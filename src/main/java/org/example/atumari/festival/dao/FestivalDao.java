@@ -19,15 +19,31 @@ public class FestivalDao {
 
     public void saveFestivals(List<FestivalDto> dtos) {
 
-        String sql =
-                "insert into atumari.festival "
-              + "(festival_id, festival_name, summary, "
-              + "start_datetime, end_datetime, venue_name, "
-              + "venue_address, access_info, image_url, organizer, "
-              + "price_free, price_text, external_url, image_source, "
-              + "prefecture_no, season) "
-              + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
+    	String sql =
+    	        "insert into atumari.festival "
+    	      + "(festival_id, festival_name, summary, "
+    	      + "start_datetime, end_datetime, venue_name, "
+    	      + "venue_address, access_info, image_url, organizer, "
+    	      + "price_free, price_text, external_url, image_source, "
+    	      + "prefecture_no, season) "
+    	      + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) "
+    	      + "on duplicate key update "
+    	      + "festival_name = values(festival_name), "
+    	      + "summary = values(summary), "
+    	      + "start_datetime = values(start_datetime), "
+    	      + "end_datetime = values(end_datetime), "
+    	      + "venue_name = values(venue_name), "
+    	      + "venue_address = values(venue_address), "
+    	      + "access_info = values(access_info), "
+    	      + "image_url = values(image_url), "
+    	      + "organizer = values(organizer), "
+    	      + "price_free = values(price_free), "
+    	      + "price_text = values(price_text), "
+    	      + "external_url = values(external_url), "
+    	      + "image_source = values(image_source), "
+    	      + "prefecture_no = values(prefecture_no), "
+    	      + "season = values(season)";
+    	
         try {
             con = DBConnection.getConnection();
 
