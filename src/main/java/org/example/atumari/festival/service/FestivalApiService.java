@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.example.atumari.common.database.DBConnection;
 import org.example.atumari.festival.dao.FestivalDao;
 import org.example.atumari.festival.dto.FestivalDto;
 import org.example.atumari.festival.util.FestivalUtil;
@@ -22,7 +21,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FestivalApiService {
-	public static void main(String[] args) {
+	public void fetchAndSaveFestivals() {
 		
 		String apiUrl = "https://owned-media-production.up.railway.app/api/sites/event/articles/?lang=ja&page_size=300&type=event&category=festivals";
 		
