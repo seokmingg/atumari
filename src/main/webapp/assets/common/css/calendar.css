@@ -1,0 +1,357 @@
+@charset "UTF-8";
+
+
+/* =========================
+   DATE WRAP
+========================= */
+
+.hero-date-wrap {
+
+    position: relative;
+
+    width: 145px;
+    height: 70px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   DATE BUTTON
+========================= */
+
+.hero-date {
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 0 20px;
+
+    border: none;
+    border-right:
+        1px solid rgba(255, 255, 255, 0.25);
+
+    background: transparent;
+
+    color: #fff;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+.hero-date span {
+
+    margin-bottom: 5px;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color:
+        rgba(255, 255, 255, 0.65);
+}
+
+
+.hero-date strong {
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    color: #fff;
+}
+
+
+/* =========================
+   CALENDAR
+========================= */
+
+.hero-calendar {
+
+    position: relative;
+
+    top: auto;
+    left: auto;
+
+    width: 320px;
+
+    padding: 20px;
+
+    background: #fff;
+
+    color: #222;
+
+    border:
+        1px solid #e5e5e5;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+
+    box-sizing: border-box;
+
+    display: block;
+}
+
+
+/* =========================
+   CALENDAR HEADER
+========================= */
+
+.calendar-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+.calendar-title {
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+
+.calendar-prev,
+.calendar-next {
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #222;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.calendar-prev:hover,
+.calendar-next:hover {
+
+    background: #f3f5fa;
+
+    border-radius: 50%;
+}
+
+
+/* =========================
+   WEEK
+========================= */
+
+.calendar-week {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    margin-bottom: 10px;
+}
+
+
+.calendar-week span {
+
+    text-align: center;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #777;
+
+    padding: 6px 0;
+}
+
+
+/* =========================
+   DAYS
+========================= */
+
+.calendar-days {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    row-gap: 6px;
+}
+
+
+.calendar-days span {
+
+    width: 36px;
+    height: 36px;
+
+    margin: auto;
+}
+
+
+.calendar-days button {
+
+    width: 36px;
+    height: 36px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    background: transparent;
+
+    color: #222;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.calendar-days button:hover {
+
+    background: #eef2f8;
+}
+
+
+/* =========================
+   SELECTED DATE
+========================= */
+
+.calendar-days button.selected {
+
+    background: #071A6B;
+
+    color: #fff;
+}
+/* =========================
+   HERO CALENDAR SIZE
+========================= */
+
+.hero-calendar {
+    width: 320px;
+    padding: 0;
+    transform: translateY(-15px);
+}
+
+.calendar-header {
+    margin-bottom: 12px;
+}
+
+.calendar-title {
+    font-size: 18px;
+}
+
+.calendar-week {
+    margin-bottom: 8px;
+}
+
+.calendar-week span {
+    font-size: 11px;
+}
+
+.calendar-days {
+    gap: 4px;
+}
+
+.calendar-days button,
+.calendar-days span {
+    width: 32px;
+    height: 32px;
+
+    font-size: 12px;
+}
+/* =========================
+   DATE PANEL
+========================= */
+
+.date-panel {
+    display: none;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 25px 40px;
+}
+
+
+/* =========================
+   DATE GUIDE
+========================= */
+
+.date-guide {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.date-guide span {
+    display: block;
+
+    margin-bottom: 18px;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 3px;
+
+    color: #999;
+}
+
+.date-guide h3 {
+    margin: 0 0 18px;
+
+    font-size: 28px;
+    font-weight: 600;
+
+    line-height: 1.35;
+    letter-spacing: -1px;
+
+    color: #222;
+}
+
+.date-guide p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.8;
+
+    color: #888;
+}
+

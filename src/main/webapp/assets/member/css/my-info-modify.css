@@ -1,0 +1,141 @@
+@charset "UTF-8";
+
+/* =========================
+   MEMBER MODIFY
+========================= */
+
+.member-modify {
+    padding: 180px 0 140px;
+    background: #f7f7f7;
+    min-height: 700px;
+}
+
+.member-modify-inner {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.modify-title {
+    margin-bottom: 60px;
+}
+
+.modify-title span {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.modify-title h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.modify-title p {
+    color: #777;
+    font-size: 15px;
+}
+
+
+/* =========================
+   FORM BOX
+========================= */
+
+.modify-box {
+    background: #fff;
+    padding: 50px 60px;
+}
+
+
+/* =========================
+   FORM ROW
+========================= */
+
+.form-row {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.form-row label {
+    width: 200px;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.form-row input {
+    width: 100%;
+    max-width: 500px;
+    height: 45px;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-row input:focus {
+    border-color: #aaa;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.modify-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.modify-buttons a {
+    text-decoration: none;
+}
+
+
+/* 회원정보 수정 */
+
+.save-button {
+    padding: 13px 30px;
+    border: none;
+    background: #e8ede5;
+    color: #333;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.save-button:hover {
+    background: #f3c6cf;
+}
+
+
+/* 회원 탈퇴 */
+
+.delete-button {
+    padding: 13px 25px;
+    color: #c85c68;
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid #e8b8be;
+    background: #fff;
+    transition: 0.2s;
+}
+
+.delete-button:hover {
+    color: #fff;
+    background: #c85c68;
+    border-color: #c85c68;
+}

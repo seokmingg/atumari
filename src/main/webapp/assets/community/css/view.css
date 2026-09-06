@@ -1,0 +1,1216 @@
+@charset "UTF-8";
+
+
+/* =========================
+   COMMUNITY VIEW PAGE
+========================= */
+
+.community-view-page {
+
+    padding: 180px 0 140px;
+
+    background: #f7f7f7;
+
+    min-height: 800px;
+
+}
+
+.community-view-inner {
+
+    width: 80%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+}
+
+
+
+/* =========================
+   POST
+========================= */
+
+.community-post {
+
+    background: #fff;
+
+    border-top: 2px solid #222;
+
+}
+
+
+
+/* =========================
+   POST HEADER
+========================= */
+
+.post-header {
+
+    padding: 50px 60px 35px;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+
+
+/* =========================
+   POST TITLE
+========================= */
+
+.post-title {
+
+    margin: 0 0 30px;
+
+    color: #222;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    word-break: break-word;
+
+}
+
+
+
+/* =========================
+   WRITER AREA
+========================= */
+
+.post-writer-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+}
+
+
+
+/* =========================
+   WRITER PROFILE
+========================= */
+
+.writer-profile {
+
+    width: 48px;
+
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: #eee;
+
+}
+
+.writer-profile img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+
+/* =========================
+   WRITER INFO
+========================= */
+
+.writer-info {
+
+    min-width: 0;
+
+}
+
+
+
+/* =========================
+   WRITER NAME
+========================= */
+
+.writer-name-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+
+}
+
+.writer-name {
+
+    color: #333;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+.writer-id {
+
+    color: #aaa;
+
+    font-size: 13px;
+
+}
+
+
+
+/* =========================
+   POST INFO
+========================= */
+
+.post-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #999;
+
+    font-size: 12px;
+
+}
+
+.info-divider {
+
+    color: #ddd;
+
+}
+
+
+
+/* =========================
+   POST BODY
+========================= */
+
+.post-body {
+
+    padding: 50px 60px 70px;
+
+}
+
+
+
+/* =========================
+   POST IMAGE
+========================= */
+
+.post-image {
+
+    width: 100%;
+
+    max-height: 550px;
+
+    margin-bottom: 45px;
+
+    overflow: hidden;
+
+    background: #f5f5f5;
+
+}
+
+.post-image img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    max-height: 550px;
+
+    object-fit: cover;
+
+}
+
+
+
+/* =========================
+   POST CONTENT
+========================= */
+
+.post-content {
+
+    color: #444;
+
+    font-size: 15px;
+
+    line-height: 2;
+
+    word-break: break-word;
+
+}
+
+.post-content p {
+
+    margin: 0;
+
+}
+/* =========================
+POST LIKE
+========================= */
+
+.post-like {
+
+display: flex;
+
+justify-content: center;
+
+margin-top: 45px;
+
+padding-top: 30px;
+
+border-top: 1px solid #eee;
+
+}
+
+.like-button {
+
+display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+gap: 7px;
+
+min-width: 120px;
+
+height: 42px;
+
+padding: 0 18px;
+
+border: 1px solid #ddd;
+
+border-radius: 3px;
+
+background: #fff;
+
+color: #555;
+
+font-size: 13px;
+
+cursor: pointer;
+
+transition: 0.2s;
+
+}
+
+.like-button:hover {
+
+border-color: #bbb;
+
+background: #fafafa;
+
+}
+
+.like-icon {
+
+color: #888;
+
+font-size: 20px;
+
+line-height: 1;
+
+}
+
+.like-text {
+
+font-size: 13px;
+
+}
+
+.like-count {
+
+color: #999;
+
+font-size: 12px;
+
+}
+
+/* =========================
+LIKE ACTIVE
+========================= */
+
+.like-button.active {
+
+border-color: #f0b6bf;
+
+background: #fff6f7;
+
+}
+
+.like-button.active .like-icon {
+
+color: #e56b7b;
+
+}
+
+.like-button.active .like-text {
+
+color: #d85b6b;
+
+}
+
+.like-button.active .like-count {
+
+color: #d85b6b;
+
+}
+
+
+
+
+/* =========================
+   COMMENT SECTION
+========================= */
+
+.comment-section {
+
+    margin-top: 40px;
+
+    background: #fff;
+
+}
+
+
+
+/* =========================
+   COMMENT TITLE
+========================= */
+
+.comment-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 25px 60px;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+.comment-title h2 {
+
+    margin: 0;
+
+    color: #222;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+.comment-title span {
+
+    color: #999;
+
+    font-size: 14px;
+
+}
+
+
+
+/* =========================
+   COMMENT LIST
+========================= */
+
+.comment-list {
+
+    width: 100%;
+
+}
+
+
+
+/* =========================
+   COMMENT ITEM
+========================= */
+
+.comment-item {
+
+    display: flex;
+
+    gap: 13px;
+
+    padding: 25px 60px;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+
+
+/* =========================
+   COMMENT PROFILE
+========================= */
+
+.comment-profile {
+
+    width: 40px;
+
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: #eee;
+
+}
+
+.comment-profile img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+
+/* =========================
+   COMMENT MAIN
+========================= */
+
+.comment-main {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+
+/* =========================
+   COMMENT WRITER
+========================= */
+
+.comment-writer {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+
+}
+
+.comment-writer strong {
+
+    color: #333;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+
+/* =========================
+   POST AUTHOR BADGE
+========================= */
+
+.comment-author {
+
+    padding: 3px 7px;
+
+    border: 1px solid #ddd;
+
+    color: #888;
+
+    font-size: 10px;
+
+    line-height: 1;
+
+}
+
+
+
+/* =========================
+   COMMENT CONTENT
+========================= */
+
+.comment-content {
+
+    margin-bottom: 13px;
+
+    color: #555;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    word-break: break-word;
+
+}
+
+
+
+/* =========================
+   COMMENT FOOTER
+========================= */
+
+.comment-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    color: #aaa;
+
+    font-size: 12px;
+
+}
+
+.comment-date {
+
+    color: #aaa;
+
+}
+
+
+
+/* =========================
+   REPLY BUTTON
+========================= */
+
+.reply-button {
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #999;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+}
+
+.reply-button:hover {
+
+    color: #333;
+
+}
+
+
+
+/* =========================
+   COMMENT WRITE
+========================= */
+
+.comment-write {
+
+    padding: 30px 60px;
+
+    background: #fafafa;
+
+}
+
+
+
+/* =========================
+   COMMENT TEXTAREA
+========================= */
+
+.comment-write textarea {
+
+    display: block;
+
+    width: 100%;
+
+    min-height: 110px;
+
+    box-sizing: border-box;
+
+    resize: vertical;
+
+    border: 1px solid #ddd;
+
+    background: #fff;
+
+    padding: 15px;
+
+    outline: none;
+
+    color: #444;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+}
+
+.comment-write textarea:focus {
+
+    border-color: #777;
+
+}
+
+
+
+/* =========================
+   COMMENT WRITE BOTTOM
+========================= */
+
+.comment-write-bottom {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 12px;
+
+}
+
+.comment-write-bottom span {
+
+    color: #aaa;
+
+    font-size: 11px;
+
+}
+
+.comment-write-bottom button {
+
+    min-height: 40px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    background: #222;
+
+    color: #fff;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+.comment-write-bottom button:hover {
+
+    background: #444;
+
+}
+
+
+
+/* =========================
+   BOTTOM BUTTON
+========================= */
+
+.community-view-bottom {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 25px;
+
+}
+
+.list-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0 22px;
+
+    background: #e8ede5;
+
+    color: #333;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+
+}
+
+.list-button:hover {
+
+    background: #d8dfd3;
+
+}
+
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .community-view-page {
+
+        padding: 140px 0 100px;
+
+    }
+
+    .community-view-inner {
+
+        width: 90%;
+
+    }
+
+
+
+    /* POST */
+
+    .post-header {
+
+        padding: 40px;
+
+    }
+
+    .post-body {
+
+        padding: 40px 40px 60px;
+
+    }
+
+
+
+    /* COMMENT */
+
+    .comment-title {
+
+        padding: 25px 40px;
+
+    }
+
+    .comment-item {
+
+        padding: 25px 40px;
+
+    }
+
+    .comment-write {
+
+        padding: 30px 40px;
+
+    }
+
+
+
+    /* IMAGE */
+
+    .post-image {
+
+        max-height: 450px;
+
+    }
+
+    .post-image img {
+
+        max-height: 450px;
+
+    }
+
+}
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .community-view-page {
+
+        padding: 120px 0 80px;
+
+    }
+
+    .community-view-inner {
+
+        width: 92%;
+
+    }
+
+
+
+    /* =========================
+       POST
+    ========================= */
+
+    .post-header {
+
+        padding: 30px 20px;
+
+    }
+
+    .post-title {
+
+        margin-bottom: 25px;
+
+        font-size: 23px;
+
+        line-height: 1.45;
+
+    }
+
+
+
+    /* WRITER */
+
+    .writer-profile {
+
+        width: 42px;
+
+        height: 42px;
+
+    }
+
+    .writer-name {
+
+        font-size: 13px;
+
+    }
+
+    .writer-id {
+
+        font-size: 12px;
+
+    }
+
+    .post-info {
+
+        font-size: 11px;
+
+    }
+
+
+
+    /* =========================
+       POST BODY
+    ========================= */
+
+    .post-body {
+
+        padding: 30px 20px 50px;
+
+    }
+
+    .post-image {
+
+        max-height: 300px;
+
+        margin-bottom: 30px;
+
+    }
+
+    .post-image img {
+
+        max-height: 300px;
+
+    }
+
+    .post-content {
+
+        font-size: 14px;
+
+        line-height: 1.9;
+
+    }
+
+
+
+    /* =========================
+       COMMENTS
+    ========================= */
+
+    .comment-section {
+
+        margin-top: 25px;
+
+    }
+
+    .comment-title {
+
+        padding: 20px;
+
+    }
+
+    .comment-title h2 {
+
+        font-size: 17px;
+
+    }
+
+    .comment-item {
+
+        gap: 10px;
+
+        padding: 20px;
+
+    }
+
+    .comment-profile {
+
+        width: 36px;
+
+        height: 36px;
+
+    }
+
+    .comment-writer strong {
+
+        font-size: 13px;
+
+    }
+
+    .comment-content {
+
+        font-size: 13px;
+
+    }
+
+    .comment-footer {
+
+        gap: 12px;
+
+        font-size: 11px;
+
+    }
+
+
+
+    /* =========================
+       COMMENT WRITE
+    ========================= */
+
+    .comment-write {
+
+        padding: 20px;
+
+    }
+
+    .comment-write textarea {
+
+        min-height: 90px;
+
+        font-size: 13px;
+
+    }
+
+    .comment-write-bottom {
+
+        align-items: flex-start;
+
+        gap: 15px;
+
+    }
+
+    .comment-write-bottom span {
+
+        line-height: 1.5;
+
+    }
+
+
+
+    /* =========================
+       BOTTOM
+    ========================= */
+
+    .community-view-bottom {
+
+        margin-top: 20px;
+
+    }
+
+}
+/* =========================
+   REPLY
+========================= */
+
+/* 대댓글 영역 */
+.reply-list {
+    margin-top: 20px;
+    padding-left: 35px;
+    border-left: 2px solid #f1f1f1;
+}
+
+/* 대댓글 */
+.reply-item {
+    display: flex;
+    gap: 10px;
+    padding: 15px 0;
+}
+
+/* 대댓글 프로필 */
+.reply-profile {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #eee;
+}
+
+.reply-profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 대댓글 내용 */
+.reply-main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 대댓글 작성자 */
+.reply-writer {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 7px;
+}
+
+.reply-writer strong {
+    color: #333;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* 대댓글 작성자 표시 */
+.reply-author {
+    padding: 2px 6px;
+    border: 1px solid #ddd;
+    color: #888;
+    font-size: 9px;
+    line-height: 1;
+}
+
+/* 대댓글 내용 */
+.reply-content {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.7;
+    word-break: break-word;
+}
+
+/* 대댓글 날짜 */
+.reply-footer {
+    margin-top: 8px;
+    color: #aaa;
+    font-size: 11px;
+}
+
+/* =========================
+   REPLY WRITE
+========================= */
+
+.reply-write {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background: #fafafa;
+    border: 1px solid #eee;
+}
+
+/* 답글 입력창이 열렸을 때 */
+.reply-write.show {
+    display: block;
+}
+
+.reply-write textarea {
+    display: block;
+    width: 100%;
+    min-height: 70px;
+    box-sizing: border-box;
+    padding: 10px;
+    resize: vertical;
+
+    border: 1px solid #ddd;
+    background: #fff;
+
+    outline: none;
+
+    color: #444;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.reply-write textarea:focus {
+    border-color: #aaa;
+}
+
+.reply-write-bottom {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.reply-write-bottom button {
+    min-width: 55px;
+    height: 32px;
+
+    border: 1px solid #ddd;
+    background: #fff;
+
+    color: #555;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.reply-write-bottom button:hover {
+    background: #f5f5f5;
+}

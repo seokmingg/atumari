@@ -1,0 +1,616 @@
+@charset "UTF-8";
+
+/* =========================
+   BOARD
+========================= */
+
+.board-page {
+    padding: 180px 0 140px;
+    background: #f7f7f7;
+    min-height: 800px;
+}
+
+.board-inner {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.board-title {
+    margin-bottom: 60px;
+}
+
+.board-title span {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.board-title h1 {
+    margin: 0 0 15px;
+    font-size: 48px;
+    font-weight: 800;
+    color: #222;
+}
+
+.board-title p {
+    margin: 0;
+    color: #777;
+    font-size: 15px;
+}
+
+
+/* =========================
+   BOARD TOP
+========================= */
+
+.board-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.board-top p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.board-top strong {
+    color: #222;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.board-search {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.board-search select,
+.board-search input {
+    height: 42px;
+    box-sizing: border-box;
+
+    border: 1px solid #ddd;
+    background: #fff;
+
+    padding: 0 12px;
+
+    outline: none;
+    font-size: 13px;
+}
+
+.board-search select {
+    width: 100px;
+}
+
+.board-search input {
+    width: 300px;
+}
+
+.board-search button {
+    height: 42px;
+    padding: 0 20px;
+
+    border: none;
+    background: #222;
+    color: #fff;
+
+    font-size: 13px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.board-search button:hover {
+    background: #444;
+}
+
+
+/* =========================
+   BOARD LIST
+========================= */
+
+.board-list {
+    background: #fff;
+}
+
+
+/* =========================
+   HEADER / ROW
+========================= */
+
+.board-header,
+.board-row {
+    display: grid;
+
+    /*
+        번호 영역
+        제목
+        내용
+        작성일
+    */
+    grid-template-columns: 80px 35% 1fr 130px;
+
+    align-items: center;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.board-header {
+    height: 55px;
+
+    background: #222;
+    color: #fff;
+
+    font-size: 13px;
+}
+/* =========================
+   HEADER TEXT COLOR
+========================= */
+
+.board-header .board-no,
+.board-header .board-subject,
+.board-header .board-content,
+.board-header .board-date {
+    color: #fff;
+}
+
+/* =========================
+   ROW
+========================= */
+
+.board-row {
+    min-height: 65px;
+
+    border-bottom: 1px solid #eee;
+
+    color: #333;
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.board-row:hover {
+    background: #fafafa;
+}
+
+
+/* =========================
+   NO
+========================= */
+
+.board-no {
+    text-align: center;
+}
+
+
+/* =========================
+   SUBJECT
+========================= */
+
+.board-subject {
+    padding-left: 20px;
+
+    color: #333;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.board-content {
+    padding: 0 20px;
+
+    color: #777;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+.board-date {
+    text-align: center;
+
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   BOARD ITEM
+========================= */
+
+.board-item {
+    background: #fff;
+}
+
+
+/* =========================
+   BOARD DETAIL
+========================= */
+
+.board-detail {
+    max-height: 0;
+
+    overflow: hidden;
+
+    background: #fafafa;
+
+    transition:
+        max-height 0.4s ease;
+}
+
+
+/* =========================
+   DETAIL INNER
+========================= */
+
+.board-detail-inner {
+    padding: 35px 80px 30px;
+
+    box-sizing: border-box;
+
+    border-bottom: 1px solid #eee;
+}
+
+
+/* =========================
+   DETAIL TITLE
+========================= */
+
+.detail-title {
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+
+/* =========================
+   DETAIL CONTENT
+========================= */
+
+.detail-content {
+    padding: 25px 0 35px;
+
+    color: #555;
+
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+
+/* =========================
+   DETAIL DATE
+========================= */
+
+.detail-date {
+    padding-top: 15px;
+
+    border-top: 1px solid #eee;
+
+    text-align: right;
+
+    color: #999;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   ACTIVE
+========================= */
+
+.board-item.active .board-detail {
+    max-height: 600px;
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.board-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 50px;
+}
+
+.board-pagination a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    color: #777;
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.board-pagination a:hover {
+    color: #222;
+}
+
+.board-pagination a.active {
+    background: #222;
+    color: #fff;
+}
+
+.board-pagination .page-prev,
+.board-pagination .page-next {
+    font-size: 16px;
+}
+
+
+/* =========================
+   WRITE BUTTON
+========================= */
+
+.board-write {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 25px;
+}
+
+.write-button {
+    padding: 13px 25px;
+
+    background: #e8ede5;
+    color: #333;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.write-button:hover {
+    background: #f3c6cf;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .board-page {
+        padding: 140px 0 100px;
+    }
+
+    .board-inner {
+        width: 90%;
+    }
+
+    .board-title h1 {
+        font-size: 40px;
+    }
+
+
+    /* 목록 */
+
+    .board-header,
+    .board-row {
+        grid-template-columns: 50px 35% 1fr 100px;
+    }
+	
+
+    /* 상세 */
+
+    .board-detail-inner {
+        padding: 30px 50px;
+    }
+
+
+    /* 검색 */
+
+    .board-search input {
+        width: 220px;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .board-page {
+        padding: 120px 0 80px;
+    }
+
+    .board-inner {
+        width: 92%;
+    }
+
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    .board-title {
+        margin-bottom: 40px;
+    }
+
+    .board-title h1 {
+        font-size: 34px;
+    }
+
+    .board-title p {
+        font-size: 14px;
+    }
+
+
+    /* =========================
+       BOARD TOP
+    ========================= */
+
+    .board-top {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 15px;
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .board-search {
+        width: 100%;
+    }
+
+    .board-search select {
+        width: 90px;
+    }
+
+    .board-search input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .board-search button {
+        padding: 0 15px;
+    }
+
+
+    /* =========================
+       MOBILE LIST
+    ========================= */
+
+    .board-header,
+    .board-row {
+        grid-template-columns: 35px 1fr 90px;
+    }
+
+
+    /*
+        번호 영역은 유지
+        실제 번호는 비워둠
+    */
+
+    .board-no {
+        display: block;
+    }
+
+
+    /*
+        모바일에서는 내용 숨김
+    */
+
+    .board-content {
+        display: none;
+    }
+
+
+    .board-subject {
+        padding-left: 15px;
+    }
+
+    .board-date {
+        font-size: 12px;
+    }
+
+
+    /* =========================
+       MOBILE DETAIL
+    ========================= */
+
+    .board-detail-inner {
+        padding: 25px 20px;
+    }
+
+    .detail-title {
+        padding-bottom: 15px;
+
+        font-size: 16px;
+    }
+
+    .detail-content {
+        padding: 20px 0 25px;
+
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .detail-date {
+        padding-top: 12px;
+
+        font-size: 12px;
+    }
+
+
+    /* =========================
+       PAGINATION
+    ========================= */
+
+    .board-pagination {
+        margin-top: 40px;
+    }
+
+    .board-pagination a {
+        width: 32px;
+        height: 32px;
+    }
+
+
+    /* =========================
+       WRITE
+    ========================= */
+
+    .board-write {
+        margin-top: 20px;
+    }
+
+    .write-button {
+        padding: 12px 20px;
+    }
+}

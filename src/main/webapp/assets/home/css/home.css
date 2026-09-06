@@ -1,0 +1,1494 @@
+@charset "UTF-8";
+
+
+/* =========================
+   RESET
+========================= */
+
+.search-section,
+.festival-section,
+.region-section,
+.article-section {
+    padding: clamp(80px, 8vw, 140px) 0;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.48) 0%,
+            rgba(0, 0, 0, 0.20) 55%,
+            rgba(0, 0, 0, 0.05) 100%
+        ),
+        url("../images/hero.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.hero-content {
+    position: relative;
+    width: 84%;
+    max-width: 1400px;
+    min-height: 100vh;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+
+/* =========================
+   HERO TEXT
+========================= */
+
+.hero-text {
+    position: absolute;
+    left: 0;
+    bottom: clamp(220px, 25vh, 350px);
+}
+
+.hero-label {
+    display: block;
+    margin-bottom: 25px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    opacity: 0.8;
+}
+
+.hero-text h1 {
+    margin: 0 0 25px;
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 3px;
+}
+
+.hero-text p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.9;
+    font-weight: 300;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+
+/* =========================
+   HERO SEARCH WRAP
+========================= */
+
+.hero-search-wrap {
+    position: absolute;
+    left: 0;
+    bottom: clamp(120px, 19vh, 270px);
+    width: min(680px, 100%);
+    z-index: 20;
+}
+
+
+/* =========================
+   HERO SEARCH
+========================= */
+
+.hero-search {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 70px;
+    background: rgba(20, 20, 20, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-sizing: border-box;
+    backdrop-filter: blur(8px);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================
+   HERO SEARCH PANEL
+========================= */
+
+.hero-search-panel {
+    position: absolute;
+    left: 0;
+    top: 70px;
+    width: 100%;
+    height: 350px;
+    background: #fff;
+    box-sizing: border-box;
+    z-index: 30;
+    display: none;
+    overflow: hidden;
+    color: #222;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================
+   PANEL OPEN
+========================= */
+
+.hero-search-panel.open {
+    display: flex;
+}
+
+.search-panel-content {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   HERO KEYWORD
+========================= */
+
+.hero-keyword {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: 0 25px;
+    border-right:
+        1px solid rgba(255, 255, 255, 0.25);
+}
+
+.hero-keyword span {
+    margin-bottom: 5px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.hero-keyword input {
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-size: 14px;
+}
+
+.hero-keyword input::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+
+/* =========================
+   DATE WRAP
+========================= */
+
+.hero-date-wrap {
+    flex: 0 0 210px;
+    width: 210px;
+    max-width: 31%;
+    display: flex;
+    min-width: 0;
+}
+
+
+/* =========================
+   DATE BUTTON
+========================= */
+
+.hero-date {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 18px;
+    box-sizing: border-box;
+    border: none;
+    border-right:
+        1px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+
+/* DATE LABEL */
+
+.hero-date > span {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+
+/* =========================
+   DATE RANGE
+========================= */
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    white-space: nowrap;
+}
+
+
+/* 날짜 */
+
+.date-range .date-start,
+.date-range .date-end {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 400;
+    color: #fff;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+
+/* 화살표 */
+
+.date-arrow {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.7);
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   SEARCH BUTTON
+========================= */
+
+.hero-search-button {
+    flex: 0 0 125px;
+    width: 125px;
+    border: none;
+    background: #fff;
+    color: #222;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.hero-search-button:hover {
+    background: #222;
+    color: #fff;
+}
+
+
+/* =========================
+   DATE PANEL
+========================= */
+
+.date-panel {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 35px 45px;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   DATE GUIDE
+========================= */
+
+.date-guide {
+    width: 190px;
+    flex-shrink: 0;
+}
+
+.date-guide > span {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #999;
+}
+
+
+/* =========================
+   DATE GUIDE TITLE
+========================= */
+
+.date-guide h3 {
+    margin: 0 0 15px;
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -1px;
+    color: #222;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   DATE GUIDE TEXT
+========================= */
+
+.date-guide p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #888;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   CALENDAR
+========================= */
+
+.hero-calendar {
+    width: 270px;
+    max-width: 100%;
+    flex-shrink: 1;
+}
+
+
+/* =========================
+   CALENDAR HEADER
+========================= */
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.calendar-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+}
+
+.calendar-prev,
+.calendar-next {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: #555;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.calendar-prev:hover,
+.calendar-next:hover {
+    color: #111;
+}
+
+
+/* =========================
+   CALENDAR WEEK
+========================= */
+
+.calendar-week {
+    display: grid;
+    grid-template-columns:
+        repeat(7, 1fr);
+    margin-bottom: 7px;
+}
+
+.calendar-week span {
+    text-align: center;
+    font-size: 10px;
+    color: #aaa;
+}
+
+
+/* =========================
+   CALENDAR DAYS
+========================= */
+
+.calendar-days {
+    display: grid;
+    grid-template-columns:
+        repeat(7, 1fr);
+    row-gap: 3px;
+}
+
+.calendar-days span {
+    height: 29px;
+}
+
+
+/* =========================
+   CALENDAR DAY BUTTON
+========================= */
+
+.calendar-days button {
+    width: 29px;
+    height: 29px;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #333;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.calendar-days button:hover {
+    background: #f0f0f0;
+}
+
+
+/* 선택된 날짜 */
+
+.calendar-days button.selected {
+    background: #222;
+    color: #fff;
+}
+
+
+/* 날짜 범위 */
+
+.calendar-days button.range {
+    background: #eeeeee;
+    border-radius: 0;
+    color: #333;
+}
+
+
+/* =========================
+   KEYWORD PANEL
+========================= */
+
+.keyword-panel {
+    width: 100%;
+    height: 100%;
+    padding: 35px 45px;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    color: #222;
+}
+
+
+/* =========================
+   KEYWORD TITLE
+========================= */
+
+.keyword-panel h3 {
+    margin: 0 0 20px;
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: #222;
+}
+
+
+/* =========================
+   FESTIVAL LIST
+========================= */
+
+.keyword-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.keyword-list button {
+    width: 100%;
+    height: 44px;
+    padding: 0 17px;
+    border: 1px solid #e8e8e8;
+    background: #fafafa;
+    color: #333;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.keyword-list button:hover {
+    background: #222;
+    border-color: #222;
+    color: #fff;
+    padding-left: 23px;
+}
+
+
+/* =========================
+   POPULAR KEYWORDS
+========================= */
+
+.keyword-panel h4 {
+    margin: 25px 0 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #999;
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   KEYWORD TAGS
+========================= */
+
+.keyword-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.keyword-tags button {
+    padding: 7px 13px;
+    border: 1px solid #e5e5e5;
+    border-radius: 20px;
+    background: #fff;
+    color: #777;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.keyword-tags button:hover {
+    background: #222;
+    border-color: #222;
+    color: #fff;
+}
+
+
+/* =========================
+   COMMON
+========================= */
+
+.section-inner {
+    width: 84%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: clamp(32px, 3vw, 42px);
+    margin-bottom: 60px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   SEARCH SECTION
+========================= */
+
+.search-section {
+    padding: clamp(90px, 9vw, 140px) 0;
+    background: #f7f7f7;
+}
+
+.search-list {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 25px;
+}
+
+.search-item {
+    padding: 60px 40px;
+    background: #fff;
+    border: 1px solid #eee;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.search-item h3 {
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.search-item p {
+    color: #777;
+}
+.search-item:visited {
+    color: inherit;
+}
+
+.search-item::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 100%;
+
+    background: #222;
+
+    transition: width 0.3s ease;
+}
+
+.search-item:hover::before {
+    width: 3px;
+}
+
+.search-item:hover {
+    background-color: #fafafa;
+}
+
+
+/* =========================
+   FESTIVAL
+========================= */
+
+.festival-section {
+
+    padding: clamp(90px, 9vw, 140px) 0;
+
+}
+
+
+/* =========================
+   FESTIVAL SLIDER WRAP
+========================= */
+
+.festival-slider-wrap {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: clamp(10px, 2vw, 30px);
+
+    width: 100%;
+
+}
+
+
+/* =========================
+   FESTIVAL SLIDER
+========================= */
+
+.festival-slider {
+
+    flex: 1;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================
+   FESTIVAL LIST
+========================= */
+
+.festival-list {
+
+    display: flex;
+
+    gap: clamp(15px, 2vw, 30px);
+
+    transition: transform 0.5s ease;
+
+}
+
+
+/* =========================
+   FESTIVAL CARD
+========================= */
+
+.festival-card {
+
+    flex: 0 0 calc((100% - 60px) / 3);
+
+    background: #fff;
+
+    object-fit: cover;
+    display: block;
+
+    transition: transform 0.4s ease;
+
+}
+
+
+/* =========================
+   FESTIVAL IMAGE
+========================= */
+
+.festival-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.festival-card:hover img {
+    transform: translateY(-4px) scale(1.02);
+}
+
+
+/* =========================
+   FESTIVAL INFO
+========================= */
+
+.festival-info {
+
+    padding: 25px;
+
+}
+
+
+.festival-info h3 {
+
+    margin: 0 0 10px;
+
+    font-size: 21px;
+
+}
+
+
+.festival-info p {
+
+    margin: 0;
+
+    color: #777;
+
+}
+
+
+/* =========================
+   FESTIVAL BUTTON
+========================= */
+
+.festival-prev,
+.festival-next {
+
+    flex-shrink: 0;
+
+    width: clamp(35px, 3vw, 45px);
+
+    height: clamp(35px, 3vw, 45px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid #ddd;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+}
+
+
+.festival-prev:hover,
+.festival-next:hover {
+
+    background: #222;
+
+    color: #fff;
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .festival-card {
+
+        flex: 0 0 calc((100% - 30px) / 2);
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .festival-slider-wrap {
+
+        gap: 10px;
+
+    }
+
+
+    .festival-card {
+
+        flex: 0 0 100%;
+
+    }
+
+
+    .festival-card img {
+
+        height: 240px;
+
+    }
+
+
+    .festival-prev,
+    .festival-next {
+
+        width: 35px;
+
+        height: 35px;
+
+        font-size: 16px;
+
+    }
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .festival-card {
+
+        flex: 0 0 calc((100% - 30px) / 2);
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .festival-slider-wrap {
+
+        gap: 10px;
+
+    }
+
+    .festival-card {
+
+        flex: 0 0 100%;
+
+    }
+
+    .festival-prev,
+    .festival-next {
+
+        width: 35px;
+
+        height: 35px;
+
+        font-size: 16px;
+
+    }
+
+}
+
+
+/* =========================
+   FEATURE
+========================= */
+
+.feature-section {
+    padding: clamp(90px, 9vw, 140px) 0;
+    background: #111;
+    color: #fff;
+}
+
+.feature-inner {
+    width: 90%;
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: clamp(40px, 5vw, 80px);
+}
+
+.feature-image {
+    width: 55%;
+}
+
+.feature-image img {
+    width: 100%;
+    display: block;
+}
+
+.feature-content {
+    width: 45%;
+}
+
+.feature-label {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: #aaa;
+}
+
+.feature-content h2 {
+    font-size: clamp(36px, 4vw, 50px);
+    margin: 25px 0;
+}
+
+.feature-content p {
+    line-height: 2;
+    color: #ccc;
+    margin-bottom: 35px;
+}
+
+.more-button {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 8px;
+}
+
+
+/* =========================
+   REGION
+========================= */
+
+.region-section {
+    padding: clamp(90px, 9vw, 140px) 0;
+    background: #fff;
+}
+
+
+/* =========================
+   REGION CONTENT
+========================= */
+
+.region-content {
+    width: 84%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(30px, 5vw, 80px);
+}
+
+
+/* =========================
+   REGION INFO
+========================= */
+
+.region-info {
+    width: 360px;
+    max-width: 36%;
+    flex-shrink: 1;
+    padding-top: 30px;
+}
+
+.region-info span {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #999;
+    margin-bottom: 18px;
+}
+
+.region-info h3 {
+    font-size: clamp(36px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: #222;
+    margin: 0 0 22px;
+}
+
+.region-info p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.9;
+    margin: 0;
+}
+
+
+/* =========================
+   REGION IMAGE
+========================= */
+
+.region-image {
+    width: 100%;
+    height: 300px;
+    margin-top: 30px;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.region-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* =========================
+   JAPAN MAP
+========================= */
+
+.japan-map {
+    width: 550px;
+    max-width: 52%;
+    margin: 0;
+    flex-shrink: 1;
+}
+
+.japan-map object {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+/* =========================
+   ARTICLE
+========================= */
+
+.article-section {
+
+    padding: clamp(90px, 9vw, 140px) 0;
+
+    background: #f7f7f7;
+
+}
+
+
+/* =========================
+   ARTICLE TITLE
+========================= */
+
+.article-section .section-title {
+
+    margin-bottom: clamp(40px, 4vw, 60px);
+
+}
+
+
+/* =========================
+   ARTICLE SLIDER WRAP
+========================= */
+
+.article-slider-wrap {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: clamp(10px, 2vw, 30px);
+
+    width: 100%;
+
+}
+
+
+/* =========================
+   ARTICLE SLIDER
+========================= */
+
+.article-slider {
+
+    flex: 1;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================
+   ARTICLE LIST
+========================= */
+
+.article-list {
+
+    display: flex;
+
+    gap: clamp(15px, 2vw, 30px);
+
+    transition: transform 0.5s ease;
+
+}
+
+
+/* =========================
+   ARTICLE CARD
+========================= */
+
+.article-card {
+
+    flex: 0 0 calc((100% - 60px) / 3);
+
+    background: #fff;
+
+    object-fit: cover;
+    
+    display: block;
+
+    transition: transform 0.4s ease;
+
+}
+
+.article-card img {
+
+    width: 100%;
+
+    height: 280px;
+
+    object-fit: cover;
+    
+    display: block;
+    
+    transition: transform 0.4s ease;
+
+}
+.article-card:hover img {
+    transform: translateY(-4px) scale(1.02);
+}
+
+
+/* =========================
+   ARTICLE INFO
+========================= */
+
+.article-info {
+
+    padding: 25px;
+
+}
+
+.article-info span {
+
+    font-size: 12px;
+
+    color: #888;
+
+    letter-spacing: 1px;
+
+}
+
+.article-info h3 {
+
+    margin: 12px 0;
+
+    font-size: 21px;
+
+}
+
+.article-info p {
+
+    color: #777;
+
+}
+
+
+/* =========================
+   SLIDER BUTTON
+========================= */
+
+.article-prev,
+.article-next {
+
+    flex-shrink: 0;
+
+    width: clamp(35px, 3vw, 45px);
+
+    height: clamp(35px, 3vw, 45px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid #ddd;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+}
+
+.article-prev:hover,
+.article-next:hover {
+
+    background: #222;
+
+    color: #fff;
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .article-card {
+
+        flex: 0 0 calc((100% - 30px) / 2);
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .article-slider-wrap {
+
+        gap: 10px;
+
+    }
+
+    .article-card {
+
+        flex: 0 0 100%;
+
+    }
+
+    .article-prev,
+    .article-next {
+
+        width: 35px;
+
+        height: 35px;
+
+        font-size: 16px;
+
+    }
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* 1200px 이하 */
+
+@media (max-width: 1200px) {
+
+    .hero-content,
+    .section-inner {
+        width: 90%;
+    }
+
+    .hero-search-wrap {
+        width: min(680px, 100%);
+    }
+
+    .search-list,
+    .festival-list,
+    .article-list {
+        gap: 20px;
+    }
+
+    .feature-inner {
+        gap: 50px;
+    }
+
+    .region-content {
+        width: 90%;
+    }
+
+}
+
+
+/* 900px 이하 */
+
+@media (max-width: 900px) {
+
+    .hero-text {
+        bottom: 220px;
+    }
+
+    .hero-search-wrap {
+        bottom: 100px;
+        width: 100%;
+    }
+
+    .hero-search-panel {
+        height: 350px;
+    }
+
+    .search-list,
+    .festival-list,
+    .article-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .feature-image,
+    .feature-content {
+        width: 100%;
+    }
+
+    .region-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .region-info {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .japan-map {
+        width: 550px;
+        max-width: 100%;
+    }
+
+}
+
+
+/* 600px 이하 */
+
+@media (max-width: 600px) {
+
+    .hero-content,
+    .section-inner,
+    .region-content {
+        width: 92%;
+    }
+
+    .hero-text {
+        bottom: 210px;
+    }
+
+    .hero-text h1 {
+        letter-spacing: 1px;
+    }
+
+    .hero-search {
+        height: 60px;
+    }
+
+    .hero-search-panel {
+        top: 60px;
+        height: 350px;
+    }
+
+    .hero-date-wrap {
+        flex: 0 0 180px;
+        width: 180px;
+        max-width: 35%;
+    }
+
+    .hero-search-button {
+        flex: 0 0 100px;
+        width: 100px;
+    }
+
+    .search-list,
+    .festival-list,
+    .article-list {
+        grid-template-columns: 1fr;
+    }
+
+    .festival-card img {
+        height: 300px;
+    }
+
+    .article-card img {
+        height: 250px;
+    }
+
+    .feature-inner {
+        width: 92%;
+    }
+
+    .region-info h3 {
+        font-size: 36px;
+    }
+
+    .date-panel {
+        padding: 25px;
+    }
+
+    .date-guide {
+        width: 160px;
+    }
+
+    .hero-calendar {
+        width: 250px;
+    }
+
+}

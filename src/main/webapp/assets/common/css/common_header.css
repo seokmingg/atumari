@@ -1,0 +1,706 @@
+@charset "UTF-8";
+
+/* =========================
+   COMMON HEADER
+   ========================= */
+
+.header {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 80px;
+
+    padding: 0 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    z-index: 1000;
+
+    background: #fff;
+    color: #222;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+}
+
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo {
+
+    text-decoration: none;
+    color: #222;
+
+}
+
+.logo-main {
+
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 5px;
+
+}
+
+.logo-sub {
+
+    margin-top: 3px;
+
+    font-size: 8px;
+    letter-spacing: 3px;
+
+    opacity: 0.7;
+
+}
+
+
+/* =========================
+   NAV
+   ========================= */
+
+.nav {
+
+    display: flex;
+    align-items: center;
+
+    gap: 40px;
+
+}
+
+.nav a {
+
+    color: #222;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================
+   MEMBER NAV
+   ========================= */
+
+.member-nav {
+
+    gap: 15px;
+
+}
+
+.member-nav span {
+
+    color: #777;
+
+}
+
+
+/* =========================
+   SEARCH
+   ========================= */
+
+/* =========================================================
+   SEARCH ICON
+========================================================= */
+
+.header-search {
+    flex-shrink: 0;
+    margin-left: clamp(20px, 1.563vw, 30px);
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 5px;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.header-search:hover {
+    opacity: 0.6;
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   SCROLLED
+========================================================= */
+
+.header.scrolled {
+    background: #fff;
+    color: #222;
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   SEARCH HEADER
+   검색 버튼을 눌렀을 때 나타나는 영역
+========================================================= */
+
+.search-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+
+    /*
+     * 달력이 영역 밖으로 나와야 하므로
+     * hidden 사용 금지
+     */
+    overflow: visible;
+
+    box-sizing: border-box;
+    background: #fff;
+    color: #222;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 2000;
+    transition:
+        height 0.4s ease,
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+
+/* =========================================================
+   SEARCH OPEN
+========================================================= */
+
+.header.search-open .search-header {
+
+    /*
+     * 기존 디자인 유지
+     */
+    height: 200px;
+
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =========================================================
+   SEARCH PANEL
+========================================================= */
+
+.search-panel {
+    width: 100%;
+    padding: 30px clamp(30px, 3.125vw, 60px);
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SEARCH PANEL TOP
+========================================================= */
+
+.search-panel-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.search-panel-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #999;
+}
+
+
+/* =========================================================
+   SEARCH CLOSE
+========================================================= */
+
+.search-close {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #222;
+    font-size: 30px;
+    font-weight: 200;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.search-close:hover {
+    opacity: 0.5;
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   SEARCH CONTENT
+========================================================= */
+
+.search-content {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+
+    /*
+     * 화면이 작아지면 자연스럽게 감소
+     */
+    gap: clamp(25px, 2.865vw, 55px);
+}
+
+
+/* =========================================================
+   KEYWORD
+========================================================= */
+
+.search-keyword {
+
+    /*
+     * 500px을 최대값으로 유지
+     */
+    width: min(500px, 40vw);
+
+    flex-shrink: 1;
+}
+
+.search-keyword label,
+.search-date label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #888;
+}
+
+.search-keyword input {
+    width: 100%;
+    height: 52px;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #222;
+    outline: none;
+    background: transparent;
+    font-size: 17px;
+    color: #222;
+}
+
+.search-keyword input::placeholder {
+    color: #aaa;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.search-date {
+    position: relative;
+
+    /*
+     * 최대 280px
+     * 화면이 좁아지면 자동 축소
+     */
+    width: min(280px, 23vw);
+
+    flex-shrink: 1;
+}
+
+
+/* =========================================================
+   DATE BUTTON
+========================================================= */
+
+.calendar-button {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #222;
+    background: transparent;
+    color: #555;
+    text-align: left;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   PLUS
+========================================================= */
+
+.calendar-plus {
+    margin-right: 10px;
+    color: #999;
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   DATE RANGE
+========================================================= */
+
+.header-date-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.header-date-range strong {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.header-date-range .date-arrow {
+    color: #999;
+}
+
+
+/* =========================================================
+   HEADER CALENDAR
+   DATE 영역 바로 아래
+========================================================= */
+
+.search-header .header-calendar {
+    position: absolute;
+
+    /*
+     * 기존 위치 유지
+     */
+    top: 105px;
+
+    left: 0;
+    right: auto;
+
+    /*
+     * 320px을 최대값으로 유지
+     */
+    width: min(320px, 100%);
+
+    padding: 22px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.12);
+
+    z-index: 3000;
+    display: none;
+}
+
+.search-header .header-calendar.open {
+    display: block;
+}
+
+
+/* =========================================================
+   CALENDAR HEADER
+========================================================= */
+
+.search-header .header-calendar .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.search-header .header-calendar .calendar-header button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    color: #555;
+    cursor: pointer;
+}
+
+.search-header .header-calendar .header-calendar-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+}
+
+
+/* =========================================================
+   CALENDAR WEEK
+========================================================= */
+
+.search-header .header-calendar .calendar-week {
+    display: grid;
+    grid-template-columns:
+        repeat(7, 1fr);
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.search-header .header-calendar .calendar-week span {
+    font-size: 10px;
+    color: #999;
+}
+
+
+/* =========================================================
+   CALENDAR DAYS
+========================================================= */
+
+.search-header .header-calendar-days {
+    display: grid;
+    grid-template-columns:
+        repeat(7, 1fr);
+    row-gap: 5px;
+}
+
+.search-header .header-calendar-days button {
+    width: 32px;
+    height: 32px;
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #333;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.search-header .header-calendar-days button:hover {
+    background: #f1f1f1;
+}
+
+.search-header .header-calendar-days button.selected {
+    background: #222;
+    color: #fff;
+}
+
+.search-header .header-calendar-days button.range {
+    background: #eee;
+    border-radius: 0;
+}
+
+
+/* =========================================================
+   SEARCH SUBMIT
+========================================================= */
+
+.search-submit {
+
+    /*
+     * 높이는 기존 유지
+     */
+    height: 52px;
+
+    /*
+     * 기존 130px을 최대값으로 사용
+     */
+    min-width: 110px;
+    width: min(130px, 10vw);
+
+    padding: 0 clamp(20px, 2.083vw, 40px);
+
+    border: none;
+    background: #222;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.search-submit:hover {
+    background: #444;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+
+/* =========================================================
+   1200px 이하
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .header {
+        padding: 0 30px;
+    }
+
+    .nav {
+        gap: 20px;
+    }
+
+    .member-nav {
+        margin-left: 20px;
+    }
+
+    .search-panel {
+        padding: 30px;
+    }
+
+    .search-content {
+        gap: 25px;
+    }
+
+    .search-keyword {
+        width: min(400px, 38vw);
+    }
+
+    .search-date {
+        width: min(250px, 22vw);
+    }
+
+}
+
+
+/* =========================================================
+   900px 이하
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .nav a {
+        font-size: 12px;
+    }
+
+    .search-content {
+        gap: 25px;
+    }
+
+    .search-keyword {
+        width: min(300px, 35vw);
+    }
+
+    .search-date {
+        width: min(220px, 23vw);
+    }
+
+    .search-submit {
+        min-width: 110px;
+        width: 110px;
+        padding: 0 25px;
+    }
+
+}
+
+
+/* =========================================================
+   700px 이하
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .header {
+        padding: 0 20px;
+    }
+
+    .nav {
+        gap: 15px;
+    }
+
+    .member-nav {
+        margin-left: 15px;
+    }
+
+    .header-search {
+        margin-left: 15px;
+    }
+
+    .search-panel {
+        padding: 25px 20px;
+    }
+
+    .search-content {
+        gap: 15px;
+    }
+
+    .search-keyword {
+        width: 100%;
+    }
+
+    .search-date {
+        width: 200px;
+    }
+
+}
+
+
+/* =========================================================
+   IMPORTANT OVERRIDE
+   calendar.css와 충돌하지 않도록
+   HEADER 검색창 내부 달력에만 적용
+========================================================= */
+
+.header .search-header {
+    overflow: visible;
+}
+
+.header .search-header .header-calendar {
+    position: absolute;
+    top: 105px;
+    left: 0;
+    right: auto;
+
+    width: min(320px, 100%);
+
+    padding: 22px;
+    box-sizing: border-box;
+
+    background: #fff;
+    border: 1px solid #eee;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.12);
+
+    z-index: 9999;
+}
+
+
+/* 달력 열림 */
+
+.header.search-open
+.search-header
+.header-calendar.open {
+    display: block;
+}
+
+
+/*
+ * 검색 영역 밖으로 달력이 나올 수 있도록
+ */
+
+.header .search-header {
+    overflow: visible;
+}
+
+
+/*
+ * 검색창이 열렸을 때 달력 표시
+ */
+
+.header.search-open .search-header .header-calendar.open {
+    display: block;
+}
+

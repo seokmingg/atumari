@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+
+/* =========================
+   MYPAGE
+========================= */
+
+.mypage {
+    padding: 180px 0 140px;
+    background: #f7f7f7;
+    min-height: 700px;
+}
+
+.mypage-inner {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.mypage-title {
+    margin-bottom: 60px;
+}
+
+.mypage-title span {
+    display: block;
+
+    font-size: 12px;
+    letter-spacing: 3px;
+
+    color: #999;
+
+    margin-bottom: 15px;
+}
+
+.mypage-title h1 {
+    font-size: 48px;
+    font-weight: 800;
+
+    margin-bottom: 15px;
+}
+
+.mypage-title p {
+    color: #777;
+}
+
+
+/* =========================
+   MEMBER INFO
+========================= */
+
+.member-info {
+    background: #fff;
+
+    padding: 50px 60px;
+}
+
+.member-info h2 {
+    font-size: 24px;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================
+   INFO ROW
+========================= */
+
+.info-row {
+    display: flex;
+
+    padding: 22px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+.info-row span {
+    width: 180px;
+
+    color: #888;
+
+    font-size: 14px;
+}
+
+.info-row strong {
+    font-size: 15px;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.info-button {
+    text-align: right;
+
+    margin-top: 35px;
+}
+
+.info-button a {
+    display: inline-block;
+
+    padding: 13px 25px;
+
+    background: #e8ede5;
+
+    color: #333;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.info-button a:hover {
+    background: #f3c6cf;
+}

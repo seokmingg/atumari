@@ -1,0 +1,1052 @@
+@charset "UTF-8";
+
+
+/* =========================
+   COMMUNITY PAGE
+========================= */
+
+.community-page {
+
+    padding: 180px 0 140px;
+
+    background: #f7f7f7;
+
+    min-height: 800px;
+
+}
+
+.community-inner {
+
+    width: 80%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.community-title {
+
+    margin-bottom: 60px;
+
+}
+
+.community-title span {
+
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #999;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+}
+
+.community-title h1 {
+
+    margin: 0 0 15px;
+
+    color: #222;
+
+    font-size: 48px;
+
+    font-weight: 800;
+
+}
+
+.community-title p {
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 15px;
+
+}
+
+
+/* =========================
+   SEARCH AREA
+========================= */
+
+.community-search-area {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.community-search {
+
+    display: flex;
+
+    gap: 5px;
+
+}
+
+.community-search select,
+
+.community-search input {
+
+    height: 42px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #ddd;
+
+    background: #fff;
+
+    padding: 0 12px;
+
+    outline: none;
+
+    font-size: 13px;
+
+}
+
+.community-search select {
+
+    width: 120px;
+
+}
+
+.community-search input {
+
+    width: 300px;
+
+}
+
+.community-search input:focus,
+
+.community-search select:focus {
+
+    border-color: #777;
+
+}
+
+.community-search button {
+
+    height: 42px;
+
+    padding: 0 22px;
+
+    border: none;
+
+    background: #222;
+
+    color: #fff;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+.community-search button:hover {
+
+    background: #444;
+
+}
+
+
+/* =========================
+   POST COUNT SELECT
+========================= */
+
+.post-count {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+.post-count span {
+
+    color: #777;
+
+    font-size: 13px;
+
+}
+
+.post-count select {
+
+    height: 42px;
+
+    border: 1px solid #ddd;
+
+    background: #fff;
+
+    padding: 0 12px;
+
+    outline: none;
+
+    color: #555;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================
+   COMMUNITY TOP
+========================= */
+
+.community-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+
+}
+
+.community-top p {
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 14px;
+
+}
+
+.community-top strong {
+
+    color: #222;
+
+}
+
+
+/* =========================
+   WRITE AREA
+========================= */
+
+.community-write {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 25px;
+
+}
+/* =========================
+   WRITE BUTTON
+========================= */
+
+.write-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0 22px;
+
+    background: #e8ede5;
+
+    color: #333;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+
+}
+
+.write-button:hover {
+
+    background: #d8dfd3;
+
+}
+
+
+/* =========================
+   POPULAR SECTION
+========================= */
+
+.popular-section {
+
+    margin-bottom: 45px;
+
+    padding: 30px 35px;
+
+    background: #f0f2ed;
+
+    border: 1px solid #e4e7e0;
+
+}
+
+.popular-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+}
+
+.popular-title span {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 42px;
+
+    height: 24px;
+
+    background: #222;
+
+    color: #fff;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+.popular-title h2 {
+
+    margin: 0;
+
+    color: #222;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================
+   POPULAR LIST
+========================= */
+
+.popular-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    background: #fff;
+
+}
+
+.popular-item {
+
+    display: grid;
+
+    grid-template-columns: 60px 1fr 150px;
+
+    align-items: center;
+
+    min-height: 75px;
+
+    border-bottom: 1px solid #eee;
+
+    color: #333;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+
+}
+
+.popular-item:last-child {
+
+    border-bottom: none;
+
+}
+
+.popular-item:hover {
+
+    background: #fafafa;
+
+}
+
+
+/* =========================
+   POPULAR NUMBER
+========================= */
+
+.popular-number {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #555;
+
+}
+
+
+/* =========================
+   POPULAR CONTENT
+========================= */
+
+.popular-content {
+
+    min-width: 0;
+
+    padding: 12px 15px 12px 0;
+
+}
+
+.popular-content strong {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    overflow: hidden;
+
+    color: #333;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+.popular-content span {
+
+    display: block;
+
+    overflow: hidden;
+
+    color: #999;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+
+/* =========================
+   POPULAR INFO
+========================= */
+
+.popular-info {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    color: #999;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================
+   COMMUNITY LIST
+========================= */
+
+.community-list {
+
+    background: #fff;
+
+    border-top: 2px solid #222;
+
+}
+
+
+/* =========================
+   HEADER / ROW
+========================= */
+
+.community-header,
+
+.community-row {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        130px
+        120px
+        90px
+        90px;
+
+    align-items: center;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.community-header {
+
+    min-height: 55px;
+
+    background: #f5f5f5;
+
+    border-bottom: 1px solid #ddd;
+
+    color: #555;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+.community-header span {
+
+    text-align: center;
+
+}
+
+.community-header .list-title {
+
+    padding-left: 25px;
+
+    text-align: left;
+
+}
+
+
+/* =========================
+   COMMUNITY ROW
+========================= */
+
+.community-row {
+
+    min-height: 70px;
+
+    border-bottom: 1px solid #eee;
+
+    color: #333;
+
+    text-decoration: none;
+
+    transition: background-color 0.2s;
+
+}
+
+.community-row:hover {
+
+    background: #fafafa;
+
+}
+
+
+/* =========================
+   LIST TITLE
+========================= */
+
+.community-row .list-title {
+
+    min-width: 0;
+
+    padding-left: 25px;
+
+    padding-right: 20px;
+
+    overflow: hidden;
+
+    color: #333;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+
+/* =========================
+   WRITER
+========================= */
+
+.list-writer {
+
+    overflow: hidden;
+
+    padding: 0 10px;
+
+    text-align: center;
+
+    color: #555;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+.list-date {
+
+    text-align: center;
+
+    color: #888;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================
+   VIEW
+========================= */
+
+.list-view {
+
+    text-align: center;
+
+    color: #888;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================
+   LIKE
+========================= */
+
+.list-like {
+
+    text-align: center;
+
+    color: #888;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.community-pagination {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 50px;
+
+}
+
+.community-pagination a {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 36px;
+
+    height: 36px;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+
+}
+
+.community-pagination a:hover {
+
+    color: #222;
+
+    background: #eee;
+
+}
+
+.community-pagination a.active {
+
+    background: #222;
+
+    color: #fff;
+
+}
+
+.community-pagination .page-prev,
+
+.community-pagination .page-next {
+
+    font-size: 17px;
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+
+    .community-page {
+
+        padding: 140px 0 100px;
+
+    }
+
+    .community-inner {
+
+        width: 90%;
+
+    }
+
+    .community-title h1 {
+
+        font-size: 40px;
+
+    }
+
+
+    /* SEARCH */
+
+    .community-search input {
+
+        width: 200px;
+
+    }
+
+
+    /* POPULAR */
+
+    .popular-section {
+
+        padding: 25px;
+
+    }
+
+
+    /* COMMUNITY LIST */
+
+    .community-header,
+
+    .community-row {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            100px
+            110px
+            70px
+            70px;
+
+    }
+
+
+    .community-row .list-title {
+
+        padding-left: 20px;
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+
+    .community-page {
+
+        padding: 120px 0 80px;
+
+    }
+
+    .community-inner {
+
+        width: 92%;
+
+    }
+
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    .community-title {
+
+        margin-bottom: 40px;
+
+    }
+
+    .community-title h1 {
+
+        font-size: 34px;
+
+    }
+
+    .community-title p {
+
+        font-size: 14px;
+
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .community-search-area {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 10px;
+
+    }
+
+    .community-search {
+
+        width: 100%;
+
+    }
+
+    .community-search select {
+
+        width: 105px;
+
+        flex-shrink: 0;
+
+    }
+
+    .community-search input {
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
+    .community-search button {
+
+        padding: 0 15px;
+
+        flex-shrink: 0;
+
+    }
+
+    .post-count {
+
+        justify-content: flex-end;
+
+    }
+
+
+    /* =========================
+       COMMUNITY TOP
+    ========================= */
+
+    .community-top {
+
+        margin-bottom: 12px;
+
+    }
+
+
+    /* =========================
+       POPULAR
+    ========================= */
+
+    .popular-section {
+
+        margin-bottom: 30px;
+
+        padding: 20px;
+
+    }
+
+    .popular-title h2 {
+
+        font-size: 18px;
+
+    }
+
+    .popular-item {
+
+        grid-template-columns: 45px 1fr;
+
+    }
+
+    .popular-number {
+
+        font-size: 14px;
+
+    }
+
+    .popular-info {
+
+        display: none;
+
+    }
+
+    .popular-content strong {
+
+        font-size: 13px;
+
+    }
+
+
+    /* =========================
+       MOBILE COMMUNITY LIST
+    ========================= */
+
+    .community-header,
+
+    .community-row {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            80px
+            90px;
+
+    }
+
+
+    /* 조회수, 좋아요 숨김 */
+
+    .list-view,
+
+    .list-like {
+
+        display: none;
+
+    }
+
+
+    .community-row {
+
+        min-height: 65px;
+
+    }
+
+    .community-row .list-title {
+
+        padding-left: 15px;
+
+        padding-right: 10px;
+
+        font-size: 13px;
+
+    }
+
+    .list-writer {
+
+        font-size: 12px;
+
+    }
+
+    .list-date {
+
+        font-size: 11px;
+
+    }
+
+
+    .community-header {
+
+        font-size: 12px;
+
+    }
+
+    .community-header .list-title {
+
+        padding-left: 15px;
+
+    }
+
+
+    /* =========================
+       PAGINATION
+    ========================= */
+
+    .community-pagination {
+
+        margin-top: 35px;
+
+    }
+
+    .community-pagination a {
+
+        width: 32px;
+
+        height: 32px;
+
+    }
+
+}
