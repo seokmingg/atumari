@@ -49,6 +49,10 @@ dependencies {
 	// 회원 비밀번호를 평문으로 저장하지 않고 BCrypt로 해시할 때 사용
 	implementation 'at.favre.lib:bcrypt:0.10.2'
 
+	// com.fasterxml.jackson.databind.ObjectMapper를 사용하기 위한 Jackson 2
+	// JSON 문자열과 Java DTO를 서로 변환할 때 사용
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.22.2'
+
 
 	// ==================================================
 	// 인증 및 보안
