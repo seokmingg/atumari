@@ -16,7 +16,7 @@
 
         <nav class="nav">
             <a href="#">祭りを探す</a>
-            <a href="#">地域から探す</a>
+            <a href="<%=request.getContextPath()%>/card-list">地域から探す</a>
             <a href="#">季節から探す</a>
             <a href="<%=request.getContextPath()%>/notices">公知事項</a>
             <a href="<%=request.getContextPath()%>/community">コミュニティ</a>
