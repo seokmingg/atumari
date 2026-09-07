@@ -1,0 +1,30 @@
+<!-- 
+	회원가입: 이메일 형식 검증 정규식 테스트 페이지
+	참고
+	https://kincoding.com/entry/%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%A3%BC%EC%86%8C%EB%A5%BC-%EA%B2%80%EC%82%AC%ED%95%98%EB%8A%94-%EC%A0%95%EA%B7%9C%EC%8B%9DRegExp-%EB%B0%8F-%EC%9B%B9%EA%B0%9C%EB%B0%9C-%EC%A0%81%EC%9A%A9#google_vignette
+	https://kincoding.com/entry/%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%A3%BC%EC%86%8C%EB%A5%BC-%EA%B2%80%EC%82%AC%ED%95%98%EB%8A%94-%EC%A0%95%EA%B7%9C%EC%8B%9DRegExp-%EB%B0%8F-%EC%9B%B9%EA%B0%9C%EB%B0%9C-%EC%A0%81%EC%9A%A9#google_vignette
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <div class="notice">
+      <label for="email">이메일 주소 입력</label>
+      <input type="text" id="email" />
+    </div>
+<script>
+  document.querySelector("#email").addEventListener("change", function () {
+    let userInput = document.querySelector("#email").value;
+    const result = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(userInput);   // 이메일 정규식 기본 패턴
+    if (!result) {
+      alert("이메일 주소 형식이 올바르지 않습니다!");
+    } else {
+      alert("이메일 주소 형식이 올바릅니다!");  // 실무에서는 쓸일 없겠지만, 확인용으로
+    }
+  });
+</script>
+</body>
+</html>
