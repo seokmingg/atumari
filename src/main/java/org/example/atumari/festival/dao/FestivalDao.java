@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.example.atumari.common.database.DBConnection;
@@ -154,4 +155,56 @@ public class FestivalDao {
             DBConnection.closeDB(con, ps, rs);
         }
     }
+    
+    //리스트 조회
+	public List<FestivalDto> getFestivalList(String regionName) {
+		List<FestivalDto> list = new ArrayList<>();
+
+		String sql =
+		        "SELECT f.festival_no, "
+		      + "       f.prefecture_no, "
+		      + "       f.festival_name, "
+		      + "       f.summary, "
+		      + "       f.image_url, "
+		      + "       f.season, "
+		      + "       f.start_datetime, "
+		      + "       f.end_datetime "
+		      + "FROM festival f "
+		      + "JOIN prefecture p "
+		      + "ON f.prefecture_no = p.prefecture_no "
+		      + "WHERE p.region_name = ? "
+		      + "ORDER BY f.start_datetime";
+
+	    try (
+	        Connection con = DBConnection.getConnection();
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+
+	        pstmt.setString(1, regionName);
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+
+	            FestivalDto dto = new FestivalDto(
+	            		rs.getInt("festival_no"),
+	                    rs.getInt("prefecture_no"),
+	                    rs.getString("festival_name"),
+	                    rs.getString("summary"),
+	                    rs.getString("image_url"),
+	                    rs.getString("season"),
+	                    rs.getTimestamp("start_datetime").toLocalDateTime(),
+	                    rs.getTimestamp("end_datetime").toLocalDateTime()
+	            );
+
+	            list.add(dto);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return list;
+	
+	}
 }
