@@ -55,9 +55,7 @@ pageEncoding="UTF-8"%>
             <!-- TITLE -->
 
             <h1 class="post-title">
-
-                京都の夏祭りに行ってきました！
-
+              <input type="text" name="t_title">
             </h1>
 
 
