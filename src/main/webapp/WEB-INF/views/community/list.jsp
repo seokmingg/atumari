@@ -580,7 +580,7 @@
         </div>
         
         <div class="community-write">
-			<a href="javascript:go"
+			<a href="<%=request.getContextPath()%>/community/write"
                class="write-button">
 
                 投稿する
