@@ -2,6 +2,7 @@ package org.example.atumari.festival.dto;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class FestivalDto {
 	
@@ -50,8 +51,26 @@ public class FestivalDto {
 		this.price_free = price_free;
 	}
 
+	
+
+	//리스트
+	public FestivalDto(Integer festival_no, Integer prefecture_no, String festival_name, String summary,
+			String image_url, String season, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+		super();
+		this.festival_no = festival_no;
+		this.prefecture_no = prefecture_no;
+		this.festival_name = festival_name;
+		this.summary = summary;
+		this.image_url = image_url;
+		this.season = season;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+	}
 
 
+
+
+	
 
 	public Integer getFestival_no() {
 		return festival_no;
@@ -96,6 +115,9 @@ public class FestivalDto {
 	public String getSeason() {
 		return season;
 	}
+	public void setSeason(String season) {
+		this.season = season;
+	}
 	public LocalDateTime getStartDateTime() {
 		return startDateTime;
 	}
@@ -105,7 +127,16 @@ public class FestivalDto {
 	public Boolean getPrice_free() {
 		return price_free;
 	}
-	
+	// 날짜 표시용
+	public String getDateRange() {
+
+	    DateTimeFormatter formatter =
+	            DateTimeFormatter.ofPattern("yyyy.MM.dd");
+
+	    return startDateTime.format(formatter)
+	            + " ~ "
+	            + endDateTime.format(formatter);
+	}
 	
 	
 	

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+
 
 <!DOCTYPE html>
 
@@ -46,10 +50,10 @@ pageEncoding="UTF-8"%>
 
         <span>FESTIVAL</span>
 
-        <h1>北海道の祭り</h1>
+        <h1>${regionName}の祭り</h1>
 
         <p>
-            北海道で開催される祭りをご紹介します。
+            ${regionName}で開催される祭りをご紹介します。
         </p>
 
     </div>
@@ -66,7 +70,7 @@ pageEncoding="UTF-8"%>
 
         <p class="festival-count">
 
-            全 <strong>24</strong> 件
+            全 <strong>${festivalList.size()}</strong> 件
 
         </p>
 
@@ -188,395 +192,73 @@ pageEncoding="UTF-8"%>
 
     <div class="festival-list">
 
+    <c:forEach var="festival" items="${festivalList}">
 
-        <!-- =========================
-             FESTIVAL 01
-        ========================== -->
-
-        <a href="/festival/view"
+        <a href="<%=request.getContextPath()%>/festival/view?festival_no=${festival.festival_no}"
            class="festival-item">
 
-
             <!-- IMAGE -->
-
             <div class="festival-image">
 
-                <img src="<%=request.getContextPath()%>/images/festival_01.jpg"
-                     alt="さっぽろ雪まつり">
+                <img src="${festival.image_url}"
+                     alt="${festival.festival_name}">
 
             </div>
 
 
             <!-- CONTENT -->
-
             <div class="festival-content">
 
-
                 <!-- CATEGORY -->
-
                 <span class="festival-category">
-
-                    WINTER
-
+                    ${festival.season}
                 </span>
 
 
                 <!-- TITLE -->
-
                 <h2>
-
-                    さっぽろ雪まつり
-
+                    ${festival.festival_name}
                 </h2>
 
 
                 <!-- DESCRIPTION -->
-
                 <p class="festival-description">
-
-                    北海道札幌市で開催される日本を代表する冬の祭りです。
-                    会場には迫力ある雪像や氷像が並び、
-                    多くの観光客が訪れます。
-
+                    ${festival.summary}
                 </p>
 
 
                 <!-- INFO -->
-
                 <div class="festival-info">
 
-
                     <span class="festival-location">
-
-                        北海道・札幌市
-
+                        ${regionName}
                     </span>
 
 
                     <span class="festival-date">
 
-                        2026.02.04 ～ 2026.02.11
+                       ${festival.dateRange}
 
                     </span>
 
-
                 </div>
-
 
             </div>
 
 
             <!-- ARROW -->
-
             <div class="festival-arrow">
-
                 →
-
             </div>
-
 
         </a>
 
+    </c:forEach>
 
-        <!-- =========================
-             FESTIVAL 02
-        ========================== -->
+</div>
 
-        <a href="/festival/view"
-           class="festival-item">
 
-
-            <div class="festival-image">
-
-                <img src="<%=request.getContextPath()%>/images/festival_02.jpg"
-                     alt="旭川夏まつり">
-
-            </div>
-
-
-            <div class="festival-content">
-
-
-                <span class="festival-category">
-
-                    SUMMER
-
-                </span>
-
-
-                <h2>
-
-                    旭川夏まつり
-
-                </h2>
-
-
-                <p class="festival-description">
-
-                    北海道旭川市で開催される夏の祭りです。
-                    地域ならではのイベントやパレードが行われ、
-                    多くの人で賑わいます。
-
-                </p>
-
-
-                <div class="festival-info">
-
-
-                    <span class="festival-location">
-
-                        北海道・旭川市
-
-                    </span>
-
-
-                    <span class="festival-date">
-
-                        2026.07.30 ～ 2026.08.01
-
-                    </span>
-
-
-                </div>
-
-
-            </div>
-
-
-            <div class="festival-arrow">
-
-                →
-
-            </div>
-
-
-        </a>
-
-
-        <!-- =========================
-             FESTIVAL 03
-        ========================== -->
-
-        <a href="/festival/view"
-           class="festival-item">
-
-
-            <div class="festival-image">
-
-                <img src="<%=request.getContextPath()%>/images/festival_03.jpg"
-                     alt="函館港まつり">
-
-            </div>
-
-
-            <div class="festival-content">
-
-
-                <span class="festival-category">
-
-                    SUMMER
-
-                </span>
-
-
-                <h2>
-
-                    函館港まつり
-
-                </h2>
-
-
-                <p class="festival-description">
-
-                    函館の夏を彩る代表的な祭りです。
-                    華やかなパレードや地域イベントが開催され、
-                    多くの人々が集まります。
-
-                </p>
-
-
-                <div class="festival-info">
-
-
-                    <span class="festival-location">
-
-                        北海道・函館市
-
-                    </span>
-
-
-                    <span class="festival-date">
-
-                        2026.08.01 ～ 2026.08.05
-
-                    </span>
-
-
-                </div>
-
-
-            </div>
-
-
-            <div class="festival-arrow">
-
-                →
-
-            </div>
-
-
-        </a>
-
-
-        <!-- =========================
-             FESTIVAL 04
-        ========================== -->
-
-        <a href="/festival/view"
-           class="festival-item">
-
-
-            <div class="festival-image">
-
-                <img src="<%=request.getContextPath()%>/images/festival_04.jpg"
-                     alt="小樽雪あかりの路">
-
-            </div>
-
-
-            <div class="festival-content">
-
-
-                <span class="festival-category">
-
-                    WINTER
-
-                </span>
-
-
-                <h2>
-
-                    小樽雪あかりの路
-
-                </h2>
-
-
-                <p class="festival-description">
-
-                    小樽の街並みを温かな灯りが包む冬のイベントです。
-                    雪景色と幻想的な光が美しい風景を作り出します。
-
-                </p>
-
-
-                <div class="festival-info">
-
-
-                    <span class="festival-location">
-
-                        北海道・小樽市
-
-                    </span>
-
-
-                    <span class="festival-date">
-
-                        2026.02.07 ～ 2026.02.14
-
-                    </span>
-
-
-                </div>
-
-
-            </div>
-
-
-            <div class="festival-arrow">
-
-                →
-
-            </div>
-
-
-        </a>
-
-
-        <!-- =========================
-             FESTIVAL 05
-        ========================== -->
-
-        <a href="/festival/view"
-           class="festival-item">
-
-
-            <div class="festival-image">
-
-                <img src="<%=request.getContextPath()%>/images/festival_05.jpg"
-                     alt="YOSAKOIソーラン祭り">
-
-            </div>
-
-
-            <div class="festival-content">
-
-
-                <span class="festival-category">
-
-                    SUMMER
-
-                </span>
-
-
-                <h2>
-
-                    YOSAKOIソーラン祭り
-
-                </h2>
-
-
-                <p class="festival-description">
-
-                    札幌市で開催される大規模な踊りの祭典です。
-                    全国から集まったチームが迫力ある演舞を披露します。
-
-                </p>
-
-
-                <div class="festival-info">
-
-
-                    <span class="festival-location">
-
-                        北海道・札幌市
-
-                    </span>
-
-
-                    <span class="festival-date">
-
-                        2026.06.03 ～ 2026.06.07
-
-                    </span>
-
-
-                </div>
-
-
-            </div>
-
-
-            <div class="festival-arrow">
-
-                →
-
-            </div>
-
-
-        </a>
-
-
-    </div>
+       
 
 
     <!-- =========================
