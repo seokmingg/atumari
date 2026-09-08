@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+// TODO. 컨트롤러 doPost() 작성
 <!DOCTYPE html>
 
 <html lang="ja">
@@ -149,7 +149,7 @@
             </form>
 <script type="text/javascript">
 	/*
-	** refactor: form id를 받아, submit할시(회원등록 버튼을 클릭하거나 엔터키 입력시) 입력값 검증하도록 수정 -> 이벤트 핸들러 활용
+	** refactor: id 값에 해당하는 form을 받아, submit할시(회원등록 버튼을 클릭하거나 엔터키 입력시) 입력값 검증하도록 수정 -> 이벤트 핸들러 활용
 	*/
 	document.querySelector("#signup").addEventListener("submit", function(event) {
 	

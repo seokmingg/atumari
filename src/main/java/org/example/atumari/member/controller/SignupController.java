@@ -18,6 +18,8 @@ public class SignupController extends HttpServlet {
                 .forward(request, response);
     }
     
+    // 테스트 완료: 정상적으로 post 요청 받음
+    // TODO. doPost() 마저 작성
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
