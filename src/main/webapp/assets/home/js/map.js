@@ -286,12 +286,38 @@ japanMap.addEventListener("load", function() {
                     );
 
 
-                    alert(
-                        regionNames[region]
-                    );
+					        // =========================
+					        // 지역별 축제 리스트 이동
+					        // =========================
 
-                }
-            );
+					        const regionPages = {
+
+					            "hokkaido": "/festival/list?region=hokkaido",
+
+					            "tohoku": "/festival/list?region=tohoku",
+
+					            "kanto": "/festival/list?region=kanto",
+
+					            "chubu": "/festival/list?region=chubu",
+
+					            "kinki": "/festival/list?region=kinki",
+
+					            "chugoku": "/festival/list??region=chugoku",
+
+					            "shikoku": "/festival/list?region=shikoku",
+
+					            "kyushu-okinawa": "/festival/list?region=kyushu-okinawa"
+					               
+
+					        };
+
+
+					        // 해당 지역 축제 리스트 페이지로 이동
+					        window.location.href = regionPages[region];
+
+					    }
+
+					);
 
 
             // =========================
