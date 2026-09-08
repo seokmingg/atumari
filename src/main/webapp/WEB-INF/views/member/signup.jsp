@@ -59,7 +59,6 @@
                         メールアドレス
                     </label>
 
-                    <!-- TODO. 이메일 형식 상세 검증 구현 -->
                     <input
                         type="email"
                         id="email"
