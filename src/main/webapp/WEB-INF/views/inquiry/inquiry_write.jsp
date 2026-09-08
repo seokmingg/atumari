@@ -60,7 +60,7 @@
 </form>
 
 <div class="form-actions">
-  <a class="secondary-button" href="inquiry_list.html">一覧へ</a>
+  <a class="secondary-button" href="${pageContext.request.contextPath}/inquiry/list">一覧へ</a>
   <div class="right">
     <a class="primary-button" href="inquiry_list.html">登録する</a>
   </div>

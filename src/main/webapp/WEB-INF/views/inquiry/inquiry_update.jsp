@@ -54,7 +54,7 @@
 </form>
 
 <div class="form-actions">
-  <a class="secondary-button" href="inquiry_detail.html">キャンセル</a>
+  <a class="secondary-button" href="${pageContext.request.contextPath}/inquiry/view">キャンセル</a>
   <div class="right"><a class="primary-button" href="inquiry_detail.html">修正する</a></div>
 </div>
 

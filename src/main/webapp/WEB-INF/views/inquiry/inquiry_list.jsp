@@ -55,7 +55,7 @@
 
   <div class="board-row">
     <div class="board-cell board-no">5</div>
-    <div class="board-cell board-subject"><a href="inquiry_detail.html">祭り情報についてお問い合わせします</a></div>
+    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view">祭り情報についてお問い合わせします</a></div>
     <div class="board-cell board-writer">kim123</div>
     <div class="board-cell board-status"><span class="status-badge status-completed">回答完了</span></div>
     <div class="board-cell board-date">2026.09.08</div>
@@ -63,7 +63,7 @@
 
   <div class="board-row">
     <div class="board-cell board-no">4</div>
-    <div class="board-cell board-subject"><a href="inquiry_detail.html">お気に入り機能について</a></div>
+    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view">お気に入り機能について</a></div>
     <div class="board-cell board-writer">park22</div>
     <div class="board-cell board-status"><span class="status-badge status-waiting">回答待ち</span></div>
     <div class="board-cell board-date">2026.09.07</div>
@@ -71,7 +71,7 @@
 
   <div class="board-row">
     <div class="board-cell board-no">3</div>
-    <div class="board-cell board-subject"><a href="inquiry_detail.html">開催日程が違うようです</a></div>
+    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view">開催日程が違うようです</a></div>
     <div class="board-cell board-writer">guest</div>
     <div class="board-cell board-status"><span class="status-badge status-completed">回答完了</span></div>
     <div class="board-cell board-date">2026.09.06</div>
@@ -83,7 +83,7 @@
 </div>
 
 <div class="board-write">
-  <a class="write-button" href="inquiry_write.html">お問い合わせを書く</a>
+  <a class="write-button" href="${pageContext.request.contextPath}/inquiry/write">お問い合わせを書く</a>
 </div>
 
 </div>
