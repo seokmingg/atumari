@@ -1,0 +1,259 @@
+@charset "UTF-8";
+
+
+/* =========================
+   REGION PAGE
+========================= */
+
+.region-page {
+
+    min-height: 800px;
+
+    padding: 180px 0 140px;
+
+    background: #f7f7f7;
+
+}
+
+
+.region-inner {
+
+    width: 90%;
+
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.region-title {
+
+    margin-bottom: 60px;
+
+}
+
+
+.region-title span {
+
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #999;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.region-title h1 {
+
+    margin: 0 0 15px;
+
+    color: #222;
+
+    font-size: 48px;
+
+    font-weight: 800;
+
+}
+
+
+.region-title p {
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 15px;
+
+}
+
+
+/* =========================
+   REGION GRID
+========================= */
+
+.region-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 30px;
+
+}
+
+
+/* =========================
+   REGION CARD
+========================= */
+
+.region-card {
+
+    position: relative;
+
+    display: block;
+
+    height: 320px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #ddd;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+
+    transition:
+
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+/* =========================
+   REGION IMAGE
+========================= */
+
+.region-card img {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+}
+
+
+/* =========================
+   DARK OVERLAY
+========================= */
+
+.region-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+
+            to top,
+
+            rgba(0, 0, 0, 0.7),
+
+            rgba(0, 0, 0, 0.05) 65%
+
+        );
+
+    transition: background 0.2s ease;
+
+}
+
+
+/* =========================
+   CARD TEXT
+========================= */
+
+.region-overlay {
+
+    position: absolute;
+
+    right: 0;
+
+    bottom: 0;
+
+    left: 0;
+
+    z-index: 1;
+
+    padding: 35px;
+
+}
+
+
+/* =========================
+   ENGLISH REGION NAME
+========================= */
+
+.region-overlay span {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    letter-spacing: 3px;
+
+}
+
+
+/* =========================
+   JAPANESE REGION NAME
+========================= */
+
+.region-overlay strong {
+
+    display: block;
+
+    color: #fff;
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================
+   HOVER
+========================= */
+
+.region-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.13);
+
+}
+
+
+.region-card:hover::after {
+
+    background:
+
+        linear-gradient(
+
+            to top,
+
+            rgba(0, 0, 0, 0.75),
+
+            rgba(0, 0, 0, 0.08) 65%
+
+        );
+
+}

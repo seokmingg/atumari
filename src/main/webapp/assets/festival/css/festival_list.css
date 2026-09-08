@@ -1,0 +1,498 @@
+@charset "UTF-8";
+
+/* =========================
+   FESTIVAL PAGE
+========================= */
+
+.festival-page {
+    min-height: 800px;
+    padding: 180px 0 140px;
+    background: #f7f7f7;
+}
+
+.festival-inner {
+    width: 90%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.festival-title {
+    margin-bottom: 60px;
+}
+
+.festival-title > span {
+    display: block;
+    margin-bottom: 15px;
+    color: #999;
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+.festival-title h1 {
+    margin: 0 0 15px;
+    color: #222;
+    font-size: 48px;
+    font-weight: 800;
+}
+
+.festival-title p {
+    margin: 0;
+    color: #777;
+    font-size: 15px;
+}
+
+
+/* =========================
+   SEARCH AREA
+========================= */
+
+.festival-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   FESTIVAL COUNT
+========================= */
+
+.festival-count {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.festival-count strong {
+    color: #222;
+    font-weight: 700;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.festival-search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.festival-search select,
+.festival-search input {
+    height: 42px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 0 12px;
+    outline: none;
+    color: #555;
+    font-size: 13px;
+    transition: border-color 0.2s;
+}
+
+.festival-search select {
+    width: 120px;
+    cursor: pointer;
+}
+
+.festival-search input {
+    width: 300px;
+}
+
+.festival-search select:focus,
+.festival-search input:focus {
+    border-color: #777;
+}
+
+.festival-search button {
+    height: 42px;
+    padding: 0 22px;
+    border: none;
+    background: #222;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.festival-search button:hover {
+    background: #444;
+}
+
+
+/* =========================
+   CATEGORY FILTER
+========================= */
+
+.festival-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.festival-filter button {
+    min-width: 75px;
+    height: 38px;
+    padding: 0 18px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: #fff;
+    color: #777;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.festival-filter button:hover {
+    border-color: #777;
+    color: #222;
+}
+
+.festival-filter button.active {
+    border-color: #222;
+    background: #222;
+    color: #fff;
+}
+
+
+/* =========================
+   FESTIVAL LIST
+========================= */
+
+.festival-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/* =========================
+   FESTIVAL ITEM
+========================= */
+
+.festival-item {
+    display: flex;
+    min-height: 240px;
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+    background: #fff;
+    color: #333;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.festival-item:hover {
+    transform: translateY(-4px);
+    border-color: #d8d8d8;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   FESTIVAL IMAGE
+========================= */
+
+.festival-image {
+    width: 340px;
+    min-width: 340px;
+    overflow: hidden;
+    background: #ddd;
+}
+
+.festival-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* =========================
+   FESTIVAL CONTENT
+========================= */
+
+.festival-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: 35px 45px;
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+.festival-category {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin-bottom: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #f0f2ed;
+    color: #666;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================
+   FESTIVAL NAME
+========================= */
+
+.festival-content h2 {
+    margin: 0 0 15px;
+    color: #222;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.festival-description {
+    margin: 0 0 25px;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   FESTIVAL INFO
+========================= */
+
+.festival-info {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-top: auto;
+}
+
+.festival-location,
+.festival-date {
+    color: #777;
+    font-size: 13px;
+}
+
+.festival-location::before {
+    content: "📍";
+    margin-right: 7px;
+}
+
+.festival-date::before {
+    content: "📅";
+    margin-right: 7px;
+}
+
+
+/* =========================
+   ARROW
+========================= */
+
+.festival-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    min-width: 80px;
+    color: #999;
+    font-size: 24px;
+    transition: 0.2s ease;
+}
+
+.festival-item:hover .festival-arrow {
+    color: #222;
+    transform: translateX(5px);
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.festival-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 60px;
+}
+
+.festival-pagination a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    color: #777;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.festival-pagination a:hover {
+    background: #eee;
+    color: #222;
+}
+
+.festival-pagination a.active {
+    background: #222;
+    color: #fff;
+}
+
+.festival-pagination .page-prev,
+.festival-pagination .page-next {
+    font-size: 17px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+
+    .festival-page {
+        padding: 150px 0 100px;
+    }
+
+    .festival-inner {
+        width: 90%;
+    }
+
+    .festival-title h1 {
+        font-size: 40px;
+    }
+
+    .festival-image {
+        width: 280px;
+        min-width: 280px;
+    }
+
+    .festival-content {
+        padding: 30px;
+    }
+
+    .festival-search input {
+        width: 220px;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .festival-page {
+        padding: 120px 0 80px;
+    }
+
+    .festival-inner {
+        width: 92%;
+    }
+
+    .festival-title {
+        margin-bottom: 40px;
+    }
+
+    .festival-title h1 {
+        font-size: 34px;
+    }
+
+    .festival-title p {
+        font-size: 14px;
+    }
+
+    .festival-top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .festival-search {
+        width: 100%;
+    }
+
+    .festival-search select {
+        width: 100px;
+        min-width: 100px;
+    }
+
+    .festival-search input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .festival-search button {
+        padding: 0 15px;
+    }
+
+    .festival-filter {
+        flex-wrap: wrap;
+    }
+
+    .festival-filter button {
+        flex: 1;
+        min-width: 65px;
+    }
+
+    .festival-item {
+        flex-direction: column;
+    }
+
+    .festival-image {
+        width: 100%;
+        height: 230px;
+    }
+
+    .festival-content {
+        padding: 25px;
+    }
+
+    .festival-content h2 {
+        font-size: 21px;
+    }
+
+    .festival-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .festival-arrow {
+        display: none;
+    }
+
+    .festival-pagination {
+        margin-top: 40px;
+    }
+
+    .festival-pagination a {
+        width: 34px;
+        height: 34px;
+    }
+
+}
