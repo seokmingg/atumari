@@ -19,9 +19,9 @@ public class MemberService {
 			throw new IllegalArgumentException("同じパスワードを入力してください。");
 		}
 		
-//		if (!signup.getAgree()) { // 이용약관 동의 체크박스
-//			throw new IllegalArgumentException("利用規約とプライバシーポリシーに同意してください.");
-//		}
+		if (!signup.getAgree()) { // 이용약관 동의 체크박스
+			throw new IllegalArgumentException("利用規約とプライバシーポリシーに同意してください.");
+		}
 		
 		// MemberDto 생성
 		MemberDto member = new MemberDto();

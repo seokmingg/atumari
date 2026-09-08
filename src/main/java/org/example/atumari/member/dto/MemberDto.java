@@ -2,7 +2,6 @@ package org.example.atumari.member.dto;
 
 public class MemberDto {
     private Long id;
-//    private String email, name, nickname, tel, reg_date, modify_date, exit_date, rk, filepath;
     private String email;
     private String name;
     private String nickname;
