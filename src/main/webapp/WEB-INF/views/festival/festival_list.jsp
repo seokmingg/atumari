@@ -193,7 +193,7 @@ pageEncoding="UTF-8"%>
              FESTIVAL 01
         ========================== -->
 
-        <a href="festival-view"
+        <a href="/festival/view"
            class="festival-item">
 
 
@@ -282,7 +282,7 @@ pageEncoding="UTF-8"%>
              FESTIVAL 02
         ========================== -->
 
-        <a href="festival-view"
+        <a href="/festival/view"
            class="festival-item">
 
 
@@ -357,7 +357,7 @@ pageEncoding="UTF-8"%>
              FESTIVAL 03
         ========================== -->
 
-        <a href="festival-view"
+        <a href="/festival/view"
            class="festival-item">
 
 
@@ -432,7 +432,7 @@ pageEncoding="UTF-8"%>
              FESTIVAL 04
         ========================== -->
 
-        <a href="festival-view"
+        <a href="/festival/view"
            class="festival-item">
 
 
@@ -506,7 +506,7 @@ pageEncoding="UTF-8"%>
              FESTIVAL 05
         ========================== -->
 
-        <a href="festival-view"
+        <a href="/festival/view"
            class="festival-item">
 
 

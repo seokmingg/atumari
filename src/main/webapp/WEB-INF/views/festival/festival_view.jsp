@@ -43,7 +43,7 @@ pageEncoding="UTF-8"%>
 
 <div class="festival-back">
 
-    <a href="festival_list.jsp">
+    <a href="/festival/list">
 
         ← 一覧へ戻る
 
@@ -377,7 +377,7 @@ pageEncoding="UTF-8"%>
 
 <div class="festival-view-bottom">
 
-    <a href="festival-list"
+    <a href="/festival/list"
        class="festival-list-button">
 
         祭り一覧へ
