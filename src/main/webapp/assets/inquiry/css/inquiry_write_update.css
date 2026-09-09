@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/* inquiry_write, update 공용 css */
+
+
+.form-card {
+    background: #fff;
+    border-top: 3px solid #222;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-bottom: 1px solid #eee;
+}
+
+.form-label {
+    padding: 22px;
+    background: #fafafa;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+}
+
+.form-field {
+    padding: 18px 22px;
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field textarea,
+.form-field select {
+    width: 100%;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 12px 14px;
+    outline: none;
+    font: inherit;
+    font-size: 14px;
+}
+
+.form-field textarea {
+    min-height: 220px;
+    resize: vertical;
+    line-height: 1.8;
+}
+
+.form-help {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #999;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.form-actions .right {
+    display: flex;
+    gap: 10px;
+}

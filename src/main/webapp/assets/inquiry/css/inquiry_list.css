@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+/* TOP / SEARCH */
+.board-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.board-top p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.board-top strong {
+    color: #222;
+}
+
+.board-search {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.board-search select,
+.board-search input {
+    height: 42px;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 0 12px;
+    outline: none;
+    font-size: 13px;
+}
+
+.board-search select {
+    width: 100px;
+}
+
+.board-search input {
+    width: 300px;
+}
+
+.board-search button {
+    height: 42px;
+    padding: 0 20px;
+    border: none;
+    background: #222;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.board-list {
+    background: #fff;
+}
+
+.board-header,
+.board-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 140px 120px 130px;
+    align-items: center;
+}
+
+.board-header {
+    min-height: 55px;
+    background: #222;
+    color: #fff;
+    font-size: 13px;
+}
+
+.board-row {
+    min-height: 68px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.board-row:hover {
+    background: #fafafa;
+}
+
+.board-cell {
+    padding: 0 18px;
+}
+
+.board-no,
+.board-writer,
+.board-status,
+.board-date {
+    text-align: center;
+}
+
+.board-subject {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.board-subject a {
+    text-decoration: none;
+}
+
+.board-subject a:hover {
+    text-decoration: underline;
+}
+
+.board-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 50px;
+}
+
+.board-pagination a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #777;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.board-pagination a.active {
+    background: #222;
+    color: #fff;
+}
+
+.board-write {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
