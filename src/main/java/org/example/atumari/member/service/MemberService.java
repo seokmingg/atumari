@@ -40,18 +40,17 @@ public class MemberService {
 			}
 			
 			// 회원 정보
-			MemberDto member = new MemberDto();
+			MemberDto memberDto = new MemberDto();
 			
-			member.setEmail(signup.getEmail());
-			member.setName(signup.getName());
-			// TODO. 비밀번호 해시한 뒤 MemberDto에 값 마저 담기
+			memberDto.setEmail(signup.getEmail());
+			memberDto.setName(signup.getName());
 			String hashPw = BCrypt.withDefaults().hashToString(10, signup.getPassword().toCharArray()); // 60자 해시값 반환
 			
 			// 인증 정보
-			MemberAuthDto memberAuth = new MemberAuthDto();
+			MemberAuthDto memberAuthDto = new MemberAuthDto();
 			
-			memberAuth.setPassword(hashPw);
-			memberAuth.setProvider("LOCAL");
+			memberAuthDto.setPassword(hashPw);
+			memberAuthDto.setProvider("LOCAL");
 			
 			// DAO 호출
 			MemberDao memberDao = MemberDao.getDao();
@@ -61,12 +60,12 @@ public class MemberService {
 				throw new SQLException("회원번호 ID 생성 실패");
 			}
 			
-			memberAuth.setMember_id(memberId);
+			memberAuthDto.setMember_id(memberId);
 			
 			MemberAuthDao authDao = MemberAuthDao.getDao();
 			
 			// 회원 인증 정보 삽입 (성공하면 1, 실패하면 0 반환)
-			int result = authDao.insertMemberAuth(con, memberAuth);
+			int result = authDao.insertMemberAuth(con, memberAuthDto);
 			
 			// 처리가 모두 성공하면 커밋
 			con.commit();

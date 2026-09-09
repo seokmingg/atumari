@@ -22,12 +22,11 @@ public class SignupController extends HttpServlet {
                 .forward(request, response);
     }
     
-    // 테스트 완료: 정상적으로 post 요청 받음
-    // TODO. doPost() 마저 작성
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	response.setCharacterEncoding("utf-8");
+    	response.setContentType("text/html");
+    	request.setCharacterEncoding("utf-8");
 
     	String email = request.getParameter("email");
     	String name = request.getParameter("userName");
@@ -41,7 +40,7 @@ public class SignupController extends HttpServlet {
         	
         	signup.setEmail(email);
         	signup.setName(name);
-        	signup.setPassword(passwordConfirm);
+        	signup.setPassword(password);
         	signup.setPasswordConfirm(passwordConfirm);
         	signup.setAgree(agree.equals("on")); // boolean으로 dto에 전달
 
@@ -49,19 +48,29 @@ public class SignupController extends HttpServlet {
         	
         	try {
 				int result = service.signup(signup);
-				
+
 				if (result == 1) {
 					request.setAttribute("msg", "회원 등록 성공");
-				} else {
-					request.setAttribute("msg", "회원 등록 실패");
-				}
+					// 성공할 때만 로그인 페이지로
+					// TODO. setAttribute한 msg를 alert으로 출력하기
+					response.sendRedirect(request.getContextPath() + "/login");
+					return;
+				} 
+				
+				// 실패하면
+				request.setAttribute("msg", "회원 등록 실패");
+//				잘못된 입력값 처리
+			} catch (IllegalArgumentException e) { 
+				e.printStackTrace();
+				e.getMessage();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				request.setAttribute("msg", "회원 등록 과정 중 문제가 발생했습니다. 웹 관리자에게 문의 바랍니다.");
 			}
         	
+        	request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp")
+        		.forward(request, response);
     	}
-//            request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp")
-//                    .forward(request, response);
     	
     	
     }

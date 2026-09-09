@@ -15,7 +15,7 @@ public class MemberAuthDao {
 	private static MemberAuthDao dao = new MemberAuthDao();
 	public static MemberAuthDao getDao() {	return dao;	}
 	
-	public int insertMemberAuth(Connection con, MemberAuthDto memberAuth) {
+	public int insertMemberAuth(Connection con, MemberAuthDto memberAuthDto) {
 		int result = 0;
 		
 		String sql = "INSERT INTO member_auth (member_id, password, provider, provider_id) "
@@ -23,9 +23,9 @@ public class MemberAuthDao {
 		
 		try (PreparedStatement ps = 
 				con.prepareStatement(sql)) {
-			ps.setLong(1, memberAuth.getMember_id());
-			ps.setString(2, memberAuth.getPassword());
-			ps.setString(3, memberAuth.getProvider());
+			ps.setLong(1, memberAuthDto.getMember_id());
+			ps.setString(2, memberAuthDto.getPassword());
+			ps.setString(3, memberAuthDto.getProvider());
 			
 			result = ps.executeUpdate();
 			
