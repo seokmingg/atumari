@@ -20,7 +20,7 @@ public class MemberDao {
 	public Long insertMember(Connection con, SignupRequest signup) throws SQLException {
 		
 		String sql = "INSERT INTO member (EMAIL, NAME) \r\n"
-				+ "VALUES ('bbb@bbb.com', '테스트');";
+				+ "VALUES (?, ?);";
 		
 		try (PreparedStatement ps = 
 				con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {

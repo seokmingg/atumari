@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.example.atumari.common.database.DBConnection;
+import org.example.atumari.member.dao.MemberAuthDao;
 import org.example.atumari.member.dao.MemberDao;
 import org.example.atumari.member.dto.MemberAuthDto;
 import org.example.atumari.member.dto.MemberDto;
@@ -53,9 +54,18 @@ public class MemberService {
 			memberAuth.setProvider("LOCAL");
 			
 			// DAO 호출
-			MemberDao dao = MemberDao.getDao();
-			Long memberId = dao.insertMember(con, signup);
+			MemberDao memberDao = MemberDao.getDao();
+			Long memberId = memberDao.insertMember(con, signup);
 			
+			if (memberId == null || memberId <= 0) {
+				throw new SQLException("회원번호 ID 생성 실패");
+			}
+			
+			memberAuth.setMember_id(memberId);
+			
+			MemberAuthDao authDao = MemberAuthDao.getDao();
+			
+			int result = authDao.insertMemberAuth(con, memberAuth);
 			
 			// 처리가 모두 성공하면 커밋
 			con.commit();
