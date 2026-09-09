@@ -74,8 +74,8 @@
                 </div>
 
 
-                <div class="login-options">
 				<!-- 
+                <div class="login-options">
                     <label>
                         <input type="checkbox" name="remember">
                         ログイン状態を保持する
