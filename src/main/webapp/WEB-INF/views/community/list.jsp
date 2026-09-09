@@ -4,59 +4,36 @@
 <!DOCTYPE html>
 
 <html lang="ja">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta http-equiv="Content-Language" content="ja">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Community | ATSUMARI</title>
-
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/community/css/list.css">
-
 </head>
 
-
 <body>
-
 
 <!-- =========================
      HEADER
 ========================== -->
-
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
-
 <!-- =========================
      COMMUNITY PAGE
 ========================== -->
-
 <main class="community-page">
-
     <div class="community-inner">
-
-
         <!-- =========================
              PAGE TITLE
         ========================== -->
-
         <div class="community-title">
-
             <span>COMMUNITY</span>
-
             <h1>コミュニティ</h1>
-
             <p>
-                日本の祭りについて自由に情報を共有しましょう。
+                
             </p>
-
         </div>
-
-
 
         <!-- =========================
              SEARCH AREA
@@ -603,7 +580,7 @@
         </div>
         
         <div class="community-write">
-			<a href="#"
+			<a href="<%=request.getContextPath()%>/community/write"
                class="write-button">
 
                 投稿する
