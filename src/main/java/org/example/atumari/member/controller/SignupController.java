@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import org.example.atumari.member.dto.SignupRequest;
 import org.example.atumari.member.service.MemberService;
@@ -46,8 +47,11 @@ public class SignupController extends HttpServlet {
 
         	MemberService service = new MemberService();
         	
-        	service.signup(signup);
-        	// TODO. MemberService 마저 작성하기
+        	try {
+				service.signup(signup);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
         	
     	}
 //            request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp")
