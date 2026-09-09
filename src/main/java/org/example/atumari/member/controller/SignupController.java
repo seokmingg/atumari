@@ -48,7 +48,13 @@ public class SignupController extends HttpServlet {
         	MemberService service = new MemberService();
         	
         	try {
-				service.signup(signup);
+				int result = service.signup(signup);
+				
+				if (result == 1) {
+					request.setAttribute("msg", "회원 등록 성공");
+				} else {
+					request.setAttribute("msg", "회원 등록 실패");
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

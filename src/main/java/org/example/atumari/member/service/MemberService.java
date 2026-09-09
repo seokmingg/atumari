@@ -18,7 +18,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 public class MemberService {
 
 	// 회원가입
-	public void signup(SignupRequest signup) throws SQLException {
+	public int signup(SignupRequest signup) throws SQLException {
 		Connection con = null; // Service에서 Connection 생성
 		
 		try {
@@ -65,10 +65,13 @@ public class MemberService {
 			
 			MemberAuthDao authDao = MemberAuthDao.getDao();
 			
+			// 회원 인증 정보 삽입 (성공하면 1, 실패하면 0 반환)
 			int result = authDao.insertMemberAuth(con, memberAuth);
 			
 			// 처리가 모두 성공하면 커밋
 			con.commit();
+			
+			return result;
 			
 		} catch (Exception e) {
 			// 하나라도 실패하면 전체 롤백
