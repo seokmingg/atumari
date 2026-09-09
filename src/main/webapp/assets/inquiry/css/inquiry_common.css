@@ -1,0 +1,166 @@
+@charset "UTF-8";
+
+/* COMMON */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Noto Sans JP", "Noto Sans KR", sans-serif;
+    color: #222;
+    background: #f7f7f7;
+}
+
+a {
+    color: inherit;
+}
+
+
+/* BOARD / PAGE */
+.board-page {
+    padding: 180px 0 140px;
+    background: #f7f7f7;
+    min-height: 800px;
+}
+
+.board-inner {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* TITLE */
+.board-title {
+    margin-bottom: 60px;
+}
+
+.board-title span {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.board-title h1 {
+    margin: 0 0 15px;
+    font-size: 48px;
+    font-weight: 800;
+    color: #222;
+}
+
+.board-title p {
+    margin: 0;
+    color: #777;
+    font-size: 15px;
+}
+
+.write-button,
+.primary-button,
+.secondary-button,
+.danger-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 110px;
+    height: 44px;
+    padding: 0 22px;
+    text-decoration: none;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.write-button,
+.primary-button {
+    background: #e8ede5;
+    color: #333;
+}
+
+.write-button:hover,
+.primary-button:hover {
+    background: #f3c6cf;
+}
+
+.secondary-button {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #555;
+}
+
+.secondary-button:hover {
+    background: #fafafa;
+}
+
+.danger-button {
+    background: #222;
+    color: #fff;
+}
+
+.danger-button:hover {
+    background: #444;
+}
+
+.status-badge,
+.public-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-waiting {
+    background: #efefef;
+    color: #555;
+}
+
+.status-completed {
+    background: #e8ede5;
+    color: #36513b;
+}
+
+.public-open {
+    background: #e8ede5;
+    color: #36513b;
+}
+
+.public-private {
+    background: #f3c6cf;
+    color: #7a3d48;
+}
+
+@media (max-width: 900px) {
+    .board-page {
+        padding: 140px 0 100px;
+    }
+
+    .board-inner {
+        width: 90%;
+    }
+
+    .board-title h1 {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 700px) {
+    .board-page {
+        padding: 120px 0 80px;
+    }
+
+    .board-inner {
+        width: 92%;
+    }
+
+    .board-title {
+        margin-bottom: 40px;
+    }
+
+    .board-title h1 {
+        font-size: 34px;
+    }
+}
