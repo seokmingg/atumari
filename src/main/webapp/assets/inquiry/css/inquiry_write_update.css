@@ -47,7 +47,7 @@
 
 .form-help {
     margin-top: 8px;
-    font-size: 12px;
+    font-size: 11px;
     color: #999;
 }
 
@@ -61,4 +61,48 @@
 .form-actions .right {
     display: flex;
     gap: 10px;
+}
+
+/*비밀번호,메일 입력칸이 나왔다 사라졌다*/
+/* 라디오 버튼 */
+.radio-field {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.radio-field label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+/* 비밀번호 input도 기존 input 스타일 적용 */
+.form-field input[type="password"] {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 12px 14px;
+    outline: none;
+    font: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* 이메일 길이 */
+.form-field input[type="email"] {
+    max-width: 420px;
+    box-sizing: border-box;
+}
+
+/* 처음에는 숨김 */
+.hidden-row {
+    display: none;
+}
+
+/* 선택하면 표시 */
+.hidden-row.show {
+    display: grid;
 }

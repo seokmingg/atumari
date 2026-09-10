@@ -42,10 +42,13 @@
 
 <div class="board-top">
   <p>全 <strong>12</strong> 件</p>
+ 
+  <!-- 검색란 -->
   <div class="board-search">
     <select>
     <option>タイトル</option>
     <option>作成者</option>
+	<option>会員ID</option>
     </select>
     <input id="searchKeyword" type="text" placeholder="検索してください">
     <button id="searchBtn" type="button">検索</button>
@@ -62,6 +65,7 @@
   <div class="board-header">
     <div class="board-cell board-no">No.</div>
     <div class="board-cell board-subject">タイトル</div>
+    <div class="board-cell board-file">添付</div>
     <div class="board-cell board-writer">作成者</div>
     <div class="board-cell board-status">状態</div>
     <div class="board-cell board-date">作成日</div>
@@ -69,6 +73,16 @@
   <div class="board-row" data-status="waiting">
     <div class="board-cell board-no">12</div>
     <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/admin/view">開催日程について確認をお願いします</a></div>
+     <!-- 첨부파일 -->
+        <div class="board-cell board-file">
+            <span class="file-info">
+                <img
+                    src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
+                    alt="添付"
+                    class="file-icon"
+                >
+            </span>
+        </div>
     <div class="board-cell board-writer">kim123</div>
     <div class="board-cell board-status"><span class="status-badge status-waiting">回答待ち</span></div>
     <div class="board-cell board-date">2026.09.08</div>

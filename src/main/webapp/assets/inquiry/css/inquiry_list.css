@@ -59,7 +59,7 @@
 .board-header,
 .board-row {
     display: grid;
-    grid-template-columns: 70px 1fr 140px 120px 130px;
+    grid-template-columns: 70px 1fr 90px 140px 120px 130px;
     align-items: center;
 }
 
@@ -133,6 +133,45 @@
 .board-write {
     display: flex;
     justify-content: flex-end;
-    gap: 10;
+    gap: 10px;
     margin-top: 25px;
+}
+
+/* ==============================
+   첨부파일 컬럼
+============================== */
+
+.board-file {
+    text-align: center;
+}
+
+/* 아이콘 + 파일 개수 */
+.file-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: default;
+}
+
+/* 클립 아이콘 */
+.file-icon {
+    font-size: 15px;
+    line-height: 1;
+}
+
+/* 첨부파일 개수 */
+.file-count {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* 실제 이미지 아이콘을 사용하는 경우 */
+.file-info img.file-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
 }

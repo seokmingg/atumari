@@ -46,6 +46,26 @@
     <span>作成日 2026.09.08</span>
     <span>公開設定 公開</span>
   </div>
+  
+    <!-- 첨부파일 -->
+<div class="detail-file">
+
+    <div class="detail-label">添付ファイル</div>
+
+    <div class="detail-file-list">
+
+        <a href="#" class="detail-file-item">
+            <img
+                src="${pageContext.request.contextPath}/assets/inquiry/images/attach_file.svg"
+                alt="添付ファイル"
+                class="detail-file-icon">
+
+            <span>festival_schedule.png</span>
+        </a>
+
+    </div>
+
+</div>
   <div class="detail-content">
     青森ねぶた祭の開催日程についてお問い合わせします。<br><br>
     現在サイトに表示されている日程と公式サイトの日程が異なるようです。<br>

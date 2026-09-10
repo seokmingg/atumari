@@ -50,6 +50,27 @@
     <span>メール kim123@example.com</span>
     <span>公開設定 公開</span>
   </div>
+  
+  <!-- 첨부파일 -->
+<div class="detail-file">
+
+    <div class="detail-label">添付ファイル</div>
+
+    <div class="detail-file-list">
+
+        <a href="#" class="detail-file-item">
+            <img
+                src="${pageContext.request.contextPath}/assets/inquiry/images/attach_file.svg"
+                alt="添付ファイル"
+                class="detail-file-icon">
+
+            <span>festival_schedule.png</span>
+        </a>
+
+    </div>
+
+</div>
+  
   <div class="detail-content">
     青森ねぶた祭の開催日程についてお問い合わせします。<br><br>
     公式サイトと日程が異なるようです。確認をお願いいたします。
@@ -59,9 +80,7 @@
 <section class="admin-answer-card">
   <div class="answer-title">管理者回答</div>
   <textarea placeholder="回答内容を入力してください"></textarea>
-  <div style="padding:0 28px 28px;color:#666;font-size:13px;">
-    <label><input type="checkbox" checked> 回答完了時にメールで通知する</label>
-  </div>
+
 </section>
 
 <div class="detail-actions">

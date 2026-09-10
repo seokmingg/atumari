@@ -33,6 +33,8 @@
 
 <div class="board-top">
   <p>全 <strong>5</strong> 件</p>
+  
+  <!-- 검색란 -->
   <div class="board-search">
     <select>
     	<option>タイトル</option>
@@ -48,6 +50,7 @@
   <div class="board-header">
     <div class="board-cell board-no">No.</div>
     <div class="board-cell board-subject">タイトル</div>
+    <div class="board-cell board-file">添付</div>
     <div class="board-cell board-writer">作成者</div>
     <div class="board-cell board-status">状態</div>
     <div class="board-cell board-date">作成日</div>
@@ -56,6 +59,16 @@
   <div class="board-row">
     <div class="board-cell board-no">5</div>
     <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view">祭り情報についてお問い合わせします</a></div>
+     <!-- 첨부파일 -->
+        <div class="board-cell board-file">
+            <span class="file-info">
+                <img
+                    src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
+                    alt="添付"
+                    class="file-icon"
+                >
+            </span>
+        </div>
     <div class="board-cell board-writer">kim123</div>
     <div class="board-cell board-status"><span class="status-badge status-completed">回答完了</span></div>
     <div class="board-cell board-date">2026.09.08</div>
@@ -84,8 +97,6 @@
 
 <div class="board-write">
   <a class="write-button" href="${pageContext.request.contextPath}/inquiry/admin/list">管理者ページ</a>
-</div>
-<div class="board-write">
   <a class="write-button" href="${pageContext.request.contextPath}/inquiry/write">お問い合わせを書く</a>
 </div>
 
