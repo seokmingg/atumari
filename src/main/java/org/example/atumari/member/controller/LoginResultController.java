@@ -18,6 +18,10 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 
 @WebServlet("/loginresult")
 public class LoginResultController extends HttpServlet {
+	/*
+	 * 로그인 결과를 알럿으로 사용자에게 보여주는 컨트롤러
+	 * */
+	
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,8 +50,8 @@ public class LoginResultController extends HttpServlet {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			
-			if (!"".equals(loginName)) out.print("로그인에 성공했습니다. " + loginName + "님 환영합니다!");
-			else out.print("이메일이나 비밀번호를 다시 확인해 주세요.");
+			if (!"".equals(loginName)) out.print("ログインに成功しました。" + loginName + "様、ありがとうございます！");
+			else out.print("メールアドレスやパスワードをもう一度確認してください。");
 				
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -61,6 +61,8 @@ public class LoginController extends HttpServlet {
 						session.setAttribute("sessionLevel", "member"); // 일반 회원 세션
 					}
 					
+					session.setMaxInactiveInterval(60 * 60 * 4); // 세션 유지 시간(4시간)
+					
 					// 로그인 성공하면 인덱스 페이지로
 					response.sendRedirect(request.getContextPath() + "/home");
 					return;
