@@ -247,6 +247,38 @@ body {
     background: #444;
 }
 
+/* =========================
+   EMAIL CHECK BUTTON
+========================= */
+
+.check-email-button {
+
+    width: 30%;
+
+    height: 30px;
+
+    border: none;
+
+    background: #222;
+
+    color: #fff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition: background 0.2s;
+}
+
+.check-email-button:hover {
+
+    background: #444;
+}
+
 
 /* =========================
    SIGN UP
