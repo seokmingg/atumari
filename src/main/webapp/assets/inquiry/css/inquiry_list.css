@@ -133,5 +133,6 @@
 .board-write {
     display: flex;
     justify-content: flex-end;
+    gap: 10;
     margin-top: 25px;
 }

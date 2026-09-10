@@ -68,7 +68,7 @@
   </div>
   <div class="board-row" data-status="waiting">
     <div class="board-cell board-no">12</div>
-    <div class="board-cell board-subject"><a href="admin_inquiry_detail.html">開催日程について確認をお願いします</a></div>
+    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/admin/view">開催日程について確認をお願いします</a></div>
     <div class="board-cell board-writer">kim123</div>
     <div class="board-cell board-status"><span class="status-badge status-waiting">回答待ち</span></div>
     <div class="board-cell board-date">2026.09.08</div>

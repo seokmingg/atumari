@@ -83,8 +83,12 @@
 </div>
 
 <div class="board-write">
+  <a class="write-button" href="${pageContext.request.contextPath}/inquiry/admin/list">管理者ページ</a>
+</div>
+<div class="board-write">
   <a class="write-button" href="${pageContext.request.contextPath}/inquiry/write">お問い合わせを書く</a>
 </div>
+
 
 </div>
 </main>
