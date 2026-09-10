@@ -124,8 +124,12 @@
                             <span class="community-image-name">
                                 新しいイメージをインプットしてください。
                             </span>
-
-                        </div>
+                            <!-- 사진 프리뷰 -->
+							<div class="cover-wrap">
+								<div id="image_preview">
+									<img id="preview-image" >
+								</div>
+							</div>
 
                         <p class="community-write-help">
                             投稿するイメージを入れて下さい。
