@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-// TODO. 컨트롤러 doPost() 작성
 <!DOCTYPE html>
 
 <html lang="ja">
@@ -16,6 +15,7 @@
           href="<%=request.getContextPath()%>/assets/member/css/login.css">
     
     <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
+    <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 
     
 </head>
@@ -64,6 +64,7 @@
                         id="email"
                         name="email"
                         placeholder="メールアドレスを入力してください">
+                     
                 </div>
                 
                  <!-- 名前 -->
@@ -146,9 +147,11 @@
                 </button>
 
             </form>
+<!-- JavaScript -->
 <script type="text/javascript">
 	/*
 	** refactor: id 값에 해당하는 form을 받아, submit할시(회원등록 버튼을 클릭하거나 엔터키 입력시) 입력값 검증하도록 수정 -> 이벤트 핸들러 활용
+	** TODO. 이미 회원가입 되어있는 이메일 입력받을시 검증 후 submit 막기(알럿) 추가
 	*/
 	document.querySelector("#signup").addEventListener("submit", function(event) {
 	
@@ -209,6 +212,8 @@
 	        event.preventDefault();
 	        return;
 	    }
+	    
+	    checkDuplicateEmail();
 	
 	    // 여기까지 왔다면 정상적으로 form 제출
 	});
@@ -225,6 +230,30 @@
 	    return true;
 	    
 	}
+	
+	// 이메일 중복 검증
+	function checkDuplicateEmail() {
+		//if (checkEmpty(mem.t_id, "아이디를 먼저 입력해주세요.")) return;
+		
+		let email = signup.email.value;
+		
+		$.ajax({
+		type :"POST",
+		url : "<%=request.getContextPath()%>/checkemail",
+		data: "email="+email,
+		async: false,
+		dataType : "text",
+		error : () => {
+			alert('통신 실패!!!!!');
+		},
+		success : (data) => {
+			let result = $.trim(data); // alert 창 공백 제거(제이쿼리)
+			//signup.t_id_check.value = result;
+			alert("=="+result+"==");
+		}
+	});	
+	}
+	
 	/*
 	function goSignup() {
 		if (checkEmpty(signup.userName, "お名前を入力してください。")) return;

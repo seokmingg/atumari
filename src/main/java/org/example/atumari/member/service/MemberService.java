@@ -26,6 +26,9 @@ public class MemberService {
 			con = DBConnection.getConnection();
 			con.setAutoCommit(false); // 자동 커밋 끄기
 			
+			// DAO 호출
+			MemberDao memberDao = MemberDao.getDao();
+			
 			// signup.jsp 입력값 검증
 			if (!signup.getEmail().matches("^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) { // 이메일
 				throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
@@ -52,8 +55,6 @@ public class MemberService {
 			memberAuthDto.setPassword(hashPw);
 			memberAuthDto.setProvider("LOCAL");
 			
-			// DAO 호출
-			MemberDao memberDao = MemberDao.getDao();
 			Long memberId = memberDao.insertMember(con, signup);
 			
 			if (memberId == null || memberId <= 0) {
@@ -85,6 +86,19 @@ public class MemberService {
 				con.close();
 			}
 		}
+		
+	}
+
+	// CheckEmailController 이메일 중복 체크
+	public int checkDuplicateEmail(String email) {
+		int count = 0;
+		
+		// DAO 호출
+		MemberDao memberDao = MemberDao.getDao();
+					
+		count = memberDao.checkEmailCount(email);
+		
+		return count;
 		
 	}
 }
