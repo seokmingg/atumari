@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.example.atumari.common.database.DBConnection;
+import org.example.atumari.member.dto.LoginRequest;
 import org.example.atumari.member.dto.SignupRequest;
 /**
  * 회원 데이터의 조회와 저장을 구현할 DAO입니다.
@@ -73,6 +74,41 @@ public class MemberDao {
 		return count;
 	}
 	
-	
+	// 로그인 - 해시된 비밀번호 값 조회
+	public String getDBPassword(LoginRequest login) {
+		String dbPassword = "";
+		
+		String sql = "SELECT a.password\r\n"
+				+ "FROM member_auth a, member m\r\n"
+				+ "WHERE a.member_id = m.id\r\n"
+				+ "AND m.email = ?";
+		
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, login.getEmail());
+			
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				dbPassword = rs.getString(1);
+			}
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return dbPassword;
+	}
+
+	// 로그인 - 가입 회원 조회
+	public int checkMemberCount(String email, String email2) {
+		
+		return 0;
+	}
+
 	
 }
