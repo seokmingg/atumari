@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.example.atumari.member.dto.LoginRequest;
+import org.example.atumari.member.dto.SessionDto;
 import org.example.atumari.member.service.MemberService;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
@@ -46,20 +47,34 @@ public class LoginController extends HttpServlet {
     		try {
 				String loginName = service.login(login);
 				
+				// 로그인 성공하면
 				if (!"".equals(loginName)) {
 					request.setAttribute("msg", "로그인 성공");
 					
 					// 모든 페이지에서 사용할 세션 설정
 					HttpSession session = request.getSession();
-					session.setAttribute("sessionEmail", email);
-					session.setAttribute("sessionName", loginName);
+					// refactor: 별도의 세션 dto 사용
+					SessionDto sessionDto = new SessionDto();
+					
+					sessionDto.setSessionEmail(email);
+					sessionDto.setSessionName(loginName);
+					
+					session.setAttribute("sessionEmail", sessionDto.getSessionEmail());
+					session.setAttribute("sessionName", sessionDto.getSessionName());
 					
 					// 관리자 이메일 회원이면
 					if ("admin@atumari.co.jp".equals(email)) {
-						session.setAttribute("sessionLevel", "admin"); // 관리자 세션
+						sessionDto.setSessionLevel("admin"); // 관리자 세션
+					// 일반 회원이면
 					} else {
-						session.setAttribute("sessionLevel", "member"); // 일반 회원 세션
+						sessionDto.setSessionLevel("member"); // 일반 회원 세션
 					}
+					
+					session.setAttribute("sessionLevel", sessionDto.getSessionLevel()); // 관리자 세션
+					
+					System.out.println(session.getAttribute("sessionEmail"));
+					System.out.println(session.getAttribute("sessionName"));
+					System.out.println(session.getAttribute("sessionLevel"));
 					
 					session.setMaxInactiveInterval(60 * 60 * 4); // 세션 유지 시간(4시간)
 					
