@@ -104,12 +104,11 @@ public class MemberService {
 		count = memberDao.checkEmailCount(email);
 		
 		return count;
-		
 	}
 
 	// 로그인
-	public int login(LoginRequest login) throws SQLException {
-		int count = 0;
+	public String login(LoginRequest login) throws SQLException {
+		String loginName = "";
 		
 		// login.jsp 입력값 검증
 		if (!login.getEmail().matches("^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) { // 이메일
@@ -126,9 +125,15 @@ public class MemberService {
 		// DB에서 해시된 비밀번호 획득
 		String dbPassword = memberDao.getDBPassword(login);
 		
-		// 가입 여부 조회 (count 0이면 없는 회원, 1 이상이면 존재하는 회원)
-		count = memberDao.checkMemberCount(login.getEmail(), dbPassword);
+		// 비밀번호 검증 -> 입력받은 값과 db의 해시 값이 같은지
+		BCrypt.Result result = BCrypt.verifyer().verify(login.getPassword().toCharArray(), dbPassword);
 		
-		return count;
+		// 입력값과 해시 값이 같으면(검증 성공)
+		if (result.verified) {
+			// 회원 이름 조회해 컨트롤러로 반환
+			loginName = memberDao.getLoginName(login.getEmail(), dbPassword);
+		}
+		
+		return loginName;
 	}
 }

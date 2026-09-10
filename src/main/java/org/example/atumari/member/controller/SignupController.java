@@ -43,7 +43,7 @@ public class SignupController extends HttpServlet {
         	signup.setPasswordConfirm(passwordConfirm);
         	/*
         	 * refactor: "String".equals(value) 형태가 구조상 조금 더 안정적이라는 피드백 반영
-        	 * 				null.equals() 예외 방지
+        	 * 				-> null.equals() 예외 방지
         	 * */
         	signup.setAgree("on".equals(agree)); // boolean으로 dto에 전달
 

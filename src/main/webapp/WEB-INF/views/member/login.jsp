@@ -14,7 +14,8 @@
         href="<%=request.getContextPath()%>/assets/member/css/login.css">
     
     <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
-
+	<!-- jQuery -->
+    <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 </head>
 
 <body>
@@ -117,8 +118,10 @@
 	        event.preventDefault();
 	        return;
 	    }
+	    
+	    getLoginResult();
 	   
-	
+		
 	    // 여기까지 왔다면 정상적으로 form 제출
 	});
 	
@@ -135,16 +138,16 @@
 	    
 	}
 	
-	// 이메일 중복 검증
-	function checkDuplicateEmail() {
-		//if (checkEmpty(mem.t_id, "아이디를 먼저 입력해주세요.")) return;
+	// 로그인 결과 알럿 반환
+	function getLoginResult() {
 		
-		let email = signup.email.value;
+		let email = login.email.value;
+		let password = login.password.value;
 		
 		$.ajax({
 		type :"POST",
-		url : "<%=request.getContextPath()%>/checkemail",
-		data: "email="+email,
+		url : "<%=request.getContextPath()%>/loginresult",
+		data: "email="+email+"&password="+password,
 		async: false,
 		dataType : "text",
 		error : () => {
@@ -152,8 +155,7 @@
 		},
 		success : (data) => {
 			let result = $.trim(data); // alert 창 공백 제거(제이쿼리)
-			//signup.t_id_check.value = result;
-			alert("=="+result+"==");
+			alert(result);
 		}
 	});	
 	}
