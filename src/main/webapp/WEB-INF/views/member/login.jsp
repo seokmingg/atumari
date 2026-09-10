@@ -74,18 +74,20 @@
                 </div>
 
 
+				<!-- 
                 <div class="login-options">
-
                     <label>
                         <input type="checkbox" name="remember">
                         ログイン状態を保持する
                     </label>
 
                     <a href="#">
-                        パスワードを忘れた方
+                        パスワードを忘れた方(TODO. 여유 생기면 비밀번호 찾기도 구현)
                     </a>
 
                 </div>
+                
+                 -->
 
 
                 <button type="submit" class="login-button">
@@ -101,7 +103,7 @@
                     まだ会員登録がお済みでない方
                 </p>
 
-                <a href="#">
+                <a href="<%=request.getContextPath()%>/signup">
                     新規会員登録
                 </a>
 
