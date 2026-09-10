@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.example.atumari.common.database.DBConnection;
 import org.example.atumari.festival.dto.FestivalDto;
+import org.example.atumari.festival.dto.PrefectureDto;
 
 public class FestivalDao {
 
@@ -156,24 +157,96 @@ public class FestivalDao {
         }
     }
     
-    //리스트 조회
-	public List<FestivalDto> getFestivalList(String regionName) {
-		List<FestivalDto> list = new ArrayList<>();
+    //리스트 조회,페이지 네이션
+    public List<FestivalDto> getFestivalList(String regionName, Integer prefectureNo,
+    										int start,int end) {
+            
+        List<FestivalDto> list = new ArrayList<>();
 
-		String sql =
-		        "SELECT f.festival_no, "
-		      + "       f.prefecture_no, "
-		      + "       f.festival_name, "
-		      + "       f.summary, "
-		      + "       f.image_url, "
-		      + "       f.season, "
-		      + "       f.start_datetime, "
-		      + "       f.end_datetime "
-		      + "FROM festival f "
-		      + "JOIN prefecture p "
-		      + "ON f.prefecture_no = p.prefecture_no "
-		      + "WHERE p.region_name = ? "
-		      + "ORDER BY f.start_datetime";
+        int offset = start - 1;
+        int pageSize = end - start + 1;
+
+        String sql =  "SELECT f.festival_no, "
+                + "       f.prefecture_no, "
+                + "       f.festival_name, "
+                + "       p.prefecture_name, "
+                + "       f.summary, "
+                + "       f.image_url, "
+                + "       f.season, "
+                + "       f.start_datetime, "
+                + "       f.end_datetime "
+                + "FROM festival f "
+                + "JOIN prefecture p "
+                + "ON f.prefecture_no = p.prefecture_no "
+                + "WHERE p.region_name = ? ";
+               
+
+        // 도도부현을 선택했을 때만 조건 추가
+        if (prefectureNo != null) {
+            sql += "AND f.prefecture_no = ? ";
+        }
+
+        sql += "ORDER BY f.start_datetime "
+             + "LIMIT ?, ?";
+
+        try (
+            Connection con = DBConnection.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)
+        ) {
+
+            int index = 1;
+
+            // 지역
+            pstmt.setString(index++, regionName);
+
+            // 도도부현
+            if (prefectureNo != null) {
+                pstmt.setInt(index++, prefectureNo);
+            }
+
+            // 페이지
+            pstmt.setInt(index++, offset);
+            pstmt.setInt(index++, pageSize);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                FestivalDto dto = new FestivalDto(
+                        rs.getInt("festival_no"),
+                        rs.getInt("prefecture_no"),
+                        rs.getString("prefecture_name"),
+                        rs.getString("festival_name"),
+                        rs.getString("summary"),
+                        rs.getString("image_url"),
+                        rs.getString("season"),
+                        rs.getTimestamp("start_datetime").toLocalDateTime(),
+                        rs.getTimestamp("end_datetime").toLocalDateTime()
+                );
+
+                list.add(dto);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    
+	//도도부현 불러오기
+	public List<PrefectureDto> getPrefectureList(String regionName) {
+
+	    List<PrefectureDto> list = new ArrayList<>();
+
+	    String sql =
+	            "SELECT p.prefecture_no, "
+	          + "       p.prefecture_name, "
+	          + "       p.region_name "
+	          + "FROM prefecture p "
+	          + "WHERE p.region_name = ? "
+	          + "ORDER BY p.prefecture_no";
 
 	    try (
 	        Connection con = DBConnection.getConnection();
@@ -186,15 +259,10 @@ public class FestivalDao {
 
 	        while (rs.next()) {
 
-	            FestivalDto dto = new FestivalDto(
-	            		rs.getInt("festival_no"),
+	            PrefectureDto dto = new PrefectureDto(
 	                    rs.getInt("prefecture_no"),
-	                    rs.getString("festival_name"),
-	                    rs.getString("summary"),
-	                    rs.getString("image_url"),
-	                    rs.getString("season"),
-	                    rs.getTimestamp("start_datetime").toLocalDateTime(),
-	                    rs.getTimestamp("end_datetime").toLocalDateTime()
+	                    rs.getString("prefecture_name"),
+	                    rs.getString("region_name")
 	            );
 
 	            list.add(dto);
@@ -205,6 +273,48 @@ public class FestivalDao {
 	    }
 
 	    return list;
-	
 	}
+	
+	public int getFestivalTotalCount(String regionName, Integer prefectureNo) {
+	        
+	    int totalCount = 0;
+
+	    String sql = "SELECT COUNT(*) "
+		          + "FROM festival f "
+		          + "JOIN prefecture p "
+		          + "ON f.prefecture_no = p.prefecture_no "
+		          + "WHERE p.region_name = ? ";
+	            
+
+	    if (prefectureNo != null) {
+	        sql += "AND f.prefecture_no = ? ";
+	    }
+
+	    try (
+	        Connection con = DBConnection.getConnection();
+	        PreparedStatement pstmt =
+	                con.prepareStatement(sql)
+	    ) {
+
+	        int index = 1;
+
+	        pstmt.setString(index++, regionName);
+
+	        if (prefectureNo != null) {
+	            pstmt.setInt(index++, prefectureNo);
+	        }
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            totalCount = rs.getInt(1);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return totalCount;
+	}
+	
 }

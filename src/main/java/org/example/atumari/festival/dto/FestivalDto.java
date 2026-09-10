@@ -12,7 +12,7 @@ public class FestivalDto {
 
 	// prefecture_no는 지역 판별이 불가능한 경우가 있으므로
 	// null을 허용하기 위해 Integer 사용
-	private String festival_name, summary, venue_name, venue_address,
+	private String festival_name, prefecture_name, summary, venue_name, venue_address,
 			access_info, image_url, organizer, price_text, external_url,
 			image_source,season;
 	private LocalDateTime startDateTime;
@@ -54,11 +54,14 @@ public class FestivalDto {
 	
 
 	//리스트
-	public FestivalDto(Integer festival_no, Integer prefecture_no, String festival_name, String summary,
-			String image_url, String season, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+	public FestivalDto(Integer festival_no, Integer prefecture_no, String prefecture_name, String festival_name,
+			String summary,String image_url, String season,
+			LocalDateTime startDateTime, LocalDateTime endDateTime) {
+			
 		super();
 		this.festival_no = festival_no;
 		this.prefecture_no = prefecture_no;
+		this.prefecture_name = prefecture_name;
 		this.festival_name = festival_name;
 		this.summary = summary;
 		this.image_url = image_url;
@@ -71,6 +74,11 @@ public class FestivalDto {
 
 
 	
+
+	public String getPrefecture_name() {
+		return prefecture_name;
+	}
+
 
 	public Integer getFestival_no() {
 		return festival_no;
