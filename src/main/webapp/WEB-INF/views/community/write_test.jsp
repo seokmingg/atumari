@@ -21,6 +21,7 @@
 
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/community/css/write.css">
+<script src="<%=request.getContextPath()%>/assets/community/js/community_write.js"></script>
 
 </head>
 
@@ -40,8 +41,8 @@
         <!-- PAGE TITLE -->
         <div class="community-write-title">
             <span>COMMUNITY</span>
-            <h1>게시글 작성</h1>
-            <p>커뮤니티에 새로운 글을 작성해보세요.</p>
+            <h1>投稿</h1>
+            <p>新しいポストを作成してください。</p>
         </div>
 
 
@@ -49,10 +50,8 @@
              WRITE FORM
         ========================= -->
         <form class="community-write-form"
-              action="${pageContext.request.contextPath}/community/write"
-              method="post"
               enctype="multipart/form-data"
-              onsubmit="return confirmSubmit('게시글을 등록하시겠습니까?')">
+              name="cmty">
 
 
             <!-- =========================
@@ -69,7 +68,7 @@
                     <div class="community-write-field">
                         <input type="text"
                                name="title"
-                               placeholder="제목을 입력해주세요."
+                               placeholder="タイトルを入力してください。"
                                required>
                     </div>
 
@@ -79,7 +78,7 @@
                 <div class="community-write-row">
 
                     <div class="community-write-label">
-                        작성자
+                        投稿者
                     </div>
 
                     <div class="community-write-field">
@@ -103,7 +102,7 @@
                 <div class="community-write-row">
 
                     <div class="community-write-label">
-                        이미지
+                        イメージ
                     </div>
 
                     <div class="community-write-field">
@@ -117,17 +116,17 @@
 
                             <label for="community-image"
                                    class="community-image-button">
-                                이미지 선택
+                                イメージ選択
                             </label>
 
                             <span class="community-image-name">
-                                선택된 이미지가 없습니다.
+                                新しいイメージをインプットしてください。
                             </span>
 
                         </div>
 
                         <p class="community-write-help">
-                            게시글에 사용할 이미지를 선택해주세요.
+                            投稿するイメージを入れて下さい。
                         </p>
 
                     </div>
@@ -139,21 +138,21 @@
                 <div class="community-write-row">
 
                     <div class="community-write-label">
-                        내용
+                        内容
                     </div>
 
                     <div class="community-write-field">
 
                         <textarea name="content"
-                                  placeholder="내용을 입력해주세요."
+                                  placeholder="内容を入力してください。"
                                   required></textarea>
 
                     </div>
 
                 </div>
 
-
-                <!-- TAG -->
+		<!--
+                TAG 기능(미사용)
                 <div class="community-write-row">
 
                     <div class="community-write-label">
@@ -173,30 +172,32 @@
                     </div>
 
                 </div>
-
+		-->
             </div>
 
-
-            <!-- =========================
+        </form>
+        
+        <!-- =========================
                  BUTTONS
             ========================= -->
             <div class="community-write-actions">
 
                 <a class="community-write-cancel"
                    href="${pageContext.request.contextPath}/community/list">
-                    취소
+                    キャンセル
                 </a>
 
                 <button type="submit"
-                        class="community-write-submit">
-                    등록하기
+                        class="community-write-submit"
+                        onclick="goSave()">
+                    ポストする
                 </button>
 
             </div>
 
-        </form>
-
     </div>
+    
+
 
 </main>
 
