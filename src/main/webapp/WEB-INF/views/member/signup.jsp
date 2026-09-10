@@ -15,6 +15,7 @@
           href="<%=request.getContextPath()%>/assets/member/css/login.css">
     
     <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
+    <!-- jQuery -->
     <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 
     
@@ -68,6 +69,9 @@
                 </div>
                 
                  <!-- 名前 -->
+                 <!-- 
+                 	TODO. 이름 입력값 검증 추가(한글, 한자, 영어만 입력 가능)
+                  -->
 
                 <div class="input-group">
 
@@ -233,8 +237,6 @@
 	
 	// 이메일 중복 검증
 	function checkDuplicateEmail() {
-		//if (checkEmpty(mem.t_id, "아이디를 먼저 입력해주세요.")) return;
-		
 		let email = signup.email.value;
 		
 		$.ajax({
@@ -244,12 +246,11 @@
 		async: false,
 		dataType : "text",
 		error : () => {
-			alert('통신 실패!!!!!');
+			alert('통신에 문제가 발생했습니다.');
 		},
 		success : (data) => {
 			let result = $.trim(data); // alert 창 공백 제거(제이쿼리)
-			//signup.t_id_check.value = result;
-			alert("=="+result+"==");
+			alert(result);
 		}
 	});	
 	}
