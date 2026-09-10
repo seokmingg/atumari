@@ -55,7 +55,6 @@
 ========================= */
 
 .community-write-form {
-    background: #fff;
     border-top: 2px solid #222;
 }
 
@@ -93,6 +92,7 @@
 
 .community-write-field {
     padding: 18px 22px;
+    background: #fff;
 }
 
 
@@ -327,6 +327,7 @@
 
     .community-write-field {
         padding: 15px 20px;
+	    background: #fff;
     }
 
     .community-write-field input[type="text"] {

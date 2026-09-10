@@ -21,7 +21,6 @@
 
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/community/css/write.css">
-<script src="<%=request.getContextPath()%>/assets/community/js/community_write.js"></script>
 
 </head>
 
@@ -50,8 +49,11 @@
              WRITE FORM
         ========================= -->
         <form class="community-write-form"
+              action="${pageContext.request.contextPath}/community/write"
+              method="post"
               enctype="multipart/form-data"
-              name="cmty">
+              onsubmit="return confirmSubmit('投稿しますか？')"
+              name="cmtywrite">
 
 
             <!-- =========================
@@ -62,7 +64,7 @@
                 <div class="community-write-row">
 
                     <div class="community-write-label">
-                        제목
+                        タイトル
                     </div>
 
                     <div class="community-write-field">
@@ -174,10 +176,8 @@
                 </div>
 		-->
             </div>
-
-        </form>
-        
-        <!-- =========================
+            
+			<!-- =========================
                  BUTTONS
             ========================= -->
             <div class="community-write-actions">
@@ -189,11 +189,15 @@
 
                 <button type="submit"
                         class="community-write-submit"
-                        onclick="goSave()">
+                        >
                     ポストする
                 </button>
 
             </div>
+            
+        </form>
+        
+        
 
     </div>
     
