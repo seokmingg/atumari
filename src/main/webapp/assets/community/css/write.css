@@ -100,6 +100,11 @@
    INPUT
 ========================= */
 
+#image_preview img{
+	max-width: 650px;
+    height: auto;
+}
+
 .community-write-field input[type="text"] {
     display: block;
     width: 100%;
@@ -133,6 +138,7 @@
     display: block;
     width: 100%;
     min-height: 320px;
+    height: auto;
     box-sizing: border-box;
     padding: 14px;
     border: 1px solid #ddd;
@@ -144,6 +150,9 @@
     font-size: 14px;
     line-height: 1.8;
     transition: 0.2s;
+    overflow: hidden;
+    resize: none;
+    
 }
 
 .community-write-field textarea:focus {
@@ -189,6 +198,7 @@
     color: #999;
     font-size: 12px;
     word-break: break-all;
+    width: 450px;
 }
 
 
