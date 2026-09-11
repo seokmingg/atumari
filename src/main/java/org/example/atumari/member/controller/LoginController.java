@@ -70,11 +70,7 @@ public class LoginController extends HttpServlet {
 						sessionDto.setSessionLevel("member"); // 일반 회원 세션
 					}
 					
-					session.setAttribute("sessionLevel", sessionDto.getSessionLevel()); // 관리자 세션
-					
-					System.out.println(session.getAttribute("sessionEmail"));
-					System.out.println(session.getAttribute("sessionName"));
-					System.out.println(session.getAttribute("sessionLevel"));
+					session.setAttribute("sessionLevel", sessionDto.getSessionLevel());
 					
 					session.setMaxInactiveInterval(60 * 60 * 4); // 세션 유지 시간(4시간)
 					
