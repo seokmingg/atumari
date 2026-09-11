@@ -400,4 +400,88 @@ public class FestivalDao {
 	    return totalCount;
 	}
 	
+	
+	// 상세 조회
+	public FestivalDto getFestivalView(int festivalNo) {
+
+	    FestivalDto festival = null;
+
+	    String sql =
+	            "SELECT festival_no, "
+	          + "       prefecture_no, "
+	          + "       festival_name, "
+	          + "       summary, "
+	          + "       venue_name, "
+	          + "       venue_address, "
+	          + "       access_info, "
+	          + "       image_url, "
+	          + "       organizer, "
+	          + "       price_text, "
+	          + "       external_url, "
+	          + "       image_source, "
+	          + "       season, "
+	          + "       start_datetime, "
+	          + "       end_datetime, "
+	          + "       price_free "
+	          + "FROM festival "
+	          + "WHERE festival_no = ?";
+
+	    try (
+	        Connection con = DBConnection.getConnection();
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+
+	        pstmt.setInt(1, festivalNo);
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+
+	            festival = new FestivalDto(
+
+	                rs.getInt("festival_no"),
+
+	                rs.getInt("prefecture_no"),
+
+	                rs.getString("festival_name"),
+
+	                rs.getString("summary"),
+
+	                rs.getString("venue_name"),
+
+	                rs.getString("venue_address"),
+
+	                rs.getString("access_info"),
+
+	                rs.getString("image_url"),
+
+	                rs.getString("organizer"),
+
+	                rs.getString("price_text"),
+
+	                rs.getString("external_url"),
+
+	                rs.getString("image_source"),
+
+	                rs.getString("season"),
+
+	                rs.getTimestamp("start_datetime")
+	                  .toLocalDateTime(),
+
+	                rs.getTimestamp("end_datetime")
+	                  .toLocalDateTime(),
+
+	                rs.getBoolean("price_free")
+	            );
+	        }
+
+	    } catch (Exception e) {
+
+	        e.printStackTrace();
+
+	    }
+
+	    return festival;
+	}
+	
 }
