@@ -87,6 +87,7 @@ public class FestivalListService {
     // ========================================
 
     public List<FestivalDto> getFestivalList(String region, Integer prefectureNo,
+    										String select, String search, 
     										int page,int pageSize) {
            
             
@@ -98,7 +99,8 @@ public class FestivalListService {
 
         int end = page * pageSize;
 
-        List<FestivalDto> list =  festivalDao.getFestivalList(regionName, prefectureNo, start, end);
+        List<FestivalDto> list =  festivalDao.getFestivalList(regionName, prefectureNo,
+        														select, search, start, end);
                
                       
                         
@@ -120,11 +122,12 @@ public class FestivalListService {
     // 전체 축제 개수
     // ========================================
 
-    public int getFestivalTotalCount(String region, Integer prefectureNo) {
+    public int getFestivalTotalCount(String region, Integer prefectureNo,
+    								String select, String search) {
 
         String regionName = getRegionName(region);
 
-        return festivalDao.getFestivalTotalCount(regionName, prefectureNo);
+        return festivalDao.getFestivalTotalCount(regionName, prefectureNo, select, search);
                 
         
     }
@@ -134,11 +137,12 @@ public class FestivalListService {
     // 전체 페이지 수
     // ========================================
 
-    public int getTotalPage(String region, Integer prefectureNo, int pageSize) {
+    public int getTotalPage(String region, Integer prefectureNo,
+    						String select, String search, int pageSize) {
             
             
 
-        int totalCount = getFestivalTotalCount(region, prefectureNo);
+        int totalCount = getFestivalTotalCount(region, prefectureNo, select, search);
 
                 
         return (int) Math.ceil((double) totalCount / pageSize );
