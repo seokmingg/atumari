@@ -47,6 +47,12 @@ public class ListController extends HttpServlet {
 				prefectureNo = null;
 			}
 		}
+		// ========================================
+		//  검색
+		// ========================================
+
+		String select = request.getParameter("select");
+		String search = request.getParameter("search");
 
 		
 
@@ -89,19 +95,19 @@ public class ListController extends HttpServlet {
 		// ========================================
 
 		List<FestivalDto> festivalList = service.getFestivalList(region, prefectureNo,
-																page, pageSize);
+																select, search,page, pageSize);
 
 		// ========================================
 		// 7. 전체 축제 개수
 		// ========================================
 
-		int totalCount = service.getFestivalTotalCount(region, prefectureNo);
+		int totalCount = service.getFestivalTotalCount(region, prefectureNo, select, search);
 
 		// ========================================
 		// 8. 전체 페이지 수
 		// ========================================
 
-		int totalPage = service.getTotalPage(region, prefectureNo, pageSize);
+		int totalPage = service.getTotalPage(region, prefectureNo, select, search, pageSize);
 
 		// ========================================
 		// 9. 도도부현 목록
@@ -125,11 +131,15 @@ public class ListController extends HttpServlet {
 
 		request.setAttribute("totalCount", totalCount);
 		request.setAttribute("totalPage", totalPage);
+		
+		request.setAttribute("select", select);
+		request.setAttribute("search", search);
 
 		// ========================================
 		// 11. JSP 이동
 		// ========================================
 
-		request.getRequestDispatcher("/WEB-INF/views/festival/festival_list.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/festival/festival_list.jsp")
+		.forward(request, response);
 	}
 }
