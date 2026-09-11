@@ -22,11 +22,11 @@ public class LoginResultController extends HttpServlet {
 	 * 로그인 결과를 알럿으로 사용자에게 보여주는 컨트롤러
 	 * */
 	
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    	doPost(request, response);
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//    	doPost(request, response);
+//    }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
