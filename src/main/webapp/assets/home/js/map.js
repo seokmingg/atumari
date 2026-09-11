@@ -4,9 +4,20 @@
 
 const japanMap = document.getElementById("japanMap");
 
-japanMap.addEventListener("load", function() {
+
+// =========================================================
+// JAPAN MAP 초기화
+// =========================================================
+
+function initJapanMap() {
 
     const svgDoc = japanMap.contentDocument;
+
+    // SVG가 아직 준비되지 않은 경우
+    if (!svgDoc) {
+        console.log("SVG가 아직 로드되지 않았습니다.");
+        return;
+    }
 
 
     // =========================
@@ -49,65 +60,105 @@ japanMap.addEventListener("load", function() {
     // 지역별 정보
     // =========================
 
-	const regionInfo = {
+    const regionInfo = {
 
-	    "hokkaido": {
-	        title: "北海道の祭り",
-	        description:
-	            "北海道で開催される祭りやイベントを紹介します。",
-	        image: "assets/home/images/region/hokkaido.jpg"
-	    },
+        "hokkaido": {
 
-	    "tohoku": {
-	        title: "東北の祭り",
-	        description:
-	            "東北地方には、長い歴史と伝統を持つ祭りが数多くあります。",
-	        image: "assets/home/images/region/tohoku.jpg"
-	    },
+            title: "北海道の祭り",
 
-	    "kanto": {
-	        title: "関東の祭り",
-	        description:
-	            "東京をはじめ、関東各地で開催される祭りを紹介します。",
-	        image: "assets/home/images/region/kanto.jpg"
-	    },
+            description:
+                "北海道で開催される祭りやイベントを紹介します。",
 
-	    "chubu": {
-	        title: "中部の祭り",
-	        description:
-	            "中部地方の特色ある祭りやイベントを紹介します。",
-	        image: "assets/home/images/region/chubu.jpg"
-	    },
+            image:
+                "assets/home/images/region/hokkaido.jpg"
 
-	    "kinki": {
-	        title: "近畿の祭り",
-	        description:
-	            "京都や大阪など、歴史ある地域の祭りを紹介します。",
-	        image: "assets/home/images/region/kinki.jpg"
-	    },
+        },
 
-	    "chugoku": {
-	        title: "中国地方の祭り",
-	        description:
-	            "中国地方各地に伝わる伝統的な祭りを紹介します。",
-	        image: "assets/home/images/region/chugoku.jpg"
-	    },
+        "tohoku": {
 
-	    "shikoku": {
-	        title: "四国の祭り",
-	        description:
-	            "四国地方で開催される特色ある祭りを紹介します。",
-	        image: "assets/home/images/region/shikoku.jpg"
-	    },
+            title: "東北の祭り",
 
-	    "kyushu-okinawa": {
-	        title: "九州・沖縄の祭り",
-	        description:
-	            "九州・沖縄ならではの文化や伝統を感じられる祭りを紹介します。",
-	        image: "assets/home/images/region/kyushu-okinawa.jpg"
-	    }
+            description:
+                "東北地方には、長い歴史と伝統を持つ祭りが数多くあります。",
 
-	};
+            image:
+                "assets/home/images/region/tohoku.jpg"
+
+        },
+
+        "kanto": {
+
+            title: "関東の祭り",
+
+            description:
+                "東京をはじめ、関東各地で開催される祭りを紹介します。",
+
+            image:
+                "assets/home/images/region/kanto.jpg"
+
+        },
+
+        "chubu": {
+
+            title: "中部の祭り",
+
+            description:
+                "中部地方の特色ある祭りやイベントを紹介します。",
+
+            image:
+                "assets/home/images/region/chubu.jpg"
+
+        },
+
+        "kinki": {
+
+            title: "近畿の祭り",
+
+            description:
+                "京都や大阪など、歴史ある地域の祭りを紹介します。",
+
+            image:
+                "assets/home/images/region/kinki.jpg"
+
+        },
+
+        "chugoku": {
+
+            title: "中国地方の祭り",
+
+            description:
+                "中国地方各地に伝わる伝統的な祭りを紹介します。",
+
+            image:
+                "assets/home/images/region/chugoku.jpg"
+
+        },
+
+        "shikoku": {
+
+            title: "四国の祭り",
+
+            description:
+                "四国地方で開催される特色ある祭りを紹介します。",
+
+            image:
+                "assets/home/images/region/shikoku.jpg"
+
+        },
+
+        "kyushu-okinawa": {
+
+            title: "九州・沖縄の祭り",
+
+            description:
+                "九州・沖縄ならではの文化や伝統を感じられる祭りを紹介します。",
+
+            image:
+                "assets/home/images/region/kyushu-okinawa.jpg"
+
+        }
+
+    };
 
 
     // =========================
@@ -131,38 +182,36 @@ japanMap.addEventListener("load", function() {
     // 지역 정보 표시
     // =========================
 
-	function showRegionInfo(region) {
+    function showRegionInfo(region) {
 
-	    const info =
-	        regionInfo[region];
+        const info =
+            regionInfo[region];
 
-	    if (!info) {
-	        return;
-	    }
+        if (!info) {
+            return;
+        }
 
-	    infoArea.innerHTML = `
+        infoArea.innerHTML = `
 
-	        
+            <h3>
+                ${regionNames[region]}
+            </h3>
 
-	        <h3>
-	            ${regionNames[region]}
-	        </h3>
+            <p>
+                ${info.description}
+            </p>
 
-	        <p>
-	            ${info.description}
-	        </p>
+            <div class="region-image">
 
-	        <div class="region-image">
+                <img
+                    src="${info.image}"
+                    alt="${regionNames[region]}">
 
-	            <img
-	                src="${info.image}"
-	                alt="${regionNames[region]}">
+            </div>
 
-	        </div>
+        `;
 
-	    `;
-
-	}
+    }
 
 
     // =========================
@@ -179,13 +228,14 @@ japanMap.addEventListener("load", function() {
 
         prefectures.forEach(function(area) {
 
-            area.querySelectorAll("path, polygon")
+            area.querySelectorAll(
+                "path, polygon"
+            )
+            .forEach(function(shape) {
 
-                .forEach(function(shape) {
+                shape.style.fill = color;
 
-                    shape.style.fill = color;
-
-                });
+            });
 
         });
 
@@ -221,13 +271,12 @@ japanMap.addEventListener("load", function() {
             prefecture.querySelectorAll(
                 "path, polygon"
             )
+            .forEach(function(shape) {
 
-                .forEach(function(shape) {
+                shape.style.fill =
+                    defaultColor;
 
-                    shape.style.fill =
-                        defaultColor;
-
-                });
+            });
 
 
             // =========================
@@ -286,38 +335,46 @@ japanMap.addEventListener("load", function() {
                     );
 
 
-					        // =========================
-					        // 지역별 축제 리스트 이동
-					        // =========================
+                    // =========================
+                    // 지역별 축제 리스트 이동
+                    // =========================
 
-					        const regionPages = {
+                    const regionPages = {
 
-					            "hokkaido": "/festival/list?region=hokkaido",
+                        "hokkaido":
+                            "/festival/list?region=hokkaido",
 
-					            "tohoku": "/festival/list?region=tohoku",
+                        "tohoku":
+                            "/festival/list?region=tohoku",
 
-					            "kanto": "/festival/list?region=kanto",
+                        "kanto":
+                            "/festival/list?region=kanto",
 
-					            "chubu": "/festival/list?region=chubu",
+                        "chubu":
+                            "/festival/list?region=chubu",
 
-					            "kinki": "/festival/list?region=kinki",
+                        "kinki":
+                            "/festival/list?region=kinki",
 
-					            "chugoku": "/festival/list?region=chugoku",
+                        "chugoku":
+                            "/festival/list?region=chugoku",
 
-					            "shikoku": "/festival/list?region=shikoku",
+                        "shikoku":
+                            "/festival/list?region=shikoku",
 
-					            "kyushu-okinawa": "/festival/list?region=kyushu-okinawa"
-					               
+                        "kyushu-okinawa":
+                            "/festival/list?region=kyushu-okinawa"
 
-					        };
+                    };
 
 
-					        // 해당 지역 축제 리스트 페이지로 이동
-					        window.location.href = regionPages[region];
+                    // 해당 지역 축제 리스트 페이지로 이동
 
-					    }
+                    window.location.href =
+                        regionPages[region];
 
-					);
+                }
+            );
 
 
             // =========================
@@ -331,4 +388,33 @@ japanMap.addEventListener("load", function() {
 
     });
 
-});
+}
+
+
+// =========================================================
+// SVG LOAD 처리
+// =========================================================
+
+japanMap.addEventListener(
+    "load",
+    function() {
+
+        console.log("SVG LOAD 이벤트 실행");
+
+        initJapanMap();
+
+    }
+);
+
+
+// =========================================================
+// 이미 SVG가 로드된 경우 처리
+// =========================================================
+
+if (japanMap.contentDocument) {
+
+    console.log("SVG가 이미 로드되어 있습니다.");
+
+    initJapanMap();
+
+}

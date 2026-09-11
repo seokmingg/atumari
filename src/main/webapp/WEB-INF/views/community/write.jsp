@@ -67,10 +67,7 @@ pageEncoding="UTF-8"%>
                 <!-- PROFILE IMAGE -->
 
                 <div class="writer-profile">
-
-                    <img src="<%=request.getContextPath()%>/assets/community/images/profile-default.svg"
-                         alt="プロフィール画像">
-
+			
                 </div>
 
 
