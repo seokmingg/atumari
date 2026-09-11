@@ -48,6 +48,7 @@
         <div class="form-field">
             <input type="text"
                    name="title"
+                   maxlength="100"
                    placeholder="タイトルを入力してください">
         </div>
     </div>
@@ -58,9 +59,8 @@
         <div class="form-label">作成者</div>
 
         <div class="form-field">
-            <input type="text"
-                   name="writer"
-                   value="kim123">
+            <input type="text" name="writer" value="${sessionScope.sessionName}">
+            <!-- 로그인했으면 작성자: 세션이름으로, 로그인 안하면 '비회원'으로 고정 예정-->
         </div>
     </div>
 
@@ -105,7 +105,7 @@
                    id="inquiryPassword"
                    name="inquiryPassword"
                    maxlength="4"
-                   inputmode="numeric"
+                   inputmode="numeric" 
                    placeholder="4桁のパスワードを入力">
 
             <div class="form-help">
@@ -203,6 +203,7 @@
 
         <div class="form-field">
             <textarea name="content"
+            			maxlength="2000"
                       placeholder="お問い合わせ内容を入力してください"></textarea>
         </div>
 
