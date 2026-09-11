@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
     
 <!DOCTYPE html>
 
@@ -18,10 +21,8 @@
 
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/community/css/community_common.css">
-
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/community/css/write.css">
-
 <!-- jQuery -->
 <script src="<%=request.getContextPath()%>/assets/community/js/community_write.js"></script>
 
@@ -89,8 +90,10 @@
                     <div class="community-write-field">
                         <input type="text"
                                name="writer"
-                               value="${sessionScope.loginMember.id}"
-                               readonly>
+                               value=" ${sessionScope.sessionName}"
+                               readonly
+                               style="color:black;"
+                               disabled="disabled">
                     </div>
 
                 </div>
