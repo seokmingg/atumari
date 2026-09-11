@@ -25,23 +25,47 @@
             <a href="<%=request.getContextPath()%>/community">コミュニティ</a>
         </nav>
         
-        <div class="nav">
-           <a href="<%=request.getContextPath()%>/my-info"> 田中 太郎 様</a>
-         </div>
+        
 
-         <div class="nav member-nav">
+         <!-- LOGIN -->
+  <div class="nav member-nav">
 
-		    <a href="<%=request.getContextPath()%>/login">
-		        ログイン
-		    </a>
-		
-		    <span>|</span>
-		
-		    <a href="<%=request.getContextPath()%>/signup">
-		        会員登録
-		    </a>
-		
-		</div>
+    <c:choose>
+
+        <%-- 로그인 상태 --%>
+        <c:when test="${not empty sessionScope.sessionEmail}">
+
+            <a href="${pageContext.request.contextPath}/my-info">
+                ${sessionScope.sessionName} 様
+            </a>
+
+            <span>|</span>
+
+            <a href="${pageContext.request.contextPath}/logout">
+                ログアウト
+            </a>
+
+        </c:when>
+
+
+        <%-- 로그아웃 상태 --%>
+        <c:otherwise>
+
+            <a href="${pageContext.request.contextPath}/login">
+                ログイン
+            </a>
+
+            <span>|</span>
+
+            <a href="${pageContext.request.contextPath}/signup">
+                会員登録
+            </a>
+
+        </c:otherwise>
+
+    </c:choose>
+
+</div>
 		
 		<!-- SEARCH -->
         <button
