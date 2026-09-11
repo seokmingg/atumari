@@ -45,7 +45,11 @@ pageEncoding="UTF-8"%>
     ========================== -->
 
     <div class="festival-title">
-
+	
+		<a href="<%=request.getContextPath()%>/festival/card" class="other-region">
+			← 他の地域の選択
+		</a>
+	
         <span>FESTIVAL</span>
 
         <h1>${regionName}の祭り</h1>
@@ -77,29 +81,43 @@ pageEncoding="UTF-8"%>
 
         <div class="festival-search">
 
-            <select>
+            <select name="select" id="searchSelect">
 
-                <option>すべて</option>
+                <option value= "all"
+                	${select == 'all' ? 'selected' : ''}>
+                	すべて
+                </option>
 
-                <option>祭り名</option>
+                <option value="title"
+                	${select == 'title' ? 'selected' : ''}>
+                	祭り名
+                </option>
 
-                <option>開催地域</option>
+                <option value= "region"
+                	${select == 'region' ? 'selected' : ''}>
+                	開催地域
+                </option>
 
             </select>
 
 
             <input type="text"
-                   placeholder="祭りを検索してください">
+                   placeholder="祭りを検索してください"
+                   id="searchInput"
+                   name="search"
+    			   value="${search}">
+                   
 
 
-            <button type="button">
+            <button type="button" id="searchButton">
 
                 検索
 
             </button>
 
         </div>
-
+		
+		<script src="<%=request.getContextPath()%>/assets/festival/js/festival_search.js"></script>
 
     </div>
 
