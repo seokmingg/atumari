@@ -24,7 +24,7 @@ public class LogoutController extends HttpServlet {
 		
 //		request.getRequestDispatcher("/WEB-INF/views/home/index.jsp")
 //			.forward(request, response);
-		
+		//
 		response.sendRedirect(request.getContextPath() + "/");
 	}
 
