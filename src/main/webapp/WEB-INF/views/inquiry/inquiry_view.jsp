@@ -56,7 +56,7 @@
 
         <a href="#" class="detail-file-item">
             <img
-                src="${pageContext.request.contextPath}/assets/inquiry/images/attach_file.svg"
+                src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
                 alt="添付ファイル"
                 class="detail-file-icon">
 

@@ -2,6 +2,34 @@
 
 /* inquiry_write, update 공용 css */
 
+.file-input {
+    display: none;
+}/*한국어로 파일선택, 선택된 파일 없음-> 없애기 기본적으로 브라우저에서 만들어주므로 없애줌*/
+
+.file-select-button {
+    display: inline-block;
+    padding: 8px 16px;
+
+    border: 1px solid #999;
+    border-radius: 4px;
+    background-color: #fff;
+
+    font-size: 14px;
+    color: #333;
+
+    cursor: pointer;
+}/*해당 설정이 없으면 그냥 글자처럼만 보임, 버튼 꾸며주는 용도*/
+
+.file-select-button:hover {
+    background-color: #f5f5f5;
+}
+
+/*파일명과 첨부버튼이 너무 붙지 않도록*/
+.file-name {
+    margin-left: 12px;
+    font-size: 14px;
+    color: #555;
+}
 
 .form-card {
     background: #fff;
@@ -46,9 +74,10 @@
 }
 
 .form-help {
-    margin-top: 8px;
+    margin-top: 5px;
     font-size: 11px;
     color: #999;
+    flex-basis: 100%;
 }
 
 .form-actions {
@@ -68,7 +97,9 @@
 .radio-field {
     display: flex;
     align-items: center;
-    gap: 28px;
+    column-gap: 30px; /* 公開 ↔ 非公開 사이 */
+    row-gap: 5px;     /* 라디오 ↔ 설명문 사이 */
+    flex-wrap: wrap;
 }
 
 .radio-field label {
