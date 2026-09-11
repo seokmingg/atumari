@@ -659,11 +659,13 @@
 
 .header .search-header .header-calendar {
     position: absolute;
+
     top: 105px;
     left: 0;
-    right: auto;
 
-    width: min(320px, 100%);
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
 
     padding: 22px;
     box-sizing: border-box;

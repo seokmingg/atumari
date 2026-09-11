@@ -17,7 +17,7 @@ import org.example.atumari.member.service.MemberService;
 @WebServlet("/checkemail")
 public class CheckEmailController extends HttpServlet {
 	/*
-	 * 회원가입에서 이메일 입력 값 충복 검증하는 컨트롤러
+	 * 회원가입에서 이메일 입력 값 중복 검증하는 컨트롤러
 	 * */
 	
 	@Override
@@ -36,7 +36,7 @@ public class CheckEmailController extends HttpServlet {
 		int count = 0;
 		count = service.checkDuplicateEmail(email);
 		
-		if (count == 0) out.print("このメールアドレスはご利用いただけます。あつまりへようこそ！");
+		if (count == 0) out.print("会員登録に成功しました。あつまりへようこそ！");
 		else out.print("このメールアドレスは登録済です。他のメールアドレスを入力してください。");
 			
 	}

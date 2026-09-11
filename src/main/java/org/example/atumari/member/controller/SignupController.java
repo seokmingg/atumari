@@ -25,7 +25,6 @@ public class SignupController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	response.setContentType("text/html");
     	request.setCharacterEncoding("utf-8");
 
     	String email = request.getParameter("email");
@@ -42,7 +41,11 @@ public class SignupController extends HttpServlet {
         	signup.setName(name);
         	signup.setPassword(password);
         	signup.setPasswordConfirm(passwordConfirm);
-        	signup.setAgree(agree.equals("on")); // boolean으로 dto에 전달
+        	/*
+        	 * refactor: "String".equals(value) 형태가 구조상 조금 더 안정적이라는 피드백 반영
+        	 * 				-> null.equals() 예외 방지
+        	 * */
+        	signup.setAgree("on".equals(agree)); // boolean으로 dto에 전달
 
         	MemberService service = new MemberService();
         	
@@ -52,7 +55,6 @@ public class SignupController extends HttpServlet {
 				if (result == 1) {
 					request.setAttribute("msg", "회원 등록 성공");
 					// 성공할 때만 로그인 페이지로
-					// TODO. setAttribute한 msg를 alert으로 출력하기
 					response.sendRedirect(request.getContextPath() + "/login");
 					return;
 				} 

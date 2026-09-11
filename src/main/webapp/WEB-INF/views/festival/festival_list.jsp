@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+
 
 
 <!DOCTYPE html>
@@ -70,7 +68,7 @@ pageEncoding="UTF-8"%>
 
         <p class="festival-count">
 
-            全 <strong>${festivalList.size()}</strong> 件
+            全 <strong>${totalCount}</strong> 件
 
         </p>
 
@@ -113,77 +111,29 @@ pageEncoding="UTF-8"%>
     <div class="festival-filter">
 
         <button type="button"
-                class="active">
+                class="prefecture-all">
 
             すべて
 
         </button>
 
 
-        <button type="button">
+        <c:forEach var="prefecture" items="${prefectureList}">
 
-            札幌市
+	        <button type="button"
+	                data-prefecture-no="${prefecture.prefecture_no}">
+	
+	            ${prefecture.prefecture_name}
+	
+	        </button>
 
-        </button>
-
-
-        <button type="button">
-
-            函館市
-
-        </button>
+    	</c:forEach>	
 
 
-        <button type="button">
-
-            旭川市
-
-        </button>
-
-
-        <button type="button">
-
-            小樽市
-
-        </button>
         
-        <button type="button">
-
-            釧路市
-
-        </button>
-        
-        <button type="button">
-
-           帯広市
-
-        </button>
-        
-        <button type="button">
-
-            北見市
-
-        </button>
-        
-        <button type="button">
-
-            稚内市
-
-        </button>
-        
-        <button type="button">
-
-            富良野市
-
-        </button>
-        
-        <button type="button">
-
-            千歳市
-
-        </button>
 
     </div>
+    <script src="<%=request.getContextPath()%>/assets/festival/js/prefecture.js"></script>
 
 
     <!-- =========================
@@ -231,7 +181,7 @@ pageEncoding="UTF-8"%>
                 <div class="festival-info">
 
                     <span class="festival-location">
-                        ${regionName}
+                        ${festival.prefecture_name}
                     </span>
 
 
@@ -261,50 +211,49 @@ pageEncoding="UTF-8"%>
        
 
 
-    <!-- =========================
-         PAGINATION
-    ========================== -->
+ <!-- =========================
+     PAGINATION
+========================== -->
 
-    <div class="festival-pagination">
+	<div class="festival-pagination">
+	
+	    <!-- 이전 -->
+	    <c:if test="${currentPage > 1}">
+	
+	        <a href="${pageContext.request.contextPath}/festival/list?region=${region}&page=${currentPage - 1}"
+	           class="page-prev">
+	
+	            ←
+	
+	        </a>
+	
+	    </c:if>
+	
+	
+	    <!-- 페이지 번호 -->
+	    <c:forEach begin="1" end="${totalPage}" var="pageNum">
 
-        <a href="#"
-           class="page-prev">
-
-            ←
-
-        </a>
-
-
-        <a href="#"
-           class="active">
-
-            1
-
-        </a>
-
-
-        <a href="#">
-
-            2
-
-        </a>
-
-
-        <a href="#">
-
-            3
-
-        </a>
-
-
-        <a href="#"
-           class="page-next">
-
-            →
-
-        </a>
-
-    </div>
+		    <a href="${pageContext.request.contextPath}/festival/list?region=${region}&prefecture_no=${param.prefecture_no}&page=${pageNum}"
+		       class="${currentPage == pageNum ? 'active' : ''}">
+		        ${pageNum}
+		    </a>
+		
+		</c:forEach>
+	
+	
+	    <!-- 다음 -->
+	    <c:if test="${currentPage < totalPage}">
+	
+	        <a href="${pageContext.request.contextPath}/festival/list?region=${region}&page=${currentPage + 1}"
+	           class="page-next">
+	
+	            →
+	
+	        </a>
+	
+	    </c:if>
+	
+	</div>
 
 
 </div>
