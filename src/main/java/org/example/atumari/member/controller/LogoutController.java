@@ -17,11 +17,15 @@ public class LogoutController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String loginName = (String)session.getAttribute("sessionName");
 		
-		// 세션 삭제 후 로그아웃 처리
-		session.invalidate();
+		if (loginName != null) {
+			// 세션 삭제 후 로그아웃 처리
+			session.invalidate();
+		}
 		
-		request.getRequestDispatcher("/WEB-INF/views/home/index.jsp")
-			.forward(request, response);
+//		request.getRequestDispatcher("/WEB-INF/views/home/index.jsp")
+//			.forward(request, response);
+		
+		response.sendRedirect(request.getContextPath() + "/");
 	}
 
 	@Override
