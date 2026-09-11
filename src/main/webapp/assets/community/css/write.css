@@ -1,0 +1,370 @@
+@charset "UTF-8";
+
+
+/* =========================
+   COMMUNITY WRITE PAGE
+========================= */
+
+.community-write-page {
+    padding: 180px 0 140px;
+    background: #f7f7f7;
+    min-height: 800px;
+}
+
+.community-write-inner {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   PAGE TITLE
+========================= */
+
+.community-write-title {
+    margin-bottom: 40px;
+}
+
+.community-write-title span {
+    display: block;
+    margin-bottom: 12px;
+    color: #999;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.community-write-title h1 {
+    margin: 0 0 15px;
+    color: #222;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.community-write-title p {
+    margin: 0;
+    color: #999;
+    font-size: 13px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.community-write-form {
+    border-top: 2px solid #222;
+}
+
+
+/* =========================
+   FORM ROW
+========================= */
+
+.community-write-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-bottom: 1px solid #eee;
+}
+
+
+/* =========================
+   FORM LABEL
+========================= */
+
+.community-write-label {
+    display: flex;
+    align-items: flex-start;
+    padding: 22px;
+    background: #fafafa;
+    color: #555;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   FORM FIELD
+========================= */
+
+.community-write-field {
+    padding: 18px 22px;
+    background: #fff;
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+#image_preview img{
+	max-width: 650px;
+    height: auto;
+}
+
+.community-write-field input[type="text"] {
+    display: block;
+    width: 100%;
+    height: 46px;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    background: #fff;
+    outline: none;
+    color: #444;
+    font-family: inherit;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.community-write-field input[type="text"]:focus {
+    border-color: #777;
+}
+
+.community-write-field input[readonly] {
+    background: #f8f8f8;
+    color: #999;
+}
+
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.community-write-field textarea {
+    display: block;
+    width: 100%;
+    min-height: 320px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 14px;
+    border: 1px solid #ddd;
+    background: #fff;
+    outline: none;
+    resize: vertical;
+    color: #444;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.8;
+    transition: 0.2s;
+    overflow: hidden;
+    resize: none;
+    
+}
+
+.community-write-field textarea:focus {
+    border-color: #777;
+}
+
+
+/* =========================
+   IMAGE UPLOAD
+========================= */
+
+.community-image-upload {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.community-image-upload input[type="file"] {
+    display: none;
+}
+
+.community-image-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 18px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #555;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.community-image-button:hover {
+    border-color: #999;
+    background: #fafafa;
+}
+
+.community-image-name {
+    color: #999;
+    font-size: 12px;
+    word-break: break-all;
+    width: 450px;
+}
+
+
+/* =========================
+   HELP TEXT
+========================= */
+
+.community-write-help {
+    margin: 8px 0 0;
+    color: #999;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   FORM ACTIONS
+========================= */
+
+.community-write-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+
+/* =========================
+   BUTTON COMMON
+========================= */
+
+.community-write-cancel,
+.community-write-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    height: 44px;
+    box-sizing: border-box;
+    padding: 0 22px;
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+
+/* =========================
+   CANCEL
+========================= */
+
+.community-write-cancel {
+    background: #e8ede5;
+    color: #333;
+}
+
+.community-write-cancel:hover {
+    background: #d8dfd3;
+}
+
+
+/* =========================
+   SUBMIT
+========================= */
+
+.community-write-submit {
+    background: #222;
+    color: #fff;
+}
+
+.community-write-submit:hover {
+    background: #444;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .community-write-page {
+        padding: 140px 0 100px;
+    }
+
+    .community-write-inner {
+        width: 90%;
+    }
+
+    .community-write-row {
+        grid-template-columns: 150px 1fr;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .community-write-page {
+        padding: 120px 0 80px;
+    }
+
+    .community-write-inner {
+        width: 92%;
+    }
+
+    .community-write-title {
+        margin-bottom: 25px;
+    }
+
+    .community-write-title h1 {
+        font-size: 23px;
+        line-height: 1.45;
+    }
+
+    .community-write-title p {
+        font-size: 12px;
+    }
+
+    .community-write-row {
+        display: block;
+    }
+
+    .community-write-label {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .community-write-field {
+        padding: 15px 20px;
+	    background: #fff;
+    }
+
+    .community-write-field input[type="text"] {
+        height: 44px;
+        font-size: 13px;
+    }
+
+    .community-write-field textarea {
+        min-height: 220px;
+        font-size: 13px;
+    }
+
+    .community-write-help {
+        font-size: 11px;
+    }
+
+    .community-write-actions {
+        
+        margin-top: 20px;
+    }
+
+    .community-write-cancel,
+    .community-write-submit {
+        min-width: 90px;
+        height: 42px;
+        padding: 0 18px;
+        font-size: 12px;
+    }
+
+}

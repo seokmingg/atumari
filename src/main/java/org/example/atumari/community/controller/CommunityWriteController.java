@@ -13,7 +13,7 @@ public class CommunityWriteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/community/write.jsp")
+        request.getRequestDispatcher("/WEB-INF/views/community/write_test.jsp")
                 .forward(request, response);
     }
 }
