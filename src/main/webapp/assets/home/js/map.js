@@ -302,7 +302,7 @@ japanMap.addEventListener("load", function() {
 
 					            "kinki": "/festival/list?region=kinki",
 
-					            "chugoku": "/festival/list??region=chugoku",
+					            "chugoku": "/festival/list?region=chugoku",
 
 					            "shikoku": "/festival/list?region=shikoku",
 
