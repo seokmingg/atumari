@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.example.atumari.common.database.DBConnection;
 import org.example.atumari.member.dao.MemberAuthDao;
 import org.example.atumari.member.dao.MemberDao;
+import org.example.atumari.member.dto.LoginRequest;
 import org.example.atumari.member.dto.MemberAuthDto;
 import org.example.atumari.member.dto.MemberDto;
 import org.example.atumari.member.dto.SignupRequest;
@@ -16,6 +17,9 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
  * 회원 관련 업무 로직을 구현할 서비스입니다.
  */
 public class MemberService {
+	
+	// DAO 호출
+	MemberDao memberDao = MemberDao.getDao();
 
 	// 회원가입
 	public int signup(SignupRequest signup) throws SQLException {
@@ -27,15 +31,19 @@ public class MemberService {
 			con.setAutoCommit(false); // 자동 커밋 끄기
 			
 			// DAO 호출
-			MemberDao memberDao = MemberDao.getDao();
+//			MemberDao memberDao = MemberDao.getDao();
 			
 			// signup.jsp 입력값 검증
 			if (!signup.getEmail().matches("^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) { // 이메일
 				throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
 			}
 			
-			if (!signup.getPassword().equals(signup.getPasswordConfirm())) { // 비밀번호
+			if (!signup.getPassword().equals(signup.getPasswordConfirm())) { // 비밀번호 일치
 				throw new IllegalArgumentException("同じパスワードを入力してください。");
+			}
+			// Feat. 비밀번호 값 길이 검증 추가
+			if (signup.getPassword().length() < 8 || signup.getPassword().length() > 20) { // 비밀번호 일치
+				throw new IllegalArgumentException("パスワードは8文字以上20文字以下で入力してください。");
 			}
 			
 			if (!signup.getAgree()) { // 이용약관 동의 체크박스
@@ -94,11 +102,47 @@ public class MemberService {
 		int count = 0;
 		
 		// DAO 호출
-		MemberDao memberDao = MemberDao.getDao();
+		//MemberDao memberDao = MemberDao.getDao();
 					
 		count = memberDao.checkEmailCount(email);
 		
 		return count;
+	}
+
+	// 로그인
+	public String login(LoginRequest login) throws SQLException {
+		String loginName = "";
 		
+		// login.jsp 입력값 검증
+		if (!login.getEmail().matches("^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) { // 이메일
+			throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
+		}
+		
+//		if (login.getPassword().length() < 8 || login.getPassword().length() > 20) { // 비밀번호 일치
+//			throw new IllegalArgumentException("パスワードは8文字以上20文字以下で入力してください。");
+//		}	
+		
+		// DAO 호출
+		//MemberDao memberDao = MemberDao.getDao();
+		
+		// DB에서 해시된 비밀번호 획득
+		String dbPassword = memberDao.getDBPassword(login);
+		
+		// 비밀번호 검증 -> 입력받은 값과 db의 해시 값이 같은지
+		BCrypt.Result result = BCrypt.verifyer().verify(login.getPassword().toCharArray(), dbPassword);
+		
+		// 입력값과 해시 값이 같으면(검증 성공)
+		if (result.verified) {
+			// 회원 이름 조회해 컨트롤러로 반환
+			loginName = memberDao.getLoginName(login.getEmail(), dbPassword);
+		}
+		
+		return loginName;
+	}
+
+	// 마이페이지 회원 정보 조회
+	public MemberDto getMemberInfo(String sessionEmail) {
+		
+		return memberDao.findByEmail(sessionEmail);
 	}
 }

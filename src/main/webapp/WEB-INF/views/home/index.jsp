@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <script src="<%=request.getContextPath()%>/assets/common/js/header.js"></script>    
    
 <html lang="ja">
@@ -47,25 +50,47 @@
             <a href="<%=request.getContextPath()%>/community">コミュニティ</a>
         </nav>
 
-        <!-- MEMBER -->
-        <div class="nav">
-            <a href="<%=request.getContextPath()%>/my-info">
-                田中 太郎 様
-            </a>
-        </div>
+       
 
-        <!-- LOGIN -->
-        <div class="nav member-nav">
-            <a href="<%=request.getContextPath()%>/login">
+  <!-- LOGIN -->
+  <div class="nav member-nav">
+
+    <c:choose>
+
+        <%-- 로그인 상태 --%>
+        <c:when test="${not empty sessionScope.sessionEmail}">
+
+            <a href="${pageContext.request.contextPath}/my-info">
+                ${sessionScope.sessionName} 様
+            </a>
+
+            <span>|</span>
+
+            <a href="${pageContext.request.contextPath}/logout">
+                ログアウト
+            </a>
+
+        </c:when>
+
+
+        <%-- 로그아웃 상태 --%>
+        <c:otherwise>
+
+            <a href="${pageContext.request.contextPath}/login">
                 ログイン
             </a>
 
             <span>|</span>
 
-            <a href="<%=request.getContextPath()%>/signup">
+            <a href="${pageContext.request.contextPath}/signup">
                 会員登録
             </a>
-        </div>
+
+        </c:otherwise>
+
+    </c:choose>
+
+</div>
 
        
 

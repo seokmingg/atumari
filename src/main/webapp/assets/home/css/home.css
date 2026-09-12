@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-
 /* =========================
    RESET
 ========================= */
@@ -9,7 +8,7 @@
 .festival-section,
 .region-section,
 .article-section {
-    padding: clamp(80px, 8vw, 140px) 0;
+    padding: 100px 0;
 }
 
 
@@ -56,7 +55,7 @@
 .hero-text {
     position: absolute;
     left: 0;
-    bottom: clamp(220px, 25vh, 350px);
+    bottom: 280px;
 }
 
 .hero-label {
@@ -70,7 +69,7 @@
 
 .hero-text h1 {
     margin: 0 0 25px;
-    font-size: clamp(48px, 5vw, 72px);
+    font-size: 72px;
     font-weight: 500;
     line-height: 1.25;
     letter-spacing: 3px;
@@ -93,8 +92,9 @@
 .hero-search-wrap {
     position: absolute;
     left: 0;
-    bottom: clamp(120px, 19vh, 270px);
-    width: min(680px, 100%);
+    bottom: 200px;
+    width: 680px;
+    max-width: none;
     z-index: 20;
 }
 
@@ -107,7 +107,8 @@
     position: relative;
     display: flex;
     align-items: stretch;
-    width: 100%;
+    width: 680px;
+    min-width: 0;
     height: 70px;
     background: rgba(20, 20, 20, 0.72);
     border: 1px solid rgba(255, 255, 255, 0.55);
@@ -159,14 +160,15 @@
 ========================= */
 
 .hero-keyword {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-width: 0;
     padding: 0 25px;
     border-right:
         1px solid rgba(255, 255, 255, 0.25);
+    box-sizing: border-box;
 }
 
 .hero-keyword span {
@@ -178,6 +180,7 @@
 
 .hero-keyword input {
     width: 100%;
+    min-width: 0;
     padding: 0;
     border: none;
     outline: none;
@@ -198,9 +201,9 @@
 .hero-date-wrap {
     flex: 0 0 210px;
     width: 210px;
-    max-width: 31%;
-    display: flex;
+    max-width: 210px;
     min-width: 0;
+    box-sizing: border-box;
 }
 
 
@@ -246,6 +249,7 @@
     align-items: center;
     gap: 6px;
     width: 100%;
+    min-width: 0;
     white-space: nowrap;
 }
 
@@ -262,7 +266,7 @@
     font-weight: 400;
     color: #fff;
     line-height: 1;
-    flex-shrink: 0;
+    flex-shrink: 1;
 }
 
 
@@ -286,6 +290,7 @@
 .hero-search-button {
     flex: 0 0 125px;
     width: 125px;
+    min-width: 0;
     border: none;
     background: #fff;
     color: #222;
@@ -314,6 +319,7 @@
     height: 100%;
     padding: 35px 45px;
     box-sizing: border-box;
+    gap: 30px;
 }
 
 
@@ -323,7 +329,8 @@
 
 .date-guide {
     width: 190px;
-    flex-shrink: 0;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .date-guide > span {
@@ -416,8 +423,7 @@
 
 .calendar-week {
     display: grid;
-    grid-template-columns:
-        repeat(7, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     margin-bottom: 7px;
 }
 
@@ -434,8 +440,7 @@
 
 .calendar-days {
     display: grid;
-    grid-template-columns:
-        repeat(7, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     row-gap: 3px;
 }
 
@@ -597,7 +602,7 @@
 }
 
 .section-title {
-    font-size: clamp(32px, 3vw, 42px);
+    font-size: 42px;
     margin-bottom: 60px;
     font-weight: 600;
 }
@@ -608,14 +613,13 @@
 ========================= */
 
 .search-section {
-    padding: clamp(90px, 9vw, 140px) 0;
+    padding: 120px 0;
     background: #f7f7f7;
 }
 
 .search-list {
     display: grid;
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 25px;
 }
 
@@ -637,23 +641,19 @@
 .search-item p {
     color: #777;
 }
+
 .search-item:visited {
     color: inherit;
 }
 
 .search-item::before {
     content: "";
-
     position: absolute;
-
     top: 0;
     left: 0;
-
     width: 0;
     height: 100%;
-
     background: #222;
-
     transition: width 0.3s ease;
 }
 
@@ -671,9 +671,7 @@
 ========================= */
 
 .festival-section {
-
-    padding: clamp(90px, 9vw, 140px) 0;
-
+    padding: 120px 0;
 }
 
 
@@ -682,15 +680,10 @@
 ========================= */
 
 .festival-slider-wrap {
-
     display: flex;
-
     align-items: center;
-
-    gap: clamp(10px, 2vw, 30px);
-
+    gap: 30px;
     width: 100%;
-
 }
 
 
@@ -699,13 +692,9 @@
 ========================= */
 
 .festival-slider {
-
     flex: 1;
-
     min-width: 0;
-
     overflow: hidden;
-
 }
 
 
@@ -714,13 +703,9 @@
 ========================= */
 
 .festival-list {
-
     display: flex;
-
-    gap: clamp(15px, 2vw, 30px);
-
+    gap: 30px;
     transition: transform 0.5s ease;
-
 }
 
 
@@ -729,16 +714,11 @@
 ========================= */
 
 .festival-card {
-
     flex: 0 0 calc((100% - 60px) / 3);
-
     background: #fff;
-
     object-fit: cover;
     display: block;
-
     transition: transform 0.4s ease;
-
 }
 
 
@@ -764,27 +744,17 @@
 ========================= */
 
 .festival-info {
-
     padding: 25px;
-
 }
-
 
 .festival-info h3 {
-
     margin: 0 0 10px;
-
     font-size: 21px;
-
 }
 
-
 .festival-info p {
-
     margin: 0;
-
     color: #777;
-
 }
 
 
@@ -794,148 +764,26 @@
 
 .festival-prev,
 .festival-next {
-
     flex-shrink: 0;
-
-    width: clamp(35px, 3vw, 45px);
-
-    height: clamp(35px, 3vw, 45px);
-
+    width: 45px;
+    height: 45px;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 0;
-
     border: 1px solid #ddd;
-
     background: #fff;
-
     color: #222;
-
     font-size: 20px;
-
     line-height: 1;
-
     cursor: pointer;
-
     transition: all 0.2s ease;
-
 }
-
 
 .festival-prev:hover,
 .festival-next:hover {
-
     background: #222;
-
     color: #fff;
-
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 900px) {
-
-    .festival-card {
-
-        flex: 0 0 calc((100% - 30px) / 2);
-
-    }
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-    .festival-slider-wrap {
-
-        gap: 10px;
-
-    }
-
-
-    .festival-card {
-
-        flex: 0 0 100%;
-
-    }
-
-
-    .festival-card img {
-
-        height: 240px;
-
-    }
-
-
-    .festival-prev,
-    .festival-next {
-
-        width: 35px;
-
-        height: 35px;
-
-        font-size: 16px;
-
-    }
-
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 900px) {
-
-    .festival-card {
-
-        flex: 0 0 calc((100% - 30px) / 2);
-
-    }
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-    .festival-slider-wrap {
-
-        gap: 10px;
-
-    }
-
-    .festival-card {
-
-        flex: 0 0 100%;
-
-    }
-
-    .festival-prev,
-    .festival-next {
-
-        width: 35px;
-
-        height: 35px;
-
-        font-size: 16px;
-
-    }
-
 }
 
 
@@ -944,7 +792,7 @@
 ========================= */
 
 .feature-section {
-    padding: clamp(90px, 9vw, 140px) 0;
+    padding: 120px 0;
     background: #111;
     color: #fff;
 }
@@ -955,7 +803,7 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: clamp(40px, 5vw, 80px);
+    gap: 80px;
 }
 
 .feature-image {
@@ -978,7 +826,7 @@
 }
 
 .feature-content h2 {
-    font-size: clamp(36px, 4vw, 50px);
+    font-size: 50px;
     margin: 25px 0;
 }
 
@@ -1001,7 +849,7 @@
 ========================= */
 
 .region-section {
-    padding: clamp(90px, 9vw, 140px) 0;
+    padding: 120px 0;
     background: #fff;
 }
 
@@ -1017,7 +865,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: clamp(30px, 5vw, 80px);
+    gap: 80px;
 }
 
 
@@ -1042,7 +890,7 @@
 }
 
 .region-info h3 {
-    font-size: clamp(36px, 4vw, 48px);
+    font-size: 48px;
     font-weight: 800;
     letter-spacing: -2px;
     color: #222;
@@ -1097,17 +945,13 @@
 }
 
 
-
 /* =========================
    ARTICLE
 ========================= */
 
 .article-section {
-
-    padding: clamp(90px, 9vw, 140px) 0;
-
+    padding: 120px 0;
     background: #f7f7f7;
-
 }
 
 
@@ -1116,9 +960,7 @@
 ========================= */
 
 .article-section .section-title {
-
-    margin-bottom: clamp(40px, 4vw, 60px);
-
+    margin-bottom: 60px;
 }
 
 
@@ -1127,15 +969,10 @@
 ========================= */
 
 .article-slider-wrap {
-
     display: flex;
-
     align-items: center;
-
-    gap: clamp(10px, 2vw, 30px);
-
+    gap: 30px;
     width: 100%;
-
 }
 
 
@@ -1144,13 +981,9 @@
 ========================= */
 
 .article-slider {
-
     flex: 1;
-
     min-width: 0;
-
     overflow: hidden;
-
 }
 
 
@@ -1159,13 +992,9 @@
 ========================= */
 
 .article-list {
-
     display: flex;
-
-    gap: clamp(15px, 2vw, 30px);
-
+    gap: 30px;
     transition: transform 0.5s ease;
-
 }
 
 
@@ -1174,32 +1003,21 @@
 ========================= */
 
 .article-card {
-
     flex: 0 0 calc((100% - 60px) / 3);
-
     background: #fff;
-
     object-fit: cover;
-    
     display: block;
-
     transition: transform 0.4s ease;
-
 }
 
 .article-card img {
-
     width: 100%;
-
     height: 280px;
-
     object-fit: cover;
-    
     display: block;
-    
     transition: transform 0.4s ease;
-
 }
+
 .article-card:hover img {
     transform: translateY(-4px) scale(1.02);
 }
@@ -1210,33 +1028,22 @@
 ========================= */
 
 .article-info {
-
     padding: 25px;
-
 }
 
 .article-info span {
-
     font-size: 12px;
-
     color: #888;
-
     letter-spacing: 1px;
-
 }
 
 .article-info h3 {
-
     margin: 12px 0;
-
     font-size: 21px;
-
 }
 
 .article-info p {
-
     color: #777;
-
 }
 
 
@@ -1246,249 +1053,24 @@
 
 .article-prev,
 .article-next {
-
     flex-shrink: 0;
-
-    width: clamp(35px, 3vw, 45px);
-
-    height: clamp(35px, 3vw, 45px);
-
+    width: 45px;
+    height: 45px;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 0;
-
     border: 1px solid #ddd;
-
     background: #fff;
-
     color: #222;
-
     font-size: 20px;
-
     line-height: 1;
-
     cursor: pointer;
-
     transition: all 0.2s ease;
-
 }
 
 .article-prev:hover,
 .article-next:hover {
-
     background: #222;
-
     color: #fff;
-
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 900px) {
-
-    .article-card {
-
-        flex: 0 0 calc((100% - 30px) / 2);
-
-    }
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-    .article-slider-wrap {
-
-        gap: 10px;
-
-    }
-
-    .article-card {
-
-        flex: 0 0 100%;
-
-    }
-
-    .article-prev,
-    .article-next {
-
-        width: 35px;
-
-        height: 35px;
-
-        font-size: 16px;
-
-    }
-
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-/* 1200px 이하 */
-
-@media (max-width: 1200px) {
-
-    .hero-content,
-    .section-inner {
-        width: 90%;
-    }
-
-    .hero-search-wrap {
-        width: min(680px, 100%);
-    }
-
-    .search-list,
-    .festival-list,
-    .article-list {
-        gap: 20px;
-    }
-
-    .feature-inner {
-        gap: 50px;
-    }
-
-    .region-content {
-        width: 90%;
-    }
-
-}
-
-
-/* 900px 이하 */
-
-@media (max-width: 900px) {
-
-    .hero-text {
-        bottom: 220px;
-    }
-
-    .hero-search-wrap {
-        bottom: 100px;
-        width: 100%;
-    }
-
-    .hero-search-panel {
-        height: 350px;
-    }
-
-    .search-list,
-    .festival-list,
-    .article-list {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .feature-inner {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .feature-image,
-    .feature-content {
-        width: 100%;
-    }
-
-    .region-content {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .region-info {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .japan-map {
-        width: 550px;
-        max-width: 100%;
-    }
-
-}
-
-
-/* 600px 이하 */
-
-@media (max-width: 600px) {
-
-    .hero-content,
-    .section-inner,
-    .region-content {
-        width: 92%;
-    }
-
-    .hero-text {
-        bottom: 210px;
-    }
-
-    .hero-text h1 {
-        letter-spacing: 1px;
-    }
-
-    .hero-search {
-        height: 60px;
-    }
-
-    .hero-search-panel {
-        top: 60px;
-        height: 350px;
-    }
-
-    .hero-date-wrap {
-        flex: 0 0 180px;
-        width: 180px;
-        max-width: 35%;
-    }
-
-    .hero-search-button {
-        flex: 0 0 100px;
-        width: 100px;
-    }
-
-    .search-list,
-    .festival-list,
-    .article-list {
-        grid-template-columns: 1fr;
-    }
-
-    .festival-card img {
-        height: 300px;
-    }
-
-    .article-card img {
-        height: 250px;
-    }
-
-    .feature-inner {
-        width: 92%;
-    }
-
-    .region-info h3 {
-        font-size: 36px;
-    }
-
-    .date-panel {
-        padding: 25px;
-    }
-
-    .date-guide {
-        width: 160px;
-    }
-
-    .hero-calendar {
-        width: 250px;
-    }
-
 }

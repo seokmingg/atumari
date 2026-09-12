@@ -12,7 +12,7 @@ pageEncoding="UTF-8"%>
 <meta http-equiv="Content-Language" content="ja">
 
 <meta name="viewport"
-   content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0">
 
 <title>Festival | ATSUMARI</title>
 
@@ -20,6 +20,7 @@ pageEncoding="UTF-8"%>
       href="<%=request.getContextPath()%>/assets/festival/css/festival_view.css">
 
 </head>
+
 
 <body>
 
@@ -29,6 +30,7 @@ pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+
 <!-- =========================
      FESTIVAL VIEW
 ========================== -->
@@ -37,266 +39,57 @@ pageEncoding="UTF-8"%>
 
 <div class="festival-view-inner">
 
-<!-- =========================
-     BACK
-========================== -->
 
-<div class="festival-back">
+    <!-- =========================
+         BACK
+    ========================== -->
 
-    <a href="/festival/list">
+    <div class="festival-back">
 
-        ← 一覧へ戻る
+        <a href="javascript:history.back()">
 
-    </a>
+            ← 一覧へ戻る
 
-</div>
-
-
-<!-- =========================
-     FESTIVAL HEADER
-========================== -->
-
-<section class="festival-view-header">
-
-
-    <!-- CATEGORY -->
-
-    <span class="festival-season">
-
-        WINTER
-
-    </span>
-
-
-    <!-- TITLE -->
-
-    <h1>
-
-        さっぽろ雪まつり
-
-    </h1>
-
-
-    <!-- BASIC INFO -->
-
-    <div class="festival-basic-info">
-
-
-        <!-- DATE -->
-
-        <div class="festival-basic-item">
-
-            <span class="info-label">
-
-                開催期間
-
-            </span>
-
-            <strong>
-
-                2026.02.04 ～ 2026.02.11
-
-            </strong>
-
-        </div>
-
-
-        <!-- LOCATION -->
-
-        <div class="festival-basic-item">
-
-            <span class="info-label">
-
-                開催地域
-
-            </span>
-
-            <strong>
-
-                北海道・札幌市
-
-            </strong>
-
-        </div>
-
-
-        <!-- PLACE -->
-
-        <div class="festival-basic-item">
-
-            <span class="info-label">
-
-                開催場所
-
-            </span>
-
-            <strong>
-
-                大通公園・すすきの会場 ほか
-
-            </strong>
-
-        </div>
-
+        </a>
 
     </div>
 
 
-</section>
+    <!-- =========================
+         FESTIVAL HEADER
+    ========================== -->
+
+    <section class="festival-view-header">
 
 
+        <!-- CATEGORY -->
 
-<!-- =========================
-     MAIN IMAGE
-========================== -->
+        <span class="festival-season">
 
-<section class="festival-main-image">
-
-    <img src="<%=request.getContextPath()%>/images/festival_01.jpg"
-         alt="さっぽろ雪まつり">
-
-</section>
-
-
-
-<!-- =========================
-     FESTIVAL CONTENT
-========================== -->
-
-<section class="festival-detail-content">
-
-
-    <!-- INTRODUCTION -->
-
-    <div class="festival-content-section">
-
-        <span class="section-label">
-
-            ABOUT FESTIVAL
+            ${festival.season}
 
         </span>
 
 
-        <h2>
+        <!-- TITLE -->
 
-            さっぽろ雪まつりについて
+        <h1>
 
-        </h2>
+            ${festival.festival_name}
 
-
-        <p>
-
-            さっぽろ雪まつりは、北海道札幌市で開催される
-            日本を代表する冬の祭りです。
-
-            <br><br>
-
-            会場には巨大な雪像や氷像が並び、
-            毎年多くの観光客が訪れます。
-
-            <br><br>
-
-            昼間は迫力ある雪像を楽しむことができ、
-            夜になるとライトアップによって
-            幻想的な景色が広がります。
-
-        </p>
-
-    </div>
+        </h1>
 
 
+        <!-- BASIC INFO -->
 
-    <!-- PROGRAM -->
-
-    <div class="festival-content-section">
-
-        <span class="section-label">
-
-            HIGHLIGHTS
-
-        </span>
+        <div class="festival-basic-info">
 
 
-        <h2>
+            <!-- DATE -->
 
-            見どころ
+            <div class="festival-basic-item">
 
-        </h2>
-
-
-        <ul class="festival-highlight-list">
-
-            <li>
-
-                大迫力の巨大雪像
-
-            </li>
-
-            <li>
-
-                夜を彩るライトアップ
-
-            </li>
-
-            <li>
-
-                氷の彫刻が並ぶすすきの会場
-
-            </li>
-
-            <li>
-
-                北海道ならではのグルメ
-
-            </li>
-
-        </ul>
-
-    </div>
-
-
-
-    <!-- EVENT INFORMATION -->
-
-    <div class="festival-content-section">
-
-        <span class="section-label">
-
-            INFORMATION
-
-        </span>
-
-
-        <h2>
-
-            開催情報
-
-        </h2>
-
-
-        <div class="festival-information">
-
-
-            <div class="information-row">
-
-                <span>
-
-                    祭り名
-
-                </span>
-
-                <strong>
-
-                    さっぽろ雪まつり
-
-                </strong>
-
-            </div>
-
-
-            <div class="information-row">
-
-                <span>
+                <span class="info-label">
 
                     開催期間
 
@@ -304,16 +97,18 @@ pageEncoding="UTF-8"%>
 
                 <strong>
 
-                    2026年2月4日 ～ 2月11日
+                    ${festival.dateRange}
 
                 </strong>
 
             </div>
 
 
-            <div class="information-row">
+            <!-- LOCATION -->
 
-                <span>
+            <div class="festival-basic-item">
+
+                <span class="info-label">
 
                     開催地域
 
@@ -321,16 +116,18 @@ pageEncoding="UTF-8"%>
 
                 <strong>
 
-                    北海道札幌市
+                    ${festival.prefecture_name}
 
                 </strong>
 
             </div>
 
 
-            <div class="information-row">
+            <!-- PLACE -->
 
-                <span>
+            <div class="festival-basic-item">
+
+                <span class="info-label">
 
                     開催場所
 
@@ -338,24 +135,7 @@ pageEncoding="UTF-8"%>
 
                 <strong>
 
-                    大通公園・すすきの会場 ほか
-
-                </strong>
-
-            </div>
-
-
-            <div class="information-row">
-
-                <span>
-
-                    主催
-
-                </span>
-
-                <strong>
-
-                    さっぽろ雪まつり実行委員会
+                    ${festival.venue_name}
 
                 </strong>
 
@@ -364,31 +144,379 @@ pageEncoding="UTF-8"%>
 
         </div>
 
+
+    </section>
+
+
+    <!-- =========================
+         MAIN IMAGE
+    ========================== -->
+
+    <section class="festival-main-image">
+
+        <img src="${festival.image_url}"
+             alt="${festival.festival_name}">
+
+    </section>
+
+
+    <!-- =========================
+         FESTIVAL CONTENT
+    ========================== -->
+
+    <section class="festival-detail-content">
+
+
+        <!-- =========================
+             INTRODUCTION
+        ========================== -->
+
+        <div class="festival-content-section">
+
+            <span class="section-label">
+
+                ABOUT FESTIVAL
+
+            </span>
+
+
+            <h2>
+
+                ${festival.festival_name}について
+
+            </h2>
+
+
+            <p>
+
+                ${festival.summary}
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             ACCESS
+        ========================== -->
+
+        <div class="festival-content-section">
+
+            <span class="section-label">
+
+                ACCESS
+
+            </span>
+
+
+            <h2>
+
+                開催場所・アクセス
+
+            </h2>
+
+
+            <div class="festival-information">
+
+
+                <!-- VENUE -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        開催場所
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.venue_name}
+
+                    </strong>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        住所
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.venue_address}
+
+                    </strong>
+
+                </div>
+
+
+                <!-- ACCESS -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        アクセス
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.access_info}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             EVENT INFORMATION
+        ========================== -->
+
+        <div class="festival-content-section">
+
+            <span class="section-label">
+
+                INFORMATION
+
+            </span>
+
+
+            <h2>
+
+                開催情報
+
+            </h2>
+
+
+            <div class="festival-information">
+
+
+                <!-- FESTIVAL NAME -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        祭り名
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.festival_name}
+
+                    </strong>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        開催期間
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.dateRange}
+
+                    </strong>
+
+                </div>
+
+
+                <!-- PREFECTURE -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        都道府県
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.prefecture_name}
+
+                    </strong>
+
+                </div>
+
+
+                <!-- VENUE -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        開催場所
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.venue_name}
+
+                    </strong>
+
+                </div>
+
+
+                <!-- ORGANIZER -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        主催
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.organizer}
+
+                    </strong>
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        料金
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.price_text}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             OFFICIAL SITE
+        ========================== -->
+
+        <div class="festival-content-section">
+
+            <span class="section-label">
+
+                OFFICIAL SITE
+
+            </span>
+
+
+            <h2>
+
+                公式情報
+
+            </h2>
+
+
+            <div class="festival-information">
+
+
+                <!-- EXTERNAL URL -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        公式サイト
+
+                    </span>
+
+                    <strong>
+
+                        <a href="${festival.external_url}"
+                           target="_blank">
+
+                            公式サイトを見る
+
+                        </a>
+
+                    </strong>
+
+                </div>
+
+
+                <!-- IMAGE SOURCE -->
+
+                <div class="information-row">
+
+                    <span>
+
+                        画像出典
+
+                    </span>
+
+                    <strong>
+
+                        ${festival.image_source}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         LIST BUTTON
+    ========================== -->
+
+    <div class="festival-view-bottom">
+
+        <a href="javascript:history.back()" class="festival-list-button">
+           
+
+            祭り一覧へ
+
+        </a>
+
     </div>
 
-
-</section>
-
-
-
-<!-- =========================
-     LIST BUTTON
-========================== -->
-
-<div class="festival-view-bottom">
-
-    <a href="/festival/list"
-       class="festival-list-button">
-
-        祭り一覧へ
-
-    </a>
-
-</div>
 
 </div>
 
 </main>
+
 
 <!-- =========================
      FOOTER
@@ -399,6 +527,7 @@ pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </footer>
+
 
 </body>
 

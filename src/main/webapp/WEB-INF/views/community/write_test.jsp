@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
     
 <!DOCTYPE html>
 
@@ -18,9 +21,10 @@
 
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/community/css/community_common.css">
-
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/community/css/write.css">
+<!-- jQuery -->
+<script src="<%=request.getContextPath()%>/assets/community/js/community_write.js"></script>
 
 </head>
 
@@ -86,8 +90,10 @@
                     <div class="community-write-field">
                         <input type="text"
                                name="writer"
-                               value="${sessionScope.loginMember.id}"
-                               readonly>
+                               value=" ${sessionScope.sessionName}"
+                               readonly
+                               style="color:black;"
+                               disabled="disabled">
                     </div>
 
                 </div>
@@ -114,7 +120,8 @@
                             <input type="file"
                                    id="community-image"
                                    name="image"
-                                   accept="image/*">
+                                   accept="image/*"
+                                   onchange="setThumbnail(event);">
 
                             <label for="community-image"
                                    class="community-image-button">
@@ -124,22 +131,25 @@
                             <span class="community-image-name">
                                 新しいイメージをインプットしてください。
                             </span>
-                            <!-- 사진 프리뷰 -->
-							<div class="cover-wrap">
-								<div id="image_preview">
-									<img id="preview-image" >
-								</div>
-							</div>
-
                         <p class="community-write-help">
-                            投稿するイメージを入れて下さい。
+                            一番よく取れた写真を投稿してください。写真は一つだけ添付できます。<br>
                         </p>
+                        
+                        <!-- 사진 프리뷰 -->
+							<div id="image_preview">
+							</div>
 
                     </div>
 
-                </div>
-
-
+                	</div>
+				
+				</div>
+<script type="text/javascript">
+	function autoResize(textarea) {
+	    textarea.style.height = 'auto' // 높이를 자동으로 초기화
+	    textarea.style.height = textarea.scrollHeight + 'px' // 스크롤 높이에 맞게 높이 설정
+	  }
+</script>
                 <!-- CONTENT -->
                 <div class="community-write-row">
 
@@ -151,12 +161,14 @@
 
                         <textarea name="content"
                                   placeholder="内容を入力してください。"
-                                  required></textarea>
+                                  required
+                                  oninput="autoResize(this)"
+                                  ></textarea>
 
                     </div>
 
                 </div>
-
+                
 		<!--
                 TAG 기능(미사용)
                 <div class="community-write-row">
