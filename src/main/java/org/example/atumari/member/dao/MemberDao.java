@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import org.example.atumari.common.database.DBConnection;
 import org.example.atumari.member.dto.LoginRequest;
+import org.example.atumari.member.dto.MemberDto;
 import org.example.atumari.member.dto.SignupRequest;
 /**
  * 회원 데이터의 조회와 저장을 구현할 DAO입니다.
@@ -138,6 +139,48 @@ public class MemberDao {
 		}
 		
 		return loginName;
+	}
+
+	// 마이페이지 -> 세션 이메일로 회원 정보 조회
+	public MemberDto findByEmail(String sessionEmail) {
+		MemberDto memberDto = null;
+		
+		String sql = "SELECT name, \r\n"
+				+ "		IFNULL(tel, '未入力') AS tel, \r\n"
+				+ "		DATE_FORMAT(reg_date, '%Y年%m月%d日') AS reg_date\r\n"
+				+ "FROM member\r\n"
+				+ "WHERE email = ?";
+		
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, sessionEmail);
+			
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				String name = rs.getString(1);
+//				String email = rs.getString(2);
+				String tel = rs.getString(2);
+				String reg_date = rs.getString(3);
+				
+				memberDto = new MemberDto();
+				
+				memberDto.setName(name);
+				memberDto.setEmail(sessionEmail);
+				memberDto.setTel(tel);
+				memberDto.setReg_date(reg_date);
+				
+			}
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return memberDto;
 	}
 
 	
