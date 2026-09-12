@@ -151,7 +151,7 @@
 		async: false,
 		dataType : "text",
 		error : () => {
-			alert('통신 실패!!!!!');
+			alert('メールアドレスやパスワードをもう一度確認してください。');
 		},
 		success : (data) => {
 			let result = $.trim(data); // alert 창 공백 제거(제이쿼리)

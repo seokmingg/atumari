@@ -17,6 +17,9 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
  * 회원 관련 업무 로직을 구현할 서비스입니다.
  */
 public class MemberService {
+	
+	// DAO 호출
+	MemberDao memberDao = MemberDao.getDao();
 
 	// 회원가입
 	public int signup(SignupRequest signup) throws SQLException {
@@ -28,7 +31,7 @@ public class MemberService {
 			con.setAutoCommit(false); // 자동 커밋 끄기
 			
 			// DAO 호출
-			MemberDao memberDao = MemberDao.getDao();
+//			MemberDao memberDao = MemberDao.getDao();
 			
 			// signup.jsp 입력값 검증
 			if (!signup.getEmail().matches("^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) { // 이메일
@@ -99,7 +102,7 @@ public class MemberService {
 		int count = 0;
 		
 		// DAO 호출
-		MemberDao memberDao = MemberDao.getDao();
+		//MemberDao memberDao = MemberDao.getDao();
 					
 		count = memberDao.checkEmailCount(email);
 		
@@ -120,7 +123,7 @@ public class MemberService {
 //		}	
 		
 		// DAO 호출
-		MemberDao memberDao = MemberDao.getDao();
+		//MemberDao memberDao = MemberDao.getDao();
 		
 		// DB에서 해시된 비밀번호 획득
 		String dbPassword = memberDao.getDBPassword(login);
@@ -135,5 +138,11 @@ public class MemberService {
 		}
 		
 		return loginName;
+	}
+
+	// 마이페이지 회원 정보 조회
+	public MemberDto getMemberInfo(String sessionEmail) {
+		
+		return memberDao.findByEmail(sessionEmail);
 	}
 }
