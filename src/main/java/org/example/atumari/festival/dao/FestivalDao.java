@@ -407,24 +407,27 @@ public class FestivalDao {
 	    FestivalDto festival = null;
 
 	    String sql =
-	            "SELECT festival_no, "
-	          + "       prefecture_no, "
-	          + "       festival_name, "
-	          + "       summary, "
-	          + "       venue_name, "
-	          + "       venue_address, "
-	          + "       access_info, "
-	          + "       image_url, "
-	          + "       organizer, "
-	          + "       price_text, "
-	          + "       external_url, "
-	          + "       image_source, "
-	          + "       season, "
-	          + "       start_datetime, "
-	          + "       end_datetime, "
-	          + "       price_free "
-	          + "FROM festival "
-	          + "WHERE festival_no = ?";
+	            "SELECT f.festival_no, "
+	          + "       f.prefecture_no, "
+	          + "       p.prefecture_name, "
+	          + "       f.festival_name, "
+	          + "       f.summary, "
+	          + "       f.venue_name, "
+	          + "       f.venue_address, "
+	          + "       f.access_info, "
+	          + "       f.image_url, "
+	          + "       f.organizer, "
+	          + "       f.price_text, "
+	          + "       f.external_url, "
+	          + "       f.image_source, "
+	          + "       f.season, "
+	          + "       f.start_datetime, "
+	          + "       f.end_datetime, "
+	          + "       f.price_free "
+	          + "FROM festival f "
+	          + "JOIN prefecture p "
+	          + "ON f.prefecture_no = p.prefecture_no "
+	          + "WHERE f.festival_no = ?";
 
 	    try (
 	        Connection con = DBConnection.getConnection();
@@ -442,8 +445,10 @@ public class FestivalDao {
 	                rs.getInt("festival_no"),
 
 	                rs.getInt("prefecture_no"),
-
+	                
 	                rs.getString("festival_name"),
+	                
+	                rs.getString("prefecture_name"),
 
 	                rs.getString("summary"),
 
