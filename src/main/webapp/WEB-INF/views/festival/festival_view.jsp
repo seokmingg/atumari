@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%>
 
     <div class="festival-back">
 
-        <a href="<%=request.getContextPath()%>/festival/list">
+        <a href="javascript:history.back()">
 
             ← 一覧へ戻る
 
@@ -97,9 +97,7 @@ pageEncoding="UTF-8"%>
 
                 <strong>
 
-                    ${festival.startDateTime}
-                    ～
-                    ${festival.endDateTime}
+                    ${festival.dateRange}
 
                 </strong>
 
@@ -118,7 +116,7 @@ pageEncoding="UTF-8"%>
 
                 <strong>
 
-                    ${festival.prefecture_no}
+                    ${festival.prefecture_name}
 
                 </strong>
 
@@ -337,9 +335,7 @@ pageEncoding="UTF-8"%>
 
                     <strong>
 
-                        ${festival.startDateTime}
-                        ～
-                        ${festival.endDateTime}
+                        ${festival.dateRange}
 
                     </strong>
 
@@ -358,7 +354,7 @@ pageEncoding="UTF-8"%>
 
                     <strong>
 
-                        ${festival.prefecture_no}
+                        ${festival.prefecture_name}
 
                     </strong>
 
@@ -507,8 +503,8 @@ pageEncoding="UTF-8"%>
 
     <div class="festival-view-bottom">
 
-        <a href="<%=request.getContextPath()%>/festival/list"
-           class="festival-list-button">
+        <a href="javascript:history.back()" class="festival-list-button">
+           
 
             祭り一覧へ
 
