@@ -378,21 +378,17 @@
 
 
 .information-row strong {
-
     display: flex;
-
     align-items: center;
-
     padding: 20px 30px;
-
     background: #fff;
-
     color: #333;
-
     font-size: 14px;
-
     font-weight: 400;
 
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 
