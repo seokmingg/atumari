@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================
        공개 / 비공개
-    ========================== */
+    ========================== 
 
     const publicRadios =
         document.querySelectorAll('input[name="isPublic"]');
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     });
-
+	*/
 
     /* =========================
        메일 알림

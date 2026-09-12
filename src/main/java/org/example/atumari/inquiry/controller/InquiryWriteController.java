@@ -22,5 +22,23 @@ public class InquiryWriteController extends HttpServlet {
 	        String view = "/WEB-INF/views/inquiry/inquiry_write.jsp";
 	        request.getRequestDispatcher(view).forward(request, response);
 	    }
+	   
+	   @Override
+	    protected void doPost(HttpServletRequest request,
+	                          HttpServletResponse response)
+	                          throws ServletException, IOException {
+
+	        String title = request.getParameter("title");
+	        String writer = request.getParameter("writer");
+	        String isPublic = request.getParameter("isPublic");
+	        String emailNotify = request.getParameter("emailNotify");
+	        String email = request.getParameter("email");
+	        String inquiryFile = request.getParameter("inquiryFile");
+	        String content = request.getParameter("content");
+
+	       
+
+	        // DB 저장 등의 처리
+	    }
 
 }

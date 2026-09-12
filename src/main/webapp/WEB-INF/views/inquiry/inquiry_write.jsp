@@ -37,6 +37,7 @@
 
 
 <form class="form-card"
+	  action="${pageContext.request.contextPath}/inquiry/write"
       onsubmit="return confirmSubmit('お問い合わせを登録しますか？')"
       method="post"
       enctype="multipart/form-data">
@@ -60,7 +61,6 @@
 
         <div class="form-field">
             <input type="text" name="writer" value="${sessionScope.sessionName}">
-            <!-- 로그인했으면 작성자: 세션이름으로, 로그인 안하면 '비회원'으로 고정 예정-->
         </div>
     </div>
 
@@ -94,7 +94,7 @@
     </div>
 
 
-    <!-- 비밀번호 -->
+    <!-- 비밀번호 
     <div class="form-row hidden-row" id="passwordArea">
 
         <div class="form-label">パスワード</div>
@@ -106,7 +106,7 @@
                    name="inquiryPassword"
                    maxlength="4"
                    inputmode="numeric" 
-                   placeholder="4桁のパスワードを入力">
+                   placeholder="4桁の数字を入力">
 
             <div class="form-help">
                 *非公開のお問い合わせを確認する際に使用します。
@@ -114,7 +114,7 @@
 
         </div>
     </div>
-
+-->
 
     <!-- 답변 알림 -->
     <div class="form-row">
@@ -209,25 +209,24 @@
 
     </div>
 
+
+
+
+	<div class="form-actions">
+	
+	    <a class="secondary-button"
+	       href="${pageContext.request.contextPath}/inquiry/list">
+	        一覧へ
+	    </a>
+	
+	    <div class="right">
+	        <button type="submit" class="primary-button">
+	            登録する
+	        </button>
+	    </div>
+	
+	</div>
 </form>
-
-
-<div class="form-actions">
-
-    <a class="secondary-button"
-       href="${pageContext.request.contextPath}/inquiry/list">
-        一覧へ
-    </a>
-
-    <div class="right">
-        <a class="primary-button"
-           href="inquiry_list.html">
-            登録する
-        </a>
-    </div>
-
-</div>
-
 
 </div>
 </main>

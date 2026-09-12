@@ -39,7 +39,7 @@
 </div>
 
 
-<form class="form-card">
+<form class="form-card" name="update_form">
 
     <!-- 제목 -->
     <div class="form-row">
@@ -58,9 +58,7 @@
         <div class="form-label">作成者</div>
 
         <div class="form-field">
-            <input type="text"
-                   name="writer"
-                   value="kim123">
+            <input type="text" name="writer" value="${sessionScope.sessionName}">
         </div>
     </div>
 
@@ -93,7 +91,7 @@
     </div>
 
 
-    <!-- 비밀번호 -->
+    <!-- 비밀번호 
     <div class="form-row hidden-row" id="passwordArea">
 
         <div class="form-label">パスワード</div>
@@ -105,7 +103,7 @@
                    name="inquiryPassword"
                    maxlength="4"
                    inputmode="numeric"
-                   placeholder="4桁のパスワードを入力">
+                   placeholder="4桁の数字を入力">
 
             <div class="form-help">
                 *非公開のお問い合わせを確認する際に使用します。
@@ -113,7 +111,7 @@
 
         </div>
     </div>
-
+-->
 
     <!-- 메일 알림 -->
     <div class="form-row">
