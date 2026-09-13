@@ -23,7 +23,7 @@
       href="<%=request.getContextPath()%>/assets/community/css/community_common.css">
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/community/css/write.css">
-<!-- jQuery -->
+
 <script src="<%=request.getContextPath()%>/assets/community/js/community_write.js"></script>
 
 </head>
@@ -53,10 +53,7 @@
              WRITE FORM
         ========================= -->
         <form class="community-write-form"
-              action="${pageContext.request.contextPath}/community/write"
-              method="post"
               enctype="multipart/form-data"
-              onsubmit="return confirmSubmit('投稿しますか？')"
               name="cmtywrite">
 
 
@@ -131,6 +128,7 @@
                             <span class="community-image-name">
                                 新しいイメージをインプットしてください。
                             </span>
+                            
                         <p class="community-write-help">
                             一番よく取れた写真を投稿してください。写真は一つだけ添付できます。<br>
                         </p>
@@ -213,7 +211,33 @@
             
         </form>
         
-        
+<script>
+	// 폼 넘기기 전에 공백인지 확인, 공백일 시 알럿창 띄우고 포커스.
+	document.querySelector(".community-write-form").addEventListener("submit", function(event) {
+	
+		if (checkEmpty(cmtywrite.title, "タイトル入力してください。")) {
+	    	signup.email.focus();
+	        event.preventDefault();
+	        return;
+	    }
+		if (checkEmpty(cmtywrite.content, "メールアドレスを入力してください。")) {
+	    	signup.email.focus();
+	        event.preventDefault();
+	        return;
+	    }
+		if (checkEmpty(signup.email, "メールアドレスを入力してください。")) {
+	    	signup.email.focus();
+	        event.preventDefault();
+	        return;
+	    }
+		if (checkEmpty(signup.email, "メールアドレスを入力してください。")) {
+	    	signup.email.focus();
+	        event.preventDefault();
+	        return;
+	    }
+	
+	});
+</script>
 
     </div>
     
@@ -222,7 +246,15 @@
 </main>
 
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<!-- =========================
+     FOOTER
+========================== -->
+
+<footer class="footer">
+
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+</footer>
 
 
 <script>
@@ -232,7 +264,7 @@ const imageName = document.querySelector('.community-image-name');
 imageInput.addEventListener('change', function() {
     imageName.textContent = this.files.length > 0
         ? this.files[0].name
-        : '선택된 이미지가 없습니다.';
+        : 'イメージを選択してください。';
 });
 </script>
 
