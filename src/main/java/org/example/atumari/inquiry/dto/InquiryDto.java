@@ -7,11 +7,10 @@ public class InquiryDto {
 	
 
 	    private int inquiry_no;
-	    private Integer member_id;
-	 
 
 	    private String title;
 	    private String writer;
+	    private String password;
 	    
 	    private boolean isPublic; //jsp에서 value값이 0,1로 넘어옴
 	    
@@ -27,15 +26,70 @@ public class InquiryDto {
 
     
     // writeController 
-		public InquiryDto(Integer member_id, String title, String writer, boolean isPublic, String content, String email) 
+		public InquiryDto(String title, String writer, String password, boolean isPublic, String content, String email) 
 		{
 			super();
-			this.member_id = member_id;
 			this.title = title;
 			this.writer = writer;
+			this.password = password;
 			this.isPublic = isPublic;
 			this.content = content;
 			this.email = email;
+		}
+
+
+		public void setInquiry_no(int inquiry_no) {
+			this.inquiry_no = inquiry_no;
+		}
+
+
+		public void setTitle(String title) {
+			this.title = title;
+		}
+
+
+		public void setPublic(boolean isPublic) {
+			this.isPublic = isPublic;
+		}
+
+
+		public void setContent(String content) {
+			this.content = content;
+		}
+
+
+		public void setAnswer_content(String answer_content) {
+			this.answer_content = answer_content;
+		}
+
+
+		public void setCreated_at(LocalDateTime created_at) {
+			this.created_at = created_at;
+		}
+
+
+		public void setAnswered_at(LocalDateTime answered_at) {
+			this.answered_at = answered_at;
+		}
+
+
+		public void setFiles(List<InquiryFileDto> files) {
+			this.files = files;
+		}
+
+
+		public void setWriter(String writer) {
+			this.writer = writer;
+		}
+
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+
+		public String getPassword() {
+			return password;
 		}
 
 
@@ -46,11 +100,6 @@ public class InquiryDto {
 
 		public int getInquiry_no() {
 			return inquiry_no;
-		}
-
-
-		public Integer getMember_id() {
-			return member_id;
 		}
 
 

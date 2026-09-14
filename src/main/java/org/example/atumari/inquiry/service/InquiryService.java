@@ -2,9 +2,13 @@ package org.example.atumari.inquiry.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,48 +51,30 @@ public class InquiryService {
 
 	
 		
-	// 1. 문의 내용 검증
+	// 1. 문의 내용, 작성자 검증
 	validateInquiry(inquiry);
 	
-	// 2. 이메일 처리
+	// 2. 비공개 비밀번호 처리
+	validatePassword(inquiry);
+	
+	// 3. 이메일 처리
 	validateNotificationEmail(inquiry,emailNotify);
 	
-	// 3. 첨부파일 검증
+	// 4. 첨부파일 검증
 	validateFiles(files);
 	
-	// 경로 테스트용
-    //testUploadPath();
-	
-	// 4. 문의 저장
+	// 5. 문의 저장
 	int inquiry_no = inquiryDao.insertInquiry(inquiry);
 	
 	if (inquiry_no <= 0) {
 	    throw new RuntimeException("문의 등록에 실패했습니다.");
 	}
 	
-	// 5. 첨부파일 저장
+	// 6. 첨부파일 저장
 	saveFiles(files, inquiry_no);
 	}
 	
-	/*private void testUploadPath() {
-
-		  String uploadPath = FileConfig.getUploadPath();
-
-		    Path uploadDir = Paths.get(uploadPath);
-
-		    try {
-		        Files.createDirectories(uploadDir);
-
-		        System.out.println(
-		            "첨부파일 저장 경로: "
-		            + uploadDir.toAbsolutePath()
-		        );
-
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    }
-	}
-*/	
+	
 	
 	//첨부파일 저장
 	private void saveFiles(List<Part> files, int inquiryNo) {
@@ -121,6 +107,7 @@ public class InquiryService {
 			     Path targetPath = uploadDir.resolve(storedFileName);
 			     //저장할 폴더 경로(uploadDir)와 파일이름(storedFileName)을 합쳐서 최종저장위치를 만듦
 			     //C:/atumari_uploads/inquiry/550e8400-e29b-41d4-a716-446655440000_photo.jpg
+			     
 			     
 			     // 1. 실제 파일 저장
 		            try (InputStream inputStream = file.getInputStream()) {
@@ -215,30 +202,53 @@ public class InquiryService {
 	    inquiry.setEmail(email.trim());
 	}
 	
-	/*member테이블에 저장된 email주소를 사용
-	 * private void setNotificationEmail(
-	        InquiryDto inquiry,
-	        boolean emailNotify) {
+	
+	//비밀번호 해시
+	private String hashPassword(String password) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			//MessageDigest는 Java에서 해시 기능을 제공하는 클래스
+			//"SHA-256 방식으로 해시할 수 있는 객체를 만들어줘."라는 의미
+			
+			byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+			//SHA-256은 Java의 String을 그대로 처리하는 게 아니라 바이트 데이터를 가지고 계산
+			//password의 문자열을 UTF-8로 변환-> byte[]로 최종 변환
+			//StandardCharsets.utf-8은 문자열을 바이트로 바꿀 때 utf-8문자 인코딩 사용하겠다.
+			//digest.digest()는 해시계산을 하는 역할
+			
+			return HexFormat.of().formatHex(hash); 
+			//해시 계산 결과는 사람이 읽기 어려움, 그래서 16진수 문자열로 변환(최종적으로 64글자가 됨)
+			
+		}catch(NoSuchAlgorithmException e) {
+			throw new RuntimeException("비밀번호 암호화 처리에 실패했습니다.", e);
+		}
+	}
+	
+	
+	//비공개 비밀번호 처리
+	private void validatePassword(InquiryDto inquiry) {
 
-	    if (!emailNotify) {
-	        inquiry.setEmail(null);
+	    // 공개 문의라면 비밀번호 저장 X
+	    if (inquiry.isPublic()) {
+	        inquiry.setPassword(null);
 	        return;
 	    }
 
-	    String memberEmail =
-	        memberDao.findEmailByMemberId(
-	            inquiry.getMember_id()
-	        );
+	    // 비공개 문의라면 4자리 숫자 필수
+	    String password = inquiry.getPassword();
 
-	    if (memberEmail == null) {
+	    if (password == null || !password.matches("\\d{4}")) {// \\d{4}정규표현식, 숫자가 정확히 4자리인지 검사하는 규칙
 	        throw new IllegalArgumentException(
-	            "登録されたメールアドレスがありません。"
+	            "4桁の数字でパスワードを入力してください。"
 	        );
 	    }
 
-	    inquiry.setEmail(memberEmail);
+	    // 비밀번호 해시 처리
+	    String hashedPassword = hashPassword(password);
+
+	    inquiry.setPassword(hashedPassword);
 	}
-	*/
+	
 	
 	//문의 내용 검증
 	private void validateInquiry(InquiryDto inquiry) {
@@ -253,6 +263,9 @@ public class InquiryService {
 			        );
 			    }
 			
+			//제목 앞뒤 공백 제거
+			inquiry.setTitle(inquiry.getTitle().trim());
+			
 			//제목 글자수 확인
 			    if (inquiry.getTitle().length() > 100) {
 			        throw new IllegalArgumentException(
@@ -260,6 +273,18 @@ public class InquiryService {
 			        		//제목은 100자 이하로 입력해주세요.
 			        );
 			    }
+				
+				
+			//작성자 확인
+			    if (inquiry.getWriter() == null ||
+			    	    inquiry.getWriter().trim().isEmpty()) {
+
+			    	    throw new IllegalArgumentException(
+			    	        "お名前を入力してください。"
+			    	    );
+			    	}
+
+			    	inquiry.setWriter(inquiry.getWriter().trim());
 			    
 			//내용 빈칸 검사
 			    if (inquiry.getContent() == null ||
@@ -271,6 +296,9 @@ public class InquiryService {
 			        );
 			    }
 			    
+			    
+			//내용 앞뒤 공백 제거
+			 inquiry.setContent(inquiry.getContent().trim());    
 			//내용 글자수 확인
 			    if (inquiry.getContent().length() > 2000) {
 			        throw new IllegalArgumentException(
@@ -278,6 +306,8 @@ public class InquiryService {
 			        		//문의 내용은 2000자 이하로 입력해주세요.
 			        );
 			    }
+			    
+			    
 	}
 	
 	

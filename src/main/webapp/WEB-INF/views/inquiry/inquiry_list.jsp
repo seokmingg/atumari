@@ -39,7 +39,6 @@
     <select>
     	<option>タイトル</option>
     	<option>作成者</option>
-    	<option>会員ID</option>
     </select>
     <input id="searchKeyword" type="text" placeholder="検索してください">
     <button id="searchBtn" type="button">検索</button>

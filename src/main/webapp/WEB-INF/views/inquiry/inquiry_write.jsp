@@ -65,7 +65,7 @@
         <div class="form-label">作成者</div>
 
         <div class="form-field">
-            <input type="text" name="writer" value="${sessionScope.sessionName}">
+            <input type="text" name="writer">
         </div>
     </div>
 
@@ -99,7 +99,7 @@
     </div>
 
 
-    <!-- 비밀번호 
+    <!-- 비밀번호 -->
     <div class="form-row hidden-row" id="passwordArea">
 
         <div class="form-label">パスワード</div>
@@ -108,7 +108,7 @@
 
             <input type="password"
                    id="inquiryPassword"
-                   name="inquiryPassword"
+                   name="password"
                    maxlength="4"
                    inputmode="numeric" 
                    placeholder="4桁の数字を入力">
@@ -119,7 +119,7 @@
 
         </div>
     </div>
--->
+
 
     <!-- 답변 알림 -->
     <div class="form-row">

@@ -45,36 +45,8 @@ public class InquiryWriteController extends HttpServlet {
 	
 		   //문의 등록 폼에서 보낸 데이터 받기
 	        String title = request.getParameter("title");
-	        
-	        HttpSession session = request.getSession(false);
-
-	        if (session == null) {
-	            response.sendRedirect(
-	                    request.getContextPath() + "/login"
-	                );
-	                return;
-	        }
-
-	        String writer =
-	                (String) session.getAttribute("sessionName");
-	        
-	        if (writer == null || writer.trim().isEmpty()) {
-	            response.sendRedirect(
-	                request.getContextPath() + "/login"
-	            );
-	            return;
-	        }
-
-//	        Integer member_id =
-//	                (Integer) session.getAttribute("sessionMemberId");
-
-//	        
-//	        if (member_id == null) {
-//	            response.sendRedirect(
-//	                    request.getContextPath() + "/login"
-//	                );
-//	                return;
-//	        }
+	        String writer =request.getParameter("writer");
+	        String password = request.getParameter("password");
 	        
 	        boolean isPublic = "1".equals(request.getParameter("isPublic"));//1이면 공개 true로 바꿔서 dto에 저장
 	        boolean emailNotify = "1".equals(request.getParameter("emailNotify"));
@@ -82,7 +54,7 @@ public class InquiryWriteController extends HttpServlet {
 	        String email = request.getParameter("email");
 	        String content = request.getParameter("content");
 	        
-	        InquiryDto inquiry = new InquiryDto(1,title, writer, isPublic, content, email);
+	        InquiryDto inquiry = new InquiryDto(title, writer, password, isPublic, content, email);
 	        
 	        List<Part> files = new ArrayList<>();
 
