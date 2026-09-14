@@ -13,6 +13,7 @@
       href="<%=request.getContextPath()%>/assets/inquiry/css/inquiry_write_update.css">
       
  <script src="${pageContext.request.contextPath}/assets/inquiry/js/inquiry_write_update.js"></script>
+ <script src="${pageContext.request.contextPath}/assets/common/js/checkEmpty.js"></script>
 </head>
 <body>
 <!-- =========================
@@ -38,9 +39,13 @@
 
 <form class="form-card"
 	  action="${pageContext.request.contextPath}/inquiry/write"
-      onsubmit="return confirmSubmit('お問い合わせを登録しますか？')"
+      onsubmit="return validateForm();"
       method="post"
-      enctype="multipart/form-data">
+      enctype="multipart/form-data"
+      novalidate
+      >
+      <!-- novalidate를 <form>에 추가하고, 검증 메시지를 JavaScript에서 전부 처리, 기본 chrome설정 언어이므로 어떤 환경에서도 일본어로 나오게하기위해-->
+      <!-- enctype="multipart/form-data"가 있어야 파일 데이터가 Controller까지 정상적으로 전달 -->
 
     <!-- 제목 -->
     <div class="form-row">
@@ -179,7 +184,10 @@
                 <input type="file"
                        id="inquiryFile"
                        name="inquiryFile"
-                       class="file-input">
+                       class="file-input"
+                       accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx"
+                       multiple>
+                    <!-- multiple을 붙이면 사용자가 파일을 여러 개 선택할 수 있음 -->
 
                 <span id="fileName"
                       class="file-name">

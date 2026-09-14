@@ -99,6 +99,55 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     }
-
 	
 });
+
+	/* =========================
+		      빈칸 검사
+	========================== */
+	  function validateForm(){
+		const title =
+		      document.querySelector("[name='title']");
+
+		  const content =
+		      document.querySelector("[name='content']");
+
+		  const email =
+		      document.querySelector("[name='email']");
+
+		  const emailNotify =
+		      document.querySelector(
+		          "[name='emailNotify']:checked"
+		      );
+
+		  // 제목
+		  if (checkEmpty(title,"タイトルを入力してください。")) {
+		      return false;
+		  }
+
+		  // 이메일 알림을 받는 경우
+		  if (emailNotify && emailNotify.value === "1") {
+
+		      if (checkEmpty(email,"メールアドレスを入力してください。")) {
+		          return false;
+		      }
+		  }
+
+		  // 내용
+		  if (checkEmpty(content,"お問い合わせ内容を入力してください。")) {
+		      return false;
+		  }
+
+		  return confirmSubmit(
+		      "お問い合わせを登録しますか？"
+		  );
+	  };
+	  
+	  
+	 /* =========================
+	  	등록,수정,삭제 할건지 최종 확인 메세지 
+	  ========================== */
+	  
+	  function confirmSubmit(msg) {
+	      return confirm(msg);
+	  }
