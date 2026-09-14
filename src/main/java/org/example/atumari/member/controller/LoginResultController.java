@@ -45,12 +45,12 @@ public class LoginResultController extends HttpServlet {
     	MemberService service = new MemberService();
     	
     	try {
-			String loginName = service.login(login);
+			String loginName = service.login(login); 
 			
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			
-			if (!"".equals(loginName)) out.print("ログインに成功しました。" + loginName + "様、ありがとうございます！");
+			if (!"".equals(loginName)) out.print(loginName + "様、あつまりへようこそ！");
 			else out.print("メールアドレスやパスワードをもう一度確認してください。");
 				
 		} catch (SQLException e) {

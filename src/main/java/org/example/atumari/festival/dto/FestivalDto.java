@@ -28,10 +28,10 @@ public class FestivalDto {
 	
 
 	// API → DB INSERT용
-	public FestivalDto(Integer festival_id, Integer prefecture_no, String festival_name, String summary,
-			String venue_name, String venue_address, String access_info, String image_url, String organizer,
-			String price_text, String external_url, String image_source, String season, LocalDateTime startDateTime,
-			LocalDateTime endDateTime, Boolean price_free) {
+	public FestivalDto(Integer festival_id, Integer prefecture_no, String festival_name,
+			String summary, String venue_name, String venue_address, String access_info, String image_url,
+			String organizer, String price_text, String external_url, String image_source, String season,
+			LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean price_free) {
 		super();
 		this.festival_id = festival_id;
 		this.prefecture_no = prefecture_no;
@@ -69,11 +69,50 @@ public class FestivalDto {
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
 	}
+	
+	
+	
 
+
+	//상세조회
+	public FestivalDto(Integer festival_id, Integer prefecture_no, String festival_name,
+			String prefecture_name, String summary, String venue_name, String venue_address, String access_info,
+			String image_url, String organizer, String price_text, String external_url, String image_source,
+			String season, LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean price_free) {
+		this.festival_id = festival_id;
+		this.prefecture_no = prefecture_no;
+		this.festival_name = festival_name;
+		this.prefecture_name = prefecture_name;
+		this.summary = summary;
+		this.venue_name = venue_name;
+		this.venue_address = venue_address;
+		this.access_info = access_info;
+		this.image_url = image_url;
+		this.organizer = organizer;
+		this.price_text = price_text;
+		this.external_url = external_url;
+		this.image_source = image_source;
+		this.season = season;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+		this.price_free = price_free;
+	}
 
 
 
 	
+
+	
+
+
+
+
+
+
+	public void setPrefecture_name(String prefecture_name) {
+		this.prefecture_name = prefecture_name;
+	}
+
 
 	public String getPrefecture_name() {
 		return prefecture_name;
