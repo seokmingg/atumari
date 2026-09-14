@@ -129,3 +129,40 @@ CREATE TABLE IF NOT EXISTS festival (
         FOREIGN KEY (prefecture_no)
         REFERENCES prefecture(prefecture_no)
 );
+
+-- 문의 정보
+CREATE TABLE IF NOT EXISTS inquiry (
+    inquiry_no INT AUTO_INCREMENT PRIMARY KEY,
+
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+
+    writer VARCHAR(100) NOT NULL,
+    email VARCHAR(255),
+
+    status VARCHAR(20) NOT NULL DEFAULT 'WAITING',
+    is_public BOOLEAN NOT NULL DEFAULT TRUE,
+
+    password VARCHAR(255),
+
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    answer_content TEXT,
+    answered_at DATETIME
+);
+
+
+-- 문의 첨부파일
+CREATE TABLE IF NOT EXISTS inquiry_file (
+    file_no INT AUTO_INCREMENT PRIMARY KEY,
+    inquiry_no INT NOT NULL,
+
+    original_file_name VARCHAR(255) NOT NULL,
+    stored_file_name VARCHAR(255) NOT NULL UNIQUE,
+
+    CONSTRAINT FK_INQUIRY_FILE_INQUIRY
+        FOREIGN KEY (inquiry_no)
+        REFERENCES inquiry(inquiry_no)
+        ON DELETE CASCADE
+);
+
