@@ -71,3 +71,7 @@ function setThumbnail(event) {
    community write save
 ========================= */
 
+function goSave(){
+	
+	
+}
