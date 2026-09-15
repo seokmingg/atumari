@@ -66,3 +66,9 @@ logging:
   level:
     root: INFO
     atumari: DEBUG
+
+# ==========================================
+# 첨부파일 경로
+# ==========================================
+file-storage:
+  upload-path: ${UPLOAD_PATH}
