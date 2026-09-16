@@ -33,6 +33,33 @@ public class CommunityPostDto {
 		this.update_date = update_date;
 		this.hit = hit;
 	}
+	public Long getCmty_no() {
+		return cmty_no;
+	}
+	public Long getMember_id() {
+		return member_id;
+	}
+	public String getMember_name() {
+		return member_name;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public String getAttach() {
+		return attach;
+	}
+	public String getReg_date() {
+		return reg_date;
+	}
+	public String getUpdate_date() {
+		return update_date;
+	}
+	public int getHit() {
+		return hit;
+	}
 	
 	
     
