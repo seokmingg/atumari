@@ -2,6 +2,34 @@
 
 /* inquiry_write, update 공용 css */
 
+.file-input {
+    display: none;
+}/*한국어로 파일선택, 선택된 파일 없음-> 없애기 기본적으로 브라우저에서 만들어주므로 없애줌*/
+
+.file-select-button {
+    display: inline-block;
+    padding: 8px 16px;
+
+    border: 1px solid #999;
+    border-radius: 4px;
+    background-color: #fff;
+
+    font-size: 14px;
+    color: #333;
+
+    cursor: pointer;
+}/*해당 설정이 없으면 그냥 글자처럼만 보임, 버튼 꾸며주는 용도*/
+
+.file-select-button:hover {
+    background-color: #f5f5f5;
+}
+
+/*파일명과 첨부버튼이 너무 붙지 않도록*/
+.file-name {
+    margin-left: 12px;
+    font-size: 14px;
+    color: #555;
+}
 
 .form-card {
     background: #fff;
@@ -46,9 +74,10 @@
 }
 
 .form-help {
-    margin-top: 8px;
-    font-size: 12px;
+    margin-top: 5px;
+    font-size: 11px;
     color: #999;
+    flex-basis: 100%;
 }
 
 .form-actions {
@@ -61,4 +90,50 @@
 .form-actions .right {
     display: flex;
     gap: 10px;
+}
+
+/*비밀번호,메일 입력칸이 나왔다 사라졌다*/
+/* 라디오 버튼 */
+.radio-field {
+    display: flex;
+    align-items: center;
+    column-gap: 30px; /* 公開 ↔ 非公開 사이 */
+    row-gap: 5px;     /* 라디오 ↔ 설명문 사이 */
+    flex-wrap: wrap;
+}
+
+.radio-field label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+/* 비밀번호 input도 기존 input 스타일 적용 */
+.form-field input[type="password"] {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 12px 14px;
+    outline: none;
+    font: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* 이메일 길이 */
+.form-field input[type="email"] {
+    max-width: 420px;
+    box-sizing: border-box;
+}
+
+/* 처음에는 숨김 */
+.hidden-row {
+    display: none;
+}
+
+/* 선택하면 표시 */
+.hidden-row.show {
+    display: grid;
 }
