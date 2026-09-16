@@ -346,7 +346,7 @@
 
         <div class="search-list">
 
-            <a class="search-item" href="">
+            <a class="search-item" href="<%=request.getContextPath()%>/festival/region/card">
 
                 <h3>地域から探す</h3>
 
@@ -357,7 +357,7 @@
             </a>
 
 
-            <a class="search-item" href="">
+            <a class="search-item" href="<%=request.getContextPath()%>/festival/season/card">
 
                 <h3>季節から探す</h3>
 
@@ -368,7 +368,7 @@
             </a>
 
 
-            <a class="search-item" href="">
+            <a class="search-item" href="/">
 
                 <h3>キーワードから探す</h3>
 
@@ -411,74 +411,23 @@
                 <div class="festival-list">
 
 
-                    <!-- FESTIVAL 01 -->
-
+                    <!-- FESTIVAL  -->
+				<c:forEach var="festival" items="${festivalList}"  begin="0" end="9">
                     <div class="festival-card">
-						<a href="">
-                        <img src="<%=request.getContextPath()%>/assets/home/images/festival/festival01.jpg"
-                             alt="青森ねぶた祭">
+						<a href="${pageContext.request.contextPath}/festival/view?festival_no=${festival.festival_no}&type=month&month=${month}">
+                        <img src="${pageContext.request.contextPath}${festival.image_url}"
+             				 alt="${festival.festival_name}">
 						</a>
                         <div class="festival-info">
 
-                            <h3>青森ねぶた祭</h3>
+                            <h3>${festival.prefecture_name}</h3>
 
-                            <p>青森県</p>
+                            <p>${festival.prefecture_name}</p>
 
                         </div>
 
                     </div>
-
-
-                    <!-- FESTIVAL 02 -->
-
-                    <div class="festival-card">
-						<a href="">
-                        <img src="<%=request.getContextPath()%>/assets/home/images/festival/festival02.jpg"
-                             alt="阿波おどり">
-						</a>
-                        <div class="festival-info">
-
-                            <h3>阿波おどり</h3>
-
-                            <p>徳島県</p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- FESTIVAL 03 -->
-
-                    <div class="festival-card">
-						<a href="">
-                        <img src="<%=request.getContextPath()%>/assets/home/images/festival/festival03.jpg"
-                             alt="仙台七夕まつり">
-						</a>
-                        <div class="festival-info">
-
-                            <h3>仙台七夕まつり</h3>
-
-                            <p>宮城県</p>
-
-                        </div>
-
-                    </div>
-                    
-                    <div class="festival-card">
-						<a href="">
-                        <img src="<%=request.getContextPath()%>/assets/home/images/festival/festival04.jpg"
-                             alt="仙台七夕まつり">
-						</a>
-                        <div class="festival-info">
-
-                            <h3>海辺の祭り</h3>
-
-                            <p>沖縄</p>
-
-                        </div>
-
-                    </div>
-
+                </c:forEach>
 
                 </div>
 
@@ -525,7 +474,7 @@
                 <div class="article-list">
 
                     <article class="article-card">
-						<a href="">
+						<a href="<%=request.getContextPath()%>/festival/list?type=season&season=봄">
 	                        <img src="<%=request.getContextPath()%>/assets/home/images/season/spring.jpg"
 	                             alt="日本の祭り">
 						</a>
@@ -547,7 +496,7 @@
 
 
                     <article class="article-card">
-						<a href="">
+						<a href="<%=request.getContextPath()%>/festival/list?type=season&season=여름">
 	                        <img src="<%=request.getContextPath()%>/assets/home/images/season/summer.jpg"
 	                             alt="神輿">
 						</a>
@@ -569,7 +518,7 @@
 
 
                     <article class="article-card">
-						<a href="">
+						<a href="<%=request.getContextPath()%>/festival/list?type=season&season=가을">
 	                        <img src="<%=request.getContextPath()%>/assets/home/images/season/fall.jpg"
 	                             alt="祭り">
 						</a>
@@ -591,7 +540,7 @@
 
 
                     <article class="article-card">
-					<a href="">
+					<a href="<%=request.getContextPath()%>/festival/list?type=season&season=겨울">
                         <img src="<%=request.getContextPath()%>/assets/home/images/season/winter.jpg"
                              alt="冬祭り">
 					</a>
