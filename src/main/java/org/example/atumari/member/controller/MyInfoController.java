@@ -31,7 +31,10 @@ public class MyInfoController extends HttpServlet {
     		
     		MemberService service = new MemberService();
     		
+    		// 회원정보 조회
     		MemberDto memberDto = service.getMemberInfo(sessionEmail);
+    		
+    		request.setAttribute("myInfo", memberDto);
     		
 			request.getRequestDispatcher("/WEB-INF/views/member/my-info.jsp")
 				.forward(request, response);
