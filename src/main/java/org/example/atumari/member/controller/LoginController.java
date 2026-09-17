@@ -46,6 +46,7 @@ public class LoginController extends HttpServlet {
     		
     		try {
 				String loginName = service.login(login);
+				// TODO?: 세션에 추가로 넣을 member_id 취득(문의 게시판에서 사용?)
 				
 				// 로그인 성공하면
 				if (!"".equals(loginName)) {
