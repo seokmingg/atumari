@@ -40,6 +40,20 @@
         <div class="notice-view-actions">
             <a class="write-button"
                href="${pageContext.request.contextPath}/notice">一覧へ</a>
+
+            <c:if test="${sessionScope.sessionLevel eq 'admin'}">
+                <a class="write-button"
+                   href="${pageContext.request.contextPath}/notice/edit?noticeNo=${notice.noticeNo}">
+                    修正する
+                </a>
+
+                <form method="post"
+                      action="${pageContext.request.contextPath}/notice/delete"
+                      onsubmit="return confirm('このお知らせを削除しますか？');">
+                    <input type="hidden" name="noticeNo" value="${notice.noticeNo}">
+                    <button type="submit" class="notice-delete-button">削除する</button>
+                </form>
+            </c:if>
         </div>
     </div>
 </main>
