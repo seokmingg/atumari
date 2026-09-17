@@ -7,8 +7,7 @@ public class CommunityFileDto {
     private String save_file_name;
     
     //저장 dto
-	public CommunityFileDto(Long file_no, Long cmty_no, String original_file_name, String save_file_name) {
-		this.file_no = file_no;
+	public CommunityFileDto(Long cmty_no, String original_file_name, String save_file_name) {
 		this.cmty_no = cmty_no;
 		this.original_file_name = original_file_name;
 		this.save_file_name = save_file_name;

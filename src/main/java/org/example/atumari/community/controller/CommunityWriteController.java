@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.example.atumari.community.dto.CommunityPostDto;
+import org.example.atumari.community.service.CommunityService;
 import org.example.atumari.config.FileConfig;
 
 import jakarta.servlet.ServletException;
@@ -35,74 +36,52 @@ public class CommunityWriteController extends HttpServlet {
             throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
 
-        // =========================
         // 로그인 사용자
-        // =========================
         String sessionEmail =
-                (String) request.getSession()
-                                .getAttribute("sessionEmail");
+                (String) request.getSession().getAttribute("sessionEmail");
 
-        // =========================
+        
         // 일반 form 데이터
-        // =========================
         String title = request.getParameter("title");
         String content = request.getParameter("content");
-
-        // =========================
         // 이미지 파일
-        // =========================
         Part imagePart = request.getPart("image");
 
-        String imageFileName = null;
-
-        if (imagePart != null && imagePart.getSize() > 0) {
-        	
-            // 업로드 폴더
-        	String uploadPath = FileConfig.getUploadPath(); 
-	    		//상위폴더 경로 가져오기
-	    		//C:/atumari_uploads
-	    		
-	
-	    		System.out.println("uploadPath = " + uploadPath);
-	    		Path uploadDir = Paths.get(uploadPath,"community"); 
-	    		//하위폴더 경로 붙이기
-	    		//c: git/atumari_upload/community
-	
-	        // =========================
 	        // 값 확인
-	        // =========================
 	        System.out.println("==============================");
 	        System.out.println("sessionEmail : " + sessionEmail);
 	        System.out.println("title       : " + title);
 	        System.out.println("content     : " + content);
-	        System.out.println("image       : " + imageFileName);
+	        System.out.println("image       : " + imagePart);
 	        System.out.println("==============================");
 	
-	        // =========================
-	        // DTO 생성
-	        // =========================
+	        
+	     // DTO 생성
 	        CommunityPostDto cmtydto =
 	                new CommunityPostDto(
 	                        sessionEmail,
 	                        title,
 	                        content
 	                );
-	
-	        /*
-	         * 여기에서 DAO/Service를 호출해서
-	         * DB에 게시글을 저장하면 됨.
-	         *
-	         * 예:
-	         *
-	         * communityService.write(cmtydto, imageFileName);
-	         */
-	
-	        // =========================
-	        // 작성 페이지로 이동
-	        // =========================
-	        request.getRequestDispatcher(
-	                "/WEB-INF/views/community/list.jsp"
-	        ).forward(request, response);
-        }			 
-    }	
+
+	        // 게시물 + 첨부파일 저장
+	        CommunityService communityService =
+	                new CommunityService();
+
+	        int result =
+	                communityService.write(cmtydto, imagePart);
+	        
+	        // 저장 성공
+	        if (result == 1) {
+	        	request.getRequestDispatcher(
+	        			"/WEB-INF/views/community/list.jsp"
+	    	        ).forward(request, response);
+
+	        } else {
+	        	request.getRequestDispatcher(
+	        			"/WEB-INF/views/community/write_test.jsp"
+	    	        ).forward(request, response);
+
+	        }
+       }
 }

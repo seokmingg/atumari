@@ -67,11 +67,4 @@ function setThumbnail(event) {
     reader.readAsDataURL(file);
 }
 
-/* =========================
-   community write save
-========================= */
 
-function goSave(){
-	
-	
-}

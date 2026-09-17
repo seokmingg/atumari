@@ -16,106 +16,98 @@ public class CommunityDao {
 	Connection con = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
-	    // =========================================================
-	    // 게시물 저장
-	    // DB에서 생성된 cmty_no를 반환
-	    // =========================================================
-	    public Long communitySave(CommunityPostDto cmtydto) {
 
-	        Long cmtyNo = null;
+	// 게시물 저장
+	public Long communitySave(CommunityPostDto cmtydto) {
 
-	        String sql =
-	                "insert into community "
-	                + "(member_id, title, content) "
-	                + "values ("
-	                + "(select id from member where email = ?), "
-	                + "?, "
-	                + "?) "
-	                + "returning cmty_no into ?";
+	    Long cmty_no = null;
 
-	        try {
+	    String sql =
+	            "insert into community "
+	            + "(member_id, title, content) "
+	            + "values ("
+	            + "(select id from member where email = ?), "
+	            + "?, "
+	            + "?)";
 
-	            con = DBConnection.getConnection();
+	    try {
 
-	            LogPreparedStatement ps =
-	                    new LogPreparedStatement(con, sql);
+	        con = DBConnection.getConnection();
 
-	            // 1. 회원 이메일
-	            ps.setString(1, cmtydto.getMember_email());
+	        ps = con.prepareStatement(
+	                sql,
+	                java.sql.Statement.RETURN_GENERATED_KEYS
+	        );
 
-	            // 2. 제목
-	            ps.setString(2, cmtydto.getTitle());
+	        ps.setString(1, cmtydto.getMember_email());
+	        ps.setString(2, cmtydto.getTitle());
+	        ps.setString(3, cmtydto.getContent());
 
-	            // 3. 내용
-	            ps.setString(3, cmtydto.getContent());
+	        ps.executeUpdate();
 
-	            // 4. DB에서 생성되는 cmty_no
-	            ps.registerOutParameter(4, Types.NUMERIC);
-
-	            ps.executeUpdate();
-
-	            // DB가 생성한 cmty_no 가져오기
-	            cmtyNo = ps.getLong(4);
-
-	        } catch (Exception e) {
-
-	            e.printStackTrace();
-
-	            System.out.println(
-	                    "communitySave() 오류! : "
-	                    + (ps != null ? ps.toString() : "ps is null")
-	            );
-
-	        } finally {
-
-	            DBConnection.closeDB(con, ps, rs);
+	        // DB에서 생성된 cmty_no 가져오기
+	        rs = ps.getGeneratedKeys();
+	        if (rs.next()) {
+	            cmty_no = rs.getLong(1);
 	        }
 
-	        return cmtyNo;
+	    } catch (Exception e) {
+
+	        e.printStackTrace();
+	        System.out.println("communitySave() 오류!!");
+
+	    } finally {
+
+	        DBConnection.closeDB(con, ps, rs);
 	    }
 
-	    // 첨부파일 저장
-	    public int fileSave(CommunityFileDto filedto) {
-	        int result = 0;
-	        String sql =
-	                "insert into community_file "
-	                + "(cmty_no, original_file_name, save_file_name) "
-	                + "values (?, ?, ?)";
+	    return cmty_no;
+	}
+	    
+	    
 
-	        try {
+    // 첨부파일 저장
+    public int fileSave(CommunityFileDto filedto) {
+        int result = 0;
+        String sql =
+                "insert into community_files "
+                + "(cmty_no, original_file_name, save_file_name) "
+                + "values (?, ?, ?)";
 
-	            con = DBConnection.getConnection();
+        try {
 
-	            LogPreparedStatement ps =
-	                    new LogPreparedStatement(con, sql);
+            con = DBConnection.getConnection();
 
-	            // 회원 이메일
-	            ps.setLong(1, filedto.getCmty_no());
+            LogPreparedStatement ps =
+                    new LogPreparedStatement(con, sql);
 
-	            // 원본 파일명
-	            ps.setString(2, filedto.getOriginal_file_name());
+            // 회원 이메일
+            ps.setLong(1, filedto.getCmty_no());
 
-	            // 서버 저장 파일명
-	            ps.setString(3, filedto.getSave_file_name());
+            // 원본 파일명
+            ps.setString(2, filedto.getOriginal_file_name());
 
-	            result = ps.executeUpdate();
+            // 서버 저장 파일명
+            ps.setString(3, filedto.getSave_file_name());
 
-	        } catch (Exception e) {
+            result = ps.executeUpdate();
 
-	            e.printStackTrace();
+        } catch (Exception e) {
 
-	            System.out.println(
-	                    "fileSave() 오류! : "
-	                    + (ps != null ? ps.toString() : "ps is null")
-	            );
+            e.printStackTrace();
 
-	        } finally {
+            System.out.println(
+                    "fileSave() 오류! : "
+                    + (ps != null ? ps.toString() : "ps is null")
+            );
 
-	            DBConnection.closeDB(con, ps, rs);
-	        }
+        } finally {
 
-	        return result;
-	    }
+            DBConnection.closeDB(con, ps, rs);
+        }
+
+        return result;
+    }
 
 	
 }
