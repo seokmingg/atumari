@@ -18,11 +18,6 @@ public class NoticeWriteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (!isAdmin(request)) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-
         request.getRequestDispatcher("/WEB-INF/views/notice/notice_write.jsp")
                 .forward(request, response);
     }
@@ -30,11 +25,6 @@ public class NoticeWriteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (!isAdmin(request)) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-
         request.setCharacterEncoding("UTF-8");
         String title = request.getParameter("title");
         String content = request.getParameter("content");
@@ -52,10 +42,4 @@ public class NoticeWriteController extends HttpServlet {
         }
     }
 
-    private boolean isAdmin(HttpServletRequest request) {
-        Object sessionLevel = request.getSession(false) == null
-                ? null
-                : request.getSession(false).getAttribute("sessionLevel");
-        return "admin".equals(sessionLevel);
-    }
 }
