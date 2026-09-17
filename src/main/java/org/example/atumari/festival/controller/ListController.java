@@ -1,17 +1,18 @@
 package org.example.atumari.festival.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
+
+import org.example.atumari.festival.dto.FestivalDto;
+import org.example.atumari.festival.dto.PrefectureDto;
+import org.example.atumari.festival.service.FestivalListService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.example.atumari.festival.dto.FestivalDto;
-import org.example.atumari.festival.dto.PrefectureDto;
-import org.example.atumari.festival.service.FestivalListService;
 
 @WebServlet("/festival/list")
 public class ListController extends HttpServlet {
@@ -21,40 +22,24 @@ public class ListController extends HttpServlet {
 			throws ServletException, IOException {
 
 		// ========================================
-		// 1. 지역 코드
+		// 1. 구분값
 		// ========================================
 
-		String region = request.getParameter("region");
+		String type = request.getParameter("type");
 
-		if (region == null || region.isEmpty()) {
-			region = "hokkaido";
+		if (type == null || type.isEmpty()) {
+
+			type = "region";
+
 		}
 
 		// ========================================
-		// 2. 도도부현
-		// ========================================
-
-		String prefectureNoParam = request.getParameter("prefecture_no");
-
-		Integer prefectureNo = null;
-
-		if (prefectureNoParam != null && !prefectureNoParam.isEmpty()) {
-
-			try {
-				prefectureNo = Integer.parseInt(prefectureNoParam);
-
-			} catch (NumberFormatException e) {
-				prefectureNo = null;
-			}
-		}
-		// ========================================
-		//  검색
+		// 2. 검색
 		// ========================================
 
 		String select = request.getParameter("select");
-		String search = request.getParameter("search");
 
-		
+		String search = request.getParameter("search");
 
 		// ========================================
 		// 3. 페이지
@@ -67,15 +52,20 @@ public class ListController extends HttpServlet {
 		if (pageParam != null && !pageParam.isEmpty()) {
 
 			try {
+
 				page = Integer.parseInt(pageParam);
 
 			} catch (NumberFormatException e) {
+
 				page = 1;
+
 			}
 		}
 
 		if (page < 1) {
+
 			page = 1;
+
 		}
 
 		// ========================================
@@ -91,55 +81,221 @@ public class ListController extends HttpServlet {
 		FestivalListService service = new FestivalListService();
 
 		// ========================================
-		// 6. 축제 목록
+		// 6. 공통 변수
 		// ========================================
 
-		List<FestivalDto> festivalList = service.getFestivalList(region, prefectureNo,
-																select, search,page, pageSize);
+		List<FestivalDto> festivalList = null;
+
+		List<PrefectureDto> prefectureList = null;
+
+		int totalCount = 0;
+
+		int totalPage = 0;
 
 		// ========================================
-		// 7. 전체 축제 개수
+		// 7. 지역
 		// ========================================
 
-		int totalCount = service.getFestivalTotalCount(region, prefectureNo, select, search);
+		String region = request.getParameter("region");
+
+		if (region == null || region.isEmpty()) {
+
+			region = "hokkaido";
+
+		}
 
 		// ========================================
-		// 8. 전체 페이지 수
+		// 8. 도도부현
 		// ========================================
 
-		int totalPage = service.getTotalPage(region, prefectureNo, select, search, pageSize);
+		String prefectureNoParam = request.getParameter("prefecture_no");
+
+		Integer prefectureNo = null;
+
+		if (prefectureNoParam != null && !prefectureNoParam.isEmpty()) {
+
+			try {
+
+				prefectureNo = Integer.parseInt(prefectureNoParam);
+
+			} catch (NumberFormatException e) {
+
+				prefectureNo = null;
+
+			}
+		}
 
 		// ========================================
-		// 9. 도도부현 목록
+		// 9. 계절
 		// ========================================
 
-		List<PrefectureDto> prefectureList = service.getPrefectureList(region);
-		
-		
+		String season = request.getParameter("season");
+
+		if (season == null || season.isEmpty()) {
+
+			season = "봄";
+
+		}
+
 		// ========================================
-		// 10. JSP에 값 전달
+		// 10. 월
 		// ========================================
 
-		request.setAttribute("region", region);
-		request.setAttribute("regionName", service.getRegionName(region));
+		String monthParam = request.getParameter("month");
+
+		int month = LocalDate.now().getMonthValue();
+
+		if (monthParam != null && !monthParam.isEmpty()) {
+
+			try {
+
+				month = Integer.parseInt(monthParam);
+
+			} catch (NumberFormatException e) {
+
+				month = LocalDate.now().getMonthValue();
+
+			}
+		}
+
+		// 월 범위 확인
+
+		if (month < 1 || month > 12) {
+
+			month = LocalDate.now().getMonthValue();
+
+		}
+
+		// ========================================
+		// 11. 월 날짜 계산
+		// ========================================
+
+		LocalDate firstDay = null;
+
+		LocalDate nextMonth = null;
+
+		if ("month".equals(type)) {
+
+			int year = LocalDate.now().getYear();
+
+			firstDay = LocalDate.of(year, month, 1);
+
+			nextMonth = firstDay.plusMonths(1);
+
+		}
+
+		// ========================================
+		// 12. 잘못된 type 확인
+		// ========================================
+
+		if (!"region".equals(type) && !"season".equals(type) && !"month".equals(type)) {
+
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "잘못된 리스트 구분값입니다.");
+
+			return;
+
+		}
+
+		// ========================================
+		// 13. 축제 목록
+		// 지역 / 계절 / 월 통합
+		// ========================================
+
+		festivalList = service.getFestivalList(type, region, season, firstDay, nextMonth, prefectureNo, select, search,
+				page, pageSize);
+
+		// ========================================
+		// 14. 전체 개수
+		// 지역 / 계절 / 월 통합
+		// ========================================
+
+		totalCount = service.getFestivalTotalCount(type, region, season, firstDay, nextMonth, prefectureNo, select,
+				search);
+
+		// ========================================
+		// 15. 전체 페이지
+		// ========================================
+
+		totalPage = service.getTotalPage(totalCount, pageSize);
+
+		// ========================================
+		// 16. 지역 데이터
+		// ========================================
+
+		if ("region".equals(type)) {
+
+			prefectureList = service.getPrefectureList(region);
+
+			request.setAttribute("region", region);
+
+			request.setAttribute("regionName", service.getRegionName(region));
+
+			request.setAttribute("prefectureList", prefectureList);
+
+		}
+
+		// ========================================
+		// 17. 계절 데이터
+		// ========================================
+
+		else if ("season".equals(type)) {
+
+			request.setAttribute("season", service.getSeasonName(season));
+
+		}
+
+		// ========================================
+		// 18. 월 데이터
+		// ========================================
+
+		else if ("month".equals(type)) {
+
+			request.setAttribute("month", month);
+
+		}
+
+		// ========================================
+		// 19. 공통 JSP 전달
+		// ========================================
+
+		request.setAttribute("type", type);
 
 		request.setAttribute("festivalList", festivalList);
-		request.setAttribute("prefectureList", prefectureList);
 
 		request.setAttribute("currentPage", page);
+
 		request.setAttribute("pageSize", pageSize);
 
 		request.setAttribute("totalCount", totalCount);
+
 		request.setAttribute("totalPage", totalPage);
-		
+
 		request.setAttribute("select", select);
+
 		request.setAttribute("search", search);
 
 		// ========================================
-		// 11. JSP 이동
+		// 20. JSP 이동
 		// ========================================
 
-		request.getRequestDispatcher("/WEB-INF/views/festival/festival_list.jsp")
-		.forward(request, response);
+		if ("region".equals(type)) {
+
+			request.getRequestDispatcher("/WEB-INF/views/festival/region_festival_list.jsp").forward(request, response);
+
+		}
+
+		else if ("season".equals(type)) {
+
+			request.getRequestDispatcher("/WEB-INF/views/festival/season_festival_list.jsp").forward(request, response);
+
+		}
+
+		else if ("month".equals(type)) {
+
+			request.getRequestDispatcher("/WEB-INF/views/festival/month_festival_list.jsp").forward(request, response);
+
+		}
+
 	}
+
 }

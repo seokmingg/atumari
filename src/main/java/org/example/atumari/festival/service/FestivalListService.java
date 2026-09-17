@@ -1,5 +1,6 @@
 package org.example.atumari.festival.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.example.atumari.festival.dao.FestivalDao;
@@ -8,161 +9,213 @@ import org.example.atumari.festival.dto.PrefectureDto;
 
 public class FestivalListService {
 
-    private FestivalDao festivalDao;
+	private FestivalDao festivalDao;
 
-    public FestivalListService() {
+	public FestivalListService() {
 
-        festivalDao = new FestivalDao();
+		festivalDao = new FestivalDao();
 
-    }
-
-
-    // ========================================
-    // 지역 코드 → 일본어 지역명 변환
-    // ========================================
-
-    public String getRegionName(String region) {
-
-        switch (region) {
-
-            case "hokkaido":
-                return "北海道";
-
-            case "tohoku":
-                return "東北";
-
-            case "kanto":
-                return "関東";
-
-            case "chubu":
-                return "中部";
-
-            case "kinki":
-                return "近畿";
-
-            case "chugoku":
-                return "中国";
-
-            case "shikoku":
-                return "四国";
-
-            case "kyushu-okinawa":
-                return "九州";
-
-            default:
-                return "";
-        }
-    }
+	}
 
 
-    // ========================================
-    // 계절 → 일본어 계절명 변환
-    // ========================================
+	// ========================================
+	// 지역 코드 → 일본어 지역명 변환
+	// ========================================
 
-    public String getSeasonName(String season) {
+	public String getRegionName(String region) {
 
-        switch (season) {
+		switch (region) {
 
-            case "봄":
-                return "春";
+		case "hokkaido":
+			return "北海道";
 
-            case "여름":
-                return "夏";
+		case "tohoku":
+			return "東北";
 
-            case "가을":
-                return "秋";
+		case "kanto":
+			return "関東";
 
-            case "겨울":
-                return "冬";
+		case "chubu":
+			return "中部";
 
-            default:
-                return "";
-        }
-    }
+		case "kinki":
+			return "近畿";
 
+		case "chugoku":
+			return "中国";
 
-    // ========================================
-    // 지역별 축제 목록 조회
-    // 페이지네이션 포함
-    // ========================================
+		case "shikoku":
+			return "四国";
 
-    public List<FestivalDto> getFestivalList(String region, Integer prefectureNo,
-    										String select, String search, 
-    										int page,int pageSize) {
-           
-            
-            
+		case "kyushu-okinawa":
+			return "九州";
 
-        String regionName = getRegionName(region);
+		default:
+			return "";
 
-        int start = (page - 1) * pageSize + 1;
+		}
 
-        int end = page * pageSize;
-
-        List<FestivalDto> list =  festivalDao.getFestivalList(regionName, prefectureNo,
-        														select, search, start, end);
-               
-                      
-                        
-                        
-                       
+	}
 
 
-        // 계절명 일본어 변환
-        for (FestivalDto festival : list) {
+	// ========================================
+	// 계절 → 일본어 계절명 변환
+	// ========================================
 
-            festival.setSeason( getSeasonName(festival.getSeason()));
-        }
+	public String getSeasonName(String season) {
 
-        return list;
-    }
+		switch (season) {
 
+		case "봄":
+			return "春";
 
-    // ========================================
-    // 전체 축제 개수
-    // ========================================
+		case "여름":
+			return "夏";
 
-    public int getFestivalTotalCount(String region, Integer prefectureNo,
-    								String select, String search) {
+		case "가을":
+			return "秋";
 
-        String regionName = getRegionName(region);
+		case "겨울":
+			return "冬";
 
-        return festivalDao.getFestivalTotalCount(regionName, prefectureNo, select, search);
-                
-        
-    }
+		default:
+			return "";
 
+		}
 
-    // ========================================
-    // 전체 페이지 수
-    // ========================================
-
-    public int getTotalPage(String region, Integer prefectureNo,
-    						String select, String search, int pageSize) {
-            
-            
-
-        int totalCount = getFestivalTotalCount(region, prefectureNo, select, search);
-
-                
-        return (int) Math.ceil((double) totalCount / pageSize );
-                
-       
-    }
+	}
 
 
-    // ========================================
-    // 지역별 도도부현 목록 조회
-    // ========================================
+	// ========================================
+	// 축제 목록 조회
+	// 지역 / 계절 / 이번 달 통합
+	// 페이지네이션 포함
+	// ========================================
 
-    public List<PrefectureDto> getPrefectureList(String region) {
-            
+	public List<FestivalDto> getFestivalList(
+			String type,
+			String region,
+			String season,
+			LocalDate firstDay,
+			LocalDate nextMonth,
+			Integer prefectureNo,
+			String select,
+			String search,
+			int page,
+			int pageSize) {
 
-        String regionName = getRegionName(region);
 
-        return festivalDao.getPrefectureList(regionName);
-                
-        
-    }
+		// 페이지 시작 / 끝 번호
+
+		int start = (page - 1) * pageSize + 1;
+
+		int end = page * pageSize;
+
+
+		// 지역 코드 → 일본어 지역명
+
+		String regionName = getRegionName(region);
+
+
+		// DAO 조회
+
+		List<FestivalDto> list =
+				festivalDao.getFestivalList(
+						type,
+						regionName,
+						season,
+						firstDay,
+						nextMonth,
+						prefectureNo,
+						select,
+						search,
+						start,
+						end
+				);
+
+
+		// 계절명 일본어 변환
+
+		for (FestivalDto festival : list) {
+
+			festival.setSeason(
+					getSeasonName(festival.getSeason())
+			);
+
+		}
+
+
+		return list;
+
+	}
+
+
+	// ========================================
+	// 전체 축제 개수
+	// 지역 / 계절 / 이번 달 통합
+	// ========================================
+
+	public int getFestivalTotalCount(
+			String type,
+			String region,
+			String season,
+			LocalDate firstDay,
+			LocalDate nextMonth,
+			Integer prefectureNo,
+			String select,
+			String search) {
+
+
+		// 지역 코드 → 일본어 지역명
+
+		String regionName = getRegionName(region);
+
+
+		return festivalDao.getFestivalTotalCount(
+				type,
+				regionName,
+				season,
+				firstDay,
+				nextMonth,
+				prefectureNo,
+				select,
+				search
+		);
+
+	}
+
+
+	// ========================================
+	// 전체 페이지 수
+	// ========================================
+
+	public int getTotalPage(
+			int totalCount,
+			int pageSize) {
+
+		return (int) Math.ceil(
+				(double) totalCount / pageSize
+		);
+
+	}
+
+
+	// ========================================
+	// 지역별 도도부현 목록 조회
+	// ========================================
+
+	public List<PrefectureDto> getPrefectureList(
+			String region) {
+
+
+		String regionName =
+				getRegionName(region);
+
+
+		return festivalDao.getPrefectureList(
+				regionName
+		);
+
+	}
 
 }

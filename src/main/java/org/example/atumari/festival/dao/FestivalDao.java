@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,122 +159,266 @@ public class FestivalDao {
     }
     
     //(지역)리스트 조회,페이지 네이션,검색
-    public List<FestivalDto> getFestivalList(String regionName, Integer prefectureNo,
-    										String select, String search,
-    										int start,int end) {
-            
-    	 List<FestivalDto> list = new ArrayList<>();
+ // ========================================
+ // 축제 목록 조회
+ // 지역 / 계절 / 이번 달 통합
+ // ========================================
 
-    	    int offset = start - 1;
-    	    int pageSize = end - start + 1;
+ public List<FestivalDto> getFestivalList(
+         String type,
+         String regionName,
+         String season,
+         LocalDate firstDay,
+         LocalDate nextMonth,
+         Integer prefectureNo,
+         String select,
+         String search,
+         int start,
+         int end) {
 
-    	    String sql =
-    	            "SELECT f.festival_no, "
-    	          + "       f.prefecture_no, "
-    	          + "       f.festival_name, "
-    	          + "       p.prefecture_name, "
-    	          + "       f.summary, "
-    	          + "       f.image_url, "
-    	          + "       f.season, "
-    	          + "       f.start_datetime, "
-    	          + "       f.end_datetime "
-    	          + "FROM festival f "
-    	          + "JOIN prefecture p "
-    	          + "ON f.prefecture_no = p.prefecture_no "
-    	          + "WHERE p.region_name = ? ";
+     List<FestivalDto> list = new ArrayList<>();
 
-    	    // 도도부현 필터
-    	    if (prefectureNo != null) {
-    	        sql += "AND f.prefecture_no = ? ";
-    	    }
+     int offset = start - 1;
+     int pageSize = end - start + 1;
 
-    	    // 검색 조건
-    	    if (search != null && !search.trim().isEmpty()) {
+     String sql =
+             "SELECT f.festival_no, "
+           + "       f.prefecture_no, "
+           + "       f.festival_name, "
+           + "       p.prefecture_name, "
+           + "       f.summary, "
+           + "       f.image_url, "
+           + "       f.season, "
+           + "       f.start_datetime, "
+           + "       f.end_datetime "
+           + "FROM festival f "
+           + "JOIN prefecture p "
+           + "ON f.prefecture_no = p.prefecture_no "
+           + "WHERE 1=1 ";
 
-    	        if ("title".equals(select)) {
 
-    	            sql += "AND f.festival_name LIKE ? ";
+     // ========================================
+     // 지역
+     // ========================================
 
-    	        } else if ("region".equals(select)) {
+     if ("region".equals(type)) {
 
-    	            sql += "AND p.prefecture_name LIKE ? ";
+         sql += "AND p.region_name = ? ";
 
-    	        } else {
+         if (prefectureNo != null) {
+             sql += "AND f.prefecture_no = ? ";
+         }
+     }
 
-    	            sql += "AND ("
-    	                 + "f.festival_name LIKE ? "
-    	                 + "OR p.prefecture_name LIKE ?"
-    	                 + ") ";
-    	        }
-    	    }
 
-    	    sql += "ORDER BY f.start_datetime "
-    	         + "LIMIT ?, ?";
+     // ========================================
+     // 계절
+     // ========================================
 
-    	    try (
-    	        Connection con = DBConnection.getConnection();
-    	        PreparedStatement pstmt = con.prepareStatement(sql)
-    	    ) {
+     else if ("season".equals(type)) {
 
-    	        int index = 1;
+         sql += "AND f.season = ? ";
+     }
 
-    	        // 지역
-    	        pstmt.setString(index++, regionName);
 
-    	        // 도도부현
-    	        if (prefectureNo != null) {
-    	            pstmt.setInt(index++, prefectureNo);
-    	        }
+     // ========================================
+     // 이번 달
+     // ========================================
 
-    	        // 검색어
-    	        if (search != null && !search.trim().isEmpty()) {
+     else if ("month".equals(type)) {
 
-    	            String keyword = "%" + search.trim() + "%";
+         sql += "AND f.start_datetime >= ? "
+              + "AND f.start_datetime < ? ";
+     }
 
-    	            if ("title".equals(select)) {
 
-    	                pstmt.setString(index++, keyword);
+     // ========================================
+     // 검색
+     // ========================================
 
-    	            } else if ("region".equals(select)) {
+     if (search != null && !search.trim().isEmpty()) {
 
-    	                pstmt.setString(index++, keyword);
+         if ("title".equals(select)) {
 
-    	            } else {
+             sql += "AND f.festival_name LIKE ? ";
 
-    	                pstmt.setString(index++, keyword);
-    	                pstmt.setString(index++, keyword);
-    	            }
-    	        }
+         }
 
-    	        // 페이징
-    	        pstmt.setInt(index++, offset);
-    	        pstmt.setInt(index++, pageSize);
+         else if ("region".equals(select)) {
 
-    	        ResultSet rs = pstmt.executeQuery();
+             sql += "AND p.prefecture_name LIKE ? ";
 
-    	        while (rs.next()) {
+         }
 
-    	            FestivalDto dto = new FestivalDto(
-    	                    rs.getInt("festival_no"),
-    	                    rs.getInt("prefecture_no"),
-    	                    rs.getString("prefecture_name"),
-    	                    rs.getString("festival_name"),
-    	                    rs.getString("summary"),
-    	                    rs.getString("image_url"),
-    	                    rs.getString("season"),
-    	                    rs.getTimestamp("start_datetime").toLocalDateTime(),
-    	                    rs.getTimestamp("end_datetime").toLocalDateTime()
-    	            );
+         else {
 
-    	            list.add(dto);
-    	        }
+             sql += "AND ("
+                  + "f.festival_name LIKE ? "
+                  + "OR p.prefecture_name LIKE ?"
+                  + ") ";
 
-    	    } catch (Exception e) {
-    	        e.printStackTrace();
-    	    }
+         }
+     }
 
-    	    return list;
-    	}
+
+     // ========================================
+     // 정렬 / 페이지네이션
+     // ========================================
+
+     sql += "ORDER BY f.start_datetime "
+          + "LIMIT ?, ?";
+
+
+     try (
+         Connection con = DBConnection.getConnection();
+         PreparedStatement pstmt = con.prepareStatement(sql)
+     ) {
+
+         int index = 1;
+
+
+         // ========================================
+         // type별 조건
+         // ========================================
+
+         if ("region".equals(type)) {
+
+             pstmt.setString(index++, regionName);
+
+             if (prefectureNo != null) {
+
+                 pstmt.setInt(
+                         index++,
+                         prefectureNo
+                 );
+
+             }
+         }
+
+         else if ("season".equals(type)) {
+
+             pstmt.setString(
+                     index++,
+                     season
+             );
+
+         }
+
+         else if ("month".equals(type)) {
+
+             pstmt.setTimestamp(
+                     index++,
+                     Timestamp.valueOf(
+                             firstDay.atStartOfDay()
+                     )
+             );
+
+             pstmt.setTimestamp(
+                     index++,
+                     Timestamp.valueOf(
+                             nextMonth.atStartOfDay()
+                     )
+             );
+         }
+
+
+         // ========================================
+         // 검색 조건
+         // ========================================
+
+         if (search != null && !search.trim().isEmpty()) {
+
+             String keyword =
+                     "%" + search.trim() + "%";
+
+
+             if ("title".equals(select)) {
+
+                 pstmt.setString(
+                         index++,
+                         keyword
+                 );
+
+             }
+
+             else if ("region".equals(select)) {
+
+                 pstmt.setString(
+                         index++,
+                         keyword
+                 );
+
+             }
+
+             else {
+
+                 pstmt.setString(
+                         index++,
+                         keyword
+                 );
+
+                 pstmt.setString(
+                         index++,
+                         keyword
+                 );
+
+             }
+         }
+
+
+         // ========================================
+         // 페이지네이션
+         // ========================================
+
+         pstmt.setInt(
+                 index++,
+                 offset
+         );
+
+         pstmt.setInt(
+                 index++,
+                 pageSize
+         );
+
+
+         ResultSet rs =
+                 pstmt.executeQuery();
+
+
+         // ========================================
+         // DTO 생성
+         // ========================================
+
+         while (rs.next()) {
+
+             FestivalDto dto =
+                     new FestivalDto(
+                             rs.getInt("festival_no"),
+                             rs.getInt("prefecture_no"),
+                             rs.getString("prefecture_name"),
+                             rs.getString("festival_name"),
+                             rs.getString("summary"),
+                             rs.getString("image_url"),
+                             rs.getString("season"),
+                             rs.getTimestamp("start_datetime")
+                               .toLocalDateTime(),
+                             rs.getTimestamp("end_datetime")
+                               .toLocalDateTime()
+                     );
+
+             list.add(dto);
+         }
+
+
+     } catch (Exception e) {
+
+         e.printStackTrace();
+
+     }
+
+
+     return list;
+ }
     
 	//도도부현 불러오기
 	public List<PrefectureDto> getPrefectureList(String regionName) {
@@ -315,42 +460,99 @@ public class FestivalDao {
 	    return list;
 	}
 	
-	public int getFestivalTotalCount(String regionName, Integer prefectureNo, 
-									String select, String search) {
-	        
-		int totalCount = 0;
+	// ========================================
+	// 전체 축제 개수
+	// 지역 / 계절 / 이번 달 통합
+	// ========================================
+
+	public int getFestivalTotalCount(
+	        String type,
+	        String regionName,
+	        String season,
+	        LocalDate firstDay,
+	        LocalDate nextMonth,
+	        Integer prefectureNo,
+	        String select,
+	        String search) {
+
+	    int totalCount = 0;
+
 
 	    String sql =
 	            "SELECT COUNT(*) "
 	          + "FROM festival f "
 	          + "JOIN prefecture p "
 	          + "ON f.prefecture_no = p.prefecture_no "
-	          + "WHERE p.region_name = ? ";
+	          + "WHERE 1=1 ";
 
-	    // 도도부현 필터
-	    if (prefectureNo != null) {
-	        sql += "AND f.prefecture_no = ? ";
+
+	    // ========================================
+	    // 지역
+	    // ========================================
+
+	    if ("region".equals(type)) {
+
+	        sql += "AND p.region_name = ? ";
+
+	        if (prefectureNo != null) {
+
+	            sql += "AND f.prefecture_no = ? ";
+
+	        }
 	    }
 
-	    // 검색 조건
+
+	    // ========================================
+	    // 계절
+	    // ========================================
+
+	    else if ("season".equals(type)) {
+
+	        sql += "AND f.season = ? ";
+
+	    }
+
+
+	    // ========================================
+	    // 이번 달
+	    // ========================================
+
+	    else if ("month".equals(type)) {
+
+	        sql += "AND f.start_datetime >= ? "
+	             + "AND f.start_datetime < ? ";
+
+	    }
+
+
+	    // ========================================
+	    // 검색
+	    // ========================================
+
 	    if (search != null && !search.trim().isEmpty()) {
 
 	        if ("title".equals(select)) {
 
 	            sql += "AND f.festival_name LIKE ? ";
 
-	        } else if ("region".equals(select)) {
+	        }
+
+	        else if ("region".equals(select)) {
 
 	            sql += "AND p.prefecture_name LIKE ? ";
 
-	        } else {
+	        }
+
+	        else {
 
 	            sql += "AND ("
 	                 + "f.festival_name LIKE ? "
 	                 + "OR p.prefecture_name LIKE ?"
 	                 + ") ";
+
 	        }
 	    }
+
 
 	    try (
 	        Connection con = DBConnection.getConnection();
@@ -359,43 +561,117 @@ public class FestivalDao {
 
 	        int index = 1;
 
-	        // 지역
-	        pstmt.setString(index++, regionName);
 
-	        // 도도부현
-	        if (prefectureNo != null) {
-	            pstmt.setInt(index++, prefectureNo);
-	        }
+	        // ========================================
+	        // type별 조건
+	        // ========================================
 
-	        // 검색어
-	        if (search != null && !search.trim().isEmpty()) {
+	        if ("region".equals(type)) {
 
-	            String keyword = "%" + search.trim() + "%";
+	            pstmt.setString(
+	                    index++,
+	                    regionName
+	            );
 
-	            if ("title".equals(select)) {
+	            if (prefectureNo != null) {
 
-	                pstmt.setString(index++, keyword);
+	                pstmt.setInt(
+	                        index++,
+	                        prefectureNo
+	                );
 
-	            } else if ("region".equals(select)) {
-
-	                pstmt.setString(index++, keyword);
-
-	            } else {
-
-	                pstmt.setString(index++, keyword);
-	                pstmt.setString(index++, keyword);
 	            }
 	        }
 
-	        ResultSet rs = pstmt.executeQuery();
+	        else if ("season".equals(type)) {
 
-	        if (rs.next()) {
-	            totalCount = rs.getInt(1);
+	            pstmt.setString(
+	                    index++,
+	                    season
+	            );
+
 	        }
 
+	        else if ("month".equals(type)) {
+
+	            pstmt.setTimestamp(
+	                    index++,
+	                    Timestamp.valueOf(
+	                            firstDay.atStartOfDay()
+	                    )
+	            );
+
+	            pstmt.setTimestamp(
+	                    index++,
+	                    Timestamp.valueOf(
+	                            nextMonth.atStartOfDay()
+	                    )
+	            );
+	        }
+
+
+	        // ========================================
+	        // 검색 조건
+	        // ========================================
+
+	        if (search != null && !search.trim().isEmpty()) {
+
+	            String keyword =
+	                    "%" + search.trim() + "%";
+
+
+	            if ("title".equals(select)) {
+
+	                pstmt.setString(
+	                        index++,
+	                        keyword
+	                );
+
+	            }
+
+	            else if ("region".equals(select)) {
+
+	                pstmt.setString(
+	                        index++,
+	                        keyword
+	                );
+
+	            }
+
+	            else {
+
+	                pstmt.setString(
+	                        index++,
+	                        keyword
+	                );
+
+	                pstmt.setString(
+	                        index++,
+	                        keyword
+	                );
+
+	            }
+	        }
+
+
+	        ResultSet rs =
+	                pstmt.executeQuery();
+
+
+	        if (rs.next()) {
+
+	            totalCount =
+	                    rs.getInt(1);
+
+	        }
+
+
 	    } catch (Exception e) {
+
 	        e.printStackTrace();
+
 	    }
+
 
 	    return totalCount;
 	}
@@ -487,6 +763,73 @@ public class FestivalDao {
 	    }
 
 	    return festival;
+	}
+	
+	//월별 리스트
+	public List<FestivalDto> getThisMonthFestivalList(LocalDate firstDay, LocalDate nextMonth) {
+		
+		List<FestivalDto> list = new ArrayList<>();
+
+		String sql =
+				"SELECT f.festival_no, "
+			  + "       f.prefecture_no, "
+			  + "       f.festival_name, "
+			  + "       p.prefecture_name, "
+			  + "       f.summary, "
+			  + "       f.image_url, "
+			  + "       f.season, "
+			  + "       f.start_datetime, "
+			  + "       f.end_datetime "
+			  + "FROM festival f "
+			  + "JOIN prefecture p "
+			  + "ON f.prefecture_no = p.prefecture_no "
+			  + "WHERE f.start_datetime >= ? "
+			  + "AND f.start_datetime < ? "
+			  + "ORDER BY f.start_datetime";
+
+		try (
+			Connection con = DBConnection.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql)
+		) {
+
+			pstmt.setTimestamp(
+					1,
+					Timestamp.valueOf(firstDay.atStartOfDay())
+			);
+
+			pstmt.setTimestamp(
+					2,
+					Timestamp.valueOf(nextMonth.atStartOfDay())
+			);
+
+			ResultSet rs =
+					pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				FestivalDto dto =
+						new FestivalDto(
+								rs.getInt("festival_no"),
+								rs.getInt("prefecture_no"),
+								rs.getString("prefecture_name"),
+								rs.getString("festival_name"),
+								rs.getString("summary"),
+								rs.getString("image_url"),
+								rs.getString("season"),
+								rs.getTimestamp("start_datetime")
+										.toLocalDateTime(),
+								rs.getTimestamp("end_datetime")
+										.toLocalDateTime()
+						);
+
+				list.add(dto);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 	
 }

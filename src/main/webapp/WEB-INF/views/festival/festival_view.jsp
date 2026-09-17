@@ -46,11 +46,35 @@ pageEncoding="UTF-8"%>
 
     <div class="festival-back">
 
-        <a href="javascript:history.back()">
+       <c:choose>
 
-            ← 一覧へ戻る
+	    <c:when test="${type == 'region'}">
+	
+	        <a href="${pageContext.request.contextPath}/festival/list?type=region&region=${region}">
+	            ← 一覧へ戻る
+	        </a>
+	
+	    </c:when>
+	
+	
+	    <c:when test="${type == 'season'}">
+	
+	        <a href="${pageContext.request.contextPath}/festival/list?type=season&season=${season}">
+	            ← 一覧へ戻る
+	        </a>
+	
+	    </c:when>
+	
+	
+	    <c:when test="${type == 'month'}">
+	
+	        <a href="${pageContext.request.contextPath}/festival/list?type=month&month=${month}">
+	            ← 一覧へ戻る
+	        </a>
+	
+	    </c:when>
 
-        </a>
+</c:choose>
 
     </div>
 
@@ -503,13 +527,35 @@ pageEncoding="UTF-8"%>
 
     <div class="festival-view-bottom">
 
-        <a href="javascript:history.back()" class="festival-list-button">
-           
+ <c:choose>
 
-            祭り一覧へ
+	    <c:when test="${type == 'region'}">
+	
+	        <a href="${pageContext.request.contextPath}/festival/list?type=region&region=${region}" class="festival-list-button">
+	            ← 一覧へ戻る
+	        </a>
+	
+	    </c:when>
+	
+	
+	    <c:when test="${type == 'season'}">
+	
+	        <a href="${pageContext.request.contextPath}/festival/list?type=season&season=${season}" class="festival-list-button">
+	            ← 一覧へ戻る
+	        </a>
+	
+	    </c:when>
+	
+	
+	    <c:when test="${type == 'month'}">
+	
+	        <a href="${pageContext.request.contextPath}/festival/list?type=month&month=${month}" class="festival-list-button">
+	            ← 一覧へ戻る
+	        </a>
+	
+	    </c:when>
 
-        </a>
-
+</c:choose>
     </div>
 
 
