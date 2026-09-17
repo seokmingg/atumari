@@ -25,18 +25,18 @@
         </div>
 
         <div class="board-top">
-            <p>全 <strong>${totalCount}</strong> 件</p>
+            <p>全 <strong>${noticePage.totalCount}</strong> 件</p>
 
             <form class="board-search" method="get"
                   action="${pageContext.request.contextPath}/notice">
                 <select name="searchType">
                     <option value="title"
-                        ${searchType eq 'title' ? 'selected' : ''}>タイトル</option>
+                        ${noticePage.searchType eq 'title' ? 'selected' : ''}>タイトル</option>
                     <option value="content"
-                        ${searchType eq 'content' ? 'selected' : ''}>内容</option>
+                        ${noticePage.searchType eq 'content' ? 'selected' : ''}>内容</option>
                 </select>
                 <input type="text" name="keyword"
-                       value="<c:out value='${keyword}'/>"
+                       value="<c:out value='${noticePage.keyword}'/>"
                        placeholder="検索してください">
                 <button type="submit">検索</button>
             </form>
@@ -51,12 +51,14 @@
             </div>
 
             <c:choose>
-                <c:when test="${not empty noticeList}">
-                    <c:forEach var="notice" items="${noticeList}" varStatus="status">
+                <c:when test="${not empty noticePage.noticeList}">
+                    <c:forEach var="notice" items="${noticePage.noticeList}" varStatus="status">
                         <a class="board-row board-row-link"
                            href="${pageContext.request.contextPath}/notice/view?noticeNo=${notice.noticeNo}">
                             <span class="board-no">
-                                ${totalCount - ((currentPage - 1) * pageSize) - status.index}
+                                ${noticePage.totalCount
+                                  - ((noticePage.currentPage - 1) * noticePage.pageSize)
+                                  - status.index}
                             </span>
                             <span class="board-subject">
                                 <c:out value="${notice.title}"/>
@@ -77,34 +79,36 @@
             </c:choose>
         </div>
 
-        <c:if test="${totalPage > 1}">
+        <c:if test="${noticePage.totalPage > 1}">
             <div class="board-pagination">
-                <c:if test="${startPage > 1}">
+                <c:if test="${noticePage.startPage > 1}">
                     <c:url var="previousPageUrl" value="/notice">
-                        <c:param name="page" value="${startPage - 1}"/>
-                        <c:param name="searchType" value="${searchType}"/>
-                        <c:param name="keyword" value="${keyword}"/>
+                        <c:param name="page" value="${noticePage.startPage - 1}"/>
+                        <c:param name="searchType" value="${noticePage.searchType}"/>
+                        <c:param name="keyword" value="${noticePage.keyword}"/>
                     </c:url>
                     <a href="${previousPageUrl}" class="page-prev">←</a>
                 </c:if>
 
-                <c:forEach var="pageNumber" begin="${startPage}" end="${endPage}">
+                <c:forEach var="pageNumber"
+                           begin="${noticePage.startPage}"
+                           end="${noticePage.endPage}">
                     <c:url var="pageUrl" value="/notice">
                         <c:param name="page" value="${pageNumber}"/>
-                        <c:param name="searchType" value="${searchType}"/>
-                        <c:param name="keyword" value="${keyword}"/>
+                        <c:param name="searchType" value="${noticePage.searchType}"/>
+                        <c:param name="keyword" value="${noticePage.keyword}"/>
                     </c:url>
                     <a href="${pageUrl}"
-                       class="${pageNumber eq currentPage ? 'active' : ''}">
+                       class="${pageNumber eq noticePage.currentPage ? 'active' : ''}">
                         ${pageNumber}
                     </a>
                 </c:forEach>
 
-                <c:if test="${endPage < totalPage}">
+                <c:if test="${noticePage.endPage < noticePage.totalPage}">
                     <c:url var="nextPageUrl" value="/notice">
-                        <c:param name="page" value="${endPage + 1}"/>
-                        <c:param name="searchType" value="${searchType}"/>
-                        <c:param name="keyword" value="${keyword}"/>
+                        <c:param name="page" value="${noticePage.endPage + 1}"/>
+                        <c:param name="searchType" value="${noticePage.searchType}"/>
+                        <c:param name="keyword" value="${noticePage.keyword}"/>
                     </c:url>
                     <a href="${nextPageUrl}" class="page-next">→</a>
                 </c:if>
