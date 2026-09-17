@@ -52,6 +52,9 @@ public class LoginController extends HttpServlet {
 				if (!"".equals(loginName)) {
 					request.setAttribute("msg", "로그인 성공");
 					
+					// refactor: 로그인한 회원 id(pk) 값 획득해 session에 추가 -> 타 기능에서 외래키로 참조할 수 있도록 수정
+					Long sessionId = service.getSessionId(email);
+					
 					// 모든 페이지에서 사용할 세션 설정
 					HttpSession session = request.getSession();
 					// refactor: 별도의 세션 dto 사용
@@ -59,9 +62,11 @@ public class LoginController extends HttpServlet {
 					
 					sessionDto.setSessionEmail(email);
 					sessionDto.setSessionName(loginName);
+					sessionDto.setSessionId(sessionId);
 					
 					session.setAttribute("sessionEmail", sessionDto.getSessionEmail());
 					session.setAttribute("sessionName", sessionDto.getSessionName());
+					session.setAttribute("sessionId", sessionDto.getSessionId());
 					
 					// 관리자 이메일 회원이면
 					if ("admin@atumari.co.jp".equals(email)) {

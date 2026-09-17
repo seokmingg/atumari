@@ -139,10 +139,17 @@ public class MemberService {
 		
 		return loginName;
 	}
+	
+	// 로그인 성공 후 세션에 넣을 회원 id(pk) 취득
+	public Long getSessionId(String email) {
+		
+		return memberDao.getIdByEmail(email);
+	}
 
 	// 마이페이지 회원 정보 조회
 	public MemberDto getMemberInfo(String sessionEmail) {
 		
 		return memberDao.findByEmail(sessionEmail);
 	}
+
 }
