@@ -14,38 +14,40 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/festival/view")
 public class ViewController extends HttpServlet {
 
-    @Override
-    protected void doGet(
-            HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        String festivalNo =
-                request.getParameter("festival_no");
+		String festivalNo = request.getParameter("festival_no");
 
-        if (festivalNo == null || festivalNo.isEmpty()) {
+		if (festivalNo == null || festivalNo.isEmpty()) {
 
-            response.sendRedirect(
-                request.getContextPath() + "/festival/list"
-            );
+			response.sendRedirect(request.getContextPath() + "/festival/list");
 
-            return;
-        }
+			return;
+		}
 
-        int festivalNoValue =
-                Integer.parseInt(festivalNo);
+		int festivalNoValue = Integer.parseInt(festivalNo);
 
-        FestivalViewService service =
-                new FestivalViewService();
+		// 목록 구분값 받기
+		String type = request.getParameter("type");
+		String region = request.getParameter("region");
+		String season = request.getParameter("season");
+		String month = request.getParameter("month");
 
-        FestivalDto festival =
-                service.getFestivalView(festivalNoValue);
+		FestivalViewService service = new FestivalViewService();
 
-        request.setAttribute("festival", festival);
+		FestivalDto festival = service.getFestivalView(festivalNoValue);
 
-        request.getRequestDispatcher(
-            "/WEB-INF/views/festival/festival_view.jsp"
-        ).forward(request, response);
-    }
+		request.setAttribute("festival", festival);
+
+		// JSP로 구분값 전달
+		request.setAttribute("type", type);
+		request.setAttribute("region", region);
+		request.setAttribute("season", season);
+		request.setAttribute("month", month);
+
+		request.getRequestDispatcher("/WEB-INF/views/festival/festival_view.jsp").forward(request, response);
+	}
 
 }

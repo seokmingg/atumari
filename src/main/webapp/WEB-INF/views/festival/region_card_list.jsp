@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%>
 <title>Region | ATSUMARI</title>
 
 <link rel="stylesheet"
-      href="<%=request.getContextPath()%>/assets/festival/css/region_list.css">
+      href="<%=request.getContextPath()%>/assets/festival/css/card_list.css">
 
 </head>
 
@@ -66,7 +66,7 @@ pageEncoding="UTF-8"%>
              HOKKAIDO
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?region=hokkaido"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=hokkaido"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/hokkaido.jpg"
@@ -87,7 +87,7 @@ pageEncoding="UTF-8"%>
              TOHOKU
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?region=tohoku"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=tohoku"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/tohoku.jpg"
@@ -108,7 +108,7 @@ pageEncoding="UTF-8"%>
              KANTO
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?region=kanto"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=kanto"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/kanto.jpg"
@@ -129,7 +129,7 @@ pageEncoding="UTF-8"%>
              CHUBU
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?region=chubu"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=chubu"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/chubu.jpg"
@@ -150,7 +150,7 @@ pageEncoding="UTF-8"%>
              KINKI
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?region=kinki"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=kinki"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/kinki.jpg"
@@ -171,7 +171,7 @@ pageEncoding="UTF-8"%>
              CHUGOKU
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?region=chugoku"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=chugoku"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/chugoku.jpg"
@@ -192,7 +192,7 @@ pageEncoding="UTF-8"%>
              SHIKOKU
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?region=shikoku"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=shigoku"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/shikoku.jpg"
@@ -213,7 +213,7 @@ pageEncoding="UTF-8"%>
              KYUSHU OKINAWA
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?region=kyushu-okinawa"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=kyushu-okinawa"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/kyushu-okinawa.jpg"
