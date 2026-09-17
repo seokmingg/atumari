@@ -166,3 +166,29 @@ CREATE TABLE IF NOT EXISTS inquiry_file (
         ON DELETE CASCADE
 );
 
+-- 공지사항 정보
+CREATE TABLE IF NOT EXISTS notice (
+    notice_no INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    content LONGTEXT NOT NULL,
+    author_id BIGINT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME,
+
+    CONSTRAINT FK_NOTICE_MEMBER
+    FOREIGN KEY (author_id)
+    REFERENCES member(id)
+    );
+
+-- 공지사항 첨부파일
+CREATE TABLE IF NOT EXISTS notice_file (
+    file_no INT AUTO_INCREMENT PRIMARY KEY,
+    notice_no INT NOT NULL,
+    original_file_name VARCHAR(255) NOT NULL,
+    stored_file_name VARCHAR(255) NOT NULL UNIQUE,
+
+    CONSTRAINT FK_NOTICE_FILE_NOTICE
+    FOREIGN KEY (notice_no)
+    REFERENCES notice(notice_no)
+    ON DELETE CASCADE
+    );
