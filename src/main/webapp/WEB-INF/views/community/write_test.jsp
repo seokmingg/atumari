@@ -52,10 +52,12 @@
         <!-- =========================
              WRITE FORM
         ========================= -->
-        <form class="community-write-form"
-              enctype="multipart/form-data"
-              name="cmtywrite">
-
+  		<form class="community-write-form"
+			    name="cmtywrite"
+			    method="post"
+			    action="${pageContext.request.contextPath}/community/write"
+			    enctype="multipart/form-data"
+	    >
 
             <!-- =========================
                  POST HEADER
@@ -87,7 +89,7 @@
                     <div class="community-write-field">
                         <input type="text"
                                name="writer"
-                               value=" ${sessionScope.sessionName}"
+                               value="${sessionScope.sessionName}"
                                readonly
                                style="color:black;"
                                disabled="disabled">
@@ -224,7 +226,6 @@
 	        event.preventDefault();
 	        return;
 	    }
-	
 	});
 </script>
 
