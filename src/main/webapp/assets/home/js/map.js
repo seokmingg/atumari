@@ -342,28 +342,28 @@ function initJapanMap() {
                     const regionPages = {
 
                         "hokkaido":
-                            "/festival/list?region=hokkaido",
+                            "/festival/list?type=region&region=hokkaido",
 
                         "tohoku":
-                            "/festival/list?region=tohoku",
+                            "/festival/list?type=region&region=tohoku",
 
                         "kanto":
-                            "/festival/list?region=kanto",
+                            "/festival/list?type=region&region=kanto",
 
                         "chubu":
-                            "/festival/list?region=chubu",
+                            "/festival/list?type=region&region=chubu",
 
                         "kinki":
-                            "/festival/list?region=kinki",
+                            "/festival/list?type=region&region=kinki",
 
                         "chugoku":
-                            "/festival/list?region=chugoku",
+                            "/festival/list?type=region&region=chugoku",
 
                         "shikoku":
-                            "/festival/list?region=shikoku",
+                            "/festival/list?type=region&region=shikoku",
 
                         "kyushu-okinawa":
-                            "/festival/list?region=kyushu-okinawa"
+                            "/festival/list?type=region&region=kyushu-okinawa"
 
                     };
 

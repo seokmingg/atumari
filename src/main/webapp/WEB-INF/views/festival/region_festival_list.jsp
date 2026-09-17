@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%>
 
     <div class="festival-title">
 	
-		<a href="<%=request.getContextPath()%>/festival/card" class="other-region">
+		<a href="<%=request.getContextPath()%>/festival/region/card" class="other-region">
 			← 他の地域の選択
 		</a>
 	
@@ -162,7 +162,7 @@ pageEncoding="UTF-8"%>
 
     <c:forEach var="festival" items="${festivalList}">
 
-        <a href="<%=request.getContextPath()%>/festival/view?festival_no=${festival.festival_no}"
+        <a href="<%=request.getContextPath()%>/festival/view?festival_no=${festival.festival_no}&type=region&region=${region}"
            class="festival-item">
 
             <!-- IMAGE -->

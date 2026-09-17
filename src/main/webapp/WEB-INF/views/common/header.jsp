@@ -18,9 +18,9 @@
 	</a>
 
         <nav class="nav">
-            <a href="#">祭りを探す</a>
-            <a href="<%=request.getContextPath()%>/festival/card">地域から探す</a>
-            <a href="#">季節から探す</a>
+            <a href="<%=request.getContextPath()%>/festival/month/card">今月の祭り</a>
+            <a href="<%=request.getContextPath()%>/festival/region/card">地域から探す</a>
+            <a href="<%=request.getContextPath()%>/festival/season/card">季節から探す</a>
             <a href="<%=request.getContextPath()%>/inquiry/list">お問い合わせ</a>
             <a href="<%=request.getContextPath()%>/community">コミュニティ</a>
         </nav>

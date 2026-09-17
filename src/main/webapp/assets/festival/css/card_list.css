@@ -257,3 +257,70 @@
         );
 
 }
+/* =========================
+   TITLE ROW
+========================= */
+
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.title-row h1 {
+    margin: 0;
+}
+
+
+/* =========================
+   CARD LIST BUTTON
+========================= */
+
+/* =========================
+   TITLE ROW
+========================= */
+
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+}
+
+.title-row h1 {
+    margin: 0;
+}
+
+
+/* =========================
+   LIST BUTTON
+========================= */
+
+.card-list-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 38px;
+    padding: 0 18px;
+
+    border: 1px solid #d6d9df;
+    border-radius: 20px;
+
+    background-color: #ffffff;
+    color: #333333;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.card-list-button:hover {
+    border-color: #999999;
+    background-color: #f5f5f5;
+    color: #111111;
+}

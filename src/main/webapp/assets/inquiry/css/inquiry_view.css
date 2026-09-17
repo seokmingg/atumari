@@ -77,3 +77,38 @@
     display: flex;
     gap: 10px;
 }
+
+/* ==============================
+   상세페이지 첨부파일, 관리자 상세 페이지 겸용
+============================== */
+
+.detail-file {
+    padding: 18px 28px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.detail-file-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.detail-file-item:hover {
+    text-decoration: underline;
+}
+
+.detail-file-icon {
+    width: 16px;
+    height: 16px;
+}
