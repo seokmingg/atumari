@@ -101,7 +101,7 @@
 ========================= */
 
 #image_preview img{
-	max-width: 650px;
+	max-width: 100%;
     height: auto;
 }
 
@@ -201,6 +201,38 @@
     width: 450px;
 }
 
+#image-preview{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.image-preview-box{
+	display: flex;
+	flex-direction: column;
+	gap : 10px;
+	align-items: flex-start;
+}
+
+/* 삭제 버튼 */
+.image-delete-button {
+    margin-top: 10px;
+    padding: 8px 18px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #444;
+    color: #fff;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 삭제 버튼 hover */
+.image-delete-button:hover {
+    background: #222;
+}
 
 /* =========================
    HELP TEXT
@@ -248,6 +280,7 @@
     cursor: pointer;
     transition: 0.2s;
 }
+
 
 
 /* =========================
