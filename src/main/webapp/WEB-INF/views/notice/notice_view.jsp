@@ -26,11 +26,25 @@
             <header class="notice-view-header">
                 <h2><c:out value="${notice.title}"/></h2>
                 <div class="notice-view-meta">
-                    <span><c:out value="${notice.authorName}"/></span>
                     <span>
-                        <fmt:formatDate value="${notice.createdAt}"
-                                        pattern="yyyy.MM.dd HH:mm"/>
+                        作成者：<c:out value="${notice.authorName}"/>
                     </span>
+
+                    <div class="notice-view-dates">
+                        <span>
+                            作成日：
+                            <fmt:formatDate value="${notice.createdAt}"
+                                            pattern="yyyy.MM.dd HH:mm"/>
+                        </span>
+
+                        <c:if test="${not empty notice.updatedAt}">
+                            <span>
+                                修正日：
+                                <fmt:formatDate value="${notice.updatedAt}"
+                                                pattern="yyyy.MM.dd HH:mm"/>
+                            </span>
+                        </c:if>
+                    </div>
                 </div>
             </header>
 
