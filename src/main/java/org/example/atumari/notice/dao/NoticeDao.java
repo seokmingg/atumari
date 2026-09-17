@@ -116,6 +116,35 @@ public class NoticeDao {
         }
     }
 
+    public int updateNotice(int noticeNo, String title, String content) {
+        String sql =
+                "UPDATE notice " +
+                "SET title = ?, content = ?, updated_at = CURRENT_TIMESTAMP " +
+                "WHERE notice_no = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, title);
+            ps.setString(2, content);
+            ps.setInt(3, noticeNo);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("공지사항 수정에 실패했습니다.", e);
+        }
+    }
+
+    public int deleteNotice(int noticeNo) {
+        String sql = "DELETE FROM notice WHERE notice_no = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, noticeNo);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("공지사항 삭제에 실패했습니다.", e);
+        }
+    }
+
     private NoticeDto mapNotice(ResultSet rs) throws SQLException {
         NoticeDto notice = new NoticeDto();
         notice.setNoticeNo(rs.getInt("notice_no"));
