@@ -63,64 +63,70 @@
              SEARCH
         ========================== -->
 
-			<div class="festival-top">
+<div class="festival-top">
+
+    <!-- LEFT -->
+    <div class="festival-count-area">
+
+        <!-- TOTAL -->
+        <p class="festival-count">
+            全 <strong>${totalCount}</strong> 件
+        </p>
+
+        <div class="festival-month-buttons">
+
+            <c:forEach begin="1" end="12" var="monthNum">
+
+                <a href="${pageContext.request.contextPath}/festival/list?type=month&month=${monthNum}"
+                   class="month-button ${month == monthNum ? 'active' : ''}">
+                    ${monthNum}月
+                </a>
+
+            </c:forEach>
+
+        </div>
+
+    </div>
 
 
-				<!-- TOTAL -->
+    <!-- SEARCH -->
+    <div class="festival-search">
 
-				<p class="festival-count">
+        <select name="select" id="searchSelect">
 
-					全 <strong>${totalCount}</strong> 件
+            <option value="all"
+                    ${select == 'all' ? 'selected' : ''}>
+                すべて
+            </option>
 
-				</p>
+            <option value="title"
+                    ${select == 'title' ? 'selected' : ''}>
+                祭り名
+            </option>
 
-			<div class="festival-month-buttons">
+            <option value="region"
+                    ${select == 'region' ? 'selected' : ''}>
+                開催地域
+            </option>
 
-	            <c:forEach begin="1" end="12" var="monthNum">
-	
-	                <a href="${pageContext.request.contextPath}/festival/list?type=month&month=${monthNum}"
-	                   class="month-button ${month == monthNum ? 'active' : ''}">
-	                    ${monthNum}月
-	                </a>
-	
-	            </c:forEach>
+        </select>
 
-        	</div>
+        <input type="text"
+               placeholder="祭りを検索してください"
+               id="searchInput"
+               name="search"
+               value="${search}">
 
-				<!-- SEARCH -->
+        <button type="button" id="searchButton">
+            検索
+        </button>
 
-				<div class="festival-search">
-
-					<select name="select" id="searchSelect">
-
-						<option value="all" ${select == 'all' ? 'selected' : ''}>
-
-							すべて</option>
-
-
-						<option value="title" ${select == 'title' ? 'selected' : ''}>
-
-							祭り名</option>
+    </div>
 
 
-						<option value="region" ${select == 'region' ? 'selected' : ''}>
+    <script src="<%=request.getContextPath()%>/assets/festival/js/festival_search.js"></script>
 
-							開催地域</option>
-
-					</select> <input type="text" placeholder="祭りを検索してください" id="searchInput"
-						name="search" value="${search}">
-
-
-
-					<button type="button" id="searchButton">検索</button>
-
-				</div>
-
-
-				<script
-					src="<%=request.getContextPath()%>/assets/festival/js/festival_search.js"></script>
-
-			</div>
+</div>
 
 
 
@@ -201,7 +207,7 @@
 
 				<!-- 이전 -->
 
-				<c:if test="${currentPage > 1}">
+				<c:if test="${startPage > 1}">
 
 					<a
 						href="${pageContext.request.contextPath}/festival/list?type=month&month=${param.month}&page=${currentPage - 1}&select=${select}&search=${search}"
@@ -213,7 +219,7 @@
 
 				<!-- 페이지 번호 -->
 
-				<c:forEach begin="1" end="${totalPage}" var="pageNum">
+				<c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
 
 
 					<a
@@ -229,7 +235,7 @@
 
 				<!-- 다음 -->
 
-				<c:if test="${currentPage < totalPage}">
+				<c:if test="${endPage < totalPage}">
 
 					<a
 						href="${pageContext.request.contextPath}/festival/list?type=month&month=${param.month}&page=${currentPage + 1}&select=${select}&search=${search}"

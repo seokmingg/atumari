@@ -181,8 +181,10 @@ public class FestivalListService {
 				select,
 				search
 		);
+		
 
 	}
+	
 
 
 	// ========================================
@@ -196,6 +198,44 @@ public class FestivalListService {
 		return (int) Math.ceil(
 				(double) totalCount / pageSize
 		);
+
+	}
+	// ========================================
+	// 페이지 번호 시작
+	// 5개 단위로 페이지 번호 표시
+	// ========================================
+
+	public int getStartPage(
+	        int currentPage,
+	        int pageBlock) {
+
+	    return ((currentPage - 1) / pageBlock)
+	            * pageBlock + 1;
+
+	}
+
+
+	// ========================================
+	// 페이지 번호 끝
+	// 5개 단위로 페이지 번호 표시
+	// ========================================
+
+	public int getEndPage(
+	        int currentPage,
+	        int totalPage,
+	        int pageBlock) {
+
+	    int endPage =
+	            getStartPage(currentPage, pageBlock)
+	            + pageBlock - 1;
+
+	    if (endPage > totalPage) {
+
+	        endPage = totalPage;
+
+	    }
+
+	    return endPage;
 
 	}
 

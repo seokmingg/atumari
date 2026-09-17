@@ -73,6 +73,9 @@ public class ListController extends HttpServlet {
 		// ========================================
 
 		int pageSize = 5;
+		
+		// 페이지 번호 표시 개수
+		int pageBlock = 5;
 
 		// ========================================
 		// 5. Service
@@ -217,6 +220,16 @@ public class ListController extends HttpServlet {
 		// ========================================
 
 		totalPage = service.getTotalPage(totalCount, pageSize);
+		
+		// ========================================
+		// 15-1. 페이지 번호 범위
+		// ========================================
+
+		int startPage =
+		        service.getStartPage(page, pageBlock);
+
+		int endPage =
+		        service.getEndPage(page, totalPage, pageBlock);
 
 		// ========================================
 		// 16. 지역 데이터
@@ -269,6 +282,10 @@ public class ListController extends HttpServlet {
 		request.setAttribute("totalCount", totalCount);
 
 		request.setAttribute("totalPage", totalPage);
+		
+		request.setAttribute("startPage", startPage);
+
+		request.setAttribute("endPage", endPage);
 
 		request.setAttribute("select", select);
 

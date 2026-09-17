@@ -150,8 +150,8 @@
 
                     <input
                         type="text"
-                        placeholder="祭りの名前を検索"
-                    >
+                        placeholder="祭りの名前を検索">
+                    	
 
                 </div>
 
@@ -368,7 +368,7 @@
             </a>
 
 
-            <a class="search-item" href="/">
+            <a class="search-item" href="${pageContext.request.contextPath}/?search=keyword">
 
                 <h3>キーワードから探す</h3>
 
