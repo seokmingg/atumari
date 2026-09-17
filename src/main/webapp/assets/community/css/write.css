@@ -201,6 +201,13 @@
     width: 450px;
 }
 
+#image-preview{
+	display: flex;
+	flex-direction: column;
+	gap : 10px;
+	align-items: flex-start;
+}
+
 /* 삭제 버튼 */
 .image-delete-button {
     margin-top: 10px;

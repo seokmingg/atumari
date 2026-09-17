@@ -216,22 +216,12 @@
 	document.querySelector(".community-write-form").addEventListener("submit", function(event) {
 	
 		if (checkEmpty(cmtywrite.title, "タイトル入力してください。")) {
-	    	signup.email.focus();
+			cmtywrite.title.focus();
 	        event.preventDefault();
 	        return;
 	    }
-		if (checkEmpty(cmtywrite.content, "メールアドレスを入力してください。")) {
-	    	signup.email.focus();
-	        event.preventDefault();
-	        return;
-	    }
-		if (checkEmpty(signup.email, "メールアドレスを入力してください。")) {
-	    	signup.email.focus();
-	        event.preventDefault();
-	        return;
-	    }
-		if (checkEmpty(signup.email, "メールアドレスを入力してください。")) {
-	    	signup.email.focus();
+		if (checkEmpty(cmtywrite.content, "内容を入力してください。")) {
+			cmtywrite.content.focus();
 	        event.preventDefault();
 	        return;
 	    }
