@@ -72,7 +72,7 @@
                         <input type="text"
                                name="title"
                                placeholder="タイトルを入力してください。"
-                               required>
+                        >
                     </div>
 
                 </div>
@@ -130,15 +130,15 @@
                             </span>
                             
                         <p class="community-write-help">
-                            一番よく取れた写真を投稿してください。写真は一つだけ添付できます。<br>
+                            一番よく取れた写真を投稿してください。写真は一つだけ添付できます。
                         </p>
                         
+                        </div>
+                        
                         <!-- 사진 프리뷰 -->
-							<div id="image_preview">
-							</div>
-
-                    </div>
-
+						<div id="image_preview">
+						</div>
+						
                 	</div>
 				
 				</div>
@@ -159,7 +159,6 @@
 
                         <textarea name="content"
                                   placeholder="内容を入力してください。"
-                                  required
                                   oninput="autoResize(this)"
                                   ></textarea>
 
@@ -231,8 +230,6 @@
 
     </div>
     
-
-
 </main>
 
 
