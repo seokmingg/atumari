@@ -140,6 +140,35 @@ public class MemberDao {
 		
 		return loginName;
 	}
+	
+	// 로그인시 이메일로 회원 id(pk) 조회
+	public Long getIdByEmail(String email) {
+		Long sessionId = null;
+		
+		String sql = "SELECT id\r\n"
+				+ "FROM member\r\n"
+				+ "WHERE email = ?";
+		
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, email);
+			
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				sessionId = rs.getLong(1);
+			}
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+
+		return sessionId;
+	}
 
 	// 마이페이지 -> 세션 이메일로 회원 정보 조회
 	public MemberDto findByEmail(String sessionEmail) {
