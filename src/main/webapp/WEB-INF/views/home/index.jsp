@@ -46,6 +46,7 @@
             <a href="#festival-section">今月の祭り</a>
             <a href="#article">季節から探す</a>
             <a href="#region">地域から探す</a>
+             <a href="<%=request.getContextPath()%>/notice">公知事項</a>
             <a href="<%=request.getContextPath()%>/inquiry/list">お問い合わせ</a>
             <a href="<%=request.getContextPath()%>/community">コミュニティ</a>
         </nav>
