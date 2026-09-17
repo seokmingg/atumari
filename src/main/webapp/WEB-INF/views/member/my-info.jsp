@@ -63,7 +63,9 @@
 
                 <span>名前</span>
 
-                <strong>田中 太郎</strong>
+                <strong>
+                	${myInfo.getName()}
+                </strong>
 
             </div>
 
@@ -73,7 +75,7 @@
                 <span>メールアドレス</span>
 
                 <strong>
-                    example@email.com
+                    ${myInfo.getEmail()}
                 </strong>
 
             </div>
@@ -84,7 +86,7 @@
                 <span>電話番号</span>
 
                 <strong>
-                    090-1234-5678
+                    ${myInfo.getTel()}
                 </strong>
 
             </div>
@@ -95,7 +97,7 @@
                 <span>登録日</span>
 
                 <strong>
-                    2026年8月24日
+                    ${myInfo.getReg_date()}
                 </strong>
 
             </div>
