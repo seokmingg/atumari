@@ -13,7 +13,7 @@
 
     <link rel="stylesheet"
           href="<%=request.getContextPath()%>/assets/member/css/login.css">
-    
+    <!-- 공통 js -->
     <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
     <!-- jQuery -->
     <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
@@ -155,7 +155,6 @@
 <script type="text/javascript">
 	/*
 	** refactor: id 값에 해당하는 form을 받아, submit할시(회원등록 버튼을 클릭하거나 엔터키 입력시) 입력값 검증하도록 수정 -> 이벤트 핸들러 활용
-	** TODO. 이미 회원가입 되어있는 이메일 입력받을시 검증 후 submit 막기(알럿) 추가
 	*/
 	document.querySelector("#signup").addEventListener("submit", function(event) {
 	
@@ -222,6 +221,9 @@
 	    // 여기까지 왔다면 정상적으로 form 제출
 	});
 	
+	/*
+	*
+	// refactor: 로그인, 회원가입 공통 사용 자바스크립트 signup.js에 삽입 후 파일 임포트
 	// 이메일 형식 세부 검증
 	function checkEmailValid() {
 	    let userInput = document.querySelector("#email").value;
@@ -234,6 +236,8 @@
 	    return true;
 	    
 	}
+	*
+	*/
 	
 	// 이메일 중복 검증
 	function checkDuplicateEmail() {

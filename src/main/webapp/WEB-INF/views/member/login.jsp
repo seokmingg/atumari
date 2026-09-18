@@ -12,7 +12,7 @@
 
     <link rel="stylesheet"
         href="<%=request.getContextPath()%>/assets/member/css/login.css">
-    
+    <!-- 공통 js -->
     <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
 	<!-- jQuery -->
     <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
@@ -97,7 +97,7 @@
                 </button>
 
             </form>
-            <!-- JavaScript -->
+<!-- JavaScript -->
 <script type="text/javascript">
 	// 입력값 공백 체크 -> 이벤트 핸들링
 	document.querySelector("#login").addEventListener("submit", function(event) {
@@ -125,6 +125,9 @@
 	    // 여기까지 왔다면 정상적으로 form 제출
 	});
 	
+	/*
+	*
+	// refactor: 로그인, 회원가입 공통 사용 자바스크립트 signup.js에 삽입 후 파일 임포트
 	// 이메일 형식 세부 검증
 	function checkEmailValid() {
 	    let userInput = document.querySelector("#email").value;
@@ -137,6 +140,8 @@
 	    return true;
 	    
 	}
+	*
+	*/
 	
 	// 로그인 결과 알럿 반환
 	function getLoginResult() {
