@@ -8,12 +8,36 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/notices")
+import org.example.atumari.notice.dto.NoticeListPageDto;
+import org.example.atumari.notice.service.NoticeService;
+
+@WebServlet("/notice")
 public class NoticeController extends HttpServlet {
+
+    private final NoticeService noticeService = new NoticeService();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/notice/list.jsp")
+
+        int currentPage = parsePage(request.getParameter("page"));
+        String searchType = request.getParameter("searchType");
+        String keyword = request.getParameter("keyword");
+
+        NoticeListPageDto noticePage = noticeService.getNoticePage(
+                currentPage, searchType, keyword);
+
+        request.setAttribute("noticePage", noticePage);
+
+        request.getRequestDispatcher("/WEB-INF/views/notice/notice_list.jsp")
                 .forward(request, response);
+    }
+
+    private int parsePage(String pageValue) {
+        try {
+            return Math.max(1, Integer.parseInt(pageValue));
+        } catch (NumberFormatException e) {
+            return 1;
+        }
     }
 }

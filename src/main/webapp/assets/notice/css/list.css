@@ -193,6 +193,19 @@
     background: #fafafa;
 }
 
+.board-row-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.board-empty {
+    padding: 70px 20px;
+    border-bottom: 1px solid #eee;
+    color: #777;
+    text-align: center;
+    font-size: 14px;
+}
+
 
 /* =========================
    NO
@@ -413,6 +426,141 @@
     background: #f3c6cf;
 }
 
+/* =========================
+   NOTICE VIEW
+========================= */
+
+.notice-view {
+    padding: 45px 55px 60px;
+    background: #fff;
+}
+
+.notice-view-header {
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.notice-view-header h2 {
+    margin: 0 0 20px;
+    color: #222;
+    font-size: 28px;
+}
+
+.notice-view-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    color: #999;
+    font-size: 13px;
+}
+
+.notice-view-dates {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.notice-view-content {
+    min-height: 260px;
+    padding: 40px 0;
+    color: #444;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.notice-view-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.notice-view-actions form {
+    margin: 0;
+}
+
+.notice-delete-button {
+    padding: 13px 25px;
+    border: 0;
+    background: #333;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.notice-delete-button:hover {
+    background: #b84242;
+}
+
+/* =========================
+   NOTICE WRITE
+========================= */
+
+.notice-write-form {
+    padding: 45px 55px;
+    background: #fff;
+}
+
+.notice-write-form label {
+    display: block;
+    margin: 22px 0 10px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.notice-write-form input,
+.notice-write-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    border: 1px solid #ddd;
+    color: #333;
+    font: inherit;
+}
+
+.notice-write-form textarea {
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.notice-form-error {
+    margin: 0 0 20px;
+    padding: 12px 15px;
+    background: #fff0f2;
+    color: #b33;
+    font-size: 13px;
+}
+
+.notice-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.notice-form-actions a,
+.notice-form-actions button {
+    padding: 13px 24px;
+    border: 0;
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.notice-form-actions a {
+    background: #eee;
+    color: #555;
+}
+
+.notice-form-actions button {
+    background: #222;
+    color: #fff;
+}
+
 
 /* =========================
    TABLET
@@ -468,6 +616,19 @@
 
     .board-inner {
         width: 92%;
+    }
+
+    .notice-view {
+        padding: 30px 20px 40px;
+    }
+
+    .notice-view-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .notice-view-dates {
+        align-items: flex-start;
     }
 
 
