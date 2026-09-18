@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<!-- JSTL -->
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -13,10 +16,12 @@
 
     <title>会員情報の変更 | ATSUMARI</title>
 
-    
-
     <link rel="stylesheet"
           href="<%=request.getContextPath()%>/assets/member/css/my-info-modify.css">
+          
+    <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
+	<!-- jQuery -->
+    <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 
 </head>
 
@@ -60,7 +65,19 @@
 
         <section class="modify-box">
 
-            <form action="#" method="post">
+            <form name="modify" id="modify" action="/my-info/modify" method="post">
+            
+            	<!-- メール: 이메일은 로그인시 아이디 역할을 하므로 수정 허용하지 않음 -->
+
+                <div class="form-row">
+
+                    <label for="email">
+                        メールアドレス
+                    </label>
+
+                    ${myInfo.getEmail()}
+
+                </div>
 
 
                 <!-- 名前 -->
@@ -75,25 +92,7 @@
                         type="text"
                         id="userName"
                         name="userName"
-                        value="田中 太郎">
-
-                </div>
-
-
-
-                <!-- メール -->
-
-                <div class="form-row">
-
-                    <label for="email">
-                        メールアドレス
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value="example@email.com">
+                        value="${myInfo.getName()}">
 
                 </div>
 
@@ -109,13 +108,12 @@
 
                     <input
                         type="text"
-                        id="phone"
-                        name="phone"
-                        value="090-1234-5678">
+                        id="tel"
+                        name="tel"
+                        value="${myInfo.getTel()}">
 
                 </div>
-
-
+                
 
                 <!-- 비밀번호 -->
 
@@ -129,7 +127,7 @@
                         type="password"
                         id="password"
                         name="password"
-                        placeholder="変更する場合のみ入力">
+                        placeholder="パスワードが一致する場合だけ、会員情報をご変更いただけます。">
 
                 </div>
 
@@ -163,15 +161,61 @@
 				        変更を保存
 				    </button>
 				
+				<!--  
 				    <a href="#"
 				       class="delete-button">
 				        退会する
 				    </a>
+				    
+				-->
 			
 				</div>
 
 
             </form>
+            
+<!-- JavaScript -->
+<script type="text/javascript">
+	document.querySelector("#modify").addEventListener("submit", function(event) {
+	    
+	    if (checkEmpty(modify.userName, "お名前を入力してください。")) {
+	    	modify.userName.focus();
+	        event.preventDefault();　// 이벤트 리스너 실행는 유지하되 이벤트 동작을 막음
+	        return;
+	    }
+	    
+	    if (checkEmpty(modify.tel, "電話番号を入力してください。")) {
+	    	modify.tel.focus();
+	        event.preventDefault();　// 이벤트 리스너 실행는 유지하되 이벤트 동작을 막음
+	        return;
+	    }
+	
+	    if (checkEmpty(modify.password, "パスワードを入力してください。")) {
+	    	modify.password.focus();
+	        event.preventDefault();
+	        return;
+	    }
+	
+	    if (checkEmpty(modify.passwordConfirm,
+	                  "もう一度パスワードを入力してください。")) {
+	    	modify.passwordConfirm.focus();
+	        event.preventDefault();
+	        return;
+	    }
+	
+	    if (modify.password.value != modify.passwordConfirm.value) {
+	
+	        alert("同じパスワードを入力してください。");
+	        modify.passwordConfirm.focus();
+	
+	        event.preventDefault();
+	        return;
+	    }
+	
+	    // 여기까지 왔다면 정상적으로 form 제출
+	});
+	
+</script>
 
         </section>
 

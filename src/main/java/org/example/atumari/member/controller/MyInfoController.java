@@ -24,10 +24,6 @@ public class MyInfoController extends HttpServlet {
     		request.getRequestDispatcher("/WEB-INF/views/member/login.jsp")
     			.forward(request, response);
     	} else {
-			// 서비스로 세션 이메일 넘기기
-    		// 서비스에서 이메일로 db 조회(dao)해서 회원 정보 획득해 넘기기
-    		// 다시 컨트롤러에서 셋 어트리뷰트한 다음
-    		// jsp에서 jstl로 출력
     		
     		MemberService service = new MemberService();
     		
