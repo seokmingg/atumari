@@ -104,6 +104,10 @@
 
 <section class="hero">
 
+	<script>
+    	const contextPath = "<%=request.getContextPath()%>";
+	</script>
+
     <script src="<%=request.getContextPath()%>/assets/home/js/search.js"></script>
 
     <div class="hero-content">
@@ -149,11 +153,8 @@
 
                     <span>FESTIVAL</span>
 
-                    <input
-                        type="text"
-                        placeholder="祭りの名前を検索">
-                    	
-
+                    <input type="text" placeholder="祭りの名前を検索" name="keyword">
+                        
                 </div>
 
 
