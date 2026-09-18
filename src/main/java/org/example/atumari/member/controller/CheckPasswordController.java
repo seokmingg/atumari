@@ -7,19 +7,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import org.example.atumari.member.service.MemberService;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 /**
- * Servlet implementation class CheckEmailController
+ * Servlet implementation class CheckPasswordController
  */
-@WebServlet("/checkemail")
-public class CheckEmailController extends HttpServlet {
-	/*
-	 * 회원가입에서 이메일 입력 값 중복 검증하는 컨트롤러
-	 * */
-	
+@WebServlet("/checkpassword")
+public class CheckPasswordController extends HttpServlet {
+	/**
+	 * 마이페이지 회원 정보 수정시 비밀번호 입력 값 일치하는지 검증하는 컨트롤러
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -31,13 +31,14 @@ public class CheckEmailController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		
 		MemberService service = new MemberService();
-		int count = service.checkDuplicateEmail(email);
+		boolean isEqual = service.checkPassword(email, password);
 		
-		if (count == 0) out.print("会員登録に成功しました。あつまりへようこそ！");
-		else out.print("このメールアドレスは登録済です。他のメールアドレスを入力してください。");
-			
+		if (service.checkPassword(email, password)) out.print("会員情報が修正されました。");
+		else out.print("パスワードをもう一度確認してください。");
+		
 	}
 
 }

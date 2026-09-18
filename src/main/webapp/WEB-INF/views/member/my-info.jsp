@@ -90,6 +90,16 @@
                 </strong>
 
             </div>
+            
+            <div class="info-row">
+
+                <span>ニックネーム</span>
+
+                <strong>
+                	${myInfo.getNickname()}
+                </strong>
+
+            </div>
 
 
             <div class="info-row">
@@ -101,7 +111,18 @@
                 </strong>
 
             </div>
-
+            
+            <c:if test="${not empty myInfo.getModify_date()}">
+	            <div class="info-row">
+	
+	                <span>修正日</span>
+	
+	                <strong>
+	                    ${myInfo.getModify_date()}
+	                </strong>
+	
+	            </div>
+			</c:if>
 
             <div class="info-button">
 

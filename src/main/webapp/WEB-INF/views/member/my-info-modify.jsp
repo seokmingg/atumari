@@ -67,6 +67,10 @@
 
             <form name="modify" id="modify" action="/my-info/modify" method="post">
             
+            <!-- getCheckPassword() 비밀번호 값 검증에 사용하는 hidden input -->
+            
+            <input type="hidden" name="checkPasswordResult" />
+            
             	<!-- メール: 이메일은 로그인시 아이디 역할을 하므로 수정 허용하지 않음 -->
 
                 <div class="form-row">
@@ -76,6 +80,11 @@
                     </label>
 
                     ${myInfo.getEmail()}
+                     <input
+                        type="hidden"
+                        id="email"
+                        name="email"
+                        value="${myInfo.getEmail()}">
 
                 </div>
 
@@ -95,9 +104,7 @@
                         value="${myInfo.getName()}">
 
                 </div>
-
-
-
+                
                 <!-- 電話番号 -->
 
                 <div class="form-row">
@@ -105,15 +112,66 @@
                     <label for="phone">
                         電話番号
                     </label>
+                    
+                    <c:choose>
+                    	<c:when test="${myInfo.getTel() eq '未入力'}">
 
-                    <input
-                        type="text"
-                        id="tel"
-                        name="tel"
-                        value="${myInfo.getTel()}">
+		                    <input
+		                        type="text"
+		                        id="tel"
+		                        name="tel"
+		                        placeholder="電話番号を入力してください">
+                        
+                        </c:when>
+                        
+                        <c:otherwise>
+                        	
+		                    <input
+		                        type="text"
+		                        id="tel"
+		                        name="tel"
+		                        value="${myInfo.getTel()}">
+                        
+                        </c:otherwise>
+                        
+                     </c:choose>
 
                 </div>
                 
+                
+                <!-- ニックネーム -->
+
+                <div class="form-row">
+
+                    <label for="userName">
+                        ニックネーム
+                    </label>
+                    
+                    <c:choose>
+                    	<c:when test="${myInfo.getNickname() eq '未入力'}">
+                    	
+                    		<input
+		                        type="text"
+		                        id="nickname"
+		                        name="nickname"
+		                        placeholder="ニックネームを入力してください">
+                        
+                        </c:when>
+                        
+                        <c:otherwise>
+                        	
+                        	 <input
+		                        type="text"
+		                        id="nickname"
+		                        name="nickname"
+		                        value="${myInfo.getNickname()}">
+                        	
+                        </c:otherwise>
+                        
+                    </c:choose>
+
+                </div>
+ 
 
                 <!-- 비밀번호 -->
 
@@ -122,12 +180,12 @@
                     <label for="password">
                         パスワード
                     </label>
-
+					
                     <input
                         type="password"
                         id="password"
                         name="password"
-                        placeholder="パスワードが一致する場合だけ、会員情報をご変更いただけます。">
+                        placeholder="パスワードが一致する場合だけ、会員情報をご変更いただけます">
 
                 </div>
 
@@ -180,13 +238,19 @@
 	    
 	    if (checkEmpty(modify.userName, "お名前を入力してください。")) {
 	    	modify.userName.focus();
-	        event.preventDefault();　// 이벤트 리스너 실행는 유지하되 이벤트 동작을 막음
+	        event.preventDefault();　// 이벤트 리스너 실행는 유지하되 서브밋 동작 자체를 막음
+	        return;
+	    }
+	    
+	    if (checkEmpty(modify.nickname, "ニックネームを入力してください。")) {
+	    	modify.nickname.focus();
+	        event.preventDefault();
 	        return;
 	    }
 	    
 	    if (checkEmpty(modify.tel, "電話番号を入力してください。")) {
 	    	modify.tel.focus();
-	        event.preventDefault();　// 이벤트 리스너 실행는 유지하되 이벤트 동작을 막음
+	        event.preventDefault();
 	        return;
 	    }
 	
@@ -212,11 +276,38 @@
 	        return;
 	    }
 	    
-	    // 비밀번호 일치 여부 검증
+	    getCheckPassword();
 	    
-	
+	    // 비밀번호가 맞지 않으면 submit 막기
+	    if (modify.checkPasswordResult.value == "パスワードをもう一度確認してください。") {
+	    	event.preventDefault();
+	    	return;
+	    }
+		
 	    // 여기까지 왔다면 정상적으로 form 제출
 	});
+	
+    function getCheckPassword() {
+		
+    	let email = modify.email.value;
+		let password = modify.password.value;
+		
+		$.ajax({
+		type :"POST",
+		url : "<%=request.getContextPath()%>/checkpassword",
+		data: "email="+email+"&password="+password,
+		async: false,
+		dataType : "text",
+		error : () => {
+			alert('問題が発生しました。もう一度確認してください。');
+		},
+		success : (data) => {
+			let result = $.trim(data); // alert 창 공백 제거(제이쿼리)
+			modify.checkPasswordResult.value = result; // 전용 인풋에 결괏값 넣기
+			alert(result);
+		}
+	});	
+	}
 	
 </script>
 
