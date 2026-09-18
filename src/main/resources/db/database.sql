@@ -166,3 +166,88 @@ CREATE TABLE IF NOT EXISTS inquiry_file (
         ON DELETE CASCADE
 );
 
+-- 공지사항 정보
+CREATE TABLE IF NOT EXISTS notice (
+    notice_no INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    content LONGTEXT NOT NULL,
+    author_id BIGINT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME,
+
+    CONSTRAINT FK_NOTICE_MEMBER
+    FOREIGN KEY (author_id)
+    REFERENCES member(id)
+    );
+
+-- 공지사항 첨부파일
+CREATE TABLE IF NOT EXISTS notice_file (
+    file_no INT AUTO_INCREMENT PRIMARY KEY,
+    notice_no INT NOT NULL,
+    original_file_name VARCHAR(255) NOT NULL,
+    stored_file_name VARCHAR(255) NOT NULL UNIQUE,
+
+    CONSTRAINT FK_NOTICE_FILE_NOTICE
+    FOREIGN KEY (notice_no)
+    REFERENCES notice(notice_no)
+    ON DELETE CASCADE
+    );
+
+
+-- 커뮤니티 테이블
+CREATE TABLE IF NOT EXISTS community (
+    cmty_no BIGINT NOT NULL AUTO_INCREMENT,
+    member_id BIGINT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    reg_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    hit INT NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (cmty_no),
+
+    CONSTRAINT fk_community_member
+    FOREIGN KEY (member_id)
+    REFERENCES member(id)
+    );
+
+-- 커뮤니티 댓글 테이블
+CREATE TABLE IF NOT EXISTS community_comments (
+    comment_no BIGINT NOT NULL AUTO_INCREMENT,
+    cmty_no BIGINT NOT NULL,
+    member_id BIGINT NOT NULL,
+    parent_no BIGINT DEFAULT NULL,
+    content TEXT NOT NULL,
+    reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_date TIMESTAMP NULL DEFAULT NULL,
+    is_deleted INT NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (comment_no),
+
+    CONSTRAINT fk_comments_community
+    FOREIGN KEY (cmty_no)
+    REFERENCES community(cmty_no),
+
+    CONSTRAINT fk_comments_member
+    FOREIGN KEY (member_id)
+    REFERENCES member(id),
+
+    CONSTRAINT fk_comments_parent
+    FOREIGN KEY (parent_no)
+    REFERENCES community_comments(comment_no)
+    );
+
+
+--커뮤니티 파일 테이블
+CREATE TABLE IF NOT EXISTS community_files (
+    file_no BIGINT NOT NULL AUTO_INCREMENT,
+    cmty_no BIGINT NOT NULL,
+    original_file_name VARCHAR(255) NOT NULL,
+    save_file_name VARCHAR(255) NOT NULL,
+
+    PRIMARY KEY (file_no),
+
+    CONSTRAINT fk_files_community
+    FOREIGN KEY (cmty_no)
+    REFERENCES community(cmty_no)
+    );
