@@ -236,7 +236,7 @@ pageEncoding="UTF-8"%>
 	<div class="festival-pagination">
 	
 	    <!-- 이전 -->
-	    <c:if test="${currentPage > 1}">
+	    <c:if test="${startPage > 1}">
 	
 	        <a href="${pageContext.request.contextPath}/festival/list?region=${region}&page=${currentPage - 1}"
 	           class="page-prev">
@@ -249,7 +249,7 @@ pageEncoding="UTF-8"%>
 	
 	
 	    <!-- 페이지 번호 -->
-	    <c:forEach begin="1" end="${totalPage}" var="pageNum">
+	    <c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
 
 		    <a href="${pageContext.request.contextPath}/festival/list?region=${region}&prefecture_no=${param.prefecture_no}&page=${pageNum}"
 		       class="${currentPage == pageNum ? 'active' : ''}">
@@ -260,7 +260,7 @@ pageEncoding="UTF-8"%>
 	
 	
 	    <!-- 다음 -->
-	    <c:if test="${currentPage < totalPage}">
+	    <c:if test="${endPage < totalPage}">
 	
 	        <a href="${pageContext.request.contextPath}/festival/list?region=${region}&page=${currentPage + 1}"
 	           class="page-next">

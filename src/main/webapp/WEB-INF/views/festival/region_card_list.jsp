@@ -192,7 +192,7 @@ pageEncoding="UTF-8"%>
              SHIKOKU
         ========================== -->
 
-        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=shigoku"
+        <a href="<%=request.getContextPath()%>/festival/list?type=region&region=shikoku"
            class="region-card">
 
             <img src="<%=request.getContextPath()%>/assets/festival/images/region/shikoku.jpg"

@@ -43,18 +43,37 @@ document.addEventListener("DOMContentLoaded", function () {
        PANEL OPEN
     ========================= */
 
-    function openPanel(panel) {
+	function openPanel(panel) {
 
-        if (!searchPanel || !panel) return;
+	    if (!searchPanel || !panel) return;
 
-        searchPanel.classList.add("open");
+	    searchPanel.classList.add("open");
 
-        keywordPanel.style.display = "none";
-        datePanel.style.display = "none";
+	    keywordPanel.style.display = "none";
 
-        panel.style.display = "flex";
-    }
+	    datePanel.style.display = "none";
 
+	    panel.style.display = "flex";
+
+
+	    /* =========================
+	       KEYWORD INPUT FOCUS
+	    ========================= */
+
+	    if (panel === keywordPanel) {
+
+	        const keywordInput =
+	            keywordTrigger.querySelector("input");
+
+	        if (keywordInput) {
+
+	            keywordInput.focus();
+
+	        }
+
+	    }
+
+	}
 
     /* =========================
        FESTIVAL CLICK
@@ -539,5 +558,25 @@ document.addEventListener("DOMContentLoaded", function () {
     ========================= */
 
     renderCalendar();
+	
+	/* =========================
+	   OPEN KEYWORD PANEL
+	   URL : ?search=keyword
+	========================= */
+
+	const params = new URLSearchParams(
+	    window.location.search
+	);
+
+	if (params.get("search") === "keyword") {
+
+	    openPanel(keywordPanel);
+
+	    window.scrollTo({
+	        top: 300,
+	        behavior: "instant"
+	    });
+
+	}
 
 });
