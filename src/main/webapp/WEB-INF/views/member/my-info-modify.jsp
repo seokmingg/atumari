@@ -112,29 +112,27 @@
                     <label for="phone">
                         電話番号
                     </label>
-                    
-                    <c:choose>
-                    	<c:when test="${myInfo.getTel() eq '未入力'}">
-
-		                    <input
-		                        type="text"
-		                        id="tel"
-		                        name="tel"
-		                        placeholder="電話番号を入力してください">
+                    <!-- TODO. member DB 전화번호 컬럼 세분화(1, 2, 3) -->
+                    <input
+                        type="text"
+                        id="tel1"
+                        name="tel1"
+                        class="tel"
+                        value="${myInfo.getTel()}">
                         
-                        </c:when>
+                    <input
+                        type="text"
+                        id="tel2"
+                        name="tel2"
+                        class="tel"
+                        value="${myInfo.getTel()}">
                         
-                        <c:otherwise>
-                        	
-		                    <input
-		                        type="text"
-		                        id="tel"
-		                        name="tel"
-		                        value="${myInfo.getTel()}">
-                        
-                        </c:otherwise>
-                        
-                     </c:choose>
+                    <input
+                        type="text"
+                        id="tel3"
+                        name="tel3"
+                        class="tel"
+                        value="${myInfo.getTel()}">
 
                 </div>
                 
@@ -146,30 +144,13 @@
                     <label for="userName">
                         ニックネーム
                     </label>
-                    
-                    <c:choose>
-                    	<c:when test="${myInfo.getNickname() eq '未入力'}">
-                    	
-                    		<input
-		                        type="text"
-		                        id="nickname"
-		                        name="nickname"
-		                        placeholder="ニックネームを入力してください">
-                        
-                        </c:when>
-                        
-                        <c:otherwise>
-                        	
-                        	 <input
-		                        type="text"
-		                        id="nickname"
-		                        name="nickname"
-		                        value="${myInfo.getNickname()}">
-                        	
-                        </c:otherwise>
-                        
-                    </c:choose>
 
+                    <input
+                       type="text"
+                       id="nickname"
+                       name="nickname"
+                       value="${myInfo.getNickname()}">
+                        	
                 </div>
  
 
@@ -188,26 +169,6 @@
                         placeholder="パスワードが一致する場合だけ、会員情報をご変更いただけます">
 
                 </div>
-
-
-
-                <!-- 비밀번호 확인 -->
-
-                <div class="form-row">
-
-                    <label for="passwordConfirm">
-                        パスワード確認
-                    </label>
-
-                    <input
-                        type="password"
-                        id="passwordConfirm"
-                        name="passwordConfirm"
-                        placeholder="もう一度入力してください">
-
-                </div>
-
-
 
                 <!-- BUTTON -->
 
@@ -242,36 +203,9 @@
 	        return;
 	    }
 	    
-	    if (checkEmpty(modify.nickname, "ニックネームを入力してください。")) {
-	    	modify.nickname.focus();
-	        event.preventDefault();
-	        return;
-	    }
-	    
-	    if (checkEmpty(modify.tel, "電話番号を入力してください。")) {
-	    	modify.tel.focus();
-	        event.preventDefault();
-	        return;
-	    }
 	
 	    if (checkEmpty(modify.password, "パスワードを入力してください。")) {
 	    	modify.password.focus();
-	        event.preventDefault();
-	        return;
-	    }
-	
-	    if (checkEmpty(modify.passwordConfirm,
-	                  "もう一度パスワードを入力してください。")) {
-	    	modify.passwordConfirm.focus();
-	        event.preventDefault();
-	        return;
-	    }
-	
-	    if (modify.password.value != modify.passwordConfirm.value) {
-	
-	        alert("同じパスワードを入力してください。");
-	        modify.passwordConfirm.focus();
-	
 	        event.preventDefault();
 	        return;
 	    }

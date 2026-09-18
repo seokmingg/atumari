@@ -176,8 +176,8 @@ public class MemberDao {
 		MemberDto memberDto = null;
 		
 		String sql = "SELECT name, \r\n"
-				+ "		IFNULL(tel, '未入力') AS tel, \r\n"
-				+ "		IFNULL(nickname, '未入力') AS nickname, \r\n"
+				+ "		tel, \r\n"
+				+ "		nickname, \r\n"
 				+ "		DATE_FORMAT(reg_date, '%Y年%m月%d日') AS reg_date,\r\n"
 				+ "		DATE_FORMAT(modify_date, '%Y年%m月%d日') AS modify_date	"
 				+ "FROM member\r\n"
