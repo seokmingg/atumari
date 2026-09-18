@@ -211,6 +211,9 @@
 	        event.preventDefault();
 	        return;
 	    }
+	    
+	    // 비밀번호 일치 여부 검증
+	    
 	
 	    // 여기까지 왔다면 정상적으로 form 제출
 	});

@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS member (
     nickname VARCHAR(255),
     tel VARCHAR(100), -- 010-0000-0000
     reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modify_date TIMESTAMP,
+    modify_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 가입시에는 가입 일자와 동일, 이후 수정시 수정일자로 자동 업데이트
     exit_date TIMESTAMP,
     rk VARCHAR(100), -- 회원 등급(rank): 매니저, 기자, 일반 등
     filepath VARCHAR(5000) -- 추후 프로필 사진 등 첨부파일 구현 시 파일 경로
