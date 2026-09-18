@@ -5,6 +5,7 @@ public class SessionDto {
 	private String sessionEmail;
 	private String sessionName;
 	private String sessionLevel;
+	private Long sessionId;
 	
 	public String getSessionEmail() {
 		return sessionEmail;
@@ -15,6 +16,9 @@ public class SessionDto {
 	public String getSessionLevel() {
 		return sessionLevel;
 	}
+	public Long getSessionId() {
+		return sessionId;
+	}
 	public void setSessionEmail(String sessionEmail) {
 		this.sessionEmail = sessionEmail;
 	}
@@ -23,6 +27,9 @@ public class SessionDto {
 	}
 	public void setSessionLevel(String sessionLevel) {
 		this.sessionLevel = sessionLevel;
+	}
+	public void setSessionId(Long sessionId) {
+		this.sessionId = sessionId;
 	}
 	
 }

@@ -618,3 +618,9 @@
     background: #071A6B;
     color: #ffffff;
 }
+.festival-count-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
