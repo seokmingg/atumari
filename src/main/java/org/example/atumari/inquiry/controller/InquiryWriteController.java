@@ -66,7 +66,7 @@ public class InquiryWriteController extends HttpServlet {
 	        }
 	        
 	       //Service 에서 던져진 예외 처리, Service 형식검증 등에 맞지 않으면 예외가 발생
-	       // Service에서 발생한 검증 오류 및 처리 오류를 Controller에서 처리
+	       //Service 에서 발생한 검증 오류 및 처리 오류를 Controller 에서 처리
 	        try {
 
 	            inquiryService.createInquiry(
