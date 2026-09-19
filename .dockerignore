@@ -1,0 +1,16 @@
+.git
+.github
+.gradle
+.idea
+build
+bin
+out
+
+.env
+deploy/.env
+deploy/certbot/conf/*
+deploy/certbot/www/*
+
+*.iml
+*.log
+.DS_Store
