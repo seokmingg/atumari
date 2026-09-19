@@ -32,7 +32,17 @@ public class InquiryWriteController extends HttpServlet {
 	    protected void doGet(HttpServletRequest request,
 	                         HttpServletResponse response)
 	            throws ServletException, IOException {
-
+		// doGet: "이 사람에게 작성 화면을 보여줘도 되는가?"
+		   
+		   HttpSession session = request.getSession(false);
+		   
+		   // 로그인 여부 확인
+		   if(session == null || session.getAttribute("sessionId")==null) {
+			   response.sendRedirect(request.getContextPath()+"/memeber/longin");
+			   return;
+		   }
+		   
+		   //로그인한 경우 작성 페이지
 	        String view = "/WEB-INF/views/inquiry/inquiry_write.jsp";
 	        request.getRequestDispatcher(view).forward(request, response);
 	    }
@@ -41,12 +51,24 @@ public class InquiryWriteController extends HttpServlet {
 	    protected void doPost(HttpServletRequest request,
 	                          HttpServletResponse response)
 	                          throws ServletException, IOException {
+		// doPost: "이 사람이 실제로 문의를 등록할 권한이 있는가?"
 		   
-	
-		   //문의 등록 폼에서 보낸 데이터 받기
+		   HttpSession session = request.getSession(false);
+		   
+		// 세션이 없거나 로그인 정보가 없는 경우
+		   if(session == null || session.getAttribute("sessionId") == null) {
+			  response.sendRedirect(
+					  request.getContextPath()+"/member/login");
+			  return;
+		   }
+		   
+		// 로그인한 회원 PK 가져오기   
+		   Long member_id = (Long)session.getAttribute("sessionId");
+		   
+		 //문의 등록 폼에서 보낸 데이터 받기
 	        String title = request.getParameter("title");
 	        String writer =request.getParameter("writer");
-	        String password = request.getParameter("password");
+	   //     String password = request.getParameter("password");
 	        
 	        boolean isPublic = "1".equals(request.getParameter("isPublic"));//1이면 공개 true로 바꿔서 dto에 저장
 	        boolean emailNotify = "1".equals(request.getParameter("emailNotify"));
@@ -54,7 +76,7 @@ public class InquiryWriteController extends HttpServlet {
 	        String email = request.getParameter("email");
 	        String content = request.getParameter("content");
 	        
-	        InquiryDto inquiry = new InquiryDto(title, writer, password, isPublic, content, email);
+	        InquiryDto inquiry = new InquiryDto(member_id,title, writer, isPublic, content, email);
 	        
 	        List<Part> files = new ArrayList<>();
 
@@ -66,7 +88,7 @@ public class InquiryWriteController extends HttpServlet {
 	        }
 	        
 	       //Service 에서 던져진 예외 처리, Service 형식검증 등에 맞지 않으면 예외가 발생
-	       // Service에서 발생한 검증 오류 및 처리 오류를 Controller에서 처리
+	       //Service 에서 발생한 검증 오류 및 처리 오류를 Controller 에서 처리
 	        try {
 
 	            inquiryService.createInquiry(

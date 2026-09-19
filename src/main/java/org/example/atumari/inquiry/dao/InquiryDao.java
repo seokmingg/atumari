@@ -20,16 +20,16 @@ public class InquiryDao {
 		int inquiry_no=0;
 		
 		String sql ="INSERT INTO inquiry " +
-			    "(title, writer, password,is_public, content, email) " +
+			    "(member_id, title, writer, is_public, content, email) " +
 			    "VALUES (?, ?, ?, ?, ?, ?)";
 		
 		try{
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			//두번째 인수 의미:INSERT에서 DB가 자동 생성한 키도 나한테 돌려줘라는 의미
-				ps.setString(1, inquiry.getTitle());
-				ps.setString(2, inquiry.getWriter());
-				ps.setString(3, inquiry.getPassword());
+				ps.setLong(1, inquiry.getMember_id());
+				ps.setString(2, inquiry.getTitle());
+				ps.setString(3, inquiry.getWriter());
 				ps.setBoolean(4, inquiry.isPublic());
 				ps.setString(5, inquiry.getContent());
 				ps.setString(6, inquiry.getEmail());
