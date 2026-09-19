@@ -30,6 +30,10 @@ repositories {
 }
 
 dependencies {
+	// AWS SDK 버전을 BOM으로 통일하고 S3 파일 저장 기능을 사용합니다.
+	implementation platform('software.amazon.awssdk:bom:2.53.1')
+	implementation 'software.amazon.awssdk:s3'
+
 	// ==================================================
 	// 데이터베이스
 	// ==================================================
