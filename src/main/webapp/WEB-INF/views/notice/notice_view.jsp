@@ -49,6 +49,21 @@
             </header>
 
             <div class="notice-view-content"><c:out value="${notice.content}"/></div>
+
+            <c:if test="${not empty noticeFiles}">
+                <div class="notice-view-files">
+                    <strong>添付ファイル</strong>
+                    <ul>
+                        <c:forEach var="file" items="${noticeFiles}">
+                            <li>
+                                <a href="${pageContext.request.contextPath}/notice/file/download?fileNo=${file.fileNo}">
+                                    <c:out value="${file.originalFileName}"/>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </c:if>
         </article>
 
         <div class="notice-view-actions">
