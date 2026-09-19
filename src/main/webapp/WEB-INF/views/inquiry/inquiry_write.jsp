@@ -65,7 +65,7 @@
         <div class="form-label">作成者</div>
 
         <div class="form-field">
-            <input type="text" name="writer">
+            <input type="text" name="writer" value="${SessionName}">
         </div>
     </div>
 
@@ -99,7 +99,7 @@
     </div>
 
 
-    <!-- 비밀번호 -->
+    <!-- 비밀번호
     <div class="form-row hidden-row" id="passwordArea">
 
         <div class="form-label">パスワード</div>
@@ -119,7 +119,7 @@
 
         </div>
     </div>
-
+ -->
 
     <!-- 답변 알림 -->
     <div class="form-row">
@@ -157,7 +157,7 @@
             <input type="email"
                    id="email"
                    name="email"
-                   placeholder="example@email.com">
+                   value="${sessionEmail}">
 
             <div class="form-help">
                 *回答が登録された際に通知メールを送信します。

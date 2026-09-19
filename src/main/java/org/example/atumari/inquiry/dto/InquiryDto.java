@@ -7,10 +7,11 @@ public class InquiryDto {
 	
 
 	    private int inquiry_no;
+	    private Long member_id;
 
 	    private String title;
 	    private String writer;
-	    private String password;
+	  //    private String password;
 	    
 	    private boolean isPublic; //jsp에서 value값이 0,1로 넘어옴
 	    
@@ -26,12 +27,12 @@ public class InquiryDto {
 
     
     // writeController 
-		public InquiryDto(String title, String writer, String password, boolean isPublic, String content, String email) 
+		public InquiryDto( Long member_id, String title, String writer, boolean isPublic, String content, String email) 
 		{
 			super();
 			this.title = title;
 			this.writer = writer;
-			this.password = password;
+			this.member_id = member_id;
 			this.isPublic = isPublic;
 			this.content = content;
 			this.email = email;
@@ -82,14 +83,20 @@ public class InquiryDto {
 			this.writer = writer;
 		}
 
+		
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
+//		public void setPassword(String password) {
+//			this.password = password;
+//		}
+//
+//
+//		public String getPassword() {
+//			return password;
+//		}
 
 
-		public String getPassword() {
-			return password;
+		public void setMember_id(Long member_id) {
+			this.member_id = member_id;
 		}
 
 
@@ -100,6 +107,11 @@ public class InquiryDto {
 
 		public int getInquiry_no() {
 			return inquiry_no;
+		}
+
+
+		public Long getMember_id() {
+			return member_id;
 		}
 
 
