@@ -132,23 +132,33 @@ CREATE TABLE IF NOT EXISTS festival (
 
 -- 문의 정보
 CREATE TABLE IF NOT EXISTS inquiry (
+
     inquiry_no INT AUTO_INCREMENT PRIMARY KEY,
 
+    member_id BIGINT NOT NULL,
+
     title VARCHAR(200) NOT NULL,
+
     content TEXT NOT NULL,
 
     writer VARCHAR(100) NOT NULL,
+
     email VARCHAR(255),
 
     status VARCHAR(20) NOT NULL DEFAULT 'WAITING',
-    is_public BOOLEAN NOT NULL DEFAULT TRUE,
 
-    password VARCHAR(255),
+    is_public BOOLEAN NOT NULL DEFAULT TRUE,
 
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     answer_content TEXT,
-    answered_at DATETIME
+
+    answered_at DATETIME,
+
+    CONSTRAINT fk_inquiry_member
+        FOREIGN KEY (member_id)
+        REFERENCES member(id)
+
 );
 
 
