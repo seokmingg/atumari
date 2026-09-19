@@ -62,13 +62,12 @@ atumari:
   database:
     server-url: ${DB_SERVER_URL:jdbc:mysql://localhost:3306/}
 
+  storage:
+    s3:
+      region: ${AWS_REGION:ap-northeast-2}
+      bucket: ${S3_BUCKET}
+
 logging:
   level:
     root: INFO
     atumari: DEBUG
-
-# ==========================================
-# 첨부파일 경로
-# ==========================================
-file-storage:
-  upload-path: ${UPLOAD_PATH}
