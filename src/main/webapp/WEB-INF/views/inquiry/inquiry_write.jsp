@@ -197,8 +197,11 @@
             </div>
 
             <div class="form-help">
-                *画像または文書ファイルを添付できます。
+               ※ 添付可能なファイル：JPG、JPEG、PNG、PDF、DOC、DOCX、XLS、XLSX<br>
+  				  （最大3ファイル、1ファイルあたり10MBまで）
             </div>
+            
+            
 
         </div>
     </div>
