@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<!-- JSTL -->
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -13,10 +16,12 @@
 
     <title>会員情報の変更 | ATSUMARI</title>
 
-    
-
     <link rel="stylesheet"
           href="<%=request.getContextPath()%>/assets/member/css/my-info-modify.css">
+          
+    <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
+	<!-- jQuery -->
+    <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 
 </head>
 
@@ -60,7 +65,28 @@
 
         <section class="modify-box">
 
-            <form action="#" method="post">
+            <form name="modify" id="modify" action="/my-info/modify" method="post">
+            
+            <!-- getCheckPassword() 비밀번호 값 검증에 사용하는 hidden input -->
+            
+            <input type="hidden" name="checkPasswordResult" />
+            
+            	<!-- メール: 이메일은 로그인시 아이디 역할을 하므로 수정 허용하지 않음 -->
+
+                <div class="form-row">
+
+                    <label for="email">
+                        メールアドレス
+                    </label>
+
+                    ${myInfo.getEmail()}
+                     <input
+                        type="hidden"
+                        id="email"
+                        name="email"
+                        value="${myInfo.getEmail()}">
+
+                </div>
 
 
                 <!-- 名前 -->
@@ -75,30 +101,10 @@
                         type="text"
                         id="userName"
                         name="userName"
-                        value="田中 太郎">
+                        value="${myInfo.getName()}">
 
                 </div>
-
-
-
-                <!-- メール -->
-
-                <div class="form-row">
-
-                    <label for="email">
-                        メールアドレス
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value="example@email.com">
-
-                </div>
-
-
-
+                
                 <!-- 電話番号 -->
 
                 <div class="form-row">
@@ -106,16 +112,47 @@
                     <label for="phone">
                         電話番号
                     </label>
-
+                    <!-- TODO. member DB 전화번호 컬럼 세분화(1, 2, 3) -->
                     <input
                         type="text"
-                        id="phone"
-                        name="phone"
-                        value="090-1234-5678">
+                        id="tel1"
+                        name="tel1"
+                        class="tel"
+                        value="${myInfo.getTel()}">
+                        
+                    <input
+                        type="text"
+                        id="tel2"
+                        name="tel2"
+                        class="tel"
+                        value="${myInfo.getTel()}">
+                        
+                    <input
+                        type="text"
+                        id="tel3"
+                        name="tel3"
+                        class="tel"
+                        value="${myInfo.getTel()}">
 
                 </div>
+                
+                
+                <!-- ニックネーム -->
 
+                <div class="form-row">
 
+                    <label for="userName">
+                        ニックネーム
+                    </label>
+
+                    <input
+                       type="text"
+                       id="nickname"
+                       name="nickname"
+                       value="${myInfo.getNickname()}">
+                        	
+                </div>
+ 
 
                 <!-- 비밀번호 -->
 
@@ -124,34 +161,14 @@
                     <label for="password">
                         パスワード
                     </label>
-
+					
                     <input
                         type="password"
                         id="password"
                         name="password"
-                        placeholder="変更する場合のみ入力">
+                        placeholder="パスワードが一致する場合だけ、会員情報をご変更いただけます">
 
                 </div>
-
-
-
-                <!-- 비밀번호 확인 -->
-
-                <div class="form-row">
-
-                    <label for="passwordConfirm">
-                        パスワード確認
-                    </label>
-
-                    <input
-                        type="password"
-                        id="passwordConfirm"
-                        name="passwordConfirm"
-                        placeholder="もう一度入力してください">
-
-                </div>
-
-
 
                 <!-- BUTTON -->
 
@@ -163,15 +180,70 @@
 				        変更を保存
 				    </button>
 				
+				<!--  
 				    <a href="#"
 				       class="delete-button">
 				        退会する
 				    </a>
+				    
+				-->
 			
 				</div>
 
 
             </form>
+            
+<!-- JavaScript -->
+<script type="text/javascript">
+	document.querySelector("#modify").addEventListener("submit", function(event) {
+	    
+	    if (checkEmpty(modify.userName, "お名前を入力してください。")) {
+	    	modify.userName.focus();
+	        event.preventDefault();　// 이벤트 리스너 실행는 유지하되 서브밋 동작 자체를 막음
+	        return;
+	    }
+	    
+	
+	    if (checkEmpty(modify.password, "パスワードを入力してください。")) {
+	    	modify.password.focus();
+	        event.preventDefault();
+	        return;
+	    }
+	    
+	    getCheckPassword();
+	    
+	    // 비밀번호가 맞지 않으면 submit 막기
+	    if (modify.checkPasswordResult.value == "パスワードをもう一度確認してください。") {
+	    	event.preventDefault();
+	    	return;
+	    }
+		
+	    // 여기까지 왔다면 정상적으로 form 제출
+	});
+	
+    function getCheckPassword() {
+		
+    	let email = modify.email.value;
+		let password = modify.password.value;
+		
+		$.ajax({
+		type :"POST",
+		url : "<%=request.getContextPath()%>/checkpassword",
+		data: "email="+email+"&password="+password,
+		async: false,
+		dataType : "text",
+		error : () => {
+			alert('問題が発生しました。もう一度確認してください。');
+		},
+		success : (data) => {
+			let result = $.trim(data); // alert 창 공백 제거(제이쿼리)
+			modify.checkPasswordResult.value = result; // 전용 인풋에 결괏값 넣기
+			alert(result);
+		}
+	});	
+	}
+	
+</script>
 
         </section>
 

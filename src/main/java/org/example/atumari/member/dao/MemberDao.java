@@ -9,6 +9,7 @@ import java.sql.Statement;
 import org.example.atumari.common.database.DBConnection;
 import org.example.atumari.member.dto.LoginRequest;
 import org.example.atumari.member.dto.MemberDto;
+import org.example.atumari.member.dto.MyInfoModifyRequest;
 import org.example.atumari.member.dto.SignupRequest;
 /**
  * 회원 데이터의 조회와 저장을 구현할 DAO입니다.
@@ -75,7 +76,7 @@ public class MemberDao {
 		return count;
 	}
 	
-	// 로그인 - 해시된 비밀번호 값 조회
+	// 로그인, 마이페이지 정보 수정 - 해시된 비밀번호 값 조회
 	public String getDBPassword(LoginRequest login) {
 		String dbPassword = "";
 		
@@ -175,8 +176,10 @@ public class MemberDao {
 		MemberDto memberDto = null;
 		
 		String sql = "SELECT name, \r\n"
-				+ "		IFNULL(tel, '未入力') AS tel, \r\n"
-				+ "		DATE_FORMAT(reg_date, '%Y年%m月%d日') AS reg_date\r\n"
+				+ "		tel, \r\n"
+				+ "		nickname, \r\n"
+				+ "		DATE_FORMAT(reg_date, '%Y年%m月%d日') AS reg_date,\r\n"
+				+ "		DATE_FORMAT(modify_date, '%Y年%m月%d日') AS modify_date	"
 				+ "FROM member\r\n"
 				+ "WHERE email = ?";
 		
@@ -190,16 +193,19 @@ public class MemberDao {
 			
 			if (rs.next()) {
 				String name = rs.getString(1);
-//				String email = rs.getString(2);
 				String tel = rs.getString(2);
-				String reg_date = rs.getString(3);
+				String nickname = rs.getString(3);
+				String reg_date = rs.getString(4);
+				String modify_date = rs.getString(5);
 				
 				memberDto = new MemberDto();
 				
 				memberDto.setName(name);
 				memberDto.setEmail(sessionEmail);
 				memberDto.setTel(tel);
+				memberDto.setNickname(nickname);
 				memberDto.setReg_date(reg_date);
+				memberDto.setModify_date(modify_date);
 				
 			}
 					
@@ -210,6 +216,36 @@ public class MemberDao {
 		}
 		
 		return memberDto;
+	}
+
+	// 마이페이지 회원 정보 수정
+	public int modify(MyInfoModifyRequest modify) {
+		int result = 0;
+		
+		String sql = "UPDATE member\r\n"
+				+ "SET name = ?,\r\n"
+				+ "	nickname = ?,\r\n"
+				+ "    tel = ?\r\n"
+				+ "WHERE email = ?";
+		
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, modify.getName());
+			ps.setString(2, modify.getNickname());
+			ps.setString(3, modify.getTel());
+			ps.setString(4, modify.getEmail());
+			
+			result = ps.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return result;
 	}
 
 	
