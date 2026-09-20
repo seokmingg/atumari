@@ -38,6 +38,8 @@
             <label for="files">添付ファイル（最大3個、各10MB）</label>
             <input id="files" type="file" name="files" multiple
                    accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx">
+            <ul id="selected-file-list" class="selected-file-list"
+                aria-live="polite" aria-label="選択した添付ファイル"></ul>
 
             <div class="notice-form-actions">
                 <a href="${pageContext.request.contextPath}/notice">キャンセル</a>
@@ -51,5 +53,6 @@
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </footer>
 
+<script src="${pageContext.request.contextPath}/assets/notice/js/notice-write.js"></script>
 </body>
 </html>
