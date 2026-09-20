@@ -175,33 +175,42 @@
         <div class="form-field">
 
             <div class="file-upload-area">
-
-                <label for="inquiryFile"
+            
+                 <label for="inquiryFile"
                        class="file-select-button">
                     ファイルを選択
                 </label>
-
-                <input type="file"
+                
+ 				<input type="file"
                        id="inquiryFile"
                        name="inquiryFile"
                        class="file-input"
                        accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx"
                        multiple>
-                    <!-- multiple을 붙이면 사용자가 파일을 여러 개 선택할 수 있음 -->
-
-                <span id="fileName"
+                    <!-- multiple을 붙이면 사용자가 파일을 여러 개 선택할 수 있음 --> 
+                    
+                  <span id="fileName"
                       class="file-name">
                     選択されていません
-                </span>
+                </span> 
+                
+                </div>              
+            
+            	<!-- 선택한 파일 목록 -->
+				<div id="selectedFileList"
+				     class="selected-file-list">
+				</div>
+				
+				<!-- 파일 검증 메시지 -->
+				<div id="fileError"
+				     class="file-error">
+				</div>
 
-            </div>
 
             <div class="form-help">
-               ※ 添付可能なファイル：JPG、JPEG、PNG、PDF、DOC、DOCX、XLS、XLSX<br>
+               * 添付可能なファイル：JPG、JPEG、PNG、PDF、DOC、DOCX、XLS、XLSX<br>
   				  （最大3ファイル、1ファイルあたり10MBまで）
             </div>
-            
-            
 
         </div>
     </div>
