@@ -46,20 +46,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Temporary diagnostic step: remove after the IAM trust policy is fixed.
-      - name: Show GitHub OIDC claims
-        shell: bash
-        run: |
-          TOKEN="$(curl --fail --silent --show-error \
-            --header "Authorization: Bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com" | jq --raw-output '.value')"
-          PAYLOAD="$(printf '%s' "$TOKEN" | cut --delimiter='.' --fields=2 | tr '_-' '/+')"
-          case $((${#PAYLOAD} % 4)) in
-            2) PAYLOAD="${PAYLOAD}==" ;;
-            3) PAYLOAD="${PAYLOAD}=" ;;
-          esac
-          printf '%s' "$PAYLOAD" | base64 --decode | jq '{sub, aud, repository, repository_id, repository_owner, repository_owner_id, ref}'
-
       - name: Configure AWS credentials with OIDC
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
