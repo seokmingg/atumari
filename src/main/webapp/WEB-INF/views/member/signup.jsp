@@ -69,9 +69,6 @@
                 </div>
                 
                  <!-- 名前 -->
-                 <!-- 
-                 	TODO. 이름 입력값 검증 추가(한글, 한자, 영어만 입력 가능)
-                  -->
 
                 <div class="input-group">
 
@@ -212,6 +209,12 @@
 	
 	    if (!checkEmailValid()) {
 	
+	        event.preventDefault();
+	        return;
+	    }
+	    
+	    if (!checkNameValid()) {
+	    	
 	        event.preventDefault();
 	        return;
 	    }

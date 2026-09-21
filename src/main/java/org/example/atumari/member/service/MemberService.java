@@ -39,6 +39,10 @@ public class MemberService {
 				throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
 			}
 			
+			if (!signup.getName().matches("^[\\p{L} ・]+$")) { // 이름(유니코드 문자만 허용)
+				throw new IllegalArgumentException("お名前は文字（ひらがな、カタカナ、漢字、アルファベットなど）だけご入力いただけます。");
+			}
+			
 			if (!signup.getPassword().equals(signup.getPasswordConfirm())) { // 비밀번호 일치
 				throw new IllegalArgumentException("同じパスワードを入力してください。");
 			}
@@ -172,13 +176,21 @@ public class MemberService {
 
 	// 마이페이지 회원 정보 수정
 	public int modify(MyInfoModifyRequest modify) throws SQLException {
-		int result = memberDao.modify(modify);
+		int result = 0;
 		
 		// my-info-modify.jsp 입력값 검증
-		if (!modify.getTel().matches("^0\\d{1,2}-\\d{3,4}-\\d{4}$")) { // 전화번호(하이픈 포함 여부)
-			result = 0;
-			throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
+		if (!"".equals(modify.getTel())) { // 전화번호 값 입력 받을시만 검증
+			if (!modify.getTel().matches("^0\\d{1,2}-\\d{3,4}-\\d{4}$")) { // 전화번호(하이픈 포함 여부)
+				throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
+			}
 		}
+		
+		if (!modify.getName().matches("^[\\p{L} ・]+$")) { // 이름(유니코드 문자만 허용)
+			throw new IllegalArgumentException("お名前は文字（ひらがな、カタカナ、漢字、アルファベットなど）だけご入力いただけます。");
+		}
+		
+		// 검증 모두 통과하면 DB 연결
+		result = memberDao.modify(modify);
 		
 		return result;
 	}

@@ -5,12 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 import org.example.atumari.member.dto.MemberDto;
 import org.example.atumari.member.dto.MyInfoModifyRequest;
+import org.example.atumari.member.dto.SessionDto;
 import org.example.atumari.member.dto.SignupRequest;
 import org.example.atumari.member.service.MemberService;
 
@@ -71,6 +73,14 @@ public class MyInfoModifyController extends HttpServlet {
 				int result = service.modify(modify);
 
 				if (result == 1) {
+					
+					// 모든 페이지에서 사용할 세션 설정
+					HttpSession session = request.getSession();
+					// refactor: 별도의 세션 dto 사용
+					SessionDto sessionDto = new SessionDto();
+					
+					session.setAttribute("sessionName", modify.getName()); // refactor: 헤더에 출력할 세션 이름을 변경한 회원 이름으로 바꾸기
+					
 					request.setAttribute("msg", "회원 정보 수정 성공");
 					// 성공할 때만 다시 마이페이지로
 					response.sendRedirect(request.getContextPath() + "/my-info");

@@ -198,11 +198,18 @@
 	        return;
 	    }
 	    
-	    if(!checkTelValid()) {
-	    	event.preventDefault();
+		if (!checkNameValid()) {
+	        event.preventDefault();
 	        return;
 	    }
 	    
+		if (modify.tel.value != "") {
+			 if(!checkTelValid()) {
+			    	event.preventDefault();
+			        return;
+			    }
+		}
+	   
 	    getCheckPassword();
 	    
 	    // 비밀번호가 맞지 않으면 submit 막기
