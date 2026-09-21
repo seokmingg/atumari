@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: ap-northeast-2
+  AWS_ACCOUNT_ID: "222634381092"
+  SPRING_REPOSITORY: atumari/spring
+  NGINX_REPOSITORY: atumari/nginx
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run tests
+        run: ./gradlew test --no-daemon
+
+  build-and-push:
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials with OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::222634381092:role/atumari-github-ecr-push
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Spring image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/spring/Dockerfile
+          push: true
+          tags: |
+            ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.SPRING_REPOSITORY }}:latest
+            ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.SPRING_REPOSITORY }}:${{ github.sha }}
+          cache-from: type=gha,scope=atumari-spring
+          cache-to: type=gha,mode=max,scope=atumari-spring
+
+      - name: Build and push Nginx image
+        uses: docker/build-push-action@v6
+        with:
+          context: deploy/nginx
+          file: deploy/nginx/Dockerfile
+          push: true
+          tags: |
+            ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.NGINX_REPOSITORY }}:latest
+            ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.NGINX_REPOSITORY }}:${{ github.sha }}
+          cache-from: type=gha,scope=atumari-nginx
+          cache-to: type=gha,mode=max,scope=atumari-nginx

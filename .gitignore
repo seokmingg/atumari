@@ -1,6 +1,10 @@
 ### 환경변수 ###
 .env
 !.env.example
+deploy/certbot/conf/*
+!deploy/certbot/conf/.gitkeep
+deploy/certbot/www/*
+!deploy/certbot/www/.gitkeep
 
 
 HELP.md

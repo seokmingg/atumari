@@ -21,7 +21,7 @@
             <h1>お知らせを書く</h1>
         </div>
 
-        <form class="notice-write-form" method="post"
+        <form class="notice-write-form" method="post" enctype="multipart/form-data"
               action="${pageContext.request.contextPath}/notice/write">
             <c:if test="${not empty errorMessage}">
                 <p class="notice-form-error"><c:out value="${errorMessage}"/></p>
@@ -35,6 +35,12 @@
             <textarea id="content" name="content" rows="16"
                       required><c:out value="${content}"/></textarea>
 
+            <label for="files">添付ファイル（最大3個、各10MB）</label>
+            <input id="files" type="file" name="files" multiple
+                   accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx">
+            <ul id="selected-file-list" class="selected-file-list"
+                aria-live="polite" aria-label="選択した添付ファイル"></ul>
+
             <div class="notice-form-actions">
                 <a href="${pageContext.request.contextPath}/notice">キャンセル</a>
                 <button type="submit">登録する</button>
@@ -47,5 +53,6 @@
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </footer>
 
+<script src="${pageContext.request.contextPath}/assets/notice/js/notice-write.js"></script>
 </body>
 </html>
