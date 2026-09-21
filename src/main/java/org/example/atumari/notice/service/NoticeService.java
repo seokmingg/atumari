@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.example.atumari.common.fileupload.FileService;
 import org.example.atumari.common.fileupload.StoredFile;
+import org.example.atumari.common.util.Pagination;
 import org.example.atumari.notice.dao.NoticeDao;
 import org.example.atumari.notice.dao.NoticeFileDao;
 import org.example.atumari.notice.dto.NoticeDto;
@@ -23,44 +24,22 @@ public class NoticeService {
     private final NoticeFileDao noticeFileDao = new NoticeFileDao();
     private final FileService fileService = new FileService();
 
-    public NoticeListPageDto getNoticePage(
-            int requestedPage, String searchType, String keyword) {
+    public NoticeListPageDto getNoticePage(int requestedPage, String searchType, String keyword) {
         String normalizedSearchType = normalizeSearchType(searchType);
         String normalizedKeyword = keyword == null ? "" : keyword.trim();
-        int totalCount = noticeDao.countNotices(
-                normalizedSearchType, normalizedKeyword);
-        int totalPage = getTotalPage(totalCount);
-        int currentPage = Math.min(Math.max(1, requestedPage), totalPage);
-        int startPage = getStartPage(currentPage);
-        int endPage = getEndPage(startPage, totalPage);
-        int offset = (currentPage - 1) * PAGE_SIZE;
+        int totalCount = noticeDao.countNotices(normalizedSearchType, normalizedKeyword);
+        Pagination pagination = Pagination.of(requestedPage, PAGE_SIZE, PAGE_GROUP_SIZE, totalCount);
 
-        List<NoticeDto> noticeList = noticeDao.findNotices(
-                PAGE_SIZE,
-                offset,
-                normalizedSearchType,
-                normalizedKeyword
-        );
+        List<NoticeDto> noticeList = noticeDao.findNotices(pagination.getPageSize(), pagination.getOffset(), normalizedSearchType, normalizedKeyword);
 
-        return new NoticeListPageDto(
-                noticeList,
-                currentPage,
-                PAGE_SIZE,
-                totalCount,
-                totalPage,
-                startPage,
-                endPage,
-                normalizedSearchType,
-                normalizedKeyword
-        );
+        return new NoticeListPageDto(noticeList, pagination.getCurrentPage(), pagination.getPageSize(), pagination.getTotalCount(), pagination.getTotalPage(), pagination.getStartPage(), pagination.getEndPage(), normalizedSearchType, normalizedKeyword);
     }
 
     public NoticeDto getNotice(int noticeNo) {
         return noticeDao.findById(noticeNo);
     }
 
-    public void createNotice(
-            String title, String content, String authorEmail, List<Part> files) {
+    public void createNotice(String title, String content, String authorEmail, List<Part> files) {
         String normalizedTitle = validateTitle(title);
         String normalizedContent = validateContent(content);
         if (authorEmail == null || authorEmail.isBlank()) {
@@ -138,18 +117,6 @@ public class NoticeService {
             }
             throw new RuntimeException("공지사항 첨부파일 저장에 실패했습니다.", e);
         }
-    }
-
-    private int getTotalPage(int totalCount) {
-        return Math.max(1, (int) Math.ceil((double) totalCount / PAGE_SIZE));
-    }
-
-    private int getStartPage(int currentPage) {
-        return ((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
-    }
-
-    private int getEndPage(int startPage, int totalPage) {
-        return Math.min(startPage + PAGE_GROUP_SIZE - 1, totalPage);
     }
 
     private String normalizeSearchType(String searchType) {

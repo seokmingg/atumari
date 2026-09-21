@@ -2,10 +2,13 @@ package org.example.atumari.common.storage;
 
 import java.io.InputStream;
 
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3ClientBuilder;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
@@ -26,15 +29,34 @@ public final class S3Storage {
     private S3Storage() {
     }
 
-    public static synchronized void configure(String region, String configuredBucket) {
+    public static synchronized void configure(
+            String region,
+            String configuredBucket,
+            String accessKey,
+            String secretKey
+    ) {
         if (configuredBucket == null || configuredBucket.isBlank()) {
             throw new IllegalStateException("S3_BUCKET 설정이 없습니다.");
         }
 
         close();
-        client = S3Client.builder()
-                .region(Region.of(region))
-                .build();
+        S3ClientBuilder builder = S3Client.builder()
+                .region(Region.of(region));
+
+        boolean hasAccessKey = accessKey != null && !accessKey.isBlank();
+        boolean hasSecretKey = secretKey != null && !secretKey.isBlank();
+        if (hasAccessKey != hasSecretKey) {
+            throw new IllegalStateException(
+                    "AWS_ACCESS_KEY_ID와 AWS_SECRET_ACCESS_KEY를 모두 설정해야 합니다."
+            );
+        }
+        if (hasAccessKey) {
+            builder.credentialsProvider(StaticCredentialsProvider.create(
+                    AwsBasicCredentials.create(accessKey, secretKey)
+            ));
+        }
+
+        client = builder.build();
         bucket = configuredBucket;
     }
 
