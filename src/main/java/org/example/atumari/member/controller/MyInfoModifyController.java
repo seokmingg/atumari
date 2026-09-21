@@ -62,8 +62,8 @@ public class MyInfoModifyController extends HttpServlet {
     		MyInfoModifyRequest modify = new MyInfoModifyRequest();
     		modify.setEmail(sessionEmail);
     		modify.setName(name);
-    		modify.setNickname(nickname);
     		modify.setTel(tel);
+    		modify.setNickname(nickname);
     		
         	MemberService service = new MemberService();
         	

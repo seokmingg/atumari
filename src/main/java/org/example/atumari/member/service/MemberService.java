@@ -174,6 +174,12 @@ public class MemberService {
 	public int modify(MyInfoModifyRequest modify) throws SQLException {
 		int result = memberDao.modify(modify);
 		
+		// my-info-modify.jsp 입력값 검증
+		if (!modify.getTel().matches("^0\\d{1,2}-\\d{3,4}-\\d{4}$")) { // 전화번호(하이픈 포함 여부)
+			result = 0;
+			throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
+		}
+		
 		return result;
 	}
 

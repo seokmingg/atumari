@@ -19,7 +19,7 @@
     <link rel="stylesheet"
           href="<%=request.getContextPath()%>/assets/member/css/my-info-modify.css">
           
-    <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
+    <script src="<%=request.getContextPath()%>/assets/member/js/member.js"></script>
 	<!-- jQuery -->
     <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 
@@ -94,7 +94,7 @@
                 <div class="form-row">
 
                     <label for="userName">
-                        名前
+                        名前（必修）
                     </label>
 
                     <input
@@ -110,16 +110,17 @@
                 <div class="form-row">
 
                     <label for="phone">
-                        電話番号
+                        電話番号（任意）
                     </label>
-                    <!-- TODO. member DB 전화번호 컬럼 세분화(1, 2, 3) -->
+                   
                     <input
                         type="text"
-                        id="tel1"
-                        name="tel1"
+                        id="tel"
+                        name="tel"
                         class="tel"
-                        value="${myInfo.getTel()}">
-                        
+                        value="${myInfo.getTel()}"
+                        placeholder="入力例：「070-0000-0000」、「080-000-0000」">
+                    <!--    
                     <input
                         type="text"
                         id="tel2"
@@ -133,6 +134,8 @@
                         name="tel3"
                         class="tel"
                         value="${myInfo.getTel()}">
+                        
+                    -->  
 
                 </div>
                 
@@ -142,7 +145,7 @@
                 <div class="form-row">
 
                     <label for="userName">
-                        ニックネーム
+                        ニックネーム（任意）
                     </label>
 
                     <input
@@ -207,6 +210,11 @@
 	    if (checkEmpty(modify.password, "パスワードを入力してください。")) {
 	    	modify.password.focus();
 	        event.preventDefault();
+	        return;
+	    }
+	    
+	    if(!checkTelValid()) {
+	    	event.preventDefault();
 	        return;
 	    }
 	    

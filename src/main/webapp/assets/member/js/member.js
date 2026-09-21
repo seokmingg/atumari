@@ -25,3 +25,16 @@ function checkEmailValid() {
     return true;
     
 }
+
+// 전화번호 형식 세부 검증 -> 마이페이지 정보 수정
+function checkTelValid() {
+    let userInput = document.querySelector("#tel").value;
+    const result = /^0\d{1,2}-\d{3,4}-\d{4}$/.test(userInput); // 전화번호 정규식 기본 패턴(하이픈 포함)
+    if (!result) {
+      alert("有効な電話番号を入力してください。"); // 하이픈 포함되어 있지 않으면
+      return false;
+    }
+     
+    return true;
+    
+}

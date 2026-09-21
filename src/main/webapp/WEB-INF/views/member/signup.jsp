@@ -14,7 +14,7 @@
     <link rel="stylesheet"
           href="<%=request.getContextPath()%>/assets/member/css/login.css">
     <!-- 공통 js -->
-    <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
+    <script src="<%=request.getContextPath()%>/assets/member/js/member.js"></script>
     <!-- jQuery -->
     <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 
