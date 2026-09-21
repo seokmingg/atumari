@@ -17,78 +17,136 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet({ "", "/home", "/home/search" })
 public class HomeController extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        String path = request.getServletPath();
+		String path = request.getServletPath();
 
+		// =========================
+		// 검색
+		// =========================
+		if ("/home/search".equals(path)) {
 
-        // =========================
-        // 검색
-        // =========================
+			String keyword = request.getParameter("keyword");
 
-        if ("/home/search".equals(path)) {
+			String startDateParam = request.getParameter("startDate");
 
-            String keyword = request.getParameter("keyword");
+			String endDateParam = request.getParameter("endDate");
 
-            String startDateParam = request.getParameter("startDate");
-            String endDateParam = request.getParameter("endDate");
+			LocalDate startDate = null;
+			LocalDate endDate = null;
 
-            LocalDate startDate = null;
-            LocalDate endDate = null;
+			if (startDateParam != null && !startDateParam.isEmpty()) {
+				startDate = LocalDate.parse(startDateParam);
+			}
 
-            if (startDateParam != null && !startDateParam.isEmpty()) {
-                startDate = LocalDate.parse(startDateParam);
-            }
+			if (endDateParam != null && !endDateParam.isEmpty()) {
+				endDate = LocalDate.parse(endDateParam);
+			}
 
-            if (endDateParam != null && !endDateParam.isEmpty()) {
-                endDate = LocalDate.parse(endDateParam);
-            }
+			// =========================
+			// 페이지
+			// =========================
+			int page = 1;
 
+			String pageParam = request.getParameter("page");
 
-            HomeSearchService service = new HomeSearchService();
+			if (pageParam != null && !pageParam.isEmpty()) {
+				try {
+					page = Integer.parseInt(pageParam);
+				} catch (NumberFormatException e) {
+					page = 1;
+				}
+			}
 
-            List<FestivalDto> festivalList =
-                    service.searchFestivalList(
-                            keyword,
-                            startDate,
-                            endDate
-                    );
+			if (page < 1) {
+				page = 1;
+			}
 
+			// =========================
+			// 페이지 설정
+			// =========================
+			int pageSize = 5;
+			int pageBlock = 5;
 
-            request.setAttribute("festivalList", festivalList);
+			int start = (page - 1) * pageSize;
 
-            request.setAttribute("keyword", keyword);
+			// =========================
+			// 검색
+			// =========================
+			HomeSearchService service = new HomeSearchService();
 
-            request.setAttribute("startDate", startDate);
+			List<FestivalDto> festivalList = service.searchFestivalList(keyword, startDate, endDate, start, pageSize);
 
-            request.setAttribute("endDate", endDate);
+			// =========================
+			// 전체 개수
+			// =========================
+			int totalCount = service.getFestivalTotalCount(keyword, startDate, endDate);
 
+			// =========================
+			// 페이지 계산
+			// =========================
+			int totalPage = service.getTotalPage(totalCount, pageSize);
 
-            request.getRequestDispatcher(
-                    "/WEB-INF/views/festival/date_festival_list.jsp"
-            ).forward(request, response);
+			int startPage = service.getStartPage(page, pageBlock);
 
-            return;
-        }
+			int endPage = service.getEndPage(page, totalPage, pageBlock);
 
+			// =========================
+			// JSP 전달
+			// =========================
+			request.setAttribute("festivalList", festivalList);
 
-        // =========================
-        // 기존 메인 페이지
-        // =========================
+			request.setAttribute("keyword", keyword);
 
-        FestivalCardService service = new FestivalCardService();
+			request.setAttribute("startDate", startDate);
 
-        List<FestivalDto> festivalList =
-                service.getThisMonthFestivalList();
+			request.setAttribute("endDate", endDate);
 
-        request.setAttribute("festivalList", festivalList);
+			request.setAttribute("currentPage", page);
 
-        request.getRequestDispatcher(
-                "/WEB-INF/views/home/index.jsp"
-        ).forward(request, response);
+			request.setAttribute("pageSize", pageSize);
 
-    }
+			request.setAttribute("totalCount", totalCount);
 
+			request.setAttribute("totalPage", totalPage);
+
+			request.setAttribute("startPage", startPage);
+
+			request.setAttribute("endPage", endPage);
+
+			request.setAttribute("type", "date");
+
+			// =========================
+			// 검색 결과 페이지
+			// =========================
+			request.getRequestDispatcher("/WEB-INF/views/festival/date_festival_list.jsp").forward(request, response);
+
+			return;
+		}
+
+		// =========================
+		// 기존 메인 페이지
+		// =========================
+		FestivalCardService service = new FestivalCardService();
+
+		List<FestivalDto> festivalList = service.getThisMonthFestivalList();
+
+		// =========================
+		// 다가오는 축제 목록
+		// =========================
+		HomeSearchService homeService = new HomeSearchService();
+
+		List<FestivalDto> upcomingFestivalList = homeService.getUpcomingFestivalList();
+
+		// =========================
+		// JSP 전달
+		// =========================
+		request.setAttribute("festivalList", festivalList);
+
+		request.setAttribute("upcomingFestivalList", upcomingFestivalList);
+
+		request.getRequestDispatcher("/WEB-INF/views/home/index.jsp").forward(request, response);
+	}
 }

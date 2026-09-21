@@ -211,20 +211,12 @@
                     </h3>
 
                     <div class="keyword-list">
-
-                        <button type="button">
-                            青森ねぶた祭
-                        </button>
-
-                        <button type="button">
-                            京都祇園祭
-                        </button>
-
-                        <button type="button">
-                            博多祇園山笠
-                        </button>
-
-                    </div>
+					    <c:forEach var="festival" items="${upcomingFestivalList}" begin="0" end="2">
+					       <a href="${pageContext.request.contextPath}/festival/view?festival_no=${festival.festival_no}&type=date&keyword=&startDate=${festival.startDateTime.toLocalDate()}&endDate=${festival.startDateTime.toLocalDate()}">
+							    ${festival.festival_name}
+							</a>
+					    </c:forEach>
+					</div>
 
 
                     <h4>
@@ -233,21 +225,21 @@
 
                     <div class="keyword-tags">
 
-                        <button type="button">
+                        <a href="${pageContext.request.contextPath}/festival/list?type=season&season=봄">
+                            #春祭り
+                        </a>
+
+                        <a href="${pageContext.request.contextPath}/festival/list?type=season&season=여름">
                             #夏祭り
-                        </button>
+                        </a>
 
-                        <button type="button">
-                            #花火
-                        </button>
-
-                        <button type="button">
-                            #伝統祭り
-                        </button>
-
-                        <button type="button">
+                        <a href="${pageContext.request.contextPath}/festival/list?type=season&season=가을">
                             #秋祭り
-                        </button>
+                        </a>
+
+                        <a href="${pageContext.request.contextPath}/festival/list?type=season&season=겨울">
+                            #冬祭り
+                        </a>
 
                     </div>
 

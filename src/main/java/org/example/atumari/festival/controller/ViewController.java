@@ -34,6 +34,13 @@ public class ViewController extends HttpServlet {
 		String region = request.getParameter("region");
 		String season = request.getParameter("season");
 		String month = request.getParameter("month");
+		String date = request.getParameter("date");
+		String year = request.getParameter("year");
+
+		// 홈 날짜 검색값 받기
+		String keyword = request.getParameter("keyword");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
 
 		FestivalViewService service = new FestivalViewService();
 
@@ -46,8 +53,17 @@ public class ViewController extends HttpServlet {
 		request.setAttribute("region", region);
 		request.setAttribute("season", season);
 		request.setAttribute("month", month);
+		request.setAttribute("date", date);
+		request.setAttribute("year", year);
 
-		request.getRequestDispatcher("/WEB-INF/views/festival/festival_view.jsp").forward(request, response);
+		// JSP로 홈 검색값 전달
+		request.setAttribute("keyword", keyword);
+		request.setAttribute("startDate", startDate);
+		request.setAttribute("endDate", endDate);
+
+		request.getRequestDispatcher(
+				"/WEB-INF/views/festival/festival_view.jsp"
+		).forward(request, response);
 	}
 
 }
