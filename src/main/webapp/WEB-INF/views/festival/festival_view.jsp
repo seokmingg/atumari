@@ -68,11 +68,19 @@ pageEncoding="UTF-8"%>
 	
 	    <c:when test="${type == 'month'}">
 	
-	        <a href="${pageContext.request.contextPath}/festival/list?type=month&month=${month}">
+	        <a href="${pageContext.request.contextPath}/festival/list?type=month&year=${year}&month=${month}">
 	            ← 一覧へ戻る
 	        </a>
 	
 	    </c:when>
+	    
+	    <c:when test="${type == 'date'}">
+
+		    <a href="${pageContext.request.contextPath}/home/search?keyword=${keyword}&startDate=${startDate}&endDate=${endDate}">
+		        ← 一覧へ戻る
+		    </a>
+		
+		</c:when>
 
 </c:choose>
 
@@ -549,7 +557,7 @@ pageEncoding="UTF-8"%>
 	
 	    <c:when test="${type == 'month'}">
 	
-	        <a href="${pageContext.request.contextPath}/festival/list?type=month&month=${month}" class="festival-list-button">
+	        <a href="${pageContext.request.contextPath}/festival/list?type=month&year=${year}&month=${month}" class="festival-list-button">
 	            ← 一覧へ戻る
 	        </a>
 	
