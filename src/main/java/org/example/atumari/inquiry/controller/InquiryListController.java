@@ -37,8 +37,13 @@ public class InquiryListController extends HttpServlet {
 		   String keyword = request.getParameter("keyword");
 		   
 		   List<InquiryDto> inquiryList = inquiryListService.getInquiryList(searchType,keyword,page);
+		   int totalCount = inquiryListService.getTotalCount(searchType,keyword);
+		   int totalPages = inquiryListService.getTotalPages(totalCount,page);
 		   
-		   request.setAttribute("inquiryList",inquiryList);
+		   request.setAttribute("inquiryList",inquiryList);// 현재 페이지에 보여줄 문의글 목록
+		   request.setAttribute("totalCount", totalCount); // 검색조건에 맞는 전체 문의글 개수
+		   request.setAttribute("totalPages", totalPages); // 전체 페이지 개수
+		   request.setAttribute("page", page); // 현재 몇페이지인지
 
 	        String view = "/WEB-INF/views/inquiry/inquiry_list.jsp";
 	        

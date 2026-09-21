@@ -58,7 +58,8 @@ public class InquiryDao {
 		return inquiry_no;
 	}
 	
-	//전체 문의글 목록 조회
+	
+	// 전체 문의글 목록 조회
 	public List<InquiryDto> findInquiryList(String searchType, String keyword, int pageSize,int offset){
 		List<InquiryDto> inquiryList = new ArrayList<>();
 		
@@ -126,8 +127,6 @@ public class InquiryDao {
 	            inquiryList.add(inquiryDto);
 				
 			}
-				
-		
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -136,6 +135,52 @@ public class InquiryDao {
 		}
 		
 		return inquiryList;
+	}
+	
+	// 전체 문의글 갯수 조회
+	public int getTotalInquiryCount(String searchType, String keyword) {
+		
+		int totalCount =0;
+		
+		StringBuilder sql = new StringBuilder("""
+				select count(*)
+				from inquiry
+				""");
+		
+		// 검색어와 올바른 검색 조건이 있는지 확인
+		boolean hasSearch = keyword != null && 
+								!keyword.isBlank() &&
+									("title".equals(searchType) || "writer".equals(searchType));
+		
+		// 검색 조건만 동적으로 추가
+		if(hasSearch) {
+			if("title".equals(searchType)) {
+				sql.append(" where i.title like ? ");//주의: 앞뒤 공백 주기, 앞뒷문장과 붙으면 안됨
+			}else if("writer".equals(searchType)) {
+				sql.append(" where i.writer like ? ");
+			}
+		}
+		
+		try{
+			con = DBConnection.getConnection();
+			 ps = con.prepareStatement(sql.toString());
+
+		        if (hasSearch) {
+		            ps.setString(1, "%" + keyword + "%");
+		        }
+			rs = ps.executeQuery();
+				
+			if(rs.next()) {
+				totalCount = rs.getInt("count");
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return totalCount;
 	}
 
 }

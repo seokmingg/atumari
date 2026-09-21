@@ -64,7 +64,6 @@ public class FileService {
 			                    inputStream, //업로드된 파일의 실제 내용(데이터)을 읽어오는 통로
 			                    targetPath //어디에 저장할지, 최종 저장 위치
 			                );
-			                
 			            }
 			            return new StoredFile(originalFileName,storedFileName);
 				 

@@ -32,7 +32,7 @@
 </div>
 
 <div class="board-top">
-  <p>全 <strong>5</strong> 件</p>
+  <p>全 <strong>${totalCount}</strong> 件</p>
   
   <!-- 검색란 -->
   <form action="${pageContext.request.contextPath}/inquiry/list" method="get">
@@ -57,11 +57,13 @@
     <div class="board-cell board-date">作成日</div>
   </div>
 
+<c:forEach var="inquiry" items="${inquiryList}">
   <div class="board-row">
-    <div class="board-cell board-no">5</div>
-    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view">祭り情報についてお問い合わせします</a></div>
+    <div class="board-cell board-no">${inquiry.inquiry_no}</div>
+    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view?inquiryNo=${inquiry.inquiry_no}">${inquiry.title}</a></div>
      <!-- 첨부파일 -->
         <div class="board-cell board-file">
+         <c:if test="${inquiry.fileIs}">
            <span class="file-info">
                 <img
                     src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
@@ -69,31 +71,47 @@
                     class="file-icon"
                 >
             </span>
+            </c:if>
         </div>
-    <div class="board-cell board-writer">kim123</div>
-    <div class="board-cell board-status"><span class="status-badge status-completed">回答完了</span></div>
-    <div class="board-cell board-date">2026.09.08</div>
+      
+    <div class="board-cell board-writer">${inquiry.writer}</div>
+    <div class="board-cell board-status"><span class="status-badge status-completed">${inquiry.status}</span></div>
+    <div class="board-cell board-date">${inquiry.created_at}</div>
   </div>
-
-  <div class="board-row">
-    <div class="board-cell board-no">4</div>
-    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view">お気に入り機能について</a></div>
-    <div class="board-cell board-writer">park22</div>
-    <div class="board-cell board-status"><span class="status-badge status-waiting">回答待ち</span></div>
-    <div class="board-cell board-date">2026.09.07</div>
-  </div>
-
-  <div class="board-row">
-    <div class="board-cell board-no">3</div>
-    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view">開催日程が違うようです</a></div>
-    <div class="board-cell board-writer">guest</div>
-    <div class="board-cell board-status"><span class="status-badge status-completed">回答完了</span></div>
-    <div class="board-cell board-date">2026.09.06</div>
-  </div>
-</div>
+</c:forEach>
 
 <div class="board-pagination">
-  <a href="#">←</a><a class="active" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">→</a>
+
+<!-- 이전 페이지 -->
+	<c:if test="${page>1}">
+		<a href="{pageContext.request.contextPath}/inquiry/list?page=${page - 1}">
+			←		
+		</a>
+	</c:if>
+	
+<!-- 페이지 번호 -->
+	<c:forEach var="i" begin="1" end="${totalPages}">
+		<c:if test="${i == page}">
+			<a class= "active"
+				href="${pageContext.request.contextPath}/inquiry/list?page=${i}">
+				${i}
+			</a>
+		</c:if>
+		
+		<c:if test="${i != page}">
+			<a href="${pageContext.request.contextPath}/inquiry/list?page=${i}">
+				${i}
+			</a>
+		</c:if>
+	</c:forEach>
+
+<!-- 다음 페이지 -->
+    <c:if test="${page < totalPages}">
+        <a href="${pageContext.request.contextPath}/inquiry/list?page=${page + 1}">
+            →
+        </a>
+    </c:if>	
+	
 </div>
 
 <div class="board-write">
