@@ -11,9 +11,10 @@ public class InquiryDto {
 
 	    private String title;
 	    private String writer;
-	  //    private String password;
+	    private String status;
 	    
 	    private boolean isPublic; //jsp에서 value값이 0,1로 넘어옴
+	    private boolean fileIs; //jsp에서 value값이 0,1로 넘어옴
 	    
 	    private String content;
 	    private String email;
@@ -36,6 +37,31 @@ public class InquiryDto {
 			this.isPublic = isPublic;
 			this.content = content;
 			this.email = email;
+		}
+
+
+		public boolean isFileIs() {
+			return fileIs;
+		}
+
+
+		public void setFileIs(boolean fileIs) {
+			this.fileIs = fileIs;
+		}
+
+
+		public InquiryDto() {
+			// TODO Auto-generated constructor stub
+		}
+
+
+		public String getStatus() {
+			return status;
+		}
+
+
+		public void setStatus(String status) {
+			this.status = status;
 		}
 
 

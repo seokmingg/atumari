@@ -35,14 +35,16 @@
   <p>全 <strong>5</strong> 件</p>
   
   <!-- 검색란 -->
+  <form action="${pageContext.request.contextPath}/inquiry/list" method="get">
   <div class="board-search">
-    <select>
-    	<option>タイトル</option>
-    	<option>作成者</option>
+    <select name="searchType">
+    	<option value="title">タイトル</option>
+    	<option value="writer">作成者</option>
     </select>
-    <input id="searchKeyword" type="text" placeholder="検索してください">
-    <button id="searchBtn" type="button">検索</button>
+    <input id="searchKeyword" name="keyword" type="text" placeholder="検索してください">
+    <button id="searchBtn" type="submit">検索</button>
   </div>
+  </form>
 </div>
 
 <div class="board-list">
@@ -60,7 +62,7 @@
     <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/view">祭り情報についてお問い合わせします</a></div>
      <!-- 첨부파일 -->
         <div class="board-cell board-file">
-            <span class="file-info">
+           <span class="file-info">
                 <img
                     src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
                     alt="添付"

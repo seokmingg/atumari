@@ -38,7 +38,7 @@ public class InquiryWriteController extends HttpServlet {
 		   
 		   // 로그인 여부 확인
 		   if(session == null || session.getAttribute("sessionId")==null) {
-			   response.sendRedirect(request.getContextPath()+"/memeber/longin");
+			   response.sendRedirect(request.getContextPath()+"/login");
 			   return;
 		   }
 		   
