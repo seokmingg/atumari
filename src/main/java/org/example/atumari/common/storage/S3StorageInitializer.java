@@ -14,7 +14,9 @@ public class S3StorageInitializer {
     public S3StorageInitializer(Environment environment) {
         S3Storage.configure(
                 environment.getRequiredProperty("atumari.storage.s3.region"),
-                environment.getRequiredProperty("atumari.storage.s3.bucket")
+                environment.getRequiredProperty("atumari.storage.s3.bucket"),
+                environment.getProperty("atumari.storage.s3.access-key"),
+                environment.getProperty("atumari.storage.s3.secret-key")
         );
     }
 
