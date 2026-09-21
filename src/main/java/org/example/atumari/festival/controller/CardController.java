@@ -1,6 +1,7 @@
 package org.example.atumari.festival.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.example.atumari.festival.dto.FestivalDto;
@@ -49,14 +50,19 @@ public class CardController extends HttpServlet {
 
 		else if ("/festival/month/card".equals(path)) {
 
-			view = "/WEB-INF/views/festival/month_card_list.jsp";
+		    view = "/WEB-INF/views/festival/month_card_list.jsp";
 
-			FestivalCardService service = new FestivalCardService();
+		    FestivalCardService service = new FestivalCardService();
 
-			List<FestivalDto> festivalList = service.getThisMonthFestivalList();
+		    int year = LocalDate.now().getYear();
+		    int month = LocalDate.now().getMonthValue();
 
-			request.setAttribute("festivalList", festivalList);
+		    List<FestivalDto> festivalList =
+		            service.getThisMonthFestivalList();
 
+		    request.setAttribute("festivalList", festivalList);
+		    request.setAttribute("year", year);
+		    request.setAttribute("month", month);
 		}
 
 		// ========================================

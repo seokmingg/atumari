@@ -33,8 +33,7 @@ public class CheckEmailController extends HttpServlet {
 		String email = request.getParameter("email");
 		
 		MemberService service = new MemberService();
-		int count = 0;
-		count = service.checkDuplicateEmail(email);
+		int count = service.checkDuplicateEmail(email);
 		
 		if (count == 0) out.print("会員登録に成功しました。あつまりへようこそ！");
 		else out.print("このメールアドレスは登録済です。他のメールアドレスを入力してください。");

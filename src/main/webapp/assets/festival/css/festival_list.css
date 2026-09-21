@@ -624,3 +624,237 @@
     align-items: flex-start;
     gap: 12px;
 }
+
+/* =========================
+   FESTIVAL SEARCH
+========================= */
+
+.festival-search {
+    display: flex;
+    align-items: center;
+}
+
+
+/* =========================
+   DATE SEARCH
+========================= */
+
+.festival-date-search {
+    position: relative;
+    width: 220px;
+    height: 70px;
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   DATE BUTTON
+========================= */
+
+.festival-date-search .festival-date-button {
+
+    position: relative;
+
+    width: 100%;
+    height: 70px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    margin: 0;
+    padding: 0 20px;
+
+    border: 0;
+    border-radius: 0;
+
+    background: transparent;
+    color: #222;
+
+    text-align: left;
+    font: inherit;
+
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+
+/* DATE 아래 강조선 */
+
+.festival-date-search .festival-date-button::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 20px;
+    right: 20px;
+    bottom: 10px;
+
+    height: 1px;
+
+    background: #cfcfcf;
+
+    transition: background 0.2s ease;
+}
+
+
+/* DATE 호버 / OPEN */
+
+.festival-date-search.open .festival-date-button::after,
+.festival-date-search .festival-date-button:hover::after {
+
+    background: #8CCFE6;
+}
+
+
+/* =========================
+   DATE LABEL
+========================= */
+
+.festival-date-search .festival-date-button > span {
+
+    display: block;
+
+    margin: 0 0 7px 0;
+    padding: 0;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 2.5px;
+
+    color: #999;
+
+    line-height: 1;
+}
+
+
+/* =========================
+   DATE RANGE
+========================= */
+
+.festival-date-search .festival-date-range {
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   DATE TEXT
+========================= */
+
+.festival-date-search .date-start,
+.festival-date-search .date-end {
+
+    margin: 0;
+    padding: 0;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #333;
+
+    line-height: 1;
+}
+
+
+/* =========================
+   ARROW
+========================= */
+
+.festival-date-search .date-arrow {
+
+    margin: 0;
+    padding: 0;
+
+    font-size: 12px;
+
+    color: #aaa;
+
+    line-height: 1;
+}
+
+
+/* =========================
+   CALENDAR PANEL
+========================= */
+
+.festival-date-search .festival-date-panel {
+
+    position: absolute;
+
+    top: 78px;
+    left: 0;
+
+    width: 320px;
+
+    padding: 20px;
+
+    background: #fff;
+
+    border: 1px solid #ddd;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.08);
+
+    box-sizing: border-box;
+
+    z-index: 100;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-6px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s ease;
+}
+
+
+/* =========================
+   OPEN
+========================= */
+
+.festival-date-search.open .festival-date-panel {
+
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+.festival-date-search .festival-date-button:hover {
+    background: #e5e5e5;
+    color: #222;
+}
+
+.festival-date-search .festival-date-button:hover > span {
+    color: #999;
+}
+
+.festival-date-search .festival-date-button:hover .date-start,
+.festival-date-search .festival-date-button:hover .date-end {
+    color: #333;
+}
+
+.festival-date-search .festival-date-button:hover .date-arrow {
+    color: #aaa;
+}
+
+
+
+

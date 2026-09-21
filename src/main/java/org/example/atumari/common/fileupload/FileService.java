@@ -2,17 +2,15 @@ package org.example.atumari.common.fileupload;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.example.atumari.config.FileConfig;
-import org.example.atumari.inquiry.dto.InquiryFileDto;
+import org.example.atumari.common.storage.S3Storage;
 
 import jakarta.servlet.http.Part;
+import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 public class FileService {
 	
@@ -25,56 +23,92 @@ public class FileService {
 	    
 	    
 
-	//첨부파일 저장(한번에 하나만 저장)
+	/**
+	 * 첨부파일 1개를 S3에 저장합니다.
+	 *
+	 * <p>folder에 "notice", "inquiry", "community" 등을 넘기면
+	 * {@code folder/UUID_원본파일명} 형태의 S3 객체 키로 저장됩니다.</p>
+	 *
+	 * <pre>{@code
+	 * StoredFile storedFile = fileService.saveFile(file, "notice");
+	 * String originalName = storedFile.getOriginalFileName();
+	 * String objectKey = storedFile.getStoredFileName(); // notice/UUID_file.pdf
+	 * }</pre>
+	 *
+	 * @param file   업로드할 파일
+	 * @param folder S3에서 구분할 상위 폴더명
+	 * @return 원본 파일명과 S3 객체 키를 담은 StoredFile
+	 */
 	public StoredFile saveFile(Part file, String folder) {
-		
-		String uploadPath = FileConfig.getUploadPath(); 
-		//상위폴더 경로 가져오기
-		//C:/atumari_uploads
-		
+		String originalFileName = file.getSubmittedFileName();
+		String storedFileName = UUID.randomUUID() + "_" + originalFileName;
+		String objectKey = folder + "/" + storedFileName;
 
-		Path uploadDir = Paths.get(uploadPath,folder); 
-		//하위폴더 경로 붙이기
-		//C:/atumari_uploads/inquiry/
-		
-		
-			//경로에 폴더가 없으면 자동 생성
-			try {
-				Files.createDirectories(uploadDir);
-				
-					String originalFileName = file.getSubmittedFileName(); 
-					//사용자가 첨부한 원본 파일명
-					//photo.jpg
-					
-					String storedFileName = UUID.randomUUID() + "_" + originalFileName; 
-					//저장용 파일명(식별을 명확히 하기위해)
-					//550e8400-e29b-41d4-a716-446655440000_photo.jpg
-					
-					
-				     //파일의 최종 저장 위치
-				     Path targetPath = uploadDir.resolve(storedFileName);
-				     //저장할 폴더 경로(uploadDir)와 파일이름(storedFileName)을 합쳐서 최종저장위치를 만듦
-				     //C:/atumari_uploads/inquiry/550e8400-e29b-41d4-a716-446655440000_photo.jpg
-				     
-				     
-				     // 1. 실제 파일 저장
-			            try (InputStream inputStream = file.getInputStream()) {
-
-			                Files.copy(
-			                    inputStream, //업로드된 파일의 실제 내용(데이터)을 읽어오는 통로
-			                    targetPath //어디에 저장할지, 최종 저장 위치
-			                );
-			            }
-			            return new StoredFile(originalFileName,storedFileName);
-				 
-			} catch (IOException e) {
-					throw new RuntimeException("첨부파일 저장에 실패했습니다.",e);
-			}
+		try (InputStream inputStream = file.getInputStream()) {
+			S3Storage.upload(
+					objectKey,
+					inputStream,
+					file.getSize(),
+					file.getContentType()
+			);
+			return new StoredFile(originalFileName, objectKey);
+		} catch (IOException e) {
+			throw new RuntimeException("첨부파일 저장에 실패했습니다.", e);
+		}
 	}
 
-	
+	/**
+	 * DB에 저장된 S3 객체 키로 파일 내용을 불러옵니다.
+	 *
+	 * <pre>{@code
+	 * ResponseBytes<GetObjectResponse> fileData =
+	 *         fileService.downloadFile(fileDto.getStoredFileName());
+	 * }</pre>
+	 *
+	 * @param objectKey DB에 저장된 전체 S3 객체 키
+	 *                  (예: notice/UUID_file.pdf)
+	 * @return 파일 내용과 S3 응답 정보
+	 */
+	public ResponseBytes<GetObjectResponse> downloadFile(String objectKey) {
+		if (objectKey == null || objectKey.isBlank()) {
+			throw new IllegalArgumentException("파일 저장 경로가 올바르지 않습니다.");
+		}
 
-	//첨부파일 검증
+		return S3Storage.download(objectKey);
+	}
+
+	/**
+	 * DB에 저장된 S3 객체 키를 사용해 파일을 삭제합니다.
+	 * objectKey가 null이거나 빈 문자열이면 삭제를 수행하지 않습니다.
+	 *
+	 * <pre>{@code
+	 * fileService.deleteFile(fileDto.getStoredFileName());
+	 * }</pre>
+	 *
+	 * @param objectKey DB에 저장된 전체 S3 객체 키
+	 *                  (예: notice/UUID_file.pdf)
+	 */
+	public void deleteFile(String objectKey) {
+		if (objectKey == null || objectKey.isBlank()) {
+			return;
+		}
+
+		S3Storage.delete(objectKey);
+	}
+
+
+
+	/**
+	 * S3에 업로드하기 전에 파일 개수, 크기, 확장자를 검증합니다.
+	 * 현재 파일은 최대 3개, 각 파일은 최대 10MB까지 허용합니다.
+	 *
+	 * <pre>{@code
+	 * fileService.validateFiles(files);
+	 * }</pre>
+	 *
+	 * @param files 검증할 첨부파일 목록
+	 * @throws IllegalArgumentException 파일이 허용 조건을 만족하지 않을 때
+	 */
 	public void validateFiles(List<Part> files) {
 		//파일 개수 
 		if(files.size() > MAX_FILE_COUNT) {
