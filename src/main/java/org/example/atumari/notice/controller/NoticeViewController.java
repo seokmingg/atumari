@@ -29,6 +29,7 @@ public class NoticeViewController extends HttpServlet {
             }
 
             request.setAttribute("notice", notice);
+            request.setAttribute("noticeFiles", noticeService.getNoticeFiles(noticeNo));
             request.getRequestDispatcher("/WEB-INF/views/notice/notice_view.jsp")
                     .forward(request, response);
         } catch (NumberFormatException e) {
