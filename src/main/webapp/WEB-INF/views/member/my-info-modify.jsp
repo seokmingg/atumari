@@ -80,6 +80,7 @@
                     </label>
 
                     ${myInfo.getEmail()}
+                    <!-- 컨트롤러에 이메일 값 넘기는 hidden input: 사용자는 이메일 수정 불가 -->
                      <input
                         type="hidden"
                         id="email"
@@ -120,22 +121,6 @@
                         class="tel"
                         value="${myInfo.getTel()}"
                         placeholder="入力例：「070-0000-0000」、「080-000-0000」">
-                    <!--    
-                    <input
-                        type="text"
-                        id="tel2"
-                        name="tel2"
-                        class="tel"
-                        value="${myInfo.getTel()}">
-                        
-                    <input
-                        type="text"
-                        id="tel3"
-                        name="tel3"
-                        class="tel"
-                        value="${myInfo.getTel()}">
-                        
-                    -->  
 
                 </div>
                 
