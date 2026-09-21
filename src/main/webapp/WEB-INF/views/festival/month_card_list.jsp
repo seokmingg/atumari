@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 
@@ -14,7 +14,7 @@ pageEncoding="UTF-8"%>
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title> Month | ATSUMARI</title>
+<title>Month | ATSUMARI</title>
 
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/festival/css/card_list.css">
@@ -29,8 +29,9 @@ pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+
 <!-- =========================
-     REGION PAGE
+     MONTH PAGE
 ========================== -->
 
 <main class="region-page">
@@ -42,62 +43,68 @@ pageEncoding="UTF-8"%>
          TITLE
     ========================== -->
 
-
     <div class="region-title">
 
-    <span>MONTH</span>
+        <span>MONTH</span>
 
-    <div class="title-row">
+        <div class="title-row">
 
-	        <h1>月別に探してください</h1>
-	
-	        <a href="${pageContext.request.contextPath}/festival/list?festival_no=${festival.festival_no}&type=month&month=${month}"
-	           class="card-list-button">
-	            月別の祭り一覧 →
-	        </a>
-	
-	    </div>
-	
-	    <p>
-	        月別に、お祭りを探すことができます。
-	    </p>
+            <h1>月別に探してください</h1>
 
-	</div>
+            <a href="${pageContext.request.contextPath}/festival/list?type=month&year=2026&month=${month}"
+               class="card-list-button">
+
+                ２０２６年月別の祭り一覧 →
+
+            </a>
+            
+            <a href="${pageContext.request.contextPath}/festival/list?type=month&year=2027&month=${month}"
+               class="card-list-button">
+
+                ２０２７年月別の祭り一覧 →
+
+            </a>
+
+        </div>
+
+        <p>
+            月別に、お祭りを探すことができます。
+        </p>
+
+    </div>
+
+
+   
 
 
     <!-- =========================
-         REGION GRID
+         MONTH GRID
     ========================== -->
 
     <div class="region-grid">
 
+        <c:forEach var="festival"
+                   items="${festivalList}"
+                   begin="0"
+                   end="9">
 
-        <!-- =========================
-             
-        ========================== -->
+            <a href="${pageContext.request.contextPath}/festival/view?festival_no=${festival.festival_no}&type=month&year=${year}&month=${month}"
+               class="region-card">
 
-     <c:forEach var="festival" items="${festivalList}"  begin="0" end="9">
-           
+                <img src="${pageContext.request.contextPath}${festival.image_url}"
+                     alt="${festival.festival_name}">
 
-	    <a href="${pageContext.request.contextPath}/festival/view?festival_no=${festival.festival_no}&type=month&month=${month}"
-	       class="region-card">
-	
-	        <img src="${pageContext.request.contextPath}${festival.image_url}"
-	             alt="${festival.festival_name}">
-	
-	        <div class="region-overlay">
-	
-	            <span>${festival.prefecture_name}</span>
-	
-	            <strong>${festival.festival_name}</strong>
-	
-	        </div>
-	
-	    </a>
+                <div class="region-overlay">
 
-	</c:forEach>
+                    <span>${festival.prefecture_name}</span>
 
+                    <strong>${festival.festival_name}</strong>
 
+                </div>
+
+            </a>
+
+        </c:forEach>
 
     </div>
 
@@ -106,15 +113,17 @@ pageEncoding="UTF-8"%>
 
 </main>
 
+
 <!-- =========================
      FOOTER
 ========================== -->
 
 <footer class="footer">
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </footer>
+
 
 </body>
 

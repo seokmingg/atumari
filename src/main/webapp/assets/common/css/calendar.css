@@ -355,3 +355,296 @@
     color: #888;
 }
 
+/* =========================
+   FESTIVAL DATE SEARCH
+========================= */
+
+.festival-date-search {
+    position: relative;
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   FESTIVAL DATE BUTTON
+========================= */
+
+.festival-date-button {
+    width: 210px;
+    height: 70px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 0 18px;
+
+    border: none;
+    border-right: 1px solid #e5e5e5;
+
+    background: #fff;
+    color: #222;
+
+    text-align: left;
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+.festival-date-button > span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 9px;
+    letter-spacing: 2px;
+
+    color: #999;
+}
+
+
+/* =========================
+   FESTIVAL DATE RANGE
+========================= */
+
+.festival-date-range {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    width: 100%;
+    min-width: 0;
+
+    white-space: nowrap;
+}
+
+.festival-date-range .date-start,
+.festival-date-range .date-end {
+    display: inline-block;
+
+    margin: 0;
+    padding: 0;
+
+    white-space: nowrap;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    color: #222;
+    line-height: 1;
+
+    flex-shrink: 1;
+}
+
+.festival-date-range .date-arrow {
+    display: inline-block;
+
+    margin: 0;
+    padding: 0;
+
+    font-size: 12px;
+    line-height: 1;
+
+    color: #999;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   FESTIVAL DATE PANEL
+========================= */
+
+.festival-date-panel {
+    position: absolute;
+
+    top: 70px;
+    left: 0;
+
+    width: 320px;
+
+    padding: 20px;
+
+    background: #fff;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+
+    box-sizing: border-box;
+
+    z-index: 100;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-10px);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s ease;
+}
+
+
+/* =========================
+   FESTIVAL DATE PANEL OPEN
+========================= */
+
+.festival-date-search.open .festival-date-panel {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+/* =========================
+   FESTIVAL CALENDAR HEADER
+========================= */
+
+.festival-date-panel .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.festival-date-panel .calendar-title {
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.festival-date-panel .calendar-prev,
+.festival-date-panel .calendar-next {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: #222;
+
+    font-size: 24px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.festival-date-panel .calendar-prev:hover,
+.festival-date-panel .calendar-next:hover {
+    background: #f3f5fa;
+    border-radius: 50%;
+}
+
+
+/* =========================
+   FESTIVAL CALENDAR WEEK
+========================= */
+
+.festival-date-panel .calendar-week {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    margin-bottom: 8px;
+}
+
+.festival-date-panel .calendar-week span {
+    text-align: center;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    color: #777;
+
+    padding: 6px 0;
+}
+
+
+/* =========================
+   FESTIVAL CALENDAR DAYS
+========================= */
+
+.festival-date-panel .calendar-days {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 4px;
+}
+
+.festival-date-panel .calendar-days span {
+    width: 32px;
+    height: 32px;
+
+    margin: auto;
+}
+
+.festival-date-panel .calendar-days button {
+    width: 32px;
+    height: 32px;
+
+    margin: auto;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #222;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.festival-date-panel .calendar-days button:hover {
+    background: #eef2f8;
+}
+
+
+/* =========================
+   FESTIVAL SELECTED DATE
+========================= */
+
+.festival-date-panel .calendar-days button.selected {
+    background: #071A6B;
+    color: #fff;
+}
+
+
+/* =========================
+   FESTIVAL DATE RANGE
+========================= */
+
+.festival-date-panel .calendar-days button.range {
+    background: #eeeeee;
+
+    border-radius: 0;
+
+    color: #333;
+}

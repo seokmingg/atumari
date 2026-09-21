@@ -1,38 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* =========================
-       공개 / 비공개
-    ========================== */
-
-    const publicRadios =
-        document.querySelectorAll('input[name="isPublic"]');
-
-    const passwordArea =
-        document.getElementById("passwordArea");
-
-    const passwordInput =
-        document.getElementById("inquiryPassword");
-
-    publicRadios.forEach(function (radio) {
-
-        radio.addEventListener("change", function () {
-
-            if (this.value === "0") {
-
-                // 비공개 선택
-                passwordArea.classList.add("show");
-                passwordInput.required = true;
-
-            } else {
-
-                // 공개 선택
-                passwordArea.classList.remove("show");
-                passwordInput.required = false;
-                passwordInput.value = "";
-            }
-        });
-    });
-
 
     /* =========================
        메일 알림
@@ -68,43 +35,174 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* =========================
-       첨부파일
-    ========================== */
+	/* =========================
+	   첨부파일
+	========================== */
 
-    const fileInput =
-        document.getElementById("inquiryFile");
+	const fileInput =
+	    document.getElementById("inquiryFile");
 
-    const fileName =
-        document.getElementById("fileName");
+	const fileName =
+	    document.getElementById("fileName");
 
-    if (fileInput && fileName) {
+	const selectedFileList =
+	    document.getElementById("selectedFileList");
 
-        fileInput.addEventListener("change", function () {
+	const fileError =
+	    document.getElementById("fileError");
 
-            if (this.files.length > 0) {
+	const MAX_FILE_COUNT = 3;
 
-                // 여러 파일 선택 시 파일 개수 표시
-                if (this.files.length === 1) {
+	// 실제 선택된 파일들을 관리
+	let selectedFiles = [];
 
-                    fileName.textContent =
-                        this.files[0].name;
+	if (fileInput) {
 
-                } else {
+	    fileInput.addEventListener("change", function () {
 
-                    fileName.textContent =
-                        this.files.length + "個のファイルを選択しました";
-                }
+	        // 이번에 선택한 파일
+	        const newFiles = Array.from(this.files);
 
-            } else {
+	        // 기존 파일 + 새 파일이 3개를 초과하는지 확인
+	        if (
+	            selectedFiles.length + newFiles.length
+	            > MAX_FILE_COUNT
+	        ) {
 
-                fileName.textContent =
-                    "選択されていません";
-            }
-        });
-    }
+	            fileError.textContent =
+	                "添付できるファイルは3件までです。";
+
+	            // 기존 파일 상태 유지
+	            updateFileInput();
+
+	            return;
+	        }
+
+	        // 정상적인 경우 에러 메시지 삭제
+	        fileError.textContent = "";
+
+	        // 기존 파일 목록에 새 파일 추가
+	        selectedFiles.push(...newFiles);
+
+	        // 실제 input에도 반영
+	        updateFileInput();
+
+	        // 화면에 파일 목록 표시
+	        renderFileList();
+	    });
+	}
+
+
+	/* =========================
+	   선택된 파일 화면 표시
+	========================== */
+
+	function renderFileList() {
+
+	    selectedFileList.innerHTML = "";
+
+	    // 파일이 없는 경우
+	    if (selectedFiles.length === 0) {
+
+	        fileName.textContent =
+	            "選択されていません";
+
+	        return;
+	    }
+
+	    // 선택된 파일 개수 표시
+	    fileName.textContent =
+	        selectedFiles.length +
+	        "個のファイルを選択しました";
+
+
+	    selectedFiles.forEach(function (file, index) {
+
+	        const fileItem =
+	            document.createElement("div");
+
+	        fileItem.classList.add("selected-file-item");
+
+
+	        // 파일 이름
+	        const name =
+	            document.createElement("span");
+
+	        name.classList.add("selected-file-name");
+
+	        name.textContent = file.name;
+
+
+	        // 삭제 버튼
+	        const deleteButton =
+	            document.createElement("button");
+
+	        deleteButton.type = "button";
+
+	        deleteButton.classList.add(
+	            "file-delete-button"
+	        );
+
+	        deleteButton.textContent = "×";
+
+
+	        // 삭제 버튼 클릭
+	        deleteButton.addEventListener(
+	            "click",
+	            function () {
+
+	                removeFile(index);
+	            }
+	        );
+
+
+	        fileItem.appendChild(name);
+
+	        fileItem.appendChild(deleteButton);
+
+	        selectedFileList.appendChild(fileItem);
+	    });
+	}
+
+
+	/* =========================
+	   선택 파일 삭제
+	========================== */
+
+	function removeFile(index) {
+
+	    // 배열에서 해당 파일 삭제
+	    selectedFiles.splice(index, 1);
+
+	    // 에러 메시지 초기화
+	    fileError.textContent = "";
+
+	    // 실제 input에 다시 반영
+	    updateFileInput();
+
+	    // 화면 다시 출력
+	    renderFileList();
+	}
+
+
+	/* =========================
+	   실제 file input 갱신
+	========================== */
+
+	function updateFileInput() {
+
+	    const dataTransfer =
+	        new DataTransfer();
+
+	    selectedFiles.forEach(function (file) {
+
+	        dataTransfer.items.add(file);
+	    });
+
+	    fileInput.files =
+	        dataTransfer.files;
+	}
 });
-
 
 /* =========================
    입력값 검증
@@ -121,14 +219,6 @@ function validateForm() {
     const content =
         document.querySelector("[name='content']");
 
-    // 현재 선택된 공개/비공개 값
-    const isPublic =
-        document.querySelector(
-            "[name='isPublic']:checked"
-        );
-
-    const password =
-        document.querySelector("[name='password']");
 
     // 현재 선택된 이메일 알림 값
     const emailNotify =
@@ -166,7 +256,7 @@ function validateForm() {
 
     /* =========================
        비공개 비밀번호
-    ========================== */
+    ==========================
 
     if (isPublic && isPublic.value === "0") {
 
@@ -190,7 +280,7 @@ function validateForm() {
             return false;
         }
     }
-
+	*/
 
     /* =========================
        이메일
@@ -252,3 +342,4 @@ function confirmSubmit(msg) {
 
     return confirm(msg);
 }
+
