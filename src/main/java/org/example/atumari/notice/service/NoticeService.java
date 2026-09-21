@@ -1,14 +1,10 @@
 package org.example.atumari.notice.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 
-import org.example.atumari.common.storage.S3Storage;
+import org.example.atumari.common.fileupload.FileService;
+import org.example.atumari.common.fileupload.StoredFile;
 import org.example.atumari.notice.dao.NoticeDao;
 import org.example.atumari.notice.dao.NoticeFileDao;
 import org.example.atumari.notice.dto.NoticeDto;
@@ -23,14 +19,9 @@ public class NoticeService {
 
     private static final int PAGE_SIZE = 10;
     private static final int PAGE_GROUP_SIZE = 5;
-    private static final int MAX_FILE_COUNT = 3;
-    private static final long MAX_FILE_SIZE = 10L * 1024 * 1024;
-    private static final List<String> ALLOWED_EXTENSIONS = List.of(
-            "jpg", "jpeg", "png", "pdf", "doc", "docx", "xls", "xlsx"
-    );
-
     private final NoticeDao noticeDao = new NoticeDao();
     private final NoticeFileDao noticeFileDao = new NoticeFileDao();
+    private final FileService fileService = new FileService();
 
     public NoticeListPageDto getNoticePage(
             int requestedPage, String searchType, String keyword) {
@@ -75,7 +66,7 @@ public class NoticeService {
         if (authorEmail == null || authorEmail.isBlank()) {
             throw new IllegalArgumentException("ログイン情報を確認してください。");
         }
-        validateFiles(files);
+        fileService.validateFiles(files);
 
         int noticeNo = noticeDao.insertNotice(normalizedTitle, normalizedContent, authorEmail);
         if (noticeNo <= 0) {
@@ -105,7 +96,7 @@ public class NoticeService {
             throw new IllegalArgumentException("お知らせが見つかりません。");
         }
         for (NoticeFileDto file : files) {
-            S3Storage.delete(file.getStoredFileName());
+            fileService.deleteFile(file.getStoredFileName());
         }
     }
 
@@ -118,68 +109,35 @@ public class NoticeService {
     }
 
     public ResponseBytes<GetObjectResponse> downloadNoticeFile(NoticeFileDto file) {
-        return S3Storage.download(file.getStoredFileName());
+        if (file == null) {
+            throw new IllegalArgumentException("첨부파일을 찾을 수 없습니다.");
+        }
+        return fileService.downloadFile(file.getStoredFileName());
     }
 
     private void saveFiles(List<Part> files, int noticeNo) {
         List<String> uploadedKeys = new ArrayList<>();
         try {
             for (Part file : files) {
-                String originalFileName = sanitizeFileName(file.getSubmittedFileName());
-                String objectKey = "notice/" + noticeNo + "/"
-                        + UUID.randomUUID() + "_" + originalFileName;
-
-                try (InputStream inputStream = file.getInputStream()) {
-                    S3Storage.upload(
-                            objectKey,
-                            inputStream,
-                            file.getSize(),
-                            file.getContentType()
-                    );
-                }
+                StoredFile storedFile = fileService.saveFile(file, "notice");
+                String originalFileName = storedFile.getOriginalFileName();
+                String objectKey = storedFile.getStoredFileName();
                 uploadedKeys.add(objectKey);
 
                 if (noticeFileDao.insertFile(noticeNo, originalFileName, objectKey) != 1) {
                     throw new RuntimeException("공지사항 첨부파일 정보 저장에 실패했습니다.");
                 }
             }
-        } catch (IOException | RuntimeException e) {
+        } catch (RuntimeException e) {
             for (String objectKey : uploadedKeys) {
                 try {
-                    S3Storage.delete(objectKey);
+                    fileService.deleteFile(objectKey);
                 } catch (RuntimeException ignored) {
                     // 원래 업로드 실패 원인을 유지합니다.
                 }
             }
             throw new RuntimeException("공지사항 첨부파일 저장에 실패했습니다.", e);
         }
-    }
-
-    private void validateFiles(List<Part> files) {
-        if (files.size() > MAX_FILE_COUNT) {
-            throw new IllegalArgumentException("添付ファイルは3個まで登録できます。");
-        }
-
-        for (Part file : files) {
-            String fileName = sanitizeFileName(file.getSubmittedFileName());
-            if (file.getSize() > MAX_FILE_SIZE) {
-                throw new IllegalArgumentException("1ファイルあたりのサイズは10MB以下にしてください。");
-            }
-            int dotIndex = fileName.lastIndexOf('.');
-            if (dotIndex < 0 || !ALLOWED_EXTENSIONS.contains(
-                    fileName.substring(dotIndex + 1).toLowerCase(Locale.ROOT))) {
-                throw new IllegalArgumentException("許可されていないファイル形式です。");
-            }
-        }
-    }
-
-    private String sanitizeFileName(String submittedFileName) {
-        if (submittedFileName == null || submittedFileName.isBlank()) {
-            throw new IllegalArgumentException("ファイル名が正しくありません。");
-        }
-        String normalizedName = submittedFileName.replace('\\', '/');
-        String fileName = Path.of(normalizedName).getFileName().toString();
-        return fileName.replaceAll("[\\r\\n]", "_");
     }
 
     private int getTotalPage(int totalCount) {
