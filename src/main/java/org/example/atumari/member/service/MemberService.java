@@ -39,7 +39,7 @@ public class MemberService {
 				throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
 			}
 			
-			if (!signup.getName().matches("^[\\p{L} ・]+$")) { // 이름(유니코드 문자만 허용)
+			if (!signup.getName().matches("^[\\p{L}\\u0020\\u3000・]+$")) { // 이름(유니코드 문자만 허용)
 				throw new IllegalArgumentException("お名前は文字（ひらがな、カタカナ、漢字、アルファベットなど）だけご入力いただけます。");
 			}
 			
@@ -185,7 +185,7 @@ public class MemberService {
 			}
 		}
 		
-		if (!modify.getName().matches("^[\\p{L} ・]+$")) { // 이름(유니코드 문자만 허용)
+		if (!modify.getName().matches("^[\\p{L}\\u0020\\u3000・]+$")) { // 이름(유니코드 문자만 허용)
 			throw new IllegalArgumentException("お名前は文字（ひらがな、カタカナ、漢字、アルファベットなど）だけご入力いただけます。");
 		}
 		

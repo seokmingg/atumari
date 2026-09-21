@@ -42,10 +42,11 @@ function checkTelValid() {
     
 }
 
-// refactor: 이름 형식 세부 검증 추가 -> 회원가입, 마이페이지 정보 수정
+// refactor: 이름 형식 세부 검증 추가 -> 회원가입, 마이페이지 정보 수정 
 function checkNameValid() {
     let userInput = document.querySelector("#userName").value;
-    const result = /^[\p{L} ・]+$/u.test(userInput); // 이름 정규식 기본 패턴 -> 유니코드 문자만 입력 가능(영문자, 한글, 히라가나, 가타카나, 한자 등)
+    const result = /^[\p{L}\u0020\u3000・]+$/u.test(userInput); // 이름 정규식 기본 패턴 -> 유니코드 문자만 입력 가능(영문자, 한글, 히라가나, 가타카나, 한자 등)
+	// u0020: 일반 공백, u3000: 일본어 전각 키보드 공백, ・: 일본어 중점 표기
     if (!result) {
       alert("お名前は文字（ひらがな、カタカナ、漢字、アルファベットなど）だけご入力いただけます。");
       return false;
