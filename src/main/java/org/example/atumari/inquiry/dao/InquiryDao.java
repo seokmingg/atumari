@@ -143,7 +143,7 @@ public class InquiryDao {
 		int totalCount =0;
 		
 		StringBuilder sql = new StringBuilder("""
-				select count(*)
+				select count(*) as count
 				from inquiry
 				""");
 		
@@ -155,9 +155,9 @@ public class InquiryDao {
 		// 검색 조건만 동적으로 추가
 		if(hasSearch) {
 			if("title".equals(searchType)) {
-				sql.append(" where i.title like ? ");//주의: 앞뒤 공백 주기, 앞뒷문장과 붙으면 안됨
+				sql.append(" where title like ? ");//주의: 앞뒤 공백 주기, 앞뒷문장과 붙으면 안됨
 			}else if("writer".equals(searchType)) {
-				sql.append(" where i.writer like ? ");
+				sql.append(" where writer like ? ");
 			}
 		}
 		

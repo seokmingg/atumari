@@ -38,8 +38,11 @@ public class InquiryListController extends HttpServlet {
 		   
 		   List<InquiryDto> inquiryList = inquiryListService.getInquiryList(searchType,keyword,page);
 		   int totalCount = inquiryListService.getTotalCount(searchType,keyword);
-		   int totalPages = inquiryListService.getTotalPages(totalCount,page);
+		   int totalPages = inquiryListService.getTotalPages(totalCount);
 		   
+		   
+		   request.setAttribute("keyword",keyword);// 검색 키워드
+		   request.setAttribute("searchType",searchType);// 검색 select
 		   request.setAttribute("inquiryList",inquiryList);// 현재 페이지에 보여줄 문의글 목록
 		   request.setAttribute("totalCount", totalCount); // 검색조건에 맞는 전체 문의글 개수
 		   request.setAttribute("totalPages", totalPages); // 전체 페이지 개수

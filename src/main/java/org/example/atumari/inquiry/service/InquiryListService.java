@@ -8,6 +8,8 @@ import org.example.atumari.inquiry.dto.InquiryDto;
 public class InquiryListService {
 	
 	private final InquiryDao inquiryDao = new InquiryDao();
+	
+	   private static final int PAGE_SIZE = 6;
 
 	// 문의글 조회
 	public List<InquiryDto> getInquiryList(String searchType,String keyword,int page) {
@@ -27,9 +29,9 @@ public class InquiryListService {
 	}
 	
 	// 전체 페이지 개수
-	public int getTotalPages(int totalCount,int pageSize) {
+	public int getTotalPages(int totalCount) {
 		
-		int totalPages = (int)Math.ceil((double)totalCount/pageSize);
+		int totalPages = (int)Math.ceil((double)totalCount/PAGE_SIZE);
 		
 		return totalPages;
 	}
