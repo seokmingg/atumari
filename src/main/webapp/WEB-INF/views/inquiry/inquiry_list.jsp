@@ -38,10 +38,10 @@
   <form action="${pageContext.request.contextPath}/inquiry/list" method="get">
   <div class="board-search">
     <select name="searchType">
-    	<option value="title">タイトル</option>
-    	<option value="writer">作成者</option>
+    	<option value="title" <c:if test="${searchType eq 'title'}"> selected </c:if>>タイトル</option>
+    	<option value="writer" <c:if test="${searchType eq 'writer'}"> selected </c:if>>作成者</option>
     </select>
-    <input id="searchKeyword" name="keyword" type="text" placeholder="検索してください">
+    <input id="searchKeyword" name="keyword" value="${keyword}" type="text" placeholder="検索してください">
     <button id="searchBtn" type="submit">検索</button>
   </div>
   </form>
@@ -79,12 +79,13 @@
     <div class="board-cell board-date">${inquiry.created_at}</div>
   </div>
 </c:forEach>
+</div>
 
 <div class="board-pagination">
 
 <!-- 이전 페이지 -->
 	<c:if test="${page>1}">
-		<a href="{pageContext.request.contextPath}/inquiry/list?page=${page - 1}">
+		<a href="${pageContext.request.contextPath}/inquiry/list?page=${page - 1}">
 			←		
 		</a>
 	</c:if>
@@ -120,7 +121,6 @@
 </div>
 
 
-</div>
 </main>
 
 <!-- =========================

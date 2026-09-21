@@ -99,28 +99,6 @@
     </div>
 
 
-    <!-- 비밀번호
-    <div class="form-row hidden-row" id="passwordArea">
-
-        <div class="form-label">パスワード</div>
-
-        <div class="form-field">
-
-            <input type="password"
-                   id="inquiryPassword"
-                   name="password"
-                   maxlength="4"
-                   inputmode="numeric" 
-                   placeholder="4桁の数字を入力">
-
-            <div class="form-help">
-                *非公開のお問い合わせを確認する際に使用します。
-            </div>
-
-        </div>
-    </div>
- -->
-
     <!-- 답변 알림 -->
     <div class="form-row">
 
