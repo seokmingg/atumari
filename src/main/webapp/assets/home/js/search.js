@@ -578,5 +578,98 @@ document.addEventListener("DOMContentLoaded", function () {
 	    });
 
 	}
+	
+	/* =========================
+	   SEARCH BUTTON
+	========================= */
+
+	const searchButton =
+	    document.querySelector(".hero-search-button");
+
+	if (searchButton) {
+
+	    searchButton.addEventListener(
+	        "click",
+	        function (event) {
+
+	            event.preventDefault();
+	            event.stopPropagation();
+
+
+	            /* =========================
+	               KEYWORD
+	            ========================= */
+
+	            const keywordInput =
+	                document.querySelector(".hero-keyword input");
+
+	            const keyword =
+	                keywordInput
+	                    ? keywordInput.value.trim()
+	                    : "";
+
+
+	            /* =========================
+	               DATE
+	            ========================= */
+
+	            const start =
+	                startDate
+	                    ? formatDate(startDate)
+	                    : "";
+
+	            const end =
+	                endDate
+	                    ? formatDate(endDate)
+	                    : "";
+
+
+	            /* =========================
+	               SEARCH URL
+	            ========================= */
+
+	            const params =
+	                new URLSearchParams();
+
+
+	            if (keyword) {
+
+	                params.set(
+	                    "keyword",
+	                    keyword
+	                );
+
+	            }
+
+	            if (start) {
+
+	                params.set(
+	                    "startDate",
+	                    start
+	                );
+
+	            }
+
+	            if (end) {
+
+	                params.set(
+	                    "endDate",
+	                    end
+	                );
+
+	            }
+
+
+	            /* =========================
+	               MOVE
+	            ========================= */
+
+	            window.location.href =
+	                `${window.contextPath || ""}/home/search?${params.toString()}`;
+
+	        }
+	    );
+
+	}
 
 });

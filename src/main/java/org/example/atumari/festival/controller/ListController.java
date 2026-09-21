@@ -150,24 +150,46 @@ public class ListController extends HttpServlet {
 
 		if (monthParam != null && !monthParam.isEmpty()) {
 
-			try {
+		    try {
 
-				month = Integer.parseInt(monthParam);
+		        month = Integer.parseInt(monthParam);
 
-			} catch (NumberFormatException e) {
+		    } catch (NumberFormatException e) {
 
-				month = LocalDate.now().getMonthValue();
+		        month = LocalDate.now().getMonthValue();
 
-			}
+		    }
 		}
 
 		// 월 범위 확인
-
 		if (month < 1 || month > 12) {
 
-			month = LocalDate.now().getMonthValue();
+		    month = LocalDate.now().getMonthValue();
 
 		}
+
+
+		// ========================================
+		// 10-1. 연도
+		// ========================================
+
+		String yearParam = request.getParameter("year");
+
+		int year = LocalDate.now().getYear();
+
+		if (yearParam != null && !yearParam.isEmpty()) {
+
+		    try {
+
+		        year = Integer.parseInt(yearParam);
+
+		    } catch (NumberFormatException e) {
+
+		        year = LocalDate.now().getYear();
+
+		    }
+		}
+
 
 		// ========================================
 		// 11. 월 날짜 계산
@@ -179,13 +201,12 @@ public class ListController extends HttpServlet {
 
 		if ("month".equals(type)) {
 
-			int year = LocalDate.now().getYear();
+		    firstDay = LocalDate.of(year, month, 1);
 
-			firstDay = LocalDate.of(year, month, 1);
-
-			nextMonth = firstDay.plusMonths(1);
+		    nextMonth = firstDay.plusMonths(1);
 
 		}
+
 
 		// ========================================
 		// 12. 잘못된 type 확인
@@ -264,6 +285,8 @@ public class ListController extends HttpServlet {
 		else if ("month".equals(type)) {
 
 			request.setAttribute("month", month);
+			
+			request.setAttribute("year", year);
 
 		}
 

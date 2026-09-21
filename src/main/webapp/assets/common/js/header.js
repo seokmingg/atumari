@@ -112,9 +112,13 @@ function closeCalendar() {
 function formatHeaderDate(date) {
 
     return `${date.getFullYear()}-${String(
+
         date.getMonth() + 1
+
     ).padStart(2, "0")}-${String(
+
         date.getDate()
+
     ).padStart(2, "0")}`;
 
 }
@@ -387,7 +391,83 @@ function renderHeaderCalendar() {
 
 
 /* =========================
-   PREVIOUS
+   SEARCH
+========================= */
+
+function searchHeaderFestival() {
+
+    const input =
+        document.querySelector(
+            "#headerSearchInput"
+        );
+
+    if (!input) return;
+
+
+    const keyword =
+        input.value.trim();
+
+
+    const contextPath =
+        window.contextPath || "";
+
+
+    const params =
+        new URLSearchParams();
+
+
+    /* KEYWORD */
+
+    if (keyword) {
+
+        params.set(
+            "keyword",
+            keyword
+        );
+
+    }
+
+
+    /* START DATE */
+
+    if (headerStartDate) {
+
+        params.set(
+            "startDate",
+            formatHeaderDate(
+                headerStartDate
+            )
+        );
+
+    }
+
+
+    /* END DATE */
+
+    if (headerEndDate) {
+
+        params.set(
+            "endDate",
+            formatHeaderDate(
+                headerEndDate
+            )
+        );
+
+    }
+
+
+    /* SEARCH */
+
+    window.location.href =
+        contextPath +
+        "/home/search?" +
+        params.toString();
+
+}
+
+
+/* =========================
+   PREVIOUS / NEXT / SEARCH
 ========================= */
 
 document.addEventListener(
@@ -404,6 +484,13 @@ document.addEventListener(
                 ".header-calendar-next"
             );
 
+        const searchButton =
+            document.querySelector(
+                "#headerSearchButton"
+            );
+
+
+        /* PREVIOUS */
 
         if (prev) {
 
@@ -435,6 +522,8 @@ document.addEventListener(
         }
 
 
+        /* NEXT */
+
         if (next) {
 
             next.addEventListener(
@@ -458,6 +547,22 @@ document.addEventListener(
 
 
                     renderHeaderCalendar();
+
+                }
+            );
+
+        }
+
+
+        /* SEARCH */
+
+        if (searchButton) {
+
+            searchButton.addEventListener(
+                "click",
+                function () {
+
+                    searchHeaderFestival();
 
                 }
             );
