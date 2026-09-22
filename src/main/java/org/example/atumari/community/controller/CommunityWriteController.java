@@ -55,33 +55,23 @@ public class CommunityWriteController extends HttpServlet {
 	        System.out.println("image       : " + imagePart);
 	        System.out.println("==============================");
 	
-	        
-	     // DTO 생성
-	        CommunityPostDto cmtydto =
-	                new CommunityPostDto(
-	                        sessionEmail,
-	                        title,
-	                        content
-	                );
+        
+	    // DTO 생성
+        CommunityPostDto cmtydto = new CommunityPostDto(sessionEmail,title,content);
 
-	        // 게시물 + 첨부파일 저장
-	        CommunityService communityService =
-	                new CommunityService();
+        // 게시물 + 첨부파일 저장
+        CommunityService communityService = new CommunityService();
+        int result = communityService.write(cmtydto, imagePart);
+        
+        // 저장 성공
+        if (result == 1) {
+        	request.getRequestDispatcher("/WEB-INF/views/community/list.jsp")
+        			.forward(request, response);
 
-	        int result =
-	                communityService.write(cmtydto, imagePart);
-	        
-	        // 저장 성공
-	        if (result == 1) {
-	        	request.getRequestDispatcher(
-	        			"/WEB-INF/views/community/list.jsp"
-	    	        ).forward(request, response);
+        } else {
+        	request.getRequestDispatcher("/WEB-INF/views/community/write_test.jsp")
+        			.forward(request, response);
 
-	        } else {
-	        	request.getRequestDispatcher(
-	        			"/WEB-INF/views/community/write_test.jsp"
-	    	        ).forward(request, response);
-
-	        }
-       }
+        }
+    }
 }
