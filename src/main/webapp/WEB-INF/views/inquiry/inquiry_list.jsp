@@ -76,7 +76,7 @@
       
     <div class="board-cell board-writer">${inquiry.writer}</div>
     <div class="board-cell board-status"><span class="status-badge status-completed">${inquiry.status}</span></div>
-    <div class="board-cell board-date">${inquiry.created_at}</div>
+    <div class="board-cell board-date"> ${inquiry.formattedCreatedDate}</div>
   </div>
 </c:forEach>
 </div>

@@ -36,22 +36,22 @@
     <div class="detail-header-top">
       <div>
         <div class="detail-label">タイトル</div>
-        <h2>祭り情報についてお問い合わせします</h2>
+        <h2>${inquiryDto.title}</h2>
       </div>
-      <span class="status-badge status-completed">回答完了</span>
+      <span class="status-badge status-completed">${inquiryDto.status}</span>
     </div>
   </div>
   <div class="detail-meta">
-    <span>作成者 kim123</span>
-    <span>作成日 2026.09.08</span>
-    <span>公開設定 公開</span>
+    <span>作成者 ${inquiryDto.writer}</span>
+    <span> 作成日時 ${inquiryDto.formattedCreatedDateTime}</span>
+    <span>公開設定 ${inquiryDto.isPublic() ? '公開' : '非公開'}</span>
   </div>
   
     <!-- 첨부파일 -->
 <div class="detail-file">
 
     <div class="detail-label">添付ファイル</div>
-
+<c:forEach var="file" items="${fileDtos}">
     <div class="detail-file-list">
 
         <a href="#" class="detail-file-item">
@@ -60,16 +60,14 @@
                 alt="添付ファイル"
                 class="detail-file-icon">
 
-            <span>festival_schedule.png</span>
+            <span>${file.original_file_name}</span>
         </a>
 
     </div>
-
+</c:forEach>
 </div>
   <div class="detail-content">
-    青森ねぶた祭の開催日程についてお問い合わせします。<br><br>
-    現在サイトに表示されている日程と公式サイトの日程が異なるようです。<br>
-    ご確認をお願いいたします。
+	${inquiryDto.content}
   </div>
 </section>
 
