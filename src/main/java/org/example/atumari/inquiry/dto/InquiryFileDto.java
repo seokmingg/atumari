@@ -17,6 +17,31 @@ public class InquiryFileDto {
 		}
 	    
 	    
+		public InquiryFileDto() {
+			// TODO Auto-generated constructor stub
+		}
+
+
+		public void setFile_no(int file_no) {
+			this.file_no = file_no;
+		}
+
+
+		public void setInquiry_no(int inquiry_no) {
+			this.inquiry_no = inquiry_no;
+		}
+
+
+		public void setOriginal_file_name(String original_file_name) {
+			this.original_file_name = original_file_name;
+		}
+
+
+		public void setStored_file_name(String stored_file_name) {
+			this.stored_file_name = stored_file_name;
+		}
+
+
 		public int getFile_no() {
 			return file_no;
 		}

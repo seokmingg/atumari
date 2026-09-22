@@ -1,6 +1,8 @@
 package org.example.atumari.inquiry.dao;
 
 import org.example.atumari.inquiry.dto.InquiryDto;
+import org.example.atumari.inquiry.dto.InquiryFileDto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -183,4 +185,50 @@ public class InquiryDao {
 		return totalCount;
 	}
 
+	//문의 상세글 조회
+	public InquiryDto getInquiry(int inquiryNo) {
+		
+		InquiryDto inquiryDto = null;
+		
+		String sql ="SELECT\r\n"
+				+ "    i.inquiry_no,\r\n"
+				+ "    i.title,\r\n"
+				+ "    i.writer,\r\n"
+				+ "    i.status,\r\n"
+				+ "    i.created_at,\r\n"
+				+ "    i.is_public,\r\n"
+				+ "    i.content\r\n"
+				+ "FROM inquiry i\r\n"
+				+ "\r\n"
+				+ "WHERE i.inquiry_no = ?";
+		
+		try{
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+				ps.setInt(1, inquiryNo);
+			rs = ps.executeQuery();
+			
+				if(rs.next()) {
+					if(inquiryDto == null) {
+						inquiryDto = new InquiryDto();
+						
+						inquiryDto.setInquiry_no(rs.getInt("inquiry_no"));
+						inquiryDto.setTitle(rs.getString("title"));
+						inquiryDto.setWriter(rs.getString("writer"));
+						inquiryDto.setStatus(rs.getString("status"));
+						inquiryDto.setCreated_at(
+						        rs.getTimestamp("created_at").toLocalDateTime()
+						);
+						inquiryDto.setPublic(rs.getBoolean("is_public"));
+						inquiryDto.setContent(rs.getString("content"));
+				}
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return inquiryDto;
+	}
 }

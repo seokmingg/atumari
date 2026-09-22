@@ -12,12 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class AtumariApplication {
 
     public static void main(String[] args) {
-    	
-        System.out.println(
-                "AWS_ACCESS_KEY_ID 존재 여부: "
-                + (System.getenv("AWS_ACCESS_KEY_ID") != null)
-            );
-    	
         SpringApplication.run(AtumariApplication.class, args);
 
 

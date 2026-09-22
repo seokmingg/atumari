@@ -3,6 +3,8 @@ package org.example.atumari.inquiry.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.example.atumari.common.util.DateTimeUtil;
+
 public class InquiryDto {
 	
 
@@ -40,6 +42,16 @@ public class InquiryDto {
 		}
 
 
+		// 목록 페이지 출력용
+		public String getFormattedCreatedDate() {
+		    return DateTimeUtil.formatDate(created_at);
+		}
+
+		// 상세 페이지 출력용
+		public String getFormattedCreatedDateTime() {
+		    return DateTimeUtil.formatDateTime(created_at);
+		}
+		
 		public boolean isFileIs() {
 			return fileIs;
 		}
@@ -108,18 +120,6 @@ public class InquiryDto {
 		public void setWriter(String writer) {
 			this.writer = writer;
 		}
-
-		
-
-//		public void setPassword(String password) {
-//			this.password = password;
-//		}
-//
-//
-//		public String getPassword() {
-//			return password;
-//		}
-
 
 		public void setMember_id(Long member_id) {
 			this.member_id = member_id;

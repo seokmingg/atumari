@@ -14,7 +14,7 @@ public class InquiryListService {
 	// 문의글 조회
 	public List<InquiryDto> getInquiryList(String searchType,String keyword,int page) {
 		
-		int pageSize = 6; // 몇개의 글을 가져올건가
+		int pageSize = 5; // 몇개의 글을 가져올건가
 		int offset = (page-1)*pageSize; 
 		// 앞에서 몇 개를 건너뛸 것인가
 		// 1을 빼는 것은 첫번째 페이지에서는 1~6이 출력되야하므로 건너뛸 필요가 없음
