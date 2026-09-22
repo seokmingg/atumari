@@ -113,91 +113,99 @@
 
 				
 				    <!-- DATE -->
-				    <div class="festival-date-search">
+				   <div class="festival-date-search">
+
+				    <button
+				        type="button"
+				        class="festival-date-button">
 				
-				        <button
-				            type="button"
-				            class="festival-date-button">
+				        <span>DATE</span>
 				
-				            <span>DATE</span>
+				        <div class="festival-date-range">
 				
-				            <div class="festival-date-range">
+				            <strong class="date-start">
+				                日付を選択
+				            </strong>
 				
-				                <strong class="date-start">
-				                    日付を選択
-				                </strong>
+				            <span class="date-arrow">
+				                →
+				            </span>
 				
-				                <span class="date-arrow">
-				                    →
-				                </span>
+				            <strong class="date-end">
+				            </strong>
 				
-				                <strong class="date-end"></strong>
+				        </div>
 				
-				            </div>
-				
-				        </button>
-				
-				
-				        <!-- CALENDAR -->
-				
-				        <div class="festival-date-panel">
-				
-				            <div class="calendar-header">
-				
-				                <button
-				                    type="button"
-				                    class="calendar-prev">
-				                    ‹
-				                </button>
-				
-				                <strong class="calendar-title"></strong>
-				
-				                <button
-				                    type="button"
-				                    class="calendar-next">
-				                    ›
-				                </button>
-				
-				            </div>
+				    </button>
 				
 				
-				            <div class="calendar-week">
-				                <span>日</span>
-				                <span>月</span>
-				                <span>火</span>
-				                <span>水</span>
-				                <span>木</span>
-				                <span>金</span>
-				                <span>土</span>
-				            </div>
+				    <!-- CALENDAR -->
 				
+				    <div class="festival-date-panel">
 				
-				            <div class="calendar-days"></div>
+				        <div class="calendar-header">
 				
+				            <button
+				                type="button"
+				                class="calendar-prev">
+				                ‹
+				            </button>
+				
+				            <strong class="calendar-title">
+				            </strong>
+				
+				            <button
+				                type="button"
+				                class="calendar-next">
+				                ›
+				            </button>
+				
+				        </div>
+				
+				        <div class="calendar-week">
+				            <span>日</span>
+				            <span>月</span>
+				            <span>火</span>
+				            <span>水</span>
+				            <span>木</span>
+				            <span>金</span>
+				            <span>土</span>
+				        </div>
+				
+				        <div class="calendar-days">
 				        </div>
 				
 				    </div>
 				
-				
-				    <!-- KEYWORD -->
-				
-				    <input
-				        type="text"
-				        placeholder="祭りを検索してください"
-				        id="searchInput"
-				        name="keyword"
-				        value="${keyword}">
-				
-				
-				    <!-- SEARCH -->
-				
-				    <button
-				        type="button"
-				        id="searchButton">
-				        検索
-				    </button>
-				
 				</div>
+				
+				
+				<!-- RESET : 여기로 이동 -->
+				
+				<button
+				    type="button"
+				    class="calendar-reset">
+				    選択をリセット
+				</button>
+				
+				
+				<!-- KEYWORD -->
+				
+				<input
+				    type="text"
+				    placeholder="祭りを検索してください"
+				    id="searchInput"
+				    name="keyword"
+				    value="${keyword}">
+				
+				
+				<!-- SEARCH -->
+				
+				<button
+				    type="button"
+				    id="searchButton">
+				    検索
+				</button>
 
 
 
