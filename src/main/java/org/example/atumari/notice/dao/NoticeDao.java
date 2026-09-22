@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,12 +106,17 @@ public class NoticeDao {
                 "SELECT ?, ?, id FROM member WHERE email = ?";
 
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, title);
             ps.setString(2, content);
             ps.setString(3, authorEmail);
-            return ps.executeUpdate();
+            if (ps.executeUpdate() != 1) {
+                return 0;
+            }
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                return rs.next() ? rs.getInt(1) : 0;
+            }
         } catch (SQLException e) {
             throw new RuntimeException("공지사항 등록에 실패했습니다.", e);
         }

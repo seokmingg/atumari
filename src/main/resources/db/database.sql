@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS member (
     nickname VARCHAR(255),
     tel VARCHAR(100), -- 010-0000-0000
     reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modify_date TIMESTAMP,
+    modify_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 가입시에는 가입 일자와 동일, 이후 수정시 수정일자로 자동 업데이트
     exit_date TIMESTAMP,
     rk VARCHAR(100), -- 회원 등급(rank): 매니저, 기자, 일반 등
     filepath VARCHAR(5000) -- 추후 프로필 사진 등 첨부파일 구현 시 파일 경로
@@ -132,23 +132,33 @@ CREATE TABLE IF NOT EXISTS festival (
 
 -- 문의 정보
 CREATE TABLE IF NOT EXISTS inquiry (
+
     inquiry_no INT AUTO_INCREMENT PRIMARY KEY,
 
+    member_id BIGINT NOT NULL,
+
     title VARCHAR(200) NOT NULL,
+
     content TEXT NOT NULL,
 
     writer VARCHAR(100) NOT NULL,
+
     email VARCHAR(255),
 
     status VARCHAR(20) NOT NULL DEFAULT 'WAITING',
-    is_public BOOLEAN NOT NULL DEFAULT TRUE,
 
-    password VARCHAR(255),
+    is_public BOOLEAN NOT NULL DEFAULT TRUE,
 
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     answer_content TEXT,
-    answered_at DATETIME
+
+    answered_at DATETIME,
+
+    CONSTRAINT fk_inquiry_member
+        FOREIGN KEY (member_id)
+        REFERENCES member(id)
+
 );
 
 

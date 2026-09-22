@@ -9,6 +9,7 @@ import org.example.atumari.member.dao.MemberDao;
 import org.example.atumari.member.dto.LoginRequest;
 import org.example.atumari.member.dto.MemberAuthDto;
 import org.example.atumari.member.dto.MemberDto;
+import org.example.atumari.member.dto.MyInfoModifyRequest;
 import org.example.atumari.member.dto.SignupRequest;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
@@ -150,6 +151,30 @@ public class MemberService {
 	public MemberDto getMemberInfo(String sessionEmail) {
 		
 		return memberDao.findByEmail(sessionEmail);
+	}
+
+	// 마이페이지 회원 정보 -> CheckPasswordController 비밀번호 일치 검증
+	public boolean checkPassword(String email, String password) {
+		
+		// 비밀번호 검증 위해 로그인 요청 dto 재활용
+		LoginRequest login = new LoginRequest();
+		login.setEmail(email);
+		
+		// DB에서 해시된 비밀번호 획득
+		String dbPassword = memberDao.getDBPassword(login);
+		
+		// 비밀번호 검증 -> 입력받은 값과 해시 값이 같은지
+		BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), dbPassword);
+		
+		// 검증 결과 반환(같으면 true, 다르면 false)
+		return result.verified;
+	}
+
+	// 마이페이지 회원 정보 수정
+	public int modify(MyInfoModifyRequest modify) throws SQLException {
+		int result = memberDao.modify(modify);
+		
+		return result;
 	}
 
 }

@@ -65,7 +65,7 @@
         <div class="form-label">作成者</div>
 
         <div class="form-field">
-            <input type="text" name="writer">
+            <input type="text" name="writer" value="${SessionName}">
         </div>
     </div>
 
@@ -99,7 +99,7 @@
     </div>
 
 
-    <!-- 비밀번호 -->
+    <!-- 비밀번호
     <div class="form-row hidden-row" id="passwordArea">
 
         <div class="form-label">パスワード</div>
@@ -119,7 +119,7 @@
 
         </div>
     </div>
-
+ -->
 
     <!-- 답변 알림 -->
     <div class="form-row">
@@ -157,7 +157,7 @@
             <input type="email"
                    id="email"
                    name="email"
-                   placeholder="example@email.com">
+                   value="${sessionEmail}">
 
             <div class="form-help">
                 *回答が登録された際に通知メールを送信します。
@@ -175,29 +175,41 @@
         <div class="form-field">
 
             <div class="file-upload-area">
-
-                <label for="inquiryFile"
+            
+                 <label for="inquiryFile"
                        class="file-select-button">
                     ファイルを選択
                 </label>
-
-                <input type="file"
+                
+ 				<input type="file"
                        id="inquiryFile"
                        name="inquiryFile"
                        class="file-input"
                        accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx"
                        multiple>
-                    <!-- multiple을 붙이면 사용자가 파일을 여러 개 선택할 수 있음 -->
-
-                <span id="fileName"
+                    <!-- multiple을 붙이면 사용자가 파일을 여러 개 선택할 수 있음 --> 
+                    
+                  <span id="fileName"
                       class="file-name">
                     選択されていません
-                </span>
+                </span> 
+                
+                </div>              
+            
+            	<!-- 선택한 파일 목록 -->
+				<div id="selectedFileList"
+				     class="selected-file-list">
+				</div>
+				
+				<!-- 파일 검증 메시지 -->
+				<div id="fileError"
+				     class="file-error">
+				</div>
 
-            </div>
 
             <div class="form-help">
-                *画像または文書ファイルを添付できます。
+               * 添付可能なファイル：JPG、JPEG、PNG、PDF、DOC、DOCX、XLS、XLSX<br>
+  				  （最大3ファイル、1ファイルあたり10MBまで）
             </div>
 
         </div>
