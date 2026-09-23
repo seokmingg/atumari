@@ -83,7 +83,7 @@
 <div class="detail-actions">
   <a class="secondary-button" href="${pageContext.request.contextPath}/inquiry/list">一覧へ</a>
   <div class="right">
-    <a class="primary-button" href="${pageContext.request.contextPath}/inquiry/update">修正</a>
+    <a class="primary-button" href="${pageContext.request.contextPath}/inquiry/update?inquiryNo=${inquiryDto.inquiry_no}">修正</a>
     <button class="danger-button" onclick="confirm('削除しますか？')">削除</button>
   </div>
 </div>
