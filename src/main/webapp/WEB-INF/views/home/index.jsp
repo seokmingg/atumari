@@ -46,7 +46,7 @@
             <a href="#festival-section">今月の祭り</a>
             <a href="#article">季節から探す</a>
             <a href="#region">地域から探す</a>
-             <a href="<%=request.getContextPath()%>/notice">公知事項</a>
+             <a href="<%=request.getContextPath()%>/notice">お知らせ</a>
             <a href="<%=request.getContextPath()%>/inquiry/list">お問い合わせ</a>
             <a href="<%=request.getContextPath()%>/community">コミュニティ</a>
         </nav>
@@ -62,7 +62,12 @@
         <c:when test="${not empty sessionScope.sessionEmail}">
 
             <a href="${pageContext.request.contextPath}/my-info">
-                ${sessionScope.sessionName} 様
+                ${sessionScope.sessionName} 様 
+            </a>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="${pageContext.request.contextPath}/my-info">
+                自分情報
             </a>
 
             <span>|</span>
@@ -262,54 +267,74 @@
 					        </p>
 					    </div>
 
-                    <div class="hero-calendar">
-
-                        <!-- CALENDAR HEADER -->
-
-                        <div class="calendar-header">
-
-                            <button
-                                type="button"
-                                class="calendar-prev"
-                            >
-                                ‹
-                            </button>
-
-                            <strong class="calendar-title">
-                                2026年 8月
-                            </strong>
-
-                            <button
-                                type="button"
-                                class="calendar-next"
-                            >
-                                ›
-                            </button>
-
-                        </div>
-
-
-                        <!-- WEEK -->
-
-                        <div class="calendar-week">
-
-                            <span>日</span>
-                            <span>月</span>
-                            <span>火</span>
-                            <span>水</span>
-                            <span>木</span>
-                            <span>金</span>
-                            <span>土</span>
-
-                        </div>
-
-
-                        <!-- DAYS -->
-
-                        <div class="calendar-days"></div>
-
-                    </div>
-
+					      <div class="calendar-wrap">
+					
+					    <div class="hero-calendar">
+					
+					        <!-- CALENDAR HEADER -->
+					
+					        <div class="calendar-header">
+					
+					            <button
+					                type="button"
+					                class="calendar-prev"
+					            >
+					                ‹
+					            </button>
+					
+					            <strong class="calendar-title">
+					                2026年 8月
+					            </strong>
+					
+					            <button
+					                type="button"
+					                class="calendar-next"
+					            >
+					                ›
+					            </button>
+					
+					        </div>
+					
+					
+					        <!-- WEEK -->
+					
+					        <div class="calendar-week">
+					
+					            <span>日</span>
+					            <span>月</span>
+					            <span>火</span>
+					            <span>水</span>
+					            <span>木</span>
+					            <span>金</span>
+					            <span>土</span>
+					
+					        </div>
+					
+					
+					        <!-- DAYS -->
+					
+					        <div class="calendar-days"></div>
+					
+					    </div>
+					
+					
+					    <!-- CALENDAR RESET -->
+					
+					    <div class="calendar-reset-area">
+					
+					        <button
+					            type="button"
+					            class="calendar-reset"
+					        >
+					            選択をリセット
+					        </button>
+					
+					    </div>
+					
+					</div>
+                    
+                    
+                    
                 </div>
 
             </div>

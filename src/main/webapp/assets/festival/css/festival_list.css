@@ -85,6 +85,43 @@
     gap: 5px;
 }
 
+.festival-search .calendar-reset {
+    width: 100px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
+
+    border: 1px solid #c62828;
+    border-radius: 4px;
+
+    background: #c62828;
+    color: #fff;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.festival-search .calendar-reset:hover {
+    background: #c62828;
+    border-color: #c62828;
+    color: #fff;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.18);
+}
+
 .festival-search select,
 .festival-search input {
     height: 42px;
@@ -645,6 +682,7 @@
     height: 70px;
     flex-shrink: 0;
 }
+
 
 
 /* =========================
