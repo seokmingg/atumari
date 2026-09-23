@@ -527,6 +527,75 @@ pageEncoding="UTF-8"%>
 
 
     </section>
+    
+    <!-- =========================
+         LIST REVIEW
+    ========================== -->
+	<section class="festival-review">
+
+    <div class="festival-review-header">
+
+        <h2>レビュー</h2>
+
+        <a href="<%=request.getContextPath()%>/community">
+            すべて見る →
+        </a>
+
+    </div>
+
+    <div class="festival-review-list">
+
+        <article class="festival-review-item">
+
+            <div class="festival-review-user">
+                <strong>田中 太郎</strong>
+                <span>2026.09.20</span>
+            </div>
+
+            <p class="festival-review-content">
+                とても楽しいお祭りでした。
+                屋台も多く、また行きたいです。
+            </p>
+
+        </article>
+
+        <article class="festival-review-item">
+
+            <div class="festival-review-user">
+                <strong>山田 花子</strong>
+                <span>2026.09.18</span>
+            </div>
+
+            <p class="festival-review-content">
+                会場の雰囲気がとてもよかったです。
+            </p>
+
+        </article>
+        
+         <article class="festival-review-item">
+
+            <div class="festival-review-user">
+                <strong>中山</strong>
+                <span>２０2６.０８.０９</span>
+            </div>
+
+            <p class="festival-review-content">
+                本当に楽しかったです。
+            </p>
+
+        </article>
+
+    </div>
+
+    <div class="festival-review-footer">
+
+        <a href="<%=request.getContextPath()%>/community/write">
+            レビューを書く
+        </a>
+
+    </div>
+
+</section>
 
 
     <!-- =========================
@@ -556,12 +625,20 @@ pageEncoding="UTF-8"%>
 	
 	
 	    <c:when test="${type == 'month'}">
-	
+	    
 	        <a href="${pageContext.request.contextPath}/festival/list?type=month&year=${year}&month=${month}" class="festival-list-button">
 	            ← 一覧へ戻る
 	        </a>
 	
 	    </c:when>
+	    
+	     <c:when test="${type == 'date'}">
+
+		    <a href="${pageContext.request.contextPath}/home/search?keyword=${keyword}&startDate=${startDate}&endDate=${endDate}" class="festival-list-button">
+		        ← 一覧へ戻る
+		    </a>
+		
+		</c:when>
 
 </c:choose>
     </div>

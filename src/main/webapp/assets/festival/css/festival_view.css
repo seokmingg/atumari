@@ -400,7 +400,7 @@
 
     display: flex;
 
-    justify-content: center;
+    justify-content: flex-end;
 
     padding-top: 40px;
 
@@ -614,5 +614,175 @@
         font-size: 12px;
 
     }
+
+}
+
+
+/* =========================
+   FESTIVAL REVIEW
+========================= */
+
+.festival-review {
+
+    width: 100%;
+    margin-top: 60px;
+    padding: 40px 0;
+
+    border-top: 1px solid #e5e5e5;
+
+}
+
+
+/* HEADER */
+
+.festival-review-header {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+
+}
+
+.festival-review-header h2 {
+
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+
+}
+
+.festival-review-header a {
+
+    color: #666;
+
+    font-size: 13px;
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+
+}
+
+.festival-review-header a:hover {
+
+    color: #222;
+
+}
+
+
+/* REVIEW LIST */
+
+.festival-review-list {
+
+    width: 100%;
+
+}
+
+
+/* REVIEW ITEM */
+
+.festival-review-item {
+
+    padding: 22px 0;
+
+    border-bottom: 1px solid #eeeeee;
+
+}
+
+.festival-review-item:first-child {
+
+    padding-top: 0;
+
+}
+
+
+/* USER */
+
+.festival-review-user {
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 12px;
+
+}
+
+.festival-review-user strong {
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #222;
+
+}
+
+.festival-review-user span {
+
+    font-size: 12px;
+    color: #999;
+
+}
+
+
+/* CONTENT */
+
+.festival-review-content {
+
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+
+}
+
+
+/* FOOTER */
+
+.festival-review-footer {
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 30px;
+
+}
+
+.festival-review-footer a {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 130px;
+    height: 42px;
+
+    padding: 0 20px;
+
+    border: 1px solid #222;
+    border-radius: 3px;
+
+    background: #222;
+    color: #fff;
+
+    font-size: 13px;
+    text-decoration: none;
+
+    box-sizing: border-box;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+.festival-review-footer a:hover {
+
+    background: #444;
+
+    transform: translateY(-2px);
 
 }
