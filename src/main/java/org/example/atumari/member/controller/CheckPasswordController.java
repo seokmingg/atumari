@@ -34,7 +34,7 @@ public class CheckPasswordController extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		MemberService service = new MemberService();
-		boolean isEqual = service.checkPassword(email, password);
+		//boolean isEqual = service.checkPassword(email, password);
 		
 		if (service.checkPassword(email, password)) out.print("会員情報が修正されました。");
 		else out.print("パスワードをもう一度確認してください。");
