@@ -36,11 +36,9 @@ public class CommunityWriteController extends HttpServlet {
             throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
 
-        // 로그인 사용자
+        // 로그인 사용자 (작성자)
         String sessionEmail =
                 (String) request.getSession().getAttribute("sessionEmail");
-
-        
         // 일반 form 데이터
         String title = request.getParameter("title");
         String content = request.getParameter("content");
@@ -55,7 +53,6 @@ public class CommunityWriteController extends HttpServlet {
 	        System.out.println("image       : " + imagePart);
 	        System.out.println("==============================");
 	
-        
 	    // DTO 생성
         CommunityPostDto cmtydto = new CommunityPostDto(sessionEmail,title,content);
 
@@ -67,11 +64,11 @@ public class CommunityWriteController extends HttpServlet {
         if (result == 1) {
         	request.getRequestDispatcher("/WEB-INF/views/community/list.jsp")
         			.forward(request, response);
-
         } else {
         	request.getRequestDispatcher("/WEB-INF/views/community/write_test.jsp")
         			.forward(request, response);
-
         }
+        
+        
     }
 }
