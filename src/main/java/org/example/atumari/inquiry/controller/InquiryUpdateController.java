@@ -99,7 +99,7 @@ public class InquiryUpdateController extends HttpServlet {
 			    String title = request.getParameter("title");
 			  
 			    String writer = (String) session.getAttribute("sessionName");
-			    Long member_id = (Long)session.getAttribute("sessionId");
+			    Long memberId = (Long)session.getAttribute("sessionId");
 			    
 			    boolean isPublic = "1".equals(request.getParameter("isPublic"));
 			    boolean emailNotify = "1".equals(request.getParameter("emailNotify"));
@@ -110,7 +110,7 @@ public class InquiryUpdateController extends HttpServlet {
 			    InquiryDto inquiry = new InquiryDto();
 
 			    inquiry.setInquiry_no(inquiryNo);
-			    inquiry.setMember_id(member_id);
+			    inquiry.setMember_id(memberId);
 			    inquiry.setTitle(title);
 			    inquiry.setWriter(writer);
 			    inquiry.setPublic(isPublic);
