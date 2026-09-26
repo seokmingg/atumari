@@ -162,7 +162,53 @@ public class InquiryService {
 		}
 	}
 	
+	
+	// 문의 삭제
+	public void deleteInquiry(int inquiryNo, Long memberId) {
 
+	    // 1. 본인이 작성한 문의인지 먼저 확인
+	    InquiryDto inquiry =
+	        inquiryDao.getInquiryByInquiryNoAndMemberId(
+	            inquiryNo,
+	            memberId
+	        );
+
+	    if (inquiry == null) {
+	        throw new IllegalArgumentException(
+	            "削除する権限がありません。"
+	        );
+	    }
+
+
+	    // 2. 첨부파일 조회
+	    List<InquiryFileDto> files =
+	        inquiryFileDao.getInquiryFiles(inquiryNo);
+
+
+	    // 3. S3 실제 파일 삭제
+	    for (InquiryFileDto file : files) {
+
+	        fileService.deleteFile(
+	            file.getStored_file_name()
+	        );
+	    }
+
+
+	    // 4. 문의글 삭제
+	    int result =
+	        inquiryDao.deleteInquiry(
+	            inquiryNo,
+	            memberId
+	        );
+
+	    if (result <= 0) {
+	        throw new RuntimeException(
+	            "문의 삭제에 실패했습니다."
+	        );
+	    }
+
+	    // inquiry_file은 ON DELETE CASCADE로 자동 삭제
+	}
 	
 	
 	

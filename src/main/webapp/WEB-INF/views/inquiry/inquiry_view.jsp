@@ -24,6 +24,9 @@
      BOARD
 ========================== -->
 <main class="board-page">
+<form>
+	<input type="hidden" name="inquiryNo" value="${inquiryDto.inquiry_no}">
+</form>
 <div class="board-inner">
 <div class="board-title">
 <span>INQUIRY</span>

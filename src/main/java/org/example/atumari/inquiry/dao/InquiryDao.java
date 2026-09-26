@@ -270,5 +270,71 @@ public class InquiryDao {
 		return result;
 	}
 
+	
+	// 문의글 존재 여부 + 작성자 본인 확인
+	public InquiryDto getInquiryByInquiryNoAndMemberId(int inquiryNo, Long memberId) {
+		
+		InquiryDto inquiry = null;
+		
+		String sql = "SELECT inquiry_no, member_id\r\n"
+				+ "FROM inquiry\r\n"
+				+ "WHERE inquiry_no = ?\r\n"
+				+ "  AND member_id = ?";
+		
+		   try {
+
+		        con = DBConnection.getConnection();
+		        ps = con.prepareStatement(sql);
+
+		        ps.setInt(1, inquiryNo);
+		        ps.setLong(2, memberId);
+
+		        rs = ps.executeQuery();
+
+		        if (rs.next()) {
+
+		            inquiry = new InquiryDto();
+
+		            inquiry.setInquiry_no(rs.getInt("inquiry_no"));
+
+		            inquiry.setMember_id(rs.getLong("member_id"));
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+
+		    } finally {
+		        DBConnection.closeDB(con, ps, rs);
+		    }
+		
+		return inquiry;
+	}
+
+	
+	// 문의글 삭제
+	public int deleteInquiry(int inquiryNo, Long memberId) {
+		int result =0;
+		
+		String sql ="delete from inquiry\r\n"
+				+ "where inquiry_no =? \r\n"
+				+ "and member_id= ?";
+		
+		try{
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+				ps.setInt(1, inquiryNo);
+				ps.setLong(2, memberId);
+				
+			result = ps.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return result;
+	}
+
 
 }
