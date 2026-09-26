@@ -74,9 +74,17 @@
 <section class="answer-card">
   <div class="answer-title">管理者回答</div>
   <div class="answer-body">
-    お問い合わせありがとうございます。<br><br>
-    確認したところ、掲載情報に誤りがありましたので修正いたしました。<br>
-    ご連絡いただきありがとうございました。
+   <c:choose>
+   		<%-- 답변 완료 --%>
+   		<c:when test="${inquiryDto.answer_content eq 'COMPLETED'}">
+   			${inquiryDto.answer_content}
+   		</c:when>
+   		
+   		<%-- 답변 대기 --%>
+   		<c:otherwise>
+                まだ回答は登録されていません。
+        </c:otherwise>
+   </c:choose>
   </div>
 </section>
 

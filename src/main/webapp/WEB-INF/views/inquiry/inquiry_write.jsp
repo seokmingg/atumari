@@ -65,7 +65,7 @@
         <div class="form-label">作成者</div>
 
         <div class="form-field">
-            <input type="text" name="writer" value="${SessionName}">
+            <input type="text" readonly value="${sessionScope.sessionName}">
         </div>
     </div>
 
