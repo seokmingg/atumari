@@ -60,6 +60,7 @@ public class CommunityWriteController extends HttpServlet {
         CommunityService communityService = new CommunityService();
         int result = communityService.write(cmtydto, imagePart);
         
+        System.out.println("result :"+result);
         // 저장 성공
         if (result == 1) {
         	request.getRequestDispatcher("/WEB-INF/views/community/list.jsp")

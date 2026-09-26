@@ -42,29 +42,14 @@ public class CommunityService {
 	        	// 2. 사진이 있을 때만 파일 저장
 		        if (imagePart != null && imagePart.getSize() > 0) {
 
-//		            // 원본 파일명
-//		            String originalFileName = Paths.get(imagePart.getSubmittedFileName()).getFileName().toString();
-//		            // 저장 파일명
-//		            String randomName = UUID.randomUUID().toString();
-//		            String saveFileName = randomName + "-" + originalFileName;
-//		            // 업로드 폴더
-//		            String uploadPath = FileConfig.getUploadPath();
-//		            Path uploadDir = Paths.get(uploadPath, "community");
-//		            Files.createDirectories(uploadDir);
-
 		            // 실제 파일 저장
 		            try {
-		                saveFile(imagePart, cmtyNo);
+		                result = saveFile(imagePart, cmtyNo);
 		            } catch (RuntimeException e) {
 		                CommunityDao.deleteCommunity(cmtyNo);
 		                throw e;
 		            }
-
-//		            // 파일 DTO
-//		            CommunityFileDto filedto =
-//		                    new CommunityFileDto(cmtyNo,originalFileName,saveFileName);
-//		            // 파일 DB 저장
-//		            result = cmtydao.fileSave(filedto);
+		            
 		        } else {
 		            // 사진이 없어도 게시물 등록 성공
 		            result = 1;
@@ -80,7 +65,9 @@ public class CommunityService {
 	}
 	
 	//파일 저장
-	 private void saveFile(Part file , Long cmtyNo) {
+	 private int saveFile(Part file , Long cmtyNo) {
+		 //리턴 값
+		 int result = 0;
 		 //오류시 삭제용
 		 String uploadedKey = null;
 	        try {
@@ -99,6 +86,8 @@ public class CommunityService {
 	                if (cmtyFileDao.fileSave(filedto) != 1) {
 	                    throw new RuntimeException("커뮤니티 첨부파일 정보 저장에 실패했습니다.");
 	                }
+	                //저장 성공시 리턴값 수정
+	                result = 1;
 	        } catch (RuntimeException e) {
 	                try {
 	                    fileService.deleteFile(uploadedKey);
@@ -107,6 +96,7 @@ public class CommunityService {
 	                }
 	            throw new RuntimeException("커뮤니티 첨부파일 저장에 실패했습니다.", e);
 	        }
+	        return result;
 	    }
 }
 
