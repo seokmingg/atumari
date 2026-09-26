@@ -64,6 +64,7 @@
     line-height: 1.9;
     color: #555;
     min-height: 150px;
+    white-space: pre-wrap; /*관리자가 입력한 줄바꿈을 유지해서 보여줄 수 있음*/
 }
 
 .detail-actions {

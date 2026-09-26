@@ -139,6 +139,7 @@ public class InquiryDao {
 		return inquiryList;
 	}
 	
+	
 	// 전체 문의글 갯수 조회
 	public int getTotalInquiryCount(String searchType, String keyword) {
 		
@@ -185,6 +186,7 @@ public class InquiryDao {
 		return totalCount;
 	}
 
+	
 	//문의 상세글 조회
 	public InquiryDto getInquiry(int inquiryNo) {
 		
@@ -231,4 +233,42 @@ public class InquiryDao {
 		
 		return inquiryDto;
 	}
+
+
+	// 문의글 수정
+	public int updateInquiry(InquiryDto inquiry) {
+		
+		int result = 0;
+		
+		String sql ="UPDATE inquiry\r\n"
+				+ "SET title = ?,\r\n"
+				+ "    content = ?,\r\n"
+				+ "    email = ?,\r\n"
+				+ "    is_public = ?\r\n"
+				+ "WHERE inquiry_no = ?\r\n"
+				+ "  AND member_id = ?";
+		// member_id를 조건으로 넣음으로서 본인이 아닌 경우는 수정이 불가하도록 한번더 확인
+		
+		try{
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+				ps.setString(1, inquiry.getTitle());
+				ps.setString(2, inquiry.getContent());
+				ps.setString(3, inquiry.getEmail());
+				ps.setBoolean(4, inquiry.isPublic());
+				ps.setInt(5, inquiry.getInquiry_no());
+				ps.setLong(6, inquiry.getMember_id());
+				
+			result = ps.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return result;
+	}
+
+
 }

@@ -85,5 +85,36 @@ public class InquiryFileDao {
 		
 		return fileDtos;
 	}
+
+	
+	// 문의 수정및 삭제시 첨부파일 삭제
+	public int deleteFile(int file_no) {
+		
+		int result =0;
+		
+		String sql="delete from inquiry_file\r\n"
+				+ "where file_no =?";
+		 try {
+
+		        con = DBConnection.getConnection();
+		        ps = con.prepareStatement(sql);
+
+		        ps.setInt(1, file_no);
+
+		        result = ps.executeUpdate();
+
+		    } catch (SQLException e) {
+
+		        e.printStackTrace();
+
+		    } finally {
+
+		        DBConnection.closeDB(con, ps, rs);
+		    }
+
+		
+		return result;
+	}
+
 	
 }

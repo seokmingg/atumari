@@ -4,7 +4,7 @@ import org.example.atumari.inquiry.dto.InquiryDto;
 
 public class InquiryValidator {
 	
-	//이메일 빈칸 검증
+	//이메일 알림 확인
 		public void validateNotificationEmail(InquiryDto inquiry, boolean emailNotify) {
 		    // 이메일 알림을 받지 않음
 		    if (!emailNotify) {
