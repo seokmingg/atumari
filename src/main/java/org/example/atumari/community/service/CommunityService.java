@@ -15,6 +15,7 @@ import org.example.atumari.common.util.Pagination;
 import org.example.atumari.community.dao.CommunityDao;
 import org.example.atumari.community.dao.CommunityFileDao;
 import org.example.atumari.community.dto.CommunityFileDto;
+import org.example.atumari.community.dto.CommunityListPageDto;
 import org.example.atumari.community.dto.CommunityDto;
 import org.example.atumari.config.FileConfig;
 
@@ -29,16 +30,16 @@ public class CommunityService {
     private final FileService fileService = new FileService();
 
     //게시물 리스트
-    public CommunityPostDto getCommunityList(int currentPage, String searchType, String search) {
+    public CommunityListPageDto getCommunityList(int currentPage, String searchType, String search) {
 		//검색 조건 정규화
     	String normalizedSearchType = normalizeSearchType(searchType);
         String normalizedKeyword = search == null ? "" : search.trim();
-        int totalCount = cmtydao.countNotices(normalizedSearchType, normalizedKeyword);
+        int totalCount = cmtydao.countCommunity(normalizedSearchType, normalizedKeyword);
         Pagination pagination = Pagination.of(currentPage, PAGE_SIZE, PAGE_GROUP_SIZE, totalCount);
 
-        List<NoticeDto> noticeList = cmtydao.getCommunityList(pagination.getPageSize(), pagination.getOffset(), normalizedSearchType, normalizedKeyword);
+        List<CommunityDto> cmtyList = cmtydao.getCommunityList(pagination.getPageSize(), pagination.getOffset(), normalizedSearchType, normalizedKeyword);
 
-        return new CommunityPostDto(noticeList, pagination.getCurrentPage(), pagination.getPageSize(), pagination.getTotalCount(), pagination.getTotalPage(), pagination.getStartPage(), pagination.getEndPage(), normalizedSearchType, normalizedKeyword);
+        return new CommunityListPageDto(cmtyList, pagination.getCurrentPage(), pagination.getPageSize(), pagination.getTotalCount(), pagination.getTotalPage(), pagination.getStartPage(), pagination.getEndPage(), normalizedSearchType, normalizedKeyword);
     
 	}
     

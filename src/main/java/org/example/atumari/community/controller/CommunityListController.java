@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import org.example.atumari.community.dto.CommunityDto;
+import org.example.atumari.community.dto.CommunityListPageDto;
 import org.example.atumari.community.service.CommunityService;
 
 
@@ -23,8 +24,10 @@ public class CommunityListController extends HttpServlet {
         String searchType = request.getParameter("searchType");
         String search = request.getParameter("search");
         
-        CommunityPostDto cmtyPage = communityService.getCommunityList(
+        CommunityListPageDto cmtyPage = communityService.getCommunityList(
                 currentPage, searchType, search);
+        
+        request.setAttribute("cmtyPage", cmtyPage);
     	
         request.getRequestDispatcher("/WEB-INF/views/community/list.jsp")
                 .forward(request, response);

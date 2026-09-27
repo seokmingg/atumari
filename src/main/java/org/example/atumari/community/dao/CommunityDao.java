@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.atumari.common.database.DBConnection;
-import org.example.atumari.community.dto.CommunityFileDto;
 import org.example.atumari.community.dto.CommunityDto;
-import org.example.atumari.festival.dao.LogPreparedStatement;
-import org.example.atumari.notice.dto.NoticeFileDto;
 
 /**
  * 커뮤니티 데이터의 조회와 저장을 구현할 DAO입니다.
@@ -47,7 +44,6 @@ public class CommunityDao {
 	        if (rs.next()) {
 	            cmty_no = rs.getLong(1);
 	        }
-
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        System.out.println("communitySave() 오류!!");
@@ -56,20 +52,48 @@ public class CommunityDao {
 	    }
 	    return cmty_no;
 	}
-
 	
-	 
+	//커뮤니티 글 삭제
 	public static void deleteCommunity(Long cmtyNo) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
-
-	public int countNotices(String normalizedSearchType, String normalizedKeyword) {
-		// TODO Auto-generated method stub
-		return 0;
+	//게시물 총 갯수
+	public int countCommunity(String SearchType, String search) {
+		int count = 0;
+		String sql = "SELECT COUNT(*) as count FROM atumari.community\r\n"
+				+ "where ? like ? ";
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, SearchType);
+			ps.setString(2, "%"+search+"%");
+		} catch(Exception e) {
+			System.out.println("countCommunity() 오류!!");
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		return count;
 	}
+	
+	//리스트 불러오기
+	public List<CommunityDto> getCommunityList(int pageSize, int offset, String normalizedSearchType,
+			String normalizedKeyword) {
+		List<CommunityDto> dtos = new ArrayList<CommunityDto>();
+		String sql = "";
+		try {
+			con = DBConnection.getConnection();
+			
+		} catch(Exception e) {
+			
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		return dtos;
+	}
+
+
 
 	
 }
