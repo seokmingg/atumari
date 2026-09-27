@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.example.atumari.community.dto.CommunityPostDto;
+import org.example.atumari.community.dto.CommunityDto;
 import org.example.atumari.community.service.CommunityService;
 import org.example.atumari.config.FileConfig;
 
@@ -54,7 +54,7 @@ public class CommunityWriteController extends HttpServlet {
 	        System.out.println("==============================");
 	
 	    // DTO 생성
-        CommunityPostDto cmtydto = new CommunityPostDto(sessionEmail,title,content);
+        CommunityDto cmtydto = new CommunityDto(sessionEmail,title,content);
 
         // 게시물 + 첨부파일 저장
         CommunityService communityService = new CommunityService();

@@ -1,6 +1,6 @@
 package org.example.atumari.community.dto;
 
-public class CommunityPostDto {
+public class CommunityDto {
 	private Long cmty_no;
     private String member_email;
     private String member_name;
@@ -12,13 +12,13 @@ public class CommunityPostDto {
     private int hit;
     
     //신규 게시물 저장 및 업데이트시 사용. 新規ポストアップロード・アップデート
-	public CommunityPostDto(String member_email, String title, String content) {
+	public CommunityDto(String member_email, String title, String content) {
 		this.member_email = member_email;
 		this.title = title;
 		this.content = content;
 	}
 	//게시물 세부정보 ポスト内容
-	public CommunityPostDto(Long cmty_no, String member_email, String member_name, String title, String content,
+	public CommunityDto(Long cmty_no, String member_email, String member_name, String title, String content,
 			String attach, String reg_date, String update_date, int hit) {
 		this.cmty_no = cmty_no;
 		this.member_email = member_email;
@@ -30,6 +30,17 @@ public class CommunityPostDto {
 		this.update_date = update_date;
 		this.hit = hit;
 	}
+	//게시물 리스트 
+	public CommunityDto(Long cmty_no, String member_name, String title, String content, String reg_date, int hit) {
+		super();
+		this.cmty_no = cmty_no;
+		this.member_name = member_name;
+		this.title = title;
+		this.content = content;
+		this.reg_date = reg_date;
+		this.hit = hit;
+	}
+	
 	public Long getCmty_no() {
 		return cmty_no;
 	}

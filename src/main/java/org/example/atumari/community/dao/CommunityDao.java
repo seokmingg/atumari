@@ -3,11 +3,15 @@ package org.example.atumari.community.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.example.atumari.common.database.DBConnection;
 import org.example.atumari.community.dto.CommunityFileDto;
-import org.example.atumari.community.dto.CommunityPostDto;
+import org.example.atumari.community.dto.CommunityDto;
 import org.example.atumari.festival.dao.LogPreparedStatement;
+import org.example.atumari.notice.dto.NoticeFileDto;
 
 /**
  * 커뮤니티 데이터의 조회와 저장을 구현할 DAO입니다.
@@ -18,10 +22,8 @@ public class CommunityDao {
 	ResultSet rs = null;
 
 	// 게시물 저장
-	public Long communitySave(CommunityPostDto cmtydto) {
-
+	public Long communitySave(CommunityDto cmtydto) {
 	    Long cmty_no = null;
-
 	    String sql =
 	            "insert into community "
 	            + "(member_id, title, content) "
@@ -35,13 +37,11 @@ public class CommunityDao {
 	                sql,
 	                java.sql.Statement.RETURN_GENERATED_KEYS
 	        );
-
 	        ps.setString(1, cmtydto.getMember_email());
 	        ps.setString(2, cmtydto.getTitle());
 	        ps.setString(3, cmtydto.getContent());
 
 	        ps.executeUpdate();
-
 	        // DB에서 생성된 cmty_no 가져오기
 	        rs = ps.getGeneratedKeys();
 	        if (rs.next()) {
@@ -57,9 +57,18 @@ public class CommunityDao {
 	    return cmty_no;
 	}
 
+	
+	 
 	public static void deleteCommunity(Long cmtyNo) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	public int countNotices(String normalizedSearchType, String normalizedKeyword) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

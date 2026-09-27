@@ -11,10 +11,11 @@ import java.util.UUID;
 
 import org.example.atumari.common.fileupload.FileService;
 import org.example.atumari.common.fileupload.StoredFile;
+import org.example.atumari.common.util.Pagination;
 import org.example.atumari.community.dao.CommunityDao;
 import org.example.atumari.community.dao.CommunityFileDao;
 import org.example.atumari.community.dto.CommunityFileDto;
-import org.example.atumari.community.dto.CommunityPostDto;
+import org.example.atumari.community.dto.CommunityDto;
 import org.example.atumari.config.FileConfig;
 
 import jakarta.servlet.http.Part;
@@ -27,9 +28,22 @@ public class CommunityService {
 	private final CommunityFileDao cmtyFileDao = new CommunityFileDao();
     private final FileService fileService = new FileService();
 
+    //게시물 리스트
+    public CommunityPostDto getCommunityList(int currentPage, String searchType, String search) {
+		//검색 조건 정규화
+    	String normalizedSearchType = normalizeSearchType(searchType);
+        String normalizedKeyword = search == null ? "" : search.trim();
+        int totalCount = cmtydao.countNotices(normalizedSearchType, normalizedKeyword);
+        Pagination pagination = Pagination.of(currentPage, PAGE_SIZE, PAGE_GROUP_SIZE, totalCount);
 
+        List<NoticeDto> noticeList = cmtydao.getCommunityList(pagination.getPageSize(), pagination.getOffset(), normalizedSearchType, normalizedKeyword);
+
+        return new CommunityPostDto(noticeList, pagination.getCurrentPage(), pagination.getPageSize(), pagination.getTotalCount(), pagination.getTotalPage(), pagination.getStartPage(), pagination.getEndPage(), normalizedSearchType, normalizedKeyword);
+    
+	}
+    
 	// 새로운 게시물 저장
-	public int write(CommunityPostDto cmtydto, Part imagePart) {
+	public int write(CommunityDto cmtydto, Part imagePart) {
 	    int result = 0;
 	    try {
 	        // 1. 게시물 저장
@@ -39,9 +53,8 @@ public class CommunityService {
 	            result = 0;
 	        }
 	        if(cmtyNo != 0) {
-	        	// 2. 사진이 있을 때만 파일 저장
+	        	// 2. 사진이 있을 때 첨부파일 저장
 		        if (imagePart != null && imagePart.getSize() > 0) {
-
 		            // 실제 파일 저장
 		            try {
 		                result = saveFile(imagePart, cmtyNo);
@@ -49,13 +62,11 @@ public class CommunityService {
 		                CommunityDao.deleteCommunity(cmtyNo);
 		                throw e;
 		            }
-		            
 		        } else {
 		            // 사진이 없어도 게시물 등록 성공
 		            result = 1;
 		        }
 	        }
-
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -65,12 +76,12 @@ public class CommunityService {
 	}
 	
 	//파일 저장
-	 private int saveFile(Part file , Long cmtyNo) {
-		 //리턴 값
-		 int result = 0;
-		 //오류시 삭제용
-		 String uploadedKey = null;
-	        try {
+	private int saveFile(Part file , Long cmtyNo) {
+		//리턴 값
+		int result = 0;
+		//오류시 삭제용
+		String uploadedKey = null;
+	    	try {
 	        		//저장 경로
 	                StoredFile storedFile = fileService.saveFile(file, "community");
 	                //원본 파일명
@@ -98,5 +109,11 @@ public class CommunityService {
 	        }
 	        return result;
 	    }
+	//검색 조건 정규화
+	private String normalizeSearchType(String searchType) {
+		if(searchType == null) searchType = "content";
+		
+		return searchType;
+    }
 }
 
