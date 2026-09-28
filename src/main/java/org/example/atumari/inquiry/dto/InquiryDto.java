@@ -45,15 +45,16 @@ public class InquiryDto {
 			// TODO Auto-generated constructor stub
 		}
 
-		// 목록 페이지 출력용
+		// 목록 페이지 출력용 [2026-09-28]
 		public String getFormattedCreatedDate() {
 		    return DateTimeUtil.formatDate(created_at);
 		}
 
-		// 상세 페이지 출력용
+		// 상세 페이지 출력용 [2026-09-28 12:10:58]
 		public String getFormattedCreatedDateTime() {
 		    return DateTimeUtil.formatDateTime(created_at);
 		}
+		
 		
 		public boolean isFileIs() {
 			return fileIs;

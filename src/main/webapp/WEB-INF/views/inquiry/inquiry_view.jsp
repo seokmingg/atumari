@@ -57,7 +57,7 @@
 <c:forEach var="file" items="${fileDtos}">
     <div class="detail-file-list">
 
-        <a href="#" class="detail-file-item">
+        <a href="${pageContext.request.contextPath}/inquiry/file/download?fileNo=${file.file_no}" class="detail-file-item">
             <img
                 src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
                 alt="添付ファイル"

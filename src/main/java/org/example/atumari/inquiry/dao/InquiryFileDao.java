@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.example.atumari.common.database.DBConnection;
 import org.example.atumari.inquiry.dto.InquiryFileDto;
+import org.example.atumari.notice.dto.NoticeFileDto;
 
 public class InquiryFileDao {
 
@@ -115,6 +116,31 @@ public class InquiryFileDao {
 		
 		return result;
 	}
+	
+	// 파일 번호로 FileDto 조회
+	public InquiryFileDto findById(int fileNo) {
+		 String sql = "SELECT file_no, inquiry_no, original_file_name, stored_file_name "
+	                + "FROM inquiry_file WHERE file_no = ?";
+
+	        try (Connection con = DBConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setInt(1, fileNo);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                return rs.next() ? mapFile(rs) : null;
+	            }
+	        } catch (SQLException e) {
+	            throw new RuntimeException("문의글 첨부파일 조회에 실패했습니다.", e);
+	        }
+	}
+	
+    private InquiryFileDto mapFile(ResultSet rs) throws SQLException {
+        return new InquiryFileDto(
+                rs.getInt("file_no"),
+                rs.getInt("inquiry_no"),
+                rs.getString("original_file_name"),
+                rs.getString("stored_file_name")
+        );
+    }
 
 	
 }
