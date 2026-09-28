@@ -12,7 +12,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter({"/my-info", "/my-info/modify"})
+/* 
+ * 각 기능 컨트롤러 실행 전 회원 로그인 여부를 먼저 검증하도록 구현한 WebFilter 클래스입니다.
+ * 로그인 검증이 필요하신 분은 아래 @WebFilter 어노테이션에 해당 기능 url을 지유롭게 추가하실 수 있습니다.
+ * */
+
+// 어노테이션 괄호 안에 회원 로그인 여부 인증 필요한 url 추가
+@WebFilter({"/my-info", "/my-info/modify",
+			"/inquiry/write", "/inquiry/update", "/inquiry/delete",
+			"/inquiry/admin/list", "/inquiry/admin/view"})
 public class MemberWebFilter implements Filter {
 	@Override
 	public void doFilter(

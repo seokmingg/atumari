@@ -224,8 +224,9 @@ public class MemberDao {
 		
 		String sql = "UPDATE member\r\n"
 				+ "SET name = ?,\r\n"
-				+ "	nickname = ?,\r\n"
-				+ "    tel = ?\r\n"
+				+ "		nickname = ?,\r\n"
+				+ "    tel = ?,\r\n"
+				+ "    modify_date = CURRENT_TIMESTAMP\r\n"
 				+ "WHERE email = ?";
 		
 		try {
