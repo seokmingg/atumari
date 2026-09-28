@@ -41,6 +41,9 @@ public class InquiryDto {
 			this.email = email;
 		}
 
+		public InquiryDto() {
+			// TODO Auto-generated constructor stub
+		}
 
 		// 목록 페이지 출력용
 		public String getFormattedCreatedDate() {
@@ -59,11 +62,6 @@ public class InquiryDto {
 
 		public void setFileIs(boolean fileIs) {
 			this.fileIs = fileIs;
-		}
-
-
-		public InquiryDto() {
-			// TODO Auto-generated constructor stub
 		}
 
 

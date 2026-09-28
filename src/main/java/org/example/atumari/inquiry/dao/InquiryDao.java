@@ -194,6 +194,7 @@ public class InquiryDao {
 		
 		String sql ="SELECT\r\n"
 				+ "    i.inquiry_no,\r\n"
+				+ "    i.member_id,\r\n"
 				+ "    i.title,\r\n"
 				+ "    i.writer,\r\n"
 				+ "    i.status,\r\n"
@@ -215,6 +216,7 @@ public class InquiryDao {
 						inquiryDto = new InquiryDto();
 						
 						inquiryDto.setInquiry_no(rs.getInt("inquiry_no"));
+						inquiryDto.setMember_id(rs.getLong("member_id"));
 						inquiryDto.setTitle(rs.getString("title"));
 						inquiryDto.setWriter(rs.getString("writer"));
 						inquiryDto.setStatus(rs.getString("status"));
