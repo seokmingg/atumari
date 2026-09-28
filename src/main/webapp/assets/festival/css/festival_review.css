@@ -1,0 +1,365 @@
+@charset "UTF-8";
+
+/* =========================
+   FESTIVAL REVIEW
+========================= */
+
+.festival-review {
+    width: 100%;
+    margin-top: 100px;
+    padding-top: 70px;
+    border-top: 1px solid #ddd;
+}
+
+
+/* =========================
+   REVIEW HEADER
+========================= */
+
+.festival-review-header {
+    margin-bottom: 35px;
+}
+
+.festival-review-header h2 {
+    margin: 0;
+    color: #222;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   REVIEW WRITE
+========================= */
+
+.festival-review-write {
+    width: 100%;
+    margin-bottom: 55px;
+    padding: 25px;
+    border: 1px solid #ddd;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.festival-review-write textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+    color: #333;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.7;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.festival-review-write textarea::placeholder {
+    color: #aaa;
+}
+
+.festival-review-write textarea:focus {
+    border-color: #999;
+    background: #fff;
+}
+
+
+/* =========================
+   WRITE BOTTOM
+========================= */
+
+.festival-review-write-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.festival-review-write-guide {
+    color: #999;
+    font-size: 12px;
+}
+
+.festival-review-write-bottom button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    height: 42px;
+    padding: 0 20px;
+    border: 0;
+    background: #222;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.festival-review-write-bottom button:hover {
+    background: #444;
+}
+
+
+/* =========================
+   REVIEW LIST
+========================= */
+
+.festival-review-list {
+    width: 100%;
+    border-top: 2px solid #222;
+}
+
+
+/* =========================
+   REVIEW ITEM
+========================= */
+
+.festival-review-item {
+    position: relative;
+    padding: 25px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.festival-review-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.festival-review-user strong {
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.festival-review-user span {
+    color: #999;
+    font-size: 12px;
+}
+
+.festival-review-content {
+    margin: 0;
+    padding-right: 100px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+
+/* =========================
+   REVIEW ACTION
+========================= */
+
+.festival-review-actions {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.festival-review-actions form {
+    display: contents;
+}
+
+.festival-review-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 16px;
+    padding: 0;
+    margin: 0;
+
+    border: 0;
+    background: transparent;
+
+    color: #999;
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 16px;
+
+    cursor: pointer;
+}
+
+.festival-review-actions button:hover {
+    color: #333;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.festival-review-empty {
+    padding: 60px 0;
+    color: #999;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    .festival-review {
+        margin-top: 70px;
+        padding-top: 50px;
+    }
+
+    .festival-review-header {
+        margin-bottom: 25px;
+    }
+
+    .festival-review-header h2 {
+        font-size: 24px;
+    }
+
+    .festival-review-write {
+        padding: 18px;
+        margin-bottom: 40px;
+    }
+
+    .festival-review-write textarea {
+        min-height: 120px;
+    }
+
+    .festival-review-write-bottom {
+        align-items: flex-end;
+        gap: 15px;
+    }
+
+    .festival-review-write-guide {
+        line-height: 1.5;
+    }
+
+    .festival-review-write-bottom button {
+        flex-shrink: 0;
+        min-width: 105px;
+        height: 40px;
+        padding: 0 15px;
+        font-size: 12px;
+    }
+
+    .festival-review-item {
+        padding: 22px 0;
+    }
+
+    .festival-review-content {
+        padding-right: 0;
+        font-size: 13px;
+    }
+
+    .festival-review-actions {
+        position: static;
+        margin-top: 15px;
+        justify-content: flex-end;
+    }
+}
+
+    .festival-review-login-guide {
+    margin: 20px 0;
+    color: #777;
+    text-align: center;
+}
+
+.festival-review-edit-form {
+    margin-top: 12px;
+}
+
+.festival-review-edit-form textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    box-sizing: border-box;
+    resize: vertical;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.festival-review-edit-form textarea:focus {
+    outline: none;
+    border-color: #999;
+}
+
+.festival-review-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.festival-review-edit-actions button {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.festival-review-edit-actions button[type="submit"] {
+    background-color: #222;
+    color: #fff;
+    border-color: #222;
+}
+
+.festival-review-edit-actions button:hover {
+    opacity: 0.8;
+}
+
+.festival-review-count {
+    font-size: 14px;
+    font-weight: normal;
+    color: #888;
+    margin-left: 8px;
+}
+
+.festival-review-item {
+    position: relative;
+    padding: 25px 0;
+    border-bottom: 1px solid #e5e5e5;
+
+    animation: reviewFadeIn 0.4s ease;
+}
+
+@keyframes reviewFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.festival-review-loading {
+    padding: 25px 0;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+    animation: reviewLoadingFade 0.5s ease;
+}
+
+@keyframes reviewLoadingFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
