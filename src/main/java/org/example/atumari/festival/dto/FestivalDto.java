@@ -75,12 +75,13 @@ public class FestivalDto {
 
 
 	//상세조회
-	public FestivalDto(Integer festival_id, Integer prefecture_no, String festival_name,
-			String prefecture_name, String summary, String venue_name, String venue_address, String access_info,
-			String image_url, String organizer, String price_text, String external_url, String image_source,
-			String season, LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean price_free) {
-		this.festival_id = festival_id;
-		this.prefecture_no = prefecture_no;
+	public FestivalDto(Integer festival_no, Integer prefecture_no, String festival_name,
+	        String prefecture_name, String summary, String venue_name, String venue_address, String access_info,
+	        String image_url, String organizer, String price_text, String external_url, String image_source,
+	        String season, LocalDateTime startDateTime, LocalDateTime endDateTime, Boolean price_free) {
+
+	    this.festival_no = festival_no;
+	    this.prefecture_no = prefecture_no;
 		this.festival_name = festival_name;
 		this.prefecture_name = prefecture_name;
 		this.summary = summary;

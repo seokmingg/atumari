@@ -261,3 +261,23 @@ CREATE TABLE IF NOT EXISTS community_files (
     FOREIGN KEY (cmty_no)
     REFERENCES community(cmty_no)
     );
+    
+--페스티벌 리뷰 테이블
+CREATE TABLE IF NOT EXISTS festival_review (
+    review_no BIGINT NOT NULL AUTO_INCREMENT,
+    festival_no INT NOT NULL,
+    member_id BIGINT NOT NULL,
+    content VARCHAR(2000) NOT NULL,
+    created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_date DATETIME NULL DEFAULT NULL,
+
+    PRIMARY KEY (review_no),
+
+    CONSTRAINT fk_festival_review_festival
+        FOREIGN KEY (festival_no)
+        REFERENCES festival(festival_no),
+
+    CONSTRAINT fk_festival_review_member
+        FOREIGN KEY (member_id)
+        REFERENCES member(id)
+);    

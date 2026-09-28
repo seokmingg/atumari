@@ -710,25 +710,19 @@
 /* =========================
    HEADER CALENDAR RESET
 ========================= */
-
 .header-calendar-reset {
-
     width: 140px;
     height: 52px;
-
     padding: 0;
-
     border: 1px solid #ddd;
     border-radius: 4px;
-
     background: #fff;
     color: #666;
-
     font-size: 13px;
-
     cursor: pointer;
-
     flex-shrink: 0;
+
+    white-space: nowrap;
 
     transition:
         background-color 0.2s ease,
@@ -762,7 +756,7 @@
 
     flex-shrink: 0;
 
-    width: 80px;
+    width: 90px;
     height: 52px;
 
     padding: 0;
