@@ -447,7 +447,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
     }
+	
+	/* =========================
+	   RESET CALENDAR
+	========================= */
 
+	function resetCalendar() {
+
+	    startDate = null;
+
+	    endDate = null;
+
+	    updateDateButton();
+
+	    renderCalendar();
+
+	}
 
     /* =========================
        PREVIOUS MONTH
@@ -576,6 +591,30 @@ document.addEventListener("DOMContentLoaded", function () {
 	        top: 300,
 	        behavior: "instant"
 	    });
+
+	}
+	
+	/* =========================
+	   RESET BUTTON
+	========================= */
+
+	const resetButton =
+	    document.querySelector(".calendar-reset");
+
+	if (resetButton) {
+
+	    resetButton.addEventListener(
+	        "click",
+	        function (event) {
+
+	            event.preventDefault();
+
+	            event.stopPropagation();
+
+	            resetCalendar();
+
+	        }
+	    );
 
 	}
 	

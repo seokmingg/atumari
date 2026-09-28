@@ -84,18 +84,6 @@
     outline: none;
 }
 
-/* 전화번호 입력란 */
-.form-row .tel {
-    width: 20%;
-    max-width: 500px;
-    height: 45px;
-    padding: 0 15px;
-    border: 1px solid #ddd;
-    background: #fff;
-    font-size: 14px;
-    outline: none;
-}
-
 .form-row input:focus {
     border-color: #aaa;
 }

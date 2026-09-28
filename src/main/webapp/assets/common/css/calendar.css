@@ -648,3 +648,63 @@
 
     color: #333;
 }
+
+/* =========================
+   CALENDAR RESET
+========================= */
+
+/* =========================
+   CALENDAR RESET AREA
+========================= */
+
+.calendar-reset-area {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 12px;
+}
+
+
+/* =========================
+   RESET BUTTON
+========================= */
+
+.calendar-reset {
+    width: 140px;
+    height: 36px;
+
+    padding: 0;
+
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    background: #fff;
+
+    color: #666;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+/* =========================
+   CALENDAR WRAP
+========================= */
+
+.calendar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.calendar-reset:hover {
+    background: #c62828;
+    border-color: #c62828;
+    color: #fff;
+}

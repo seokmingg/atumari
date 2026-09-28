@@ -31,6 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const searchInput =
         document.querySelector("#searchInput");
+		
+	const resetButton =
+	    document.querySelector(".calendar-reset");
 
 
     /* =========================
@@ -621,6 +624,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
     );
+	
+	/* =========================
+	   RESET
+	========================= */
+
+	function resetFestivalCalendar() {
+
+	    festivalStartDate = null;
+	    festivalEndDate = null;
+
+	    updateFestivalDate();
+	    renderFestivalCalendar();
+
+	}
+	
+	if (resetButton) {
+
+	    resetButton.addEventListener(
+	        "click",
+	        function (event) {
+
+	            event.preventDefault();
+	            event.stopPropagation();
+
+	            resetFestivalCalendar();
+
+	        }
+	    );
+
+	}
 
 
 	/* =========================

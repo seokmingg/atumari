@@ -188,6 +188,20 @@ function updateHeaderDate() {
 
 }
 
+/* =========================
+   RESET DATE
+========================= */
+
+function resetHeaderCalendar() {
+
+    headerStartDate = null;
+    headerEndDate = null;
+
+    updateHeaderDate();
+    renderHeaderCalendar();
+
+}
+
 
 /* =========================
    RENDER CALENDAR
@@ -488,6 +502,11 @@ document.addEventListener(
             document.querySelector(
                 "#headerSearchButton"
             );
+			
+		const resetButton =
+		    document.querySelector(
+		        ".header-calendar-reset"
+		    );
 
 
         /* PREVIOUS */
@@ -568,6 +587,24 @@ document.addEventListener(
             );
 
         }
+		
+		/* RESET */
+
+		if (resetButton) {
+
+		    resetButton.addEventListener(
+		        "click",
+		        function (event) {
+
+		            event.preventDefault();
+		            event.stopPropagation();
+
+		            resetHeaderCalendar();
+
+		        }
+		    );
+
+		}
 
 
         renderHeaderCalendar();

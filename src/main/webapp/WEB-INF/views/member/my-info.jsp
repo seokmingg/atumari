@@ -88,19 +88,7 @@
                 <strong>
                     ${myInfo.getTel()}
                 </strong>
-                
-                -
-                
-                <strong>
-                    ${myInfo.getTel()}
-                </strong>
-                
-                -
-                
-                <strong>
-                    ${myInfo.getTel()}
-                </strong>
-
+             
             </div>
             
             <div class="info-row">

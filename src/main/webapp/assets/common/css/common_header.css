@@ -706,3 +706,86 @@
     display: block;
 }
 
+
+/* =========================
+   HEADER CALENDAR RESET
+========================= */
+
+.header-calendar-reset {
+
+    width: 140px;
+    height: 52px;
+
+    padding: 0;
+
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    background: #fff;
+    color: #666;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.header-calendar-reset:hover {
+
+    background: #c62828;
+    border-color: #c62828;
+    color: #fff;
+
+}
+
+.date-select-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.date-select-row .calendar-button {
+    flex: 1;
+}
+
+/* =========================
+   HEADER CALENDAR RESET
+========================= */
+
+.header-calendar-reset {
+
+    flex-shrink: 0;
+
+    width: 80px;
+    height: 52px;
+
+    padding: 0;
+
+    border: 1px solid #c62828;
+    border-radius: 4px;
+
+    background: #c62828;
+    color: #fff;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.header-calendar-reset:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.18);
+}

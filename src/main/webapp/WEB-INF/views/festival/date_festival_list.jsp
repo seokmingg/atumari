@@ -179,6 +179,12 @@
 				    </div>
 				
 				
+					<button
+			            type="button"
+			            class="calendar-reset">
+			             選択をリセット
+			        </button>
+				
 				    <!-- KEYWORD -->
 				
 				    <input

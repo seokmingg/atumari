@@ -19,7 +19,7 @@
     <link rel="stylesheet"
           href="<%=request.getContextPath()%>/assets/member/css/my-info-modify.css">
           
-    <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
+    <script src="<%=request.getContextPath()%>/assets/member/js/member.js"></script>
 	<!-- jQuery -->
     <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 
@@ -80,6 +80,7 @@
                     </label>
 
                     ${myInfo.getEmail()}
+                    <!-- 컨트롤러에 이메일 값 넘기는 hidden input: 사용자는 이메일 수정 불가 -->
                      <input
                         type="hidden"
                         id="email"
@@ -94,7 +95,7 @@
                 <div class="form-row">
 
                     <label for="userName">
-                        名前
+                        名前（必修）
                     </label>
 
                     <input
@@ -110,29 +111,16 @@
                 <div class="form-row">
 
                     <label for="phone">
-                        電話番号
+                        電話番号（任意）
                     </label>
-                    <!-- TODO. member DB 전화번호 컬럼 세분화(1, 2, 3) -->
+                   
                     <input
                         type="text"
-                        id="tel1"
-                        name="tel1"
+                        id="tel"
+                        name="tel"
                         class="tel"
-                        value="${myInfo.getTel()}">
-                        
-                    <input
-                        type="text"
-                        id="tel2"
-                        name="tel2"
-                        class="tel"
-                        value="${myInfo.getTel()}">
-                        
-                    <input
-                        type="text"
-                        id="tel3"
-                        name="tel3"
-                        class="tel"
-                        value="${myInfo.getTel()}">
+                        value="${myInfo.getTel()}"
+                        placeholder="入力例：「070-0000-0000」、「080-000-0000」">
 
                 </div>
                 
@@ -142,7 +130,7 @@
                 <div class="form-row">
 
                     <label for="userName">
-                        ニックネーム
+                        ニックネーム（任意）
                     </label>
 
                     <input
@@ -210,6 +198,18 @@
 	        return;
 	    }
 	    
+		if (!checkNameValid()) {
+	        event.preventDefault();
+	        return;
+	    }
+	    
+		if (modify.tel.value != "") {
+			 if(!checkTelValid()) {
+			    	event.preventDefault();
+			        return;
+			    }
+		}
+	   
 	    getCheckPassword();
 	    
 	    // 비밀번호가 맞지 않으면 submit 막기

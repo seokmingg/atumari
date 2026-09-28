@@ -14,7 +14,7 @@
     <link rel="stylesheet"
           href="<%=request.getContextPath()%>/assets/member/css/login.css">
     <!-- 공통 js -->
-    <script src="<%=request.getContextPath()%>/assets/member/js/signup.js"></script>
+    <script src="<%=request.getContextPath()%>/assets/member/js/member.js"></script>
     <!-- jQuery -->
     <script src="<%=request.getContextPath()%>/assets/member/js/jquery-1.8.1.min.js"></script>
 
@@ -69,9 +69,6 @@
                 </div>
                 
                  <!-- 名前 -->
-                 <!-- 
-                 	TODO. 이름 입력값 검증 추가(한글, 한자, 영어만 입력 가능)
-                  -->
 
                 <div class="input-group">
 
@@ -212,6 +209,12 @@
 	
 	    if (!checkEmailValid()) {
 	
+	        event.preventDefault();
+	        return;
+	    }
+	    
+	    if (!checkNameValid()) {
+	    	
 	        event.preventDefault();
 	        return;
 	    }
