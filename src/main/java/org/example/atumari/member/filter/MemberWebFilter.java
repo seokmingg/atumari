@@ -20,7 +20,8 @@ import jakarta.servlet.http.HttpSession;
 // 어노테이션 괄호 안에 회원 로그인 여부 인증 필요한 url 추가
 @WebFilter({"/my-info", "/my-info/modify",
 			"/inquiry/write", "/inquiry/update", "/inquiry/delete",
-			"/inquiry/admin/list", "/inquiry/admin/view"})
+			"/inquiry/admin/list", "/inquiry/admin/view",
+			"/notice/delete", "/notice/edit", "/notice/write"})
 public class MemberWebFilter implements Filter {
 	@Override
 	public void doFilter(
