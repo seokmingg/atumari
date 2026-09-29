@@ -60,15 +60,29 @@ public class CommunityDao {
 	}
 
 	//게시물 총 갯수
-	public int countCommunity(String SearchType, String search) {
+	public int countCommunity(String searchType, String search) {
 		int count = 0;
-		String sql = "SELECT COUNT(*) as count FROM atumari.community\r\n"
-				+ "where ? like ? ";
+		StringBuilder sql = new StringBuilder("SELECT COUNT(*) as count FROM atumari.community\r\n");
+		boolean hasKeyword = search != null && !search.isBlank();
+
+        if (hasKeyword) {
+            sql.append(" WHERE ");
+            if(searchType.equals("content")) sql.append("content like ?");
+            else if(searchType.equals("title")) sql.append("title like ?");
+            else if(searchType.equals("content_title")) {
+            	sql.append("(content like ? or title like ?)");
+            }
+        }
+		
 		try {
 			con = DBConnection.getConnection();
-			ps = con.prepareStatement(sql);
-			ps.setString(1, SearchType);
-			ps.setString(2, "%"+search+"%");
+			ps = con.prepareStatement(sql.toString());
+			if (hasKeyword) {
+		        ps.setString(1, "%" + search + "%");
+		        if ("content_title".equals(searchType)) {
+		            ps.setString(2, "%" + search + "%");
+		        }
+		    }
 		} catch(Exception e) {
 			System.out.println("countCommunity() 오류!!");
 		} finally {
@@ -78,12 +92,45 @@ public class CommunityDao {
 	}
 	
 	//리스트 불러오기
-	public List<CommunityDto> getCommunityList(int pageSize, int offset, String normalizedSearchType,
-			String normalizedKeyword) {
+	public List<CommunityDto> getCommunityList(int limit, int offset, String searchType,
+			String search) {
 		List<CommunityDto> dtos = new ArrayList<CommunityDto>();
-		String sql = "";
+		StringBuilder sql = new StringBuilder(
+				"select c.cmty_no, m.name, c.title, c.content, c.reg_date, c.hit\r\n"
+				+ "from atumari.community c, atumari.member m\r\n"
+				+ "where c.member_id = m.id\r\n");
+		boolean hasKeyword = search != null && !search.isBlank();
+
+        if (hasKeyword) {
+            sql.append(" AND ");
+            if(searchType.equals("content")) sql.append("content like ?");
+            else if(searchType.equals("title")) sql.append("title like ?");
+            else if(searchType.equals("content_title")) {
+            	sql.append("(content like ? or title like ?)");
+            }
+        }
+        
+        sql.append(" ORDER BY n.cmty_no DESC LIMIT ? OFFSET ?");
+		
 		try {
 			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql.toString());
+			
+			int index = 1;
+			if (hasKeyword) {
+		        ps.setString(index++, "%" + search + "%");
+		        if ("content_title".equals(searchType)) {
+		            ps.setString(index++, "%" + search + "%");
+		        }
+		    }
+			ps.setInt(index++, limit);
+            ps.setInt(index, offset);
+			
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                	dtos.add(mapCmty(rs));
+                }
+            }
 			
 		} catch(Exception e) {
 			
@@ -92,8 +139,16 @@ public class CommunityDao {
 		}
 		return dtos;
 	}
-
-
+	//리스트 저장
+	private CommunityDto mapCmty(ResultSet rs) throws SQLException {
+		CommunityDto cmty = new CommunityDto(rs.getLong("cmty_no"), 
+											rs.getString("name"), 
+											rs.getString("title"), 
+											rs.getString("content"), 
+											rs.getString("reg_date"), 
+											rs.getInt("hit"));
+        return cmty;
+    }
 
 	
 }

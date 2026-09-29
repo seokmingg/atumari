@@ -41,9 +41,12 @@ public class CommunityWriteController extends HttpServlet {
                 (String) request.getSession().getAttribute("sessionEmail");
         // 일반 form 데이터
         String title = request.getParameter("title");
+        	title = getSingleQuot(title);
         String content = request.getParameter("content");
+        	content = getSingleQuot(content);
         // 이미지 파일
         Part imagePart = request.getPart("image");
+        
 
 	        // 값 확인
 	        System.out.println("==============================");
@@ -59,8 +62,6 @@ public class CommunityWriteController extends HttpServlet {
         // 게시물 + 첨부파일 저장
         CommunityService communityService = new CommunityService();
         int result = communityService.write(cmtydto, imagePart);
-        
-        System.out.println("result :"+result);
         // 저장 성공
         if (result == 1) {
         	request.getRequestDispatcher("/WEB-INF/views/community/list.jsp")
@@ -69,7 +70,10 @@ public class CommunityWriteController extends HttpServlet {
         	request.getRequestDispatcher("/WEB-INF/views/community/write_test.jsp")
         			.forward(request, response);
         }
-        
-        
     }
+    //작은따옴표 변환
+    public String getSingleQuot(String str) {
+		str = str.replaceAll("'", "&#39;");
+		return str;
+	}
 }
