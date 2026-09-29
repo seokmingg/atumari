@@ -131,7 +131,6 @@ public class CommunityDao {
                 	dtos.add(mapCmty(rs));
                 }
             }
-			
 		} catch(Exception e) {
 			
 		} finally {
