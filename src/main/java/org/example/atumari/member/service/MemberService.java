@@ -104,12 +104,7 @@ public class MemberService {
 
 	// CheckEmailController 이메일 중복 체크
 	public int checkDuplicateEmail(String email) {
-		int count = 0;
-		
-		// DAO 호출
-		//MemberDao memberDao = MemberDao.getDao();
-					
-		count = memberDao.checkEmailCount(email);
+		int count = memberDao.checkEmailCount(email);
 		
 		return count;
 	}
