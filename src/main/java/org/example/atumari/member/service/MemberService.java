@@ -110,7 +110,7 @@ public class MemberService {
 	}
 
 	// 로그인
-	public String login(LoginRequest login) throws SQLException {
+	public String login(LoginRequest login) throws SQLException, IllegalArgumentException {
 		String loginName = "";
 		
 		// login.jsp 입력값 검증
@@ -188,6 +188,11 @@ public class MemberService {
 		result = memberDao.modify(modify);
 		
 		return result;
+	}
+
+	// 마이페이지 회원 탈퇴
+	public int exit(String sessionId) throws SQLException {
+		return memberDao.exit(sessionId);
 	}
 
 }

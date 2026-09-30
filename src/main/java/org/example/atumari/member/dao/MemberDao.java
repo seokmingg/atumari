@@ -249,5 +249,34 @@ public class MemberDao {
 		return result;
 	}
 
+	// 회원 탈퇴
+	public int exit(String sessionId) {
+		int result = 0;
+		
+		String sql = "UPDATE member\r\n"
+					+ "SET email = REPLACE(UUID(), '-', ''),\r\n" // 이메일은 중복 방지를 위해 랜덤 문자열 난수로 변경 -> 이메일 컬럼은 UNIQUE 제약조건 있음
+					+ "	name = '(exit member)',\r\n"
+					+ "    nickname = '(exit member)',\r\n"
+					+ "    tel = '(exit member)',\r\n"
+					+ "    exit_date = CURRENT_TIMESTAMP\r\n"
+					+ "WHERE id = ?";
+		
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, sessionId);
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return result;
+	}
+
 	
 }
