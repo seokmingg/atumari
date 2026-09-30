@@ -113,7 +113,6 @@ public class CommunityService {
 	//검색 조건 정규화
 	private String normalizeSearchType(String searchType) {
 		if(searchType == null) searchType = "content";
-		
 		return searchType;
     }
 }

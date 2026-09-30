@@ -31,7 +31,7 @@
             <span>COMMUNITY</span>
             <h1>コミュニティ</h1>
             <p>
-                
+                お祭りでの思い出を集めましょう！
             </p>
         </div>
 
@@ -46,37 +46,17 @@
 
             <div class="community-search">
 
-                <select name="search">
-
-                    <option value="content">
-                        内容
-                    </option>
-
-                    <option value="title">
-                        タイトル
-                    </option>
-
-                    <option value="title_content">
-                        タイトル＋内容
-                    </option>
-
-                    <option value="writer">
-                        投稿者
-                    </option>
+                <select name="searchType">
+	                <option value="content">　内容　</option>
+                    <option value="title">　タイトル　</option>
+                    <option value="title_content">　タイトル＋内容　</option>
+                    <option value="writer">　投稿者　</option>
 
                 </select>
 
+                <input type="text" placeholder="検索してください" name="search">
 
-                <input
-                    type="text"
-                    placeholder="検索してください">
-
-
-                <button type="button">
-
-                    検索
-
-                </button>
+                <button type="button"> 検索 </button>
 
             </div>
 
@@ -89,24 +69,11 @@
                     表示件数
                 </span>
 
-                <select>
-
-                    <option>
-                        10件
-                    </option>
-
-                    <option>
-                        20件
-                    </option>
-
-                    <option>
-                        30件
-                    </option>
-
-                    <option>
-                        50件
-                    </option>
-
+                <select name="postCount">
+                    <option value="10">　10件　</option>
+                    <option value="20"> 20件 </option>
+                    <option value="30"> 30件 </option>
+                    <option value="50"> 50件 </option>
                 </select>
 
             </div>
@@ -124,13 +91,7 @@
 
             <p>
 
-                全
-
-                <strong>
-                    128
-                </strong>
-
-                件
+                全<strong> ${cmtyPage.getTotalCount()} </strong>件
 
             </p>
 

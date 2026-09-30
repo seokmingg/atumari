@@ -28,6 +28,7 @@ public class CommunityListController extends HttpServlet {
                 currentPage, searchType, search);
         
         request.setAttribute("cmtyPage", cmtyPage);
+        
     	
         request.getRequestDispatcher("/WEB-INF/views/community/list.jsp")
                 .forward(request, response);
