@@ -23,18 +23,19 @@ import jakarta.servlet.http.Part;
 
 public class CommunityService {
 	
-	private static final int PAGE_SIZE = 10;
+	private static int PAGE_SIZE = 10;
     private static final int PAGE_GROUP_SIZE = 5;
 	private final CommunityDao cmtydao = new CommunityDao();
 	private final CommunityFileDao cmtyFileDao = new CommunityFileDao();
     private final FileService fileService = new FileService();
 
     //게시물 리스트
-    public CommunityListPageDto getCommunityList(int currentPage, String searchType, String search) {
+    public CommunityListPageDto getCommunityList(int currentPage, String searchType, String search, int postCount) {
 		//검색 조건 정규화
     	String normalizedSearchType = normalizeSearchType(searchType);
         String normalizedKeyword = search == null ? "" : search.trim();
         int totalCount = cmtydao.countCommunity(normalizedSearchType, normalizedKeyword);
+        PAGE_SIZE = postCount == 1 ? 10 : postCount;
         Pagination pagination = Pagination.of(currentPage, PAGE_SIZE, PAGE_GROUP_SIZE, totalCount);
 
         List<CommunityDto> cmtyList = cmtydao.getCommunityList(pagination.getPageSize(), pagination.getOffset(), normalizedSearchType, normalizedKeyword);
@@ -74,6 +75,17 @@ public class CommunityService {
 	        result = 0;
 	    }
 	    return result;
+	}
+	
+	//게시물 상세조회
+	public CommunityDto getCommunityView(long cmtyno) {
+		CommunityDao cmtydao = new CommunityDao();
+		CommunityFileDao cmtyfiledao = new CommunityFileDao();
+		
+		CommunityDto cmtydto = cmtydao.getCommunityView(cmtyno);
+		CommunityFileDto cmtyfile = null;
+		
+		return cmtydto;
 	}
 	
 	//파일 저장

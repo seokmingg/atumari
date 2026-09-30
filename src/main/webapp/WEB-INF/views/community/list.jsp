@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <!DOCTYPE html>
 
@@ -38,7 +40,7 @@
         <!-- =========================
              SEARCH AREA
         ========================== -->
-
+		<form name="search">
         <div class="community-search-area">
 
 
@@ -80,7 +82,8 @@
 
 
         </div>
-
+        
+		</form>
 
 
         <!-- =========================
@@ -300,244 +303,44 @@
 
 
             </div>
-
-
-
-            <!-- =========================
-                 POST 01
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    初めて日本の祭りに参加しました！
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    祭り好き
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-09-04
-
-                </div>
-
-
-                <div class="list-view">
-
-                    328
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 24
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- =========================
-                 POST 02
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    大阪でおすすめの祭りを教えてください
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    大阪旅行中
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-09-03
-
-                </div>
-
-
-                <div class="list-view">
-
-                    217
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 18
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- =========================
-                 POST 03
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    秋に開催されるおすすめの祭り
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    秋祭り
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-09-02
-
-                </div>
-
-
-                <div class="list-view">
-
-                    185
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 12
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- =========================
-                 POST 04
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    祭りに行くときの服装について
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    夏休み
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-09-01
-
-                </div>
-
-
-                <div class="list-view">
-
-                    154
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 9
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- =========================
-                 POST 05
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    初心者におすすめの日本の祭りはありますか？
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    日本旅行
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-08-31
-
-                </div>
-
-
-                <div class="list-view">
-
-                    132
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 7
-
-                </div>
-
-
-            </a>
-				
-				
-
+		 	<c:choose> 
+			<c:when test="${not empty cmtyPage.cmtyList}">
+			<c:forEach var="cmty" items="${cmtyPage.cmtyList}" varStatus="status">
+	            <!-- =========================
+	                 POST 
+	            ========================== -->
+			
+	            <a href="<%=request.getContextPath()%>/community/view?cmtyNo=${cmty.cmty_no}"
+	               class="community-row">
+	
+	                <span class="list-title">
+	                    <c:out value="${cmty.title}"/>
+	                </span>
+	
+	                <span class="list-writer">
+	                    <c:out value="${cmty.member_name}"/>
+	                </span>
+	
+	                <span class="list-date">
+	                    <c:out value="${cmty.reg_date}"/>
+	                </span>
+	                
+	                <span class="list-view">
+	                    <c:out value="${cmty.hit}"></c:out>
+	                </span>
+	
+	                <span class="list-like">
+	                    ♥ 24
+	                </span>
+	
+	
+	            </a>
+			</c:forEach>
+			</c:when>
+			 <c:otherwise>
+                    <div class="list-empty">検索結果がありません。</div>
+                </c:otherwise>
+            </c:choose>
         </div>
         
         <div class="community-write">

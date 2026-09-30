@@ -19,13 +19,12 @@ public class CommunityDto {
 	}
 	//게시물 세부정보 ポスト内容
 	public CommunityDto(Long cmty_no, String member_email, String member_name, String title, String content,
-			String attach, String reg_date, String update_date, int hit) {
+			String reg_date, String update_date, int hit) {
 		this.cmty_no = cmty_no;
 		this.member_email = member_email;
 		this.member_name = member_name;
 		this.title = title;
 		this.content = content;
-		this.attach = attach;
 		this.reg_date = reg_date;
 		this.update_date = update_date;
 		this.hit = hit;
