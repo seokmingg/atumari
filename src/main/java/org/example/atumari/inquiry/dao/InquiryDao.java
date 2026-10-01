@@ -313,24 +313,23 @@ public class InquiryDao {
 	}
 
 	
-	// 문의글 삭제
+	// 문의글 삭제 — Service에서 권한 확인 후 호출
 	public int deleteInquiry(int inquiryNo) {
 
 	    String sql = "DELETE FROM inquiry WHERE inquiry_no = ?";
 
 	    try (
-	    	Connection con = DBConnection.getConnection();
-	        PreparedStatement ps =
-	        		con.prepareStatement(sql)) {
-
-	    	ps.setInt(1, inquiryNo);
+	        Connection con = DBConnection.getConnection();
+	        PreparedStatement ps = con.prepareStatement(sql)
+	    ) {
+	        ps.setInt(1, inquiryNo);
 
 	        return ps.executeUpdate();
 
 	    } catch (SQLException e) {
-	        throw new RuntimeException("문의 삭제 DB 처리에 실패했습니다.", e);
-	    }finally {
-	    	DBConnection.closeDB(con, ps, rs);
+	        throw new RuntimeException(
+	            "문의 삭제 DB 처리에 실패했습니다.", e
+	        );
 	    }
 	}
 
