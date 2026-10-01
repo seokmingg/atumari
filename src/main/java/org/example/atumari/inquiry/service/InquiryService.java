@@ -77,6 +77,19 @@ public class InquiryService {
 	// 문의 수정
 	public void updateInquiry(InquiryDto inquiry, List<Integer> deleteFileNos, List<Part> newFiles, boolean emailNotify) {
 		
+		 // 0. 문의 존재 여부 + 작성자 본인 확인
+	    InquiryDto existingInquiry =
+	        inquiryDao.getInquiryByInquiryNoAndMemberId(
+	            inquiry.getInquiry_no(),
+	            inquiry.getMember_id()
+	        );
+
+	    if (existingInquiry == null) {
+	        throw new IllegalArgumentException(
+	            "お問い合わせが存在しないか、修正する権限がありません。"
+	        );
+	    }
+		
 		// 1. 문의 내용, 작성자 검증
 		validator.validateInquiry(inquiry);
 				
@@ -167,28 +180,40 @@ public class InquiryService {
 	
 	
 	// 문의 삭제
-	public void deleteInquiry(int inquiryNo, Long memberId) {
+	public void deleteInquiry(int inquiryNo, Long memberId, boolean isAdmin) {
 
-	    // 1. 본인이 작성한 문의인지 먼저 확인
-	    InquiryDto inquiry =
-	        inquiryDao.getInquiryByInquiryNoAndMemberId(
-	            inquiryNo,
-	            memberId
-	        );
-
-	    if (inquiry == null) {
-	        throw new IllegalArgumentException(
-	            "削除する権限がありません。"
-	        );
-	    }
-
+		// 0. 삭제할 문의 조회
+		InquiryDto inquiry = inquiryDao.getInquiry(inquiryNo);
+		
+		if(inquiry == null) {
+			throw new IllegalArgumentException("お問い合わせが存在しません。");
+		}
+		
+		// 1. 작성자 본인 또는 관리자만 삭제 가능 
+		boolean isOwner = 
+				memberId != null && 
+				memberId.equals(inquiry.getMember_id());
+		
+		if(!isOwner && !isAdmin) {
+			throw new IllegalArgumentException("削除する権限がありません。");
+		}
+		
 
 	    // 2. 첨부파일 조회
 	    List<InquiryFileDto> files =
 	        inquiryFileDao.getInquiryFiles(inquiryNo);
+	 
 
+	    // 3. 문의글 삭제
+	    int result = inquiryDao.deleteInquiry(inquiryNo);
 
-	    // 3. S3 실제 파일 삭제
+	    if (result <= 0) {
+	        throw new RuntimeException(
+	            "문의 삭제에 실패했습니다."
+	        );
+	    }
+	    
+	    // 4. DB삭제 성공후 S3 실제 파일 삭제
 	    for (InquiryFileDto file : files) {
 
 	        fileService.deleteFile(
@@ -196,19 +221,6 @@ public class InquiryService {
 	        );
 	    }
 
-
-	    // 4. 문의글 삭제
-	    int result =
-	        inquiryDao.deleteInquiry(
-	            inquiryNo,
-	            memberId
-	        );
-
-	    if (result <= 0) {
-	        throw new RuntimeException(
-	            "문의 삭제에 실패했습니다."
-	        );
-	    }
 
 	    // inquiry_file은 ON DELETE CASCADE로 자동 삭제
 	}

@@ -116,8 +116,14 @@
 </div>
 
 <div class="board-write">
-  <a class="write-button" href="${pageContext.request.contextPath}/inquiry/admin/list">管理者ページ</a>
-  <a class="write-button" href="${pageContext.request.contextPath}/inquiry/write">お問い合わせを書く</a>
+<%-- 관리자만 : 관리자 페이지 버튼 표시 --%>
+	<c:if test="${sessionScope.sessionLevel eq 'admin'}">
+  		<a class="write-button" href="${pageContext.request.contextPath}/inquiry/admin/list">管理者ページ</a>
+	</c:if>
+<%-- 로긘한 회원만 : 문의 글등록 버튼 표시 --%> 
+	<c:if test="${not empty sessionScope.sessionId}">
+  		<a class="write-button" href="${pageContext.request.contextPath}/inquiry/write">お問い合わせを書く</a>
+	</c:if>
 </div>
 
 

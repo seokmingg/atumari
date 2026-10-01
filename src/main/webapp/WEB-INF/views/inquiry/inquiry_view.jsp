@@ -94,8 +94,25 @@
 <div class="detail-actions">
   <a class="secondary-button" href="${pageContext.request.contextPath}/inquiry/list">一覧へ</a>
   <div class="right">
-    <a class="primary-button" href="${pageContext.request.contextPath}/inquiry/update?inquiryNo=${inquiryDto.inquiry_no}">修正</a>
-    <button class="danger-button" onclick="confirm('削除しますか？')">削除</button>
+  	<%-- 작성자 본인: 수정 버튼 표시 --%>
+  	<c:if test="${not empty sessionScope.sessionId and sessionScope.sessionId eq inquiryDto.member_id}">
+    	<a class="primary-button" href="${pageContext.request.contextPath}/inquiry/update?inquiryNo=${inquiryDto.inquiry_no}">修正</a>
+    </c:if>
+    <%-- 작성자 본인 또는 관리자: 삭제 버튼 표시 --%>
+    <c:if test="${not empty sessionScope.sessionId 
+    			and (sessionScope.sessionId eq inquiryDto.member_id or sessionScope.sessionLevel eq 'admin')}">
+    			
+    	<form action="${pageContext.request.contextPath}/inquiry/delete"
+    		  method="post"
+    		  onsubmit="return confirm('削除しますか？');">
+
+    	<input type="hidden"
+    		   name="inquiryNo"
+    		   value="${inquiryDto.inquiry_no}">
+
+    	<button class="danger-button" type="submit">削除</button>
+    	</form>
+    </c:if>
   </div>
 </div>
 

@@ -58,16 +58,7 @@ public class InquiryUpdateController extends HttpServlet {
 	        // 문의글 상세조회
 		  	InquiryDto inquiryDto = inquiryViewService.getInquiryView(inquiryNo);
 		  	
-		  	
-		  	System.out.println("===== 문의 수정 본인 확인 =====");
-		  	System.out.println("inquiryNo = " + inquiryNo);
-		  	System.out.println("inquiryDto = " + inquiryDto);
-		  	System.out.println("session memberId = " + memberId);
-		  	
-
-if (inquiryDto != null) {
-    System.out.println("inquiry memberId = " + inquiryDto.getMember_id());
-}
+		
 		  	// 본인이 작성한 문의인지 확인
 		  	if(inquiryDto == null || !memberId.equals(inquiryDto.getMember_id())) {
 		  		
