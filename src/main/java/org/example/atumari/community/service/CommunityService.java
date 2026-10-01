@@ -20,6 +20,8 @@ import org.example.atumari.community.dto.CommunityDto;
 import org.example.atumari.config.FileConfig;
 
 import jakarta.servlet.http.Part;
+import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 public class CommunityService {
 	
@@ -122,6 +124,27 @@ public class CommunityService {
 	        }
 	        return result;
 	    }
+	// 첨부파일 목록 조회
+	public List<CommunityFileDto> getCommunityFiles(long cmtyno) {
+	    return cmtyFileDao.getCmtyFiles(cmtyno);
+	}
+	public CommunityFileDto getCommunityFile(long fileNo) {
+	    return cmtyFileDao.getCmtyFileByNo(fileNo);
+	}
+
+	// S3에서 실제 파일 데이터 조회
+	public ResponseBytes<GetObjectResponse> downloadCommunityFile(
+	        CommunityFileDto file) {
+
+	    if (file == null) {
+	        throw new IllegalArgumentException("첨부파일을 찾을 수 없습니다.");
+	    }
+
+	    return fileService.downloadFile(file.getSave_file_name());
+	}
+	
+	
+	
 	//검색 조건 정규화
 	private String normalizeSearchType(String searchType) {
 		if(searchType == null) searchType = "content";

@@ -23,6 +23,7 @@ public class CommunityViewController extends HttpServlet {
     	CommunityDto cmtydto = communityService.getCommunityView(cmtyno);
     	
     	request.setAttribute("cmtydto", cmtydto);
+    	request.setAttribute("cmtyFiles", communityService.getCommunityFiles(cmtyno));
     	
         request.getRequestDispatcher("/WEB-INF/views/community/view.jsp")
                 .forward(request, response);

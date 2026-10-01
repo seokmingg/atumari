@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+
 <!DOCTYPE html>
 
 <html lang="ja">
@@ -146,7 +150,15 @@ pageEncoding="UTF-8"%>
                      alt="投稿画像">
 
             </div>
-
+			
+			<c:forEach var="file" items="${cmtyFiles}">
+			    <c:if test="${file.original_file_name.matches('(?i).*\\.(jpg|jpeg|png|gif|webp)$')}">
+			        <img
+			            src="${pageContext.request.contextPath}/community/file/image?fileNo=${file.file_no}"
+			            alt="커뮤니티 첨부 이미지"
+			            style="max-width: 100%; height: auto;">
+			    </c:if>
+			</c:forEach>
 
             <!-- POST CONTENT -->
 

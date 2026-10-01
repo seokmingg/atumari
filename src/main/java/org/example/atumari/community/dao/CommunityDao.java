@@ -126,7 +126,7 @@ public class CommunityDao {
 			ps.setInt(index++, limit);
             ps.setInt(index, offset);
 			
-            System.out.println("sql:"+ps.toString());
+            System.out.println("getCommunityList() 오류 :"+ps.toString());
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                 	dtos.add(mapCmty(rs));
@@ -134,6 +134,7 @@ public class CommunityDao {
             }
 		} catch(Exception e) {
 			e.printStackTrace();
+            System.out.println("sql:"+ps.toString());
 		} finally {
 			DBConnection.closeDB(con, ps, rs);
 		}
@@ -143,7 +144,7 @@ public class CommunityDao {
 	//상세조회
 	public CommunityDto getCommunityView(long cmtyno) {
 		CommunityDto dto = null;
-		String sql = "select m.email, m.name, c.title, c.content,  c.reg_date, c.hit\r\n"
+		String sql = "select m.email, m.name, c.title, c.content, c.reg_date, c.hit\r\n"
 				+ "from atumari.community c, atumari.member m\r\n"
 				+ "where c.member_id = m.id\r\n"
 				+ "and cmty_no = ?";
@@ -165,7 +166,7 @@ public class CommunityDao {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-            System.out.println("sql:"+ps.toString());
+            System.out.println("getCommunityView() 오류:"+ps.toString());
 		} finally {
 			DBConnection.closeDB(con, ps, rs);
 		}
