@@ -41,10 +41,10 @@ public class AdminWebFilter implements Filter {
 			System.out.println("관리자 외 접근 제한. index 페이지로 이동");
 			req.getRequestDispatcher("/WEB-INF/views/home/index.jsp")
 				.forward(req, resp);
-			return; // 로그인 페이지로 리다이렉트 후 필터 종료
+			return; // 메인 페이지로 리다이렉트 후 필터 종료
 		}
 		
-		chain.doFilter(request, response); // 세션에 로그인 정보가 있으면 각 기능 컨트롤러로 넘기기
+		chain.doFilter(request, response); // 관리자이면 각 기능 컨트롤러로 넘기기
 	}
 
 }
