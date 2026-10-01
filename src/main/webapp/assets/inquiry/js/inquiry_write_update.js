@@ -96,6 +96,18 @@ document.addEventListener("DOMContentLoaded", function () {
 			
 			// 삭제되지 않고 남아있는 기존 파일 개수
 			const existingFileCount = getCurrentFileCount();
+			
+			// 확인용 로그 — 여기에 추가
+			        console.log("전체 기존 파일:", existingFiles.length);
+			        console.log(
+			            "삭제 체크 수:",
+			            document.querySelectorAll(
+			                ".delete-file-checkbox:checked"
+			            ).length
+			        );
+			        console.log("남는 기존 파일:", existingFileCount);
+			        console.log("앞서 선택한 새 파일:", selectedFiles.length);
+			        console.log("이번에 선택한 파일:", newFiles.length);
 
 	        // 기존 파일 + 이전에 선택한 새 파일 + 새 파일이 3개를 초과하는지 확인
 	        if (
