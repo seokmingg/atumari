@@ -91,14 +91,14 @@ public class InquiryService {
 	            inquiryFileDao.getInquiryFiles(inquiry.getInquiry_no());
 
 	    // 5. 삭제 요청한 파일 검증
-	    List<InquiryFileDto> deleteFiles = new ArrayList<>(); // 검증완료된 삭제할 파일저장
+	    List<InquiryFileDto> deleteFiles = new ArrayList<>(); // 검증완료된 삭제할 파일 저장할 리스트
 	    
-	    for(InquiryFileDto existingFile: existingFiles) {
+	    for(Integer deleteFileNo : deleteFileNos) {
 	    	
-	    	// 해당 파일을 찾았는지 확인하기 위한 변수
+	    	// 기존저장된 파일과 삭제체크를 한 파일 번호 일치를 확인하기 위한 변수
 	    	boolean found = false;
 	    	
-	    	for(Integer deleteFileNo : deleteFileNos) {
+	    	for(InquiryFileDto existingFile: existingFiles) {
 		    
 	    		if(existingFile.getFile_no() == deleteFileNo) {
 		    		found = true;
