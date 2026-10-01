@@ -314,28 +314,24 @@ public class InquiryDao {
 
 	
 	// 문의글 삭제
-	public int deleteInquiry(int inquiryNo, Long memberId) {
-		int result =0;
-		
-		String sql ="delete from inquiry\r\n"
-				+ "where inquiry_no =? \r\n"
-				+ "and member_id= ?";
-		
-		try{
-			con = DBConnection.getConnection();
-			ps = con.prepareStatement(sql);
-				ps.setInt(1, inquiryNo);
-				ps.setLong(2, memberId);
-				
-			result = ps.executeUpdate();
-			
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBConnection.closeDB(con, ps, rs);
-		}
-		
-		return result;
+	public int deleteInquiry(int inquiryNo) {
+
+	    String sql = "DELETE FROM inquiry WHERE inquiry_no = ?";
+
+	    try (
+	    	Connection con = DBConnection.getConnection();
+	        PreparedStatement ps =
+	        		con.prepareStatement(sql)) {
+
+	    	ps.setInt(1, inquiryNo);
+
+	        return ps.executeUpdate();
+
+	    } catch (SQLException e) {
+	        throw new RuntimeException("문의 삭제 DB 처리에 실패했습니다.", e);
+	    }finally {
+	    	DBConnection.closeDB(con, ps, rs);
+	    }
 	}
 
 
