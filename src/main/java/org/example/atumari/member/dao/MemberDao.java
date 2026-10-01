@@ -78,7 +78,7 @@ public class MemberDao {
 	
 	// 로그인, 마이페이지 정보 수정 - 해시된 비밀번호 값 조회
 	public String getDBPassword(LoginRequest login) {
-		String dbPassword = "";
+		String dbPassword = "pw"; // fix: db 조회 실패시 비밀번호를 공백으로 반환할 경우 MemberService login()에서 예외 출력하는 문제 수정
 		
 		String sql = "SELECT a.password\r\n"
 				+ "FROM member_auth a, member m\r\n"

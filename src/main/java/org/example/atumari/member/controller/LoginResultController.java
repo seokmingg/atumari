@@ -52,7 +52,7 @@ public class LoginResultController extends HttpServlet {
 			
 			if (!"".equals(loginName)) out.print(loginName + "様、あつまりへようこそ！");
 			else {
-				System.out.println("로그인 정보가 올바르지 않음.");
+				System.out.println("LoginResultController Log: 로그인 정보가 올바르지 않음.");
 				out.print("メールアドレスやパスワードをもう一度確認してください。");
 			}
 				
