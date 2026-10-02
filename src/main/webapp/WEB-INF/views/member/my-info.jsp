@@ -123,14 +123,35 @@
 	
 	            </div>
 			</c:if>
-
+			
             <div class="info-button">
 
                 <a href="<%=request.getContextPath()%>/my-info/modify">
-                    会員情報を編集
+                    編集
                 </a>
+                
+                <a href="javascript:goDelete('<%=request.getSession().getAttribute("sessionId")%>')" class="member-exit-button">
+                    削除
+                </a>
+                
+<script>
+	// 회원 탈퇴
+	function goDelete(sessionId) {
+		if(confirm("本当に退会しますか？")) {
+			exit.sessionId.value = sessionId;
+			exit.method = "post";
+			exit.action = "<%=request.getContextPath()%>/my-info/exit";
+			exit.submit();
+		}
+	}
+</script>
+
+                <form name="exit">
+                	<input type="hidden" name="sessionId"/>
+                </form>
 
             </div>
+
 
         </section>
 

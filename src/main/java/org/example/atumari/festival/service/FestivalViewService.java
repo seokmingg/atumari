@@ -1,5 +1,6 @@
 package org.example.atumari.festival.service;
 
+
 import org.example.atumari.festival.dao.FestivalDao;
 import org.example.atumari.festival.dto.FestivalDto;
 
@@ -50,5 +51,7 @@ public class FestivalViewService {
                 return "";
         }
     }
+    
+   
 
 }
