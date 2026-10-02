@@ -36,8 +36,8 @@ public class InquiryListController extends HttpServlet {
 		   String searchType = request.getParameter("searchType");
 		   String keyword = request.getParameter("keyword");
 		   
-		   List<InquiryDto> inquiryList = inquiryListService.getInquiryList(searchType,keyword,page);
-		   int totalCount = inquiryListService.getTotalCount(searchType,keyword);
+		   List<InquiryDto> inquiryList = inquiryListService.getInquiryList(searchType,keyword,page,"");
+		   int totalCount = inquiryListService.getTotalCount(searchType,keyword,"");
 		   int totalPages = inquiryListService.getTotalPages(totalCount);
 		   
 		   

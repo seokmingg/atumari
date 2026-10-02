@@ -33,25 +33,51 @@ public class InquiryAdminListController extends HttpServlet {
 				   page = Integer.parseInt(pageParam);
 			   }
 			   
+			   //검색 조건
 			   String searchType = request.getParameter("searchType");
 			   String keyword = request.getParameter("keyword");
 			   
-			   List<InquiryDto> inquiryList = inquiryListService.getInquiryList(searchType,keyword,page);
-			   int totalCount = inquiryListService.getTotalCount(searchType,keyword);
+			   //답변 상태
+			   String status = request.getParameter("status");
+			   
+			   //허용된 답변 상태인지 확인
+			   if(!"WAITING".equals(status) && !"COMPLETED".equals(status)) {
+				   status = null;
+			   }
+			   
+			   
+			   List<InquiryDto> inquiryList = inquiryListService.getInquiryList(searchType,keyword,page,status);
+			   
+			   // 검색 및 답변상태 조회시 전체 글 수 
+			   int totalCount = inquiryListService.getTotalCount(searchType,keyword,status);
 			   int totalPages = inquiryListService.getTotalPages(totalCount);
 			   
+			   // 검색 조건과 관계없는 전체 글 수
+			   int allInquiryCount =
+			       inquiryListService.getTotalCount("", "", "");
+			   // 답변 상태 waiting 인 문의글 수
+			   int waitingInquiryCount =
+			       inquiryListService.getTotalCount("", "", "WAITING");
+			   // 답변 상태 completed 인 문의글 수
+			   int completedInquiryCount =
+			       inquiryListService.getTotalCount("", "", "COMPLETED");
+		
 			   
-			   request.setAttribute("keyword",keyword);// 검색 키워드
-			   request.setAttribute("searchType",searchType);// 검색 select
-			   request.setAttribute("inquiryList",inquiryList);// 현재 페이지에 보여줄 문의글 목록
-			   request.setAttribute("totalCount", totalCount); // 검색조건에 맞는 전체 문의글 개수
+			   
+			   request.setAttribute("keyword", keyword);// 검색 키워드
+			   request.setAttribute("searchType", searchType);// 검색 select
+			   request.setAttribute("inquiryList", inquiryList);// 현재 페이지에 보여줄 문의글 목록
+			   request.setAttribute("totalCount", totalCount); // 검색조건에 맞는 전체 문의 수
+			   request.setAttribute("allInquiryCount", allInquiryCount); // 검색 조건 관계없는 전체 문의 수
+			   request.setAttribute("waitingInquiryCount", waitingInquiryCount); // 답변미응답 문의 수
+			   request.setAttribute("completedInquiryCount", completedInquiryCount); // 답변 완료 문의 수
 			   request.setAttribute("totalPages", totalPages); // 전체 페이지 개수
 			   request.setAttribute("page", page); // 현재 몇페이지인지
+		//	   request.setAttribute("status", status);// 답변상태
 
+		       String view = "/WEB-INF/views/inquiry/admin_inquiry_list.jsp";
 
-		        String view = "/WEB-INF/views/inquiry/admin_inquiry_list.jsp";
-
-		        request.getRequestDispatcher(view)
+		       request.getRequestDispatcher(view)
 		               .forward(request, response);
 		   }
 

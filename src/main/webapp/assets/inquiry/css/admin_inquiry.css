@@ -30,7 +30,7 @@
     margin: 20px 0 25px;
 }
 
-.board-filter button {
+.board-filter a {
     border: 1px solid #ddd;
     background: #fff;
     color: #444;
@@ -39,8 +39,8 @@
     cursor: pointer;
 }
 
-.board-filter button:hover,
-.board-filter button.active {
+.board-filter a:hover,
+.board-filter a.active {
     background: #222;
     color: #fff;
     border-color: #222;

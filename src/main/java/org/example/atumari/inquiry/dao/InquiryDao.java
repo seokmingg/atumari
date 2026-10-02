@@ -62,7 +62,7 @@ public class InquiryDao {
 	
 	
 	// 전체 문의글 목록 조회
-	public List<InquiryDto> findInquiryList(String searchType, String keyword, int pageSize,int offset){
+	public List<InquiryDto> findInquiryList(String searchType, String keyword, int pageSize,int offset, String status){
 		List<InquiryDto> inquiryList = new ArrayList<>();
 		
 		// StringBuilder로 생성 -> 이유: sql.append 기능(sql문 덧붙이기)을 쓰기위해
@@ -78,25 +78,36 @@ public class InquiryDao {
 		               WHERE f.inquiry_no = i.inquiry_no
 		           ) AS file_is
 				  FROM inquiry i
+				  where 1=1
 				""");
+		//where 1=1 은 항상 참인 조건. 이렇게 하면 검색어와 상태유무에 관계없이 추가 조건 and로 연결 가능
 		
 		// 검색어와 올바른 검색 조건이 있는지 확인
 		boolean hasSearch = keyword != null && 
 								!keyword.isBlank() &&
 									("title".equals(searchType) || "writer".equals(searchType));
 		
+		// 답변상태가 조건에 맞게 옳게 값이 들어있는지
+		boolean hasStatus = 
+				"WAITING".equals(status) || "COMPLETED".equals(status);
+		
 		// 검색 조건만 동적으로 추가
 		if(hasSearch) {
 			if("title".equals(searchType)) {
-				sql.append(" where i.title like ? ");//주의: 앞뒤 공백 주기, 앞뒷문장과 붙으면 안됨
+				sql.append(" and i.title like ? ");//주의: 앞뒤 공백 주기, 앞뒷문장과 붙으면 안됨
 			}else if("writer".equals(searchType)) {
-				sql.append(" where i.writer like ? ");
+				sql.append(" and i.writer like ? ");
 			}
 		}
 		
+		// 답변상태 조건 추가
+		if(hasStatus) {
+			sql.append(" AND i.status =? ");
+		}
+		
 		//공통적으로 필요한 부분(페이지네이션)
-		sql.append("ORDER BY i.created_at DESC ");
-		sql.append("LIMIT ? OFFSET ?");//LIMIT 몇개의 행을 가져올 것인가, OFFSET 앞에서 몇개의 행을 건너뛸것 인가
+		sql.append(" ORDER BY i.created_at DESC ");
+		sql.append(" LIMIT ? OFFSET ?");//LIMIT 몇개의 행을 가져올 것인가, OFFSET 앞에서 몇개의 행을 건너뛸것 인가
 				
 		
 		try{
@@ -108,6 +119,10 @@ public class InquiryDao {
 			// 검색어 있을 때만 바인딩에 추가
 				if(hasSearch) {
 					ps.setString(parameterIndex++, "%"+keyword+"%");
+				}
+			// 답변상태가 있을때만 바인딩에 추가
+				if(hasStatus) {
+					ps.setString(parameterIndex++, status);
 				}
 			// 검색어 관계없이 항상 바인딩
 			ps.setInt(parameterIndex++, pageSize);
@@ -141,13 +156,14 @@ public class InquiryDao {
 	
 	
 	// 전체 문의글 갯수 조회
-	public int getTotalInquiryCount(String searchType, String keyword) {
+	public int getTotalInquiryCount(String searchType, String keyword,String status) {
 		
 		int totalCount =0;
 		
 		StringBuilder sql = new StringBuilder("""
 				select count(*) as count
 				from inquiry
+				where 1=1
 				""");
 		
 		// 검색어와 올바른 검색 조건이 있는지 확인
@@ -155,22 +171,38 @@ public class InquiryDao {
 								!keyword.isBlank() &&
 									("title".equals(searchType) || "writer".equals(searchType));
 		
-		// 검색 조건만 동적으로 추가
-		if(hasSearch) {
-			if("title".equals(searchType)) {
-				sql.append(" where title like ? ");//주의: 앞뒤 공백 주기, 앞뒷문장과 붙으면 안됨
-			}else if("writer".equals(searchType)) {
-				sql.append(" where writer like ? ");
-			}
-		}
+		// 답변상태가 조건에 맞게 옳게 값이 들어있는지
+				boolean hasStatus = 
+						"WAITING".equals(status) || "COMPLETED".equals(status);
+				
+				// 검색 조건만 동적으로 추가
+				if(hasSearch) {
+					if("title".equals(searchType)) {
+						sql.append(" and title like ? ");//주의: 앞뒤 공백 주기, 앞뒷문장과 붙으면 안됨
+					}else if("writer".equals(searchType)) {
+						sql.append(" and writer like ? ");
+					}
+				}
+				
+				// 답변상태 조건 추가
+				if(hasStatus) {
+					sql.append(" AND status =? ");
+				}
 		
 		try{
 			con = DBConnection.getConnection();
 			 ps = con.prepareStatement(sql.toString());
 
-		        if (hasSearch) {
-		            ps.setString(1, "%" + keyword + "%");
-		        }
+			 int parameterIndex = 1;
+
+			 if (hasSearch) {
+			     ps.setString(parameterIndex++, "%" + keyword + "%");
+			 }
+
+			 if (hasStatus) {
+			     ps.setString(parameterIndex++, status);
+			 }
+			 
 			rs = ps.executeQuery();
 				
 			if(rs.next()) {
