@@ -73,7 +73,7 @@ public class InquiryAdminListController extends HttpServlet {
 			   request.setAttribute("completedInquiryCount", completedInquiryCount); // 답변 완료 문의 수
 			   request.setAttribute("totalPages", totalPages); // 전체 페이지 개수
 			   request.setAttribute("page", page); // 현재 몇페이지인지
-		//	   request.setAttribute("status", status);// 답변상태
+			   request.setAttribute("status", status);// 답변상태
 
 		       String view = "/WEB-INF/views/inquiry/admin_inquiry_list.jsp";
 

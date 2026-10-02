@@ -44,6 +44,10 @@
   <p>全 <strong>${totalCount}</strong> 件</p>
  
   <!-- 검색란 -->
+    <form action="${pageContext.request.contextPath}/inquiry/admin/list" method="get">
+    
+    <input type="hidden" name="status" value="${status}">
+    
   <div class="board-search">
    <select name="searchType">
     	<option value="title" <c:if test="${searchType eq 'title'}"> selected </c:if>>タイトル</option>
@@ -52,6 +56,7 @@
     <input id="searchKeyword" name="keyword" value="${keyword}" type="text" placeholder="検索してください">
     <button id="searchBtn" type="submit">検索</button>
   </div>
+   </form>
 </div>
 
 <div class="board-filter">
@@ -59,11 +64,11 @@
 	class="${empty status ? 'active' : ''}">
 		すべて
 	</a>
-	 <a href="${pageContext.request.contextPath}/inquiry/admin/list?status=waiting"
+	 <a href="${pageContext.request.contextPath}/inquiry/admin/list?status=WAITING"
 	 class="${status eq 'WAITING' ? 'active' : ''}">
 		回答待ち
 	 </a>
-	 <a href="${pageContext.request.contextPath}/inquiry/admin/list?status=completed"
+	 <a href="${pageContext.request.contextPath}/inquiry/admin/list?status=COMPLETED"
 	 class="${status eq 'COMPLETED' ? 'active' : ''}">
 	 	回答完了
 	 </a>
@@ -106,7 +111,7 @@
 
 <!-- 이전 페이지 -->
 	<c:if test="${page>1}">
-		<a href="${pageContext.request.contextPath}/inquiry/list?page=${page - 1}">
+		<a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${page - 1}">
 			←		
 		</a>
 	</c:if>
@@ -115,13 +120,13 @@
 	<c:forEach var="i" begin="1" end="${totalPages}">
 		<c:if test="${i == page}">
 			<a class= "active"
-				href="${pageContext.request.contextPath}/inquiry/list?page=${i}">
+				href="${pageContext.request.contextPath}/inquiry/admin/list?page=${i}">
 				${i}
 			</a>
 		</c:if>
 		
 		<c:if test="${i != page}">
-			<a href="${pageContext.request.contextPath}/inquiry/list?page=${i}">
+			<a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${i}">
 				${i}
 			</a>
 		</c:if>
@@ -129,7 +134,7 @@
 
 <!-- 다음 페이지 -->
     <c:if test="${page < totalPages}">
-        <a href="${pageContext.request.contextPath}/inquiry/list?page=${page + 1}">
+        <a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${page + 1}">
             →
         </a>
     </c:if>	
