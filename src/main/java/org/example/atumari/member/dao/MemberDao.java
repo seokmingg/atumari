@@ -78,7 +78,7 @@ public class MemberDao {
 	
 	// 로그인, 마이페이지 정보 수정 - 해시된 비밀번호 값 조회
 	public String getDBPassword(LoginRequest login) {
-		String dbPassword = "";
+		String dbPassword = "pw"; // fix: db 조회 실패시 비밀번호를 공백으로 반환할 경우 MemberService login()에서 예외 출력하는 문제 수정
 		
 		String sql = "SELECT a.password\r\n"
 				+ "FROM member_auth a, member m\r\n"
@@ -240,6 +240,35 @@ public class MemberDao {
 			
 			result = ps.executeUpdate();
 					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return result;
+	}
+
+	// 회원 탈퇴
+	public int exit(String sessionId) {
+		int result = 0;
+		
+		String sql = "UPDATE member\r\n"
+					+ "SET email = REPLACE(UUID(), '-', ''),\r\n" // 이메일은 중복 방지를 위해 랜덤 문자열 난수로 변경 -> 이메일 컬럼은 UNIQUE 제약조건 있음
+					+ "	name = '(exit member)',\r\n"
+					+ "    nickname = '(exit member)',\r\n"
+					+ "    tel = '(exit member)',\r\n"
+					+ "    exit_date = CURRENT_TIMESTAMP\r\n"
+					+ "WHERE id = ?";
+		
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, sessionId);
+			
+			result = ps.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

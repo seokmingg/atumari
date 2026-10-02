@@ -18,10 +18,8 @@ import jakarta.servlet.http.HttpSession;
  * */
 
 // 어노테이션 괄호 안에 회원 로그인 여부 인증 필요한 url 추가
-@WebFilter({"/my-info", "/my-info/modify",
-			"/inquiry/write", "/inquiry/update", "/inquiry/delete",
-			"/inquiry/admin/list", "/inquiry/admin/view",
-			"/notice/delete", "/notice/edit", "/notice/write"})
+@WebFilter({"/my-info", "/my-info/modify", "/my-info/exit",
+			"/inquiry/write", "/inquiry/update", "/inquiry/delete"})
 public class MemberWebFilter implements Filter {
 	@Override
 	public void doFilter(
@@ -35,7 +33,7 @@ public class MemberWebFilter implements Filter {
 		
 		HttpSession session = req.getSession(false); // 세션이 이미 존재하면 가져오고, 없으면 null 반환
 		
-		System.out.println("WebFilter 호출 -> 회원 세션 인증 실행");
+		System.out.println("MemberWebFilter 호출 -> 회원 세션 인증 실행");
 		
 		// 생성된 세션이 없거나, 세션에 로그인 정보가 없으면
 		if (session == null || session.getAttribute("sessionEmail") == null) {

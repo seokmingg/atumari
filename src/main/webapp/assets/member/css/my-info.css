@@ -122,3 +122,17 @@
 .info-button a:hover {
     background: #f3c6cf;
 }
+
+.info-button .member-exit-button {
+    padding: 13px 25px;
+    
+    border: 0;
+    
+    background: #333;
+    
+    color: #fff;
+    
+    font-size: 13px;
+    
+    cursor: pointer;
+}
