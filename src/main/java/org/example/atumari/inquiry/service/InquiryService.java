@@ -11,7 +11,6 @@ import org.example.atumari.inquiry.dao.InquiryFileDao;
 import org.example.atumari.inquiry.dto.InquiryDto;
 import org.example.atumari.inquiry.dto.InquiryFileDto;
 import org.example.atumari.inquiry.validator.InquiryValidator;
-import org.example.atumari.notice.dto.NoticeFileDto;
 
 import jakarta.servlet.http.Part;
 import software.amazon.awssdk.core.ResponseBytes;

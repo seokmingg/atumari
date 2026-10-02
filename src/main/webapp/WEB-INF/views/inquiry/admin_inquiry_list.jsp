@@ -41,17 +41,16 @@
 </div>
 
 <div class="board-top">
-  <p>全 <strong>${totalConnt}</strong> 件</p>
+  <p>全 <strong>${totalCount}</strong> 件</p>
  
   <!-- 검색란 -->
   <div class="board-search">
-    <select>
-    <option>タイトル</option>
-    <option>作成者</option>
-	<option>会員ID</option>
+   <select name="searchType">
+    	<option value="title" <c:if test="${searchType eq 'title'}"> selected </c:if>>タイトル</option>
+    	<option value="writer" <c:if test="${searchType eq 'writer'}"> selected </c:if>>作成者</option>
     </select>
-    <input id="searchKeyword" type="text" placeholder="検索してください">
-    <button id="searchBtn" type="button">検索</button>
+    <input id="searchKeyword" name="keyword" value="${keyword}" type="text" placeholder="検索してください">
+    <button id="searchBtn" type="submit">検索</button>
   </div>
 </div>
 

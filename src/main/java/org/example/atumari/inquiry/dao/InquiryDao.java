@@ -70,6 +70,7 @@ public class InquiryDao {
 				 SELECT i.inquiry_no,
 			           i.title,
 			           i.writer,
+			           i.is_public,
 			           i.status,
 			           i.created_at,
 		           EXISTS (
@@ -137,6 +138,7 @@ public class InquiryDao {
 				inquiryDto.setInquiry_no(rs.getInt("inquiry_no"));
 				inquiryDto.setTitle(rs.getString("title"));
 				inquiryDto.setWriter(rs.getString("writer"));
+				inquiryDto.setPublic(rs.getBoolean("is_public"));
 				inquiryDto.setStatus(rs.getString("status"));
 				inquiryDto.setCreated_at(rs.getTimestamp("created_at").toLocalDateTime()); //InquiryDto에 타입으로 형변환
 				inquiryDto.setFileIs(rs.getBoolean("file_is"));
