@@ -20,7 +20,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 public class MemberService {
 	
 	// DAO 호출
-	MemberDao memberDao = MemberDao.getDao();
+	private final MemberDao memberDao = MemberDao.getDao();
 
 	// 회원가입
 	public int signup(SignupRequest signup) throws SQLException {
@@ -104,18 +104,13 @@ public class MemberService {
 
 	// CheckEmailController 이메일 중복 체크
 	public int checkDuplicateEmail(String email) {
-		int count = 0;
-		
-		// DAO 호출
-		//MemberDao memberDao = MemberDao.getDao();
-					
-		count = memberDao.checkEmailCount(email);
+		int count = memberDao.checkEmailCount(email);
 		
 		return count;
 	}
 
 	// 로그인
-	public String login(LoginRequest login) throws SQLException {
+	public String login(LoginRequest login) throws SQLException, IllegalArgumentException {
 		String loginName = "";
 		
 		// login.jsp 입력값 검증
@@ -123,17 +118,16 @@ public class MemberService {
 			throw new IllegalArgumentException("有効なメールアドレスを入力してください。");
 		}
 		
-//		if (login.getPassword().length() < 8 || login.getPassword().length() > 20) { // 비밀번호 일치
+//		if (login.getPassword().length() < 8 || login.getPassword().length() > 20) { // 비밀번호 자릿수
 //			throw new IllegalArgumentException("パスワードは8文字以上20文字以下で入力してください。");
 //		}	
 		
-		// DAO 호출
-		//MemberDao memberDao = MemberDao.getDao();
-		
 		// DB에서 해시된 비밀번호 획득
+		// fix: 사용자가 올바르지 않은 정보로 로그인을 시도하면 서버에서 IllegalArgumentException 반환하는 버그 수정(실패시 "pw" 반환)
 		String dbPassword = memberDao.getDBPassword(login);
 		
 		// 비밀번호 검증 -> 입력받은 값과 db의 해시 값이 같은지
+		// fix: BCrypt.Result는 해시 대상 값이 null이거나 공백일 경우 IllegalArgumentException 반환
 		BCrypt.Result result = BCrypt.verifyer().verify(login.getPassword().toCharArray(), dbPassword);
 		
 		// 입력값과 해시 값이 같으면(검증 성공)
@@ -193,6 +187,11 @@ public class MemberService {
 		result = memberDao.modify(modify);
 		
 		return result;
+	}
+
+	// 마이페이지 회원 탈퇴
+	public int exit(String sessionId) throws SQLException {
+		return memberDao.exit(sessionId);
 	}
 
 }

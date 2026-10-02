@@ -24,6 +24,9 @@
      BOARD
 ========================== -->
 <main class="board-page">
+<form>
+	<input type="hidden" name="inquiryNo" value="${inquiryDto.inquiry_no}">
+</form>
 <div class="board-inner">
 <div class="board-title">
 <span>INQUIRY</span>
@@ -36,57 +39,80 @@
     <div class="detail-header-top">
       <div>
         <div class="detail-label">タイトル</div>
-        <h2>祭り情報についてお問い合わせします</h2>
+        <h2>${inquiryDto.title}</h2>
       </div>
-      <span class="status-badge status-completed">回答完了</span>
+      <span class="status-badge status-completed">${inquiryDto.status}</span>
     </div>
   </div>
   <div class="detail-meta">
-    <span>作成者 kim123</span>
-    <span>作成日 2026.09.08</span>
-    <span>公開設定 公開</span>
+    <span>作成者 ${inquiryDto.writer}</span>
+    <span> 作成日時 ${inquiryDto.formattedCreatedDateTime}</span>
+    <span>公開設定 ${inquiryDto.isPublic() ? '公開' : '非公開'}</span>
   </div>
   
     <!-- 첨부파일 -->
 <div class="detail-file">
 
     <div class="detail-label">添付ファイル</div>
-
+<c:forEach var="file" items="${fileDtos}">
     <div class="detail-file-list">
 
-        <a href="#" class="detail-file-item">
+        <a href="${pageContext.request.contextPath}/inquiry/file/download?fileNo=${file.file_no}" class="detail-file-item">
             <img
                 src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
                 alt="添付ファイル"
                 class="detail-file-icon">
 
-            <span>festival_schedule.png</span>
+            <span>${file.original_file_name}</span>
         </a>
 
     </div>
-
+</c:forEach>
 </div>
   <div class="detail-content">
-    青森ねぶた祭の開催日程についてお問い合わせします。<br><br>
-    現在サイトに表示されている日程と公式サイトの日程が異なるようです。<br>
-    ご確認をお願いいたします。
+	${inquiryDto.content}
   </div>
 </section>
 
 <section class="answer-card">
   <div class="answer-title">管理者回答</div>
   <div class="answer-body">
-    お問い合わせありがとうございます。<br><br>
-    確認したところ、掲載情報に誤りがありましたので修正いたしました。<br>
-    ご連絡いただきありがとうございました。
+   <c:choose>
+   		<%-- 답변 완료 --%>
+   		<c:when test="${inquiryDto.answer_content eq 'COMPLETED'}">
+   			${inquiryDto.answer_content}
+   		</c:when>
+   		
+   		<%-- 답변 대기 --%>
+   		<c:otherwise>
+                まだ回答は登録されていません。
+        </c:otherwise>
+   </c:choose>
   </div>
 </section>
 
 <div class="detail-actions">
   <a class="secondary-button" href="${pageContext.request.contextPath}/inquiry/list">一覧へ</a>
   <div class="right">
-    <a class="primary-button" href="${pageContext.request.contextPath}/inquiry/update">修正</a>
-    <button class="danger-button" onclick="confirm('削除しますか？')">削除</button>
+  	<%-- 작성자 본인: 수정 버튼 표시 --%>
+  	<c:if test="${not empty sessionScope.sessionId and sessionScope.sessionId eq inquiryDto.member_id}">
+    	<a class="primary-button" href="${pageContext.request.contextPath}/inquiry/update?inquiryNo=${inquiryDto.inquiry_no}">修正</a>
+    </c:if>
+    <%-- 작성자 본인 또는 관리자: 삭제 버튼 표시 --%>
+    <c:if test="${not empty sessionScope.sessionId 
+    			and (sessionScope.sessionId eq inquiryDto.member_id or sessionScope.sessionLevel eq 'admin')}">
+    			
+    	<form action="${pageContext.request.contextPath}/inquiry/delete"
+    		  method="post"
+    		  onsubmit="return confirm('削除しますか？');">
+
+    	<input type="hidden"
+    		   name="inquiryNo"
+    		   value="${inquiryDto.inquiry_no}">
+
+    	<button class="danger-button" type="submit">削除</button>
+    	</form>
+    </c:if>
   </div>
 </div>
 

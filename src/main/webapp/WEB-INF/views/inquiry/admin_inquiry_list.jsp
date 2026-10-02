@@ -70,11 +70,14 @@
     <div class="board-cell board-status">状態</div>
     <div class="board-cell board-date">作成日</div>
   </div>
+  
+  <c:forEach var="inquiry" items="${inquiryList}">
   <div class="board-row" data-status="waiting">
-    <div class="board-cell board-no">12</div>
-    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/admin/view">開催日程について確認をお願いします</a></div>
+    <div class="board-cell board-no">${inquiry.inquiry_no}</div>
+    <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/admin/view?inquiryNo=${inquiry.inquiry_no}">${inquiry.title}</a></div>
      <!-- 첨부파일 -->
         <div class="board-cell board-file">
+         <c:if test="${inquiry.fileIs}">
             <span class="file-info">
                 <img
                     src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
@@ -82,18 +85,13 @@
                     class="file-icon"
                 >
             </span>
+            </c:if>
         </div>
-    <div class="board-cell board-writer">kim123</div>
-    <div class="board-cell board-status"><span class="status-badge status-waiting">回答待ち</span></div>
-    <div class="board-cell board-date">2026.09.08</div>
+    <div class="board-cell board-writer">${inquiry.writer}</div>
+    <div class="board-cell board-status"><span class="status-badge status-waiting">${inquiry.status}</span></div>
+    <div class="board-cell board-date">${inquiry.formattedCreatedDate}</div>
   </div>
-  <div class="board-row" data-status="completed">
-    <div class="board-cell board-no">11</div>
-    <div class="board-cell board-subject"><a href="admin_inquiry_detail.html">お気に入り機能について</a></div>
-    <div class="board-cell board-writer">park22</div>
-    <div class="board-cell board-status"><span class="status-badge status-completed">回答完了</span></div>
-    <div class="board-cell board-date">2026.09.07</div>
-  </div>
+  </c:forEach>
 </div>
 
 </div>
