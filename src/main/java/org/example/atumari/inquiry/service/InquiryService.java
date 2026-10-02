@@ -1,6 +1,7 @@
 package org.example.atumari.inquiry.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.example.atumari.common.fileupload.FileService;
@@ -9,8 +10,12 @@ import org.example.atumari.inquiry.dao.InquiryDao;
 import org.example.atumari.inquiry.dao.InquiryFileDao;
 import org.example.atumari.inquiry.dto.InquiryDto;
 import org.example.atumari.inquiry.dto.InquiryFileDto;
+import org.example.atumari.inquiry.validator.InquiryValidator;
+import org.example.atumari.notice.dto.NoticeFileDto;
 
 import jakarta.servlet.http.Part;
+import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 public class InquiryService {
 	/*
@@ -23,23 +28,20 @@ public class InquiryService {
 	private final InquiryDao inquiryDao = new InquiryDao();	
 	private final InquiryFileDao inquiryFileDao = new InquiryFileDao();	
 	private final FileService fileService = new FileService();
+	private final InquiryValidator validator = new InquiryValidator();
 	
 	
-    //문의등록 순서대로 실행
+    // 문의 등록
 	public void createInquiry(InquiryDto inquiry,
             List<Part> files,
             boolean emailNotify) {
 		
 			
 		// 1. 문의 내용, 작성자 검증
-		validateInquiry(inquiry);
+		validator.validateInquiry(inquiry);
 		
-		// 2. 비공개 비밀번호 처리
-		//validatePassword(inquiry);
-		
-		
-		// 2. 이메일 처리
-		validateNotificationEmail(inquiry,emailNotify);
+		// 2. 이메일 알림 서비스 여부
+		validator.validateNotificationEmail(inquiry,emailNotify);
 		
 		// 3. 첨부파일 검증
 		fileService.validateFiles(files); //이미 전체 파일리스트를 넘겨서 검사 for문필요X
@@ -72,239 +74,169 @@ public class InquiryService {
 	}	
 	
 	
-//	//첨부파일 저장
-//	private void saveFiles(List<Part> files, int inquiryNo) {
-//		
-//		String uploadPath = FileConfig.getUploadPath(); 
-//		//상위폴더 경로 가져오기
-//		//C:/atumari_uploads
-//		
-//
-//		System.out.println("uploadPath = " + uploadPath);
-//		Path uploadDir = Paths.get(uploadPath,"inquiry"); 
-//		//하위폴더 경로 붙이기
-//		//C:/atumari_uploads/inquiry/
-//		
-//		try {
-//			//경로에 폴더가 없으면 자동 생성
-//			Files.createDirectories(uploadDir);
-//			
-//			for(Part file : files) {
-//				String originalFileName = file.getSubmittedFileName(); 
-//				//사용자가 첨부한 원본 파일명
-//				//photo.jpg
-//				
-//				String storedFileName = UUID.randomUUID() + "_" + originalFileName; 
-//				//저장용 파일명(식별을 명확히 하기위해)
-//				//550e8400-e29b-41d4-a716-446655440000_photo.jpg
-//				
-//				
-//			     //파일의 최종 저장 위치
-//			     Path targetPath = uploadDir.resolve(storedFileName);
-//			     //저장할 폴더 경로(uploadDir)와 파일이름(storedFileName)을 합쳐서 최종저장위치를 만듦
-//			     //C:/atumari_uploads/inquiry/550e8400-e29b-41d4-a716-446655440000_photo.jpg
-//			     
-//			     
-//			     // 1. 실제 파일 저장
-//		            try (InputStream inputStream = file.getInputStream()) {
-//
-//		                Files.copy(
-//		                    inputStream, //업로드된 파일의 실제 내용(데이터)을 읽어오는 통로
-//		                    targetPath //어디에 저장할지, 최종 저장 위치
-//		                );
-//		                
-//		            }
-//		         // 2. 파일정보 DTO 생성
-//		            InquiryFileDto fileDto = new InquiryFileDto(inquiryNo, originalFileName, storedFileName);
-//		         
-//		         // 3. 파일정보 DB저장
-// 		            int result = inquiryFileDao.insertFile(fileDto);
-// 		            
-//		         // 4. DB저장 실패 확인 
-//		            if(result<1) {
-//		            	throw new RuntimeException(
-//		            	        "첨부파일 정보 저장에 실패했습니다."
-//		            	    );
-//		            }
-//			}
-//		} catch (IOException e) {
-//			throw new RuntimeException(
-//		            "첨부파일 저장에 실패했습니다.",
-//		            e
-//		        );
-//		}
-//		
-//	}
+	// 문의 수정
+	public void updateInquiry(InquiryDto inquiry, List<Integer> deleteFileNos, List<Part> newFiles, boolean emailNotify) {
+		
+		 // 0. 문의 존재 여부 + 작성자 본인 확인
+	    InquiryDto existingInquiry =
+	        inquiryDao.getInquiryByInquiryNoAndMemberId(
+	            inquiry.getInquiry_no(),
+	            inquiry.getMember_id()
+	        );
 
-
-//	//첨부파일 검증
-//	private void validateFiles(List<Part> files) {
-//		//파일 개수 
-//		if(files.size() > MAX_FILE_COUNT) {
-//			throw new IllegalArgumentException("添付ファイルは3個まで登録できます。");
-//		}
-//		
-//		for(Part file : files) {
-//			
-//			//파일명
-//			String fileName = file.getSubmittedFileName();
-//			
-//			if(fileName == null || fileName.trim().isEmpty()) {
-//				throw new IllegalArgumentException("ファイル名が正しくありません。");
-//			}
-//			
-//					
-//				if(file.getSize() > MAX_FILE_SIZE) {
-//					throw new IllegalArgumentException("1ファイルあたりのサイズは10MB以下にしてください。");
-//				}
-//			
-//			//파일 형식 확인(파일이름에서 확장자를 뽑아서 허용된 형식인지 확인)
-//			int dotIndex = fileName.lastIndexOf("."); //lastIndexOf(".")는 문자열 안에서 가장 마지막에 나오는 .의 위치를 찾아줌
-//			
-//			if(dotIndex == -1) {//-1은 .을 찾지 못했다는 뜻 > 즉, 확장자를 판단할 수 없음
-//				throw new IllegalArgumentException("許可されていないファイル形式です。");
-//			}
-//			
-//			//확장자 추출
-//			String extension = fileName.substring(dotIndex + 1).toLowerCase(); //.다음부터 문자열을 반환 + 소문자변환
-//			
-//			//허용 확장자인지 확인
-//			if(!ALLOWED_EXTENSIONS.contains(extension)) {
-//				throw new IllegalArgumentException("許可されていないファイル形式です。");
-//			}
-//		}
-//		
-//	}
-
-
-	//이메일 빈칸 검증
-	private void validateNotificationEmail(InquiryDto inquiry, boolean emailNotify) {
-	    // 이메일 알림을 받지 않음
-	    if (!emailNotify) {
-	        inquiry.setEmail(null);
-	        return;
-	    }
-
-	    // 이메일 알림을 받음
-	    String email = inquiry.getEmail();
-
-	    if (email == null || email.trim().isEmpty()) {
+	    if (existingInquiry == null) {
 	        throw new IllegalArgumentException(
-	            "メールアドレスを入力してください。"
+	            "お問い合わせが存在しないか、修正する権限がありません。"
+	        );
+	    }
+		
+		// 1. 문의 내용, 작성자 검증
+		validator.validateInquiry(inquiry);
+				
+		// 2. 이메일 알림 서비스 여부
+		validator.validateNotificationEmail(inquiry,emailNotify);
+		
+		// 3. 새로 첨부한 파일 검증
+		fileService.validateFiles(newFiles); // 기존 파일은 이미 검증해 저장되어 있음 현재는 새로운 저장할 파일에 대한 검증 필요
+		
+		// 4. 현재 문의에 저장되어 있는 기존 파일 조회
+	    List<InquiryFileDto> existingFiles =
+	            inquiryFileDao.getInquiryFiles(inquiry.getInquiry_no());
+
+	    // 5. 삭제 요청한 파일 검증
+	    List<InquiryFileDto> deleteFiles = new ArrayList<>(); // 검증완료된 삭제할 파일 저장할 리스트
+	    
+	    for(Integer deleteFileNo : deleteFileNos) {
+	    	
+	    	// 기존저장된 파일과 삭제체크를 한 파일 번호 일치를 확인하기 위한 변수
+	    	boolean found = false;
+	    	
+	    	for(InquiryFileDto existingFile: existingFiles) {
+		    
+	    		if(existingFile.getFile_no() == deleteFileNo) {
+		    		found = true;
+		    		
+		    		// 실제 삭제할 파일정보 저장
+		    		deleteFiles.add(existingFile);
+		    		
+		    		break;// ← 안쪽 for문만 종료, 가장 가까운 반복문 종료
+		    	}
+	    	}
+	    	// 기존 파일목록에서 찾지 못함
+	    	if(!found) {
+	    		throw new IllegalArgumentException("削除するファイル情報が正しくありません。");
+	    	}
+	    }
+	    
+	    // 6. 수정 후 최종 파일 개수 검증
+	    int fileCount = existingFiles.size() - deleteFiles.size() + newFiles.size();
+		
+	    fileService.validateFileCount(fileCount);
+	    
+		// 7. 수정된 문의정보 DB 저장
+		int result = inquiryDao.updateInquiry(inquiry);
+		
+		
+		if (result <= 0) {
+		    throw new RuntimeException("문의 수정에 실패했습니다.");
+		}
+		
+		// 8. 삭제 요청된 기존 첨부파일 삭제
+		// → deleteFileNos에 포함된 파일만 DB + S3에서 삭제
+		for(InquiryFileDto deleteFile : deleteFiles) {
+			
+			// S3에 저장된 실제 파일 삭제
+			fileService.deleteFile(deleteFile.getStored_file_name());
+			
+			// DB의 파일정보 삭제
+			int deleteResult = inquiryFileDao.deleteFile(deleteFile.getFile_no());
+			
+			if(deleteResult <= 0) {
+				throw new RuntimeException("첨부파일 정보 삭제에 실패했습니다.");
+			}
+		}
+		
+		// 9. 새로 첨부한 파일 저장
+		// → S3 저장 + inquiry_file INSERT
+		for(Part newFile : newFiles) {
+			
+			// S3에 새로 첨부한 파일 저장
+			StoredFile storedFile = fileService.saveFile(newFile, "inquiry");
+			
+			// DB 저장용 DTO 생성
+			InquiryFileDto inquiryFile = new InquiryFileDto(
+											inquiry.getInquiry_no(),
+											storedFile.getOriginalFileName(),
+											storedFile.getStoredFileName());
+			
+			// DB에 파일 정보 저장
+			int saveResult = inquiryFileDao.insertFile(inquiryFile);
+			
+			if(saveResult <= 0) {
+				throw new RuntimeException("새로 첨부한 파일 정보 저장에 실패했습니다.");
+			}
+		}
+	}
+	
+	
+	// 문의 삭제
+	public void deleteInquiry(int inquiryNo, Long memberId, boolean isAdmin) {
+
+		// 0. 삭제할 문의 조회
+		InquiryDto inquiry = inquiryDao.getInquiry(inquiryNo);
+		
+		if(inquiry == null) {
+			throw new IllegalArgumentException("お問い合わせが存在しません。");
+		}
+		
+		// 1. 작성자 본인 또는 관리자만 삭제 가능 
+		boolean isOwner = 
+				memberId != null && 
+				memberId.equals(inquiry.getMember_id());
+		
+		if(!isOwner && !isAdmin) {
+			throw new IllegalArgumentException("削除する権限がありません。");
+		}
+		
+
+	    // 2. 첨부파일 조회
+	    List<InquiryFileDto> files =
+	        inquiryFileDao.getInquiryFiles(inquiryNo);
+	 
+
+	    // 3. 문의글 삭제
+	    int result = inquiryDao.deleteInquiry(inquiryNo);
+
+	    if (result <= 0) {
+	        throw new RuntimeException(
+	            "문의 삭제에 실패했습니다."
+	        );
+	    }
+	    
+	    // 4. DB삭제 성공후 S3 실제 파일 삭제
+	    for (InquiryFileDto file : files) {
+
+	        fileService.deleteFile(
+	            file.getStored_file_name()
 	        );
 	    }
 
-	    // 앞뒤 공백 제거 후 DTO에 다시 저장
-	    inquiry.setEmail(email.trim());
+
+	    // inquiry_file은 ON DELETE CASCADE로 자동 삭제
+	}
+
+	// 파일다운로드시 DB에서 파일조회
+	public InquiryFileDto getInquiryFile(int fileNo) {
+		return inquiryFileDao.findById(fileNo);
 	}
 	
-	
-	//비밀번호 해시
-//	private String hashPassword(String password) {
-//		try {
-//			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-//			//MessageDigest는 Java에서 해시 기능을 제공하는 클래스
-//			//"SHA-256 방식으로 해시할 수 있는 객체를 만들어줘."라는 의미
-//			
-//			byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-//			//SHA-256은 Java의 String을 그대로 처리하는 게 아니라 바이트 데이터를 가지고 계산
-//			//password의 문자열을 UTF-8로 변환-> byte[]로 최종 변환
-//			//StandardCharsets.utf-8은 문자열을 바이트로 바꿀 때 utf-8문자 인코딩 사용하겠다.
-//			//digest.digest()는 해시계산을 하는 역할
-//			
-//			return HexFormat.of().formatHex(hash); 
-//			//해시 계산 결과는 사람이 읽기 어려움, 그래서 16진수 문자열로 변환(최종적으로 64글자가 됨)
-//			
-//		}catch(NoSuchAlgorithmException e) {
-//			throw new RuntimeException("비밀번호 암호화 처리에 실패했습니다.", e);
-//		}
-//	}
-	
-	
-	//비공개 비밀번호 처리
-//	private void validatePassword(InquiryDto inquiry) {
-//
-//	    // 공개 문의라면 비밀번호 저장 X
-//	    if (inquiry.isPublic()) {
-//	        inquiry.setPassword(null);
-//	        return;
-//	    }
-//
-//	    // 비공개 문의라면 4자리 숫자 필수
-//	    String password = inquiry.getPassword();
-//
-//	    if (password == null || !password.matches("\\d{4}")) {// \\d{4}정규표현식, 숫자가 정확히 4자리인지 검사하는 규칙
-//	        throw new IllegalArgumentException(
-//	            "4桁の数字でパスワードを入力してください。"
-//	        );
-//	    }
-//
-//	    // 비밀번호 해시 처리
-//	    String hashedPassword = hashPassword(password);
-//
-//	    inquiry.setPassword(hashedPassword);
-//	}
-	
-	
-	//문의 내용 검증
-	private void validateInquiry(InquiryDto inquiry) {
-		  
-			//제목 빈칸 검사
-			if (inquiry.getTitle() == null ||
-				  inquiry.getTitle().trim().isEmpty()) {
-
-			        throw new IllegalArgumentException(
-			            "タイトルを入力してください。"
-			        		//제목을 입력해주세요.
-			        );
-			    }
-			
-			//제목 앞뒤 공백 제거
-			inquiry.setTitle(inquiry.getTitle().trim());
-			
-			//제목 글자수 확인
-			    if (inquiry.getTitle().length() > 100) {
-			        throw new IllegalArgumentException(
-			            "タイトルは100文字以下で入力してください。"
-			        		//제목은 100자 이하로 입력해주세요.
-			        );
-			    }
-				
-				
-			//작성자 확인
-			    if (inquiry.getWriter() == null ||
-			    	    inquiry.getWriter().trim().isEmpty()) {
-
-			    	    throw new IllegalArgumentException(
-			    	        "お名前を入力してください。"
-			    	    );
-			    	}
-
-			    	inquiry.setWriter(inquiry.getWriter().trim());
-			    
-			//내용 빈칸 검사
-			    if (inquiry.getContent() == null ||
-			    		inquiry.getContent().trim().isEmpty()) {
-
-			        throw new IllegalArgumentException(
-			            "お問い合わせ内容をご入力ください。"
-			        		//문의 내용을 입력해주세요.
-			        );
-			    }
-			    
-			    
-			//내용 앞뒤 공백 제거
-			 inquiry.setContent(inquiry.getContent().trim());    
-			//내용 글자수 확인
-			    if (inquiry.getContent().length() > 2000) {
-			        throw new IllegalArgumentException(
-			            "お問い合わせ内容は2000文字以下で入力してください。"
-			        		//문의 내용은 2000자 이하로 입력해주세요.
-			        );
-			    }
-			    
-			    
-	}
+	// 파일 다운로드
+	public ResponseBytes<GetObjectResponse> downloadInquiryFile(InquiryFileDto file) {
+        if (file == null) {
+            throw new IllegalArgumentException("첨부파일을 찾을 수 없습니다.");
+        }
+        return fileService.downloadFile(file.getStored_file_name());
+    }
 	
 	
 }
