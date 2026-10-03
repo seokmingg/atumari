@@ -59,11 +59,10 @@ pageEncoding="UTF-8"%>
                             ${cmtydto.getMember_name()}
                         </strong>
                         <span class="writer-id">
-                            @${cmtydto.getMember_name()}
+                            @<c:out value="${fn:substringBefore(cmtydto.getMember_email(), '@')}" />
                         </span>
-
                     </div>
-                    
+         
                     <!-- POST INFO -->
                     <div class="post-info">
                         <span>
@@ -117,13 +116,9 @@ pageEncoding="UTF-8"%>
 				    <span class="like-count">
 				        24
 				    </span>
-				
 				</button>
-
 			</div>
-            
         </div>
-
     </article>
 
 
@@ -181,7 +176,7 @@ pageEncoding="UTF-8"%>
                         </span>
                         <button type="button"
                                 class="reply-button">
-                            返信
+                            返信する
                         </button>
                     </div>
                 </div>
@@ -201,7 +196,7 @@ pageEncoding="UTF-8"%>
 			
 			        <div class="comment-writer">
 			            <strong>山田花子</strong>
-			            <span class="comment-author">작성자</span>
+			            <span class="comment-author">投稿者</span>
 			        </div>
 			
 			        <div class="comment-content">
@@ -212,7 +207,7 @@ pageEncoding="UTF-8"%>
 			        <div class="comment-footer">
 			            <span class="comment-date">2026-09-04</span>
 			            <button type="button" class="reply-button">
-			                답글
+			                返信する
 			            </button>
 			        </div>
 
