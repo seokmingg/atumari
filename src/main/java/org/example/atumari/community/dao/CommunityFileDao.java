@@ -83,7 +83,7 @@ public class CommunityFileDao {
 	 //파일 불러오기
 	 public CommunityFileDto getCmtyFileByNo(long fileNo) {
 		 CommunityFileDto dto = null;
-	        String sql = "SELECT file_no, notice_no, original_file_name, stored_file_name "
+	        String sql = "SELECT file_no, cmty_no, original_file_name, save_file_name "
 	                + "FROM community_files WHERE file_no = ?";
 
 	        try {

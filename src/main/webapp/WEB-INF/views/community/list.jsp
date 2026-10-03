@@ -356,68 +356,76 @@
              PAGINATION
         ========================== -->
 
-        <div class="community-pagination">
-
-
+ <!--        <div class="community-pagination">
             <a href="#"
                class="page-prev">
-
                 ←
-
             </a>
-
-
             <a href="#"
                class="active">
-
                 1
-
             </a>
-
-
             <a href="#">
-
                 2
-
             </a>
-
-
             <a href="#">
-
                 3
-
             </a>
-
-
             <a href="#">
-
                 4
-
             </a>
-
-
             <a href="#">
-
                 5
-
             </a>
-
-
             <a href="#"
                class="page-next">
-
                 →
-
             </a>
-
-
         </div>
+  -->      
+        <c:if test="${cmtyPage.totalPage > 1}">
+            <div class="community-pagination">
+                <c:if test="${cmtyPage.startPage > 1}">
+                    <c:url var="previousPageUrl" value="/community">
+                        <c:param name="page" value="${cmtyPage.startPage - 1}"/>
+                        <c:param name="searchType" value="${cmtyPage.searchType}"/>
+                        <c:param name="search" value="${cmtyPage.search}"/>
+                    </c:url>
+                    <a href="${previousPageUrl}" class="page-prev">←</a>
+                </c:if>
 
+                <c:forEach var="pageNumber"
+                           begin="${cmtyPage.startPage}"
+                           end="${cmtyPage.endPage}">
+                    <c:url var="pageUrl" value="/community">
+                        <c:param name="page" value="${pageNumber}"/>
+                        <c:param name="searchType" value="${cmtyPage.searchType}"/>
+                        <c:param name="search" value="${cmtyPage.search}"/>
+                    </c:url>
+                    <a href="${pageUrl}"
+                       class="${pageNumber eq cmtyPage.currentPage ? 'active' : ''}">
+                        ${pageNumber}
+                    </a>
+                </c:forEach>
+
+                <c:if test="${cmtyPage.endPage < cmtyPage.totalPage}">
+                    <c:url var="nextPageUrl" value="/community">
+                        <c:param name="page" value="${cmtyPage.endPage + 1}"/>
+                        <c:param name="searchType" value="${cmtyPage.searchType}"/>
+                        <c:param name="search" value="${cmtyPage.search}"/>
+                    </c:url>
+                    <a href="${nextPageUrl}" class="page-next">→</a>
+                </c:if>
+            </div>
+        </c:if>
+        
 
     </div>
+    
 
 </main>
 
+ 
 
 
 <!-- =========================
