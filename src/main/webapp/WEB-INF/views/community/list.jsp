@@ -330,7 +330,7 @@
 	                </span>
 	
 	                <span class="list-like">
-	                    ♥ 24
+	                    ♥ 0
 	                </span>
 	
 	

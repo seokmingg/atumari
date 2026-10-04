@@ -12,10 +12,12 @@ import java.util.UUID;
 import org.example.atumari.common.fileupload.FileService;
 import org.example.atumari.common.fileupload.StoredFile;
 import org.example.atumari.common.util.Pagination;
+import org.example.atumari.community.dao.CommunityCommentDao;
 import org.example.atumari.community.dao.CommunityDao;
 import org.example.atumari.community.dao.CommunityFileDao;
 import org.example.atumari.community.dto.CommunityFileDto;
 import org.example.atumari.community.dto.CommunityListPageDto;
+import org.example.atumari.community.dto.CommunityCommentDto;
 import org.example.atumari.community.dto.CommunityDto;
 import org.example.atumari.config.FileConfig;
 
@@ -29,6 +31,7 @@ public class CommunityService {
     private static final int PAGE_GROUP_SIZE = 5;
 	private final CommunityDao cmtydao = new CommunityDao();
 	private final CommunityFileDao cmtyFileDao = new CommunityFileDao();
+	private final CommunityCommentDao cmtyCommentDao = new CommunityCommentDao();
     private final FileService fileService = new FileService();
 
     //게시물 리스트
@@ -87,6 +90,7 @@ public class CommunityService {
 		CommunityDto cmtydto = cmtydao.getCommunityView(cmtyno);
 		CommunityFileDto cmtyfile = null;
 		
+		
 		return cmtydto;
 	}
 	
@@ -130,6 +134,10 @@ public class CommunityService {
 	}
 	public CommunityFileDto getCommunityFile(long fileNo) {
 	    return cmtyFileDao.getCmtyFileByNo(fileNo);
+	}
+	// 댓글 조회
+	public List<CommunityCommentDto> getCommunityCommentView(long cmtyno){
+		return cmtyCommentDao.getCommunityCommentView(cmtyno);
 	}
 
 	// S3에서 실제 파일 데이터 조회

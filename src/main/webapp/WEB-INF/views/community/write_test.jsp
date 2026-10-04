@@ -213,20 +213,20 @@
         </form>
         
 <script>
-	// 폼 넘기기 전에 공백인지 확인, 공백일 시 알럿창 띄우고 포커스.
-	document.querySelector(".community-write-form").addEventListener("submit", function(event) {
-	
-		if (checkEmpty(cmtywrite.title, "タイトル入力してください。")) {
-			cmtywrite.title.focus();
-	        event.preventDefault();
-	        return;
-	    }
-		if (checkEmpty(cmtywrite.content, "内容を入力してください。")) {
-			cmtywrite.content.focus();
-	        event.preventDefault();
-	        return;
-	    }
-	});
+//폼 넘기기 전에 공백인지 확인, 공백일 시 알럿창 띄우고 포커스.
+document.querySelector(".community-write-form").addEventListener("submit", function(event) {
+
+	if (checkEmpty(cmtywrite.title, "タイトル入力してください。")) {
+		cmtywrite.title.focus();
+        event.preventDefault();
+        return;
+    }
+	if (checkEmpty(cmtywrite.content, "内容を入力してください。")) {
+		cmtywrite.content.focus();
+        event.preventDefault();
+        return;
+    }
+});
 </script>
 
     </div>

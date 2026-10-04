@@ -141,140 +141,113 @@ pageEncoding="UTF-8"%>
              COMMENT LIST    댓글 글자수제한 450자.
         ========================== -->
         <div class="comment-list">
-            <!-- =========================
-                 COMMENT 
-            ========================== -->
-            <div class="comment-item">
-              <!--   PROFILE   -->
-<!--
-                <div class="comment-profile">
 
-                    <img src="<%=request.getContextPath()%>/assets/community/images/profile-default.svg"
-                         alt="プロフィール画像">
+    <%-- 부모 댓글만 반복 --%>
+    <c:forEach var="comment" items="${commentList}">
+
+        <c:if test="${empty comment.parentNo}">
+
+            <div class="comment-item">
+
+                <div class="comment-profile">
+                    <img
+                        src="${pageContext.request.contextPath}/assets/community/images/profile-default.svg"
+                        alt="프로필 이미지">
                 </div>
--->
-                <!-- COMMENT CONTENT -->
+
                 <div class="comment-main">
-                    <!-- WRITER -->
+
                     <div class="comment-writer">
                         <strong>
-                            山田花子
+                            <c:out value="${comment.writerName}" />
                         </strong>
-                        <!-- POST WRITER BADGE -->
-                        <span class="comment-author">
-							投稿者
-                        </span>
                     </div>
-                    <!-- COMMENT TEXT -->
+
                     <div class="comment-content">
-                        とても素敵なお祭りですね！
-                        私も京都のお祭りに行ってみたいです。
+                        <c:choose>
+                            <c:when test="${comment.isDeleted == 1}">
+                                삭제된 댓글입니다.
+                            </c:when>
+                            <c:otherwise>
+                                <c:out value="${comment.content}" />
+                            </c:otherwise>
+                        </c:choose>
                     </div>
-                    <!-- COMMENT FOOTER -->
+
                     <div class="comment-footer">
                         <span class="comment-date">
-                            2026-09-04
+                            <fmt:formatDate
+                                value="${comment.regDate}"
+                                pattern="yyyy-MM-dd HH:mm" />
                         </span>
-                        <button type="button"
-                                class="reply-button">
-                            返信する
-                        </button>
+
+                        <c:if test="${comment.isDeleted == 0}">
+                            <button
+                                type="button"
+                                class="reply-button"
+                                data-comment-no="${comment.commentNo}">
+                                답글 달기
+                            </button>
+                        </c:if>
+                    </div>
+
+                    <!-- 해당 부모 댓글의 대댓글 -->
+                    <div class="reply-list">
+
+                        <c:forEach var="reply" items="${commentList}">
+
+                            <c:if test="${reply.parentNo == comment.commentNo}">
+
+                                <div class="reply-item">
+
+                                    <div class="reply-profile">
+                                        <img
+                                            src="${pageContext.request.contextPath}/assets/community/images/profile-default.svg"
+                                            alt="프로필 이미지">
+                                    </div>
+
+                                    <div class="reply-main">
+
+                                        <div class="reply-writer">
+                                            <strong>
+                                                <c:out value="${reply.writerName}" />
+                                            </strong>
+                                        </div>
+
+                                        <div class="reply-content">
+                                            <c:choose>
+                                                <c:when test="${reply.isDeleted == 1}">
+                                                    삭제된 댓글입니다.
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:out value="${reply.content}" />
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+
+                                        <div class="reply-footer">
+                                            <span>
+                                                <fmt:formatDate
+                                                    value="${reply.regDate}"
+                                                    pattern="yyyy-MM-dd HH:mm" />
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </c:if>
+
+                        </c:forEach>
+
                     </div>
                 </div>
             </div>
-            <!-- =========================
-                 COMMENT 
-            ========================== -->
 
-            <div class="comment-item">
+        </c:if>
+    </c:forEach>
 
-			    <div class="comment-profile">
-			        <img src="<%=request.getContextPath()%>/assets/community/images/profile-default.svg"
-			             alt="プロフィール画像">
-			    </div>
-			
-			    <div class="comment-main">
-			
-			        <div class="comment-writer">
-			            <strong>山田花子</strong>
-			            <span class="comment-author">投稿者</span>
-			        </div>
-			
-			        <div class="comment-content">
-			            とても素敵なお祭りですね！
-			            私も京都のお祭りに行ってみたいです。
-			        </div>
-			
-			        <div class="comment-footer">
-			            <span class="comment-date">2026-09-04</span>
-			            <button type="button" class="reply-button">
-			                返信する
-			            </button>
-			        </div>
-
-	        		<!-- 대댓글 -->
-	       	 		<div class="reply-list">
-			            <div class="reply-item">
-			                <div class="reply-profile">
-			                    <img src="<%=request.getContextPath()%>/assets/community/images/profile-default.svg"
-			                         alt="プロフィール画像">
-			                </div>
-			                <div class="reply-main">
-			                    <div class="reply-writer">
-			                        <strong>田中太郎</strong>
-			                        <span class="reply-author">작성자</span>
-			                    </div>
-			                    <div class="reply-content">
-			                        ありがとうございます！
-			                        ぜひ一度行ってみてください。
-			                    </div>
-			                    <div class="reply-footer">
-			                        <span>2026-09-04</span>
-			                    </div>
-			                </div>
-			            </div>
-		       	 	</div>
-		
-			        <!-- 대댓글 입력 -->
-			        <div class="reply-write">
-			            <textarea placeholder="답글을 입력해주세요."></textarea>
-			            <div class="reply-write-bottom">
-			                <button type="button">등록</button>
-			            </div>
-			        </div>
-			    </div>
-			</div>
-
-            <!-- =========================
-                 COMMENT 
-            ========================== -->
-            <div class="comment-item">
-                <div class="comment-profile">
-                    <img src="<%=request.getContextPath()%>/assets/community/images/profile-default.svg"
-                         alt="プロフィール画像">
-                </div>
-                <div class="comment-main">
-                    <div class="comment-writer">
-                        <strong>
-                            佐藤美咲
-                        </strong>
-                    </div>
-                    <div class="comment-content">
-                        京都の夏祭り、私も大好きです。
-                        来年はぜひ行ってみたいです！
-                    </div>
-                    <div class="comment-footer">
-                        <span class="comment-date">
-                            2026-09-03
-                        </span>
-                        <button type="button"
-                                class="reply-button">
-                            返信する
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+</div>
 
 
         <!-- =========================

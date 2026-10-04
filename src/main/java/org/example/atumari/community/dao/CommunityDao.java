@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.atumari.common.database.DBConnection;
+import org.example.atumari.community.dto.CommunityCommentDto;
 import org.example.atumari.community.dto.CommunityDto;
 
 /**
@@ -144,7 +145,7 @@ public class CommunityDao {
 	public CommunityDto getCommunityView(long cmtyno) {
 		CommunityDto dto = null;
 		String sql = "select m.email, m.name, c.title, c.content, c.reg_date, c.update_date, c.hit\r\n"
-				+ "from atumari.community c, atumari.member m\r\n"
+				+ "from atumari.community c, atumari.member m \r\n"
 				+ "where c.member_id = m.id\r\n"
 				+ "and cmty_no = ?";
 		try {
@@ -155,13 +156,14 @@ public class CommunityDao {
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				dto = new CommunityDto(cmtyno, 
-										rs.getString("email"),
-										rs.getString("name"), 
-										rs.getString("title"), 
-										rs.getString("content"), 
-										rs.getString("reg_date"), 
-										rs.getString("update_date"),
-										rs.getInt("hit"));
+									rs.getString("email"),
+									rs.getString("name"), 
+									rs.getString("title"), 
+									rs.getString("content"), 
+									rs.getString("reg_date"), 
+									rs.getString("update_date"),
+									rs.getInt("hit"),
+									0);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -171,15 +173,18 @@ public class CommunityDao {
 		}
 		return dto;
 	}
+	
+	
 
 	//리스트 저장
 		private CommunityDto mapCmty(ResultSet rs) throws SQLException {
 			CommunityDto cmty = new CommunityDto(rs.getLong("cmty_no"), 
 												rs.getString("name"), 
-												rs.getString("title"), 
+												rs.getString("title").replace("&#39;", "'"), 
 												rs.getString("content"), 
 												rs.getString("reg_date"), 
-												rs.getInt("hit"));
+												rs.getInt("hit"),
+												0);
 	        return cmty;
 	    }
 	

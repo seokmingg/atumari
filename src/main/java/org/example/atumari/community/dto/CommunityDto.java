@@ -10,6 +10,7 @@ public class CommunityDto {
     private String reg_date;
     private String update_date;
     private int hit;
+    private int like;
     
     //신규 게시물 저장 및 업데이트시 사용. 新規ポストアップロード・アップデート
 	public CommunityDto(String member_email, String title, String content) {
@@ -19,7 +20,7 @@ public class CommunityDto {
 	}
 	//게시물 세부정보 ポスト内容
 	public CommunityDto(Long cmty_no, String member_email, String member_name, String title, String content,
-			String reg_date, String update_date, int hit) {
+			String reg_date, String update_date, int hit, int like) {
 		this.cmty_no = cmty_no;
 		this.member_email = member_email;
 		this.member_name = member_name;
@@ -28,9 +29,10 @@ public class CommunityDto {
 		this.reg_date = reg_date;
 		this.update_date = update_date;
 		this.hit = hit;
+		this.like = like;
 	}
 	//게시물 리스트 
-	public CommunityDto(Long cmty_no, String member_name, String title, String content, String reg_date, int hit) {
+	public CommunityDto(Long cmty_no, String member_name, String title, String content, String reg_date, int hit, int like) {
 		super();
 		this.cmty_no = cmty_no;
 		this.member_name = member_name;
@@ -38,6 +40,7 @@ public class CommunityDto {
 		this.content = content;
 		this.reg_date = reg_date;
 		this.hit = hit;
+		this.like = like;
 	}
 	
 	public Long getCmty_no() {
@@ -67,6 +70,11 @@ public class CommunityDto {
 	public int getHit() {
 		return hit;
 	}
+	
+	public int getLike() {
+		return like;
+	}
+	
 	
 	
     
