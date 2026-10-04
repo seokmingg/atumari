@@ -65,3 +65,9 @@
     font: inherit;
     line-height: 1.8;
 }
+/*답변 저장시 오류발생하면 해당 오류메시지에 적용*/
+.form-error {
+    color: #d32f2f;
+    margin: 12px 28px;
+    font-size: 14px;
+}

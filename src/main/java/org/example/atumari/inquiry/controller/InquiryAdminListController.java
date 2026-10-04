@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class InquiryAdminListController
@@ -24,6 +25,16 @@ public class InquiryAdminListController extends HttpServlet {
 		    protected void doGet(HttpServletRequest request,
 		                         HttpServletResponse response)
 		            throws ServletException, IOException {
+			   
+			  
+			   // 로그인 여부 + 관리자 확인
+			    HttpSession session = request.getSession(false);
+			    
+			    if(session == null || 
+			    		!"admin".equals(session.getAttribute("sessionLevel")) ) {
+			    	response.sendRedirect(request.getContextPath() + "/member/login");
+			    	return;
+			    }
 
 			   //페이지네이션
 			   String pageParam = request.getParameter("page");

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
 
 import org.example.atumari.common.database.DBConnection;
 
@@ -71,6 +72,7 @@ public class InquiryDao {
 			           i.title,
 			           i.writer,
 			           i.is_public,
+			           i.email,
 			           i.status,
 			           i.created_at,
 		           EXISTS (
@@ -139,6 +141,7 @@ public class InquiryDao {
 				inquiryDto.setTitle(rs.getString("title"));
 				inquiryDto.setWriter(rs.getString("writer"));
 				inquiryDto.setPublic(rs.getBoolean("is_public"));
+				inquiryDto.setEmail(rs.getString("email"));
 				inquiryDto.setStatus(rs.getString("status"));
 				inquiryDto.setCreated_at(rs.getTimestamp("created_at").toLocalDateTime()); //InquiryDto에 타입으로 형변환
 				inquiryDto.setFileIs(rs.getBoolean("file_is"));
@@ -234,7 +237,10 @@ public class InquiryDao {
 				+ "    i.status,\r\n"
 				+ "    i.created_at,\r\n"
 				+ "    i.is_public,\r\n"
-				+ "    i.content\r\n"
+				+ "    i.content,\r\n"
+				+ "    i.answer_content,\r\n"
+				+ "    i.email,\r\n"
+				+ "    i.answered_at\r\n"
 				+ "FROM inquiry i\r\n"
 				+ "\r\n"
 				+ "WHERE i.inquiry_no = ?";
@@ -254,6 +260,14 @@ public class InquiryDao {
 						inquiryDto.setTitle(rs.getString("title"));
 						inquiryDto.setWriter(rs.getString("writer"));
 						inquiryDto.setStatus(rs.getString("status"));
+						inquiryDto.setEmail(rs.getString("email"));
+						inquiryDto.setAnswer_content(rs.getString("answer_content"));
+						Timestamp answeredAt = rs.getTimestamp("answered_at");
+						// DB의 답변 시간을 DTO의 LocalDateTime 타입에 맞춰 변환
+
+						if (answeredAt != null) {
+						    inquiryDto.setAnswered_at(answeredAt.toLocalDateTime());
+						} // 검증을 안하면 미답변일 때 null.toLocalDateTime()을 호출하게 되어 NullPointerException이 발생
 						inquiryDto.setCreated_at(
 						        rs.getTimestamp("created_at").toLocalDateTime()
 						);
@@ -365,6 +379,33 @@ public class InquiryDao {
 	            "문의 삭제 DB 처리에 실패했습니다.", e
 	        );
 	    }
+	}
+
+	// 관리자 답변 등록
+	public int saveInquiryAnswer(int inquiryNo, String answerContent) {
+		int result = 0;
+		
+		String sql ="update inquiry\r\n"
+				+ "set answer_content = ?,\r\n"
+				+ "	answered_at = CURRENT_TIMESTAMP,\r\n"
+				+ "    status= \"COMPLETED\"\r\n"
+				+ "where inquiry_no = ?;";
+		
+		try{
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+				ps.setString(1, answerContent);
+				ps.setInt(2, inquiryNo);
+				
+			result = ps.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return result;
 	}
 
 

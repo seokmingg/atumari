@@ -27,6 +27,9 @@
      BOARD
 ========================== -->
 <main class="board-page">
+<form action="${pageContext.request.contextPath}/inquiry/admin/view"
+      method="post">
+	<input type="hidden" name="inquiryNo" value="${inquiryDto.inquiry_no}">
 <div class="board-inner">
 <div class="board-title">
 <span>INQUIRY</span>
@@ -39,56 +42,67 @@
     <div class="detail-header-top">
       <div>
         <div class="detail-label">タイトル</div>
-        <h2>開催日程について確認をお願いします</h2>
+        <h2>${inquiryDto.title}</h2>
       </div>
-      <span class="status-badge status-waiting">回答待ち</span>
+      <span class="status-badge status-waiting">${inquiryDto.status}</span>
     </div>
   </div>
   <div class="detail-meta">
-    <span>作成者 kim123</span>
-    <span>作成日 2026.09.08</span>
-    <span>メール kim123@example.com</span>
-    <span>公開設定 公開</span>
+    <span>作成者 ${inquiryDto.writer}</span>
+    <span>作成日 ${inquiryDto.formattedCreatedDateTime}</span>
+    <span>メール ${inquiryDto.email}</span>
+    <span>公開設定 ${inquiryDto.isPublic() ? '公開' : '非公開'}</span>
   </div>
   
   <!-- 첨부파일 -->
 <div class="detail-file">
 
     <div class="detail-label">添付ファイル</div>
-
+<c:forEach var="file" items="${fileDtos}">
     <div class="detail-file-list">
 
-        <a href="#" class="detail-file-item">
+        <a href="${pageContext.request.contextPath}/inquiry/file/download?fileNo=${file.file_no}" class="detail-file-item">
             <img
                 src="${pageContext.request.contextPath}/assets/inquiry/images/icon_file.svg"
                 alt="添付ファイル"
                 class="detail-file-icon">
 
-            <span>festival_schedule.png</span>
+            <span>${file.original_file_name}</span>
         </a>
 
     </div>
+</c:forEach>
 
 </div>
   
   <div class="detail-content">
-    青森ねぶた祭の開催日程についてお問い合わせします。<br><br>
-    公式サイトと日程が異なるようです。確認をお願いいたします。
+	${inquiryDto.content}
   </div>
 </section>
 
 <section class="admin-answer-card">
   <div class="answer-title">管理者回答</div>
-  <textarea placeholder="回答内容を入力してください"></textarea>
+  
+   <%-- 답변 등록 실패 시 오류 메시지 , 저장에 실패했을 때 오류 메시지 확인--%>
+    <c:if test="${not empty errorMessage}">
+        <div class="form-error" role="alert">
+            <c:out value="${errorMessage}" />
+        </div>
+    </c:if>
+  
+  <textarea name="answerContent" placeholder="回答内容を入力してください"><c:out value="${inquiryDto.answer_content}" /></textarea>
 
 </section>
 
 <div class="detail-actions">
-  <a class="secondary-button" href="admin_inquiry_list.html">一覧へ</a>
-  <div class="right"><button class="primary-button" onclick="alert('回答を登録しました。')">回答登録</button></div>
+  <a class="secondary-button" href="${pageContext.request.contextPath}/inquiry/admin/list">一覧へ</a>
+  <div class="right">
+  <button type="submit" class="primary-button">回答登録</button>
+  </div>
 </div>
 
 </div>
+</form>
 </main>
 
 <!-- =========================

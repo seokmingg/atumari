@@ -69,7 +69,6 @@ public class InquiryWriteController extends HttpServlet {
 	        String title = request.getParameter("title");
 	        String writer =
 	        	    (String) session.getAttribute("sessionName");
-	   //     String password = request.getParameter("password");
 	        
 	        boolean isPublic = "1".equals(request.getParameter("isPublic"));//1이면 공개 true로 바꿔서 dto에 저장
 	        boolean emailNotify = "1".equals(request.getParameter("emailNotify"));
