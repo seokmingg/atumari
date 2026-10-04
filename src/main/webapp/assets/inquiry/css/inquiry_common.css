@@ -151,6 +151,16 @@ a {
     color: #7a3d48;
 }
 
+.form-error {
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    border: 1px solid #e4b8bd;
+    background: #fff1f2;
+    color: #8a3540;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
 @media (max-width: 900px) {
     .board-page {
         padding: 140px 0 100px;

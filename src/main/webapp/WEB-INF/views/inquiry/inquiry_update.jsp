@@ -46,6 +46,13 @@
       enctype="multipart/form-data"
       onsubmit="return validateForm();">
       <!-- input type="file" 이 있어서 form안에 enctype이 필요 -->
+    
+    <!-- 서버에서 검증 또는 저장 실패시 메세지 표시 -->
+    <c:if test="${not empty errorMessage}">
+    	<div class="form-error" role="alert">
+        	<c:out value="${errorMessage}" />
+    	</div>
+	</c:if>
 
 	<input type="hidden" name="inquiryNo" value="${inquiryDto.inquiry_no}">
 
@@ -100,7 +107,7 @@
     </div>
 
 
-    <!-- 메일 알림 -->
+    <%-- 메일 알림 
     <div class="form-row">
 
         <div class="form-label">回答通知</div>
@@ -127,9 +134,7 @@
 
         </div>
     </div>
-
-
-    <!-- 이메일 -->
+ 	-- 이메일 
     <div class="form-row hidden-row" id="emailArea">
 
         <div class="form-label">メールアドレス</div>
@@ -148,6 +153,8 @@
 
         </div>
     </div>
+    
+    --%>
 	<!-- 첨부파일 -->
 	
 	<div class="form-row">

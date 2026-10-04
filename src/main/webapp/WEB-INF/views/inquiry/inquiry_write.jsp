@@ -99,7 +99,7 @@
     </div>
 
 
-    <!-- 답변 알림 -->
+    <%-- 답변 알림 
     <div class="form-row">
 
         <div class="form-label">回答通知</div>
@@ -125,7 +125,7 @@
     </div>
 
 
-    <!-- 이메일 입력 -->
+-- 이메일 입력
     <div class="form-row hidden-row" id="emailArea">
 
         <div class="form-label">メールアドレス</div>
@@ -143,7 +143,7 @@
 
         </div>
     </div>
-
+--%>
 
     <!-- 첨부파일 -->
     <div class="form-row">

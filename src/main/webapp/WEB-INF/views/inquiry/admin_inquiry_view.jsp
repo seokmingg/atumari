@@ -29,6 +29,7 @@
 <main class="board-page">
 <form action="${pageContext.request.contextPath}/inquiry/admin/view"
       method="post">
+	
 	<input type="hidden" name="inquiryNo" value="${inquiryDto.inquiry_no}">
 <div class="board-inner">
 <div class="board-title">
@@ -50,7 +51,6 @@
   <div class="detail-meta">
     <span>作成者 ${inquiryDto.writer}</span>
     <span>作成日 ${inquiryDto.formattedCreatedDateTime}</span>
-    <span>メール ${inquiryDto.email}</span>
     <span>公開設定 ${inquiryDto.isPublic() ? '公開' : '非公開'}</span>
   </div>
   

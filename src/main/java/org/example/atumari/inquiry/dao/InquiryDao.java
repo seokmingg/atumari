@@ -26,8 +26,8 @@ public class InquiryDao {
 		int inquiry_no=0;
 		
 		String sql ="INSERT INTO inquiry " +
-			    "(member_id, title, writer, is_public, content, email) " +
-			    "VALUES (?, ?, ?, ?, ?, ?)";
+			    "(member_id, title, writer, is_public, content) " +
+			    "VALUES (?, ?, ?, ?, ?)";
 		
 		try{
 			con = DBConnection.getConnection();
@@ -38,7 +38,6 @@ public class InquiryDao {
 				ps.setString(3, inquiry.getWriter());
 				ps.setBoolean(4, inquiry.isPublic());
 				ps.setString(5, inquiry.getContent());
-				ps.setString(6, inquiry.getEmail());
 				
 			int result = ps.executeUpdate();
 			
@@ -72,7 +71,6 @@ public class InquiryDao {
 			           i.title,
 			           i.writer,
 			           i.is_public,
-			           i.email,
 			           i.status,
 			           i.created_at,
 		           EXISTS (
@@ -141,7 +139,7 @@ public class InquiryDao {
 				inquiryDto.setTitle(rs.getString("title"));
 				inquiryDto.setWriter(rs.getString("writer"));
 				inquiryDto.setPublic(rs.getBoolean("is_public"));
-				inquiryDto.setEmail(rs.getString("email"));
+		//		inquiryDto.setEmail(rs.getString("email"));
 				inquiryDto.setStatus(rs.getString("status"));
 				inquiryDto.setCreated_at(rs.getTimestamp("created_at").toLocalDateTime()); //InquiryDto에 타입으로 형변환
 				inquiryDto.setFileIs(rs.getBoolean("file_is"));
@@ -239,7 +237,6 @@ public class InquiryDao {
 				+ "    i.is_public,\r\n"
 				+ "    i.content,\r\n"
 				+ "    i.answer_content,\r\n"
-				+ "    i.email,\r\n"
 				+ "    i.answered_at\r\n"
 				+ "FROM inquiry i\r\n"
 				+ "\r\n"
@@ -260,7 +257,6 @@ public class InquiryDao {
 						inquiryDto.setTitle(rs.getString("title"));
 						inquiryDto.setWriter(rs.getString("writer"));
 						inquiryDto.setStatus(rs.getString("status"));
-						inquiryDto.setEmail(rs.getString("email"));
 						inquiryDto.setAnswer_content(rs.getString("answer_content"));
 						Timestamp answeredAt = rs.getTimestamp("answered_at");
 						// DB의 답변 시간을 DTO의 LocalDateTime 타입에 맞춰 변환
@@ -293,7 +289,6 @@ public class InquiryDao {
 		String sql ="UPDATE inquiry\r\n"
 				+ "SET title = ?,\r\n"
 				+ "    content = ?,\r\n"
-				+ "    email = ?,\r\n"
 				+ "    is_public = ?\r\n"
 				+ "WHERE inquiry_no = ?\r\n"
 				+ "  AND member_id = ?";
@@ -304,10 +299,9 @@ public class InquiryDao {
 			ps = con.prepareStatement(sql);
 				ps.setString(1, inquiry.getTitle());
 				ps.setString(2, inquiry.getContent());
-				ps.setString(3, inquiry.getEmail());
-				ps.setBoolean(4, inquiry.isPublic());
-				ps.setInt(5, inquiry.getInquiry_no());
-				ps.setLong(6, inquiry.getMember_id());
+				ps.setBoolean(3, inquiry.isPublic());
+				ps.setInt(4, inquiry.getInquiry_no());
+				ps.setLong(5, inquiry.getMember_id());
 				
 			result = ps.executeUpdate();
 			
@@ -388,7 +382,7 @@ public class InquiryDao {
 		String sql ="update inquiry\r\n"
 				+ "set answer_content = ?,\r\n"
 				+ "	answered_at = CURRENT_TIMESTAMP,\r\n"
-				+ "    status= \"COMPLETED\"\r\n"
+				+ "    status= 'COMPLETED'\r\n"
 				+ "where inquiry_no = ?;";
 		
 		try{
@@ -408,7 +402,7 @@ public class InquiryDao {
 		return result;
 	}
 
-
+	// 관리자 문의 답변삭제
 	public int deleteInquiryAnswer(int inquiryNo) {
 		int result =0;
 		

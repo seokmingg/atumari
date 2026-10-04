@@ -29,8 +29,19 @@ public class InquiryViewController extends HttpServlet {
 	                         HttpServletResponse response)
 	            throws ServletException, IOException {
 		  
-		  	String inquiryNoParam = request.getParameter("inquiryNo");
-	        int inquiryNo = Integer.parseInt(inquiryNoParam);
+		  // 문의 글 번호 , 사용자가 값을 문자열이나 확인불가한 문자로 값을 변경할 경우를 대비
+		    int inquiryNo;
+		    try {
+		        inquiryNo = Integer.parseInt(request.getParameter("inquiryNo"));
+		        //양수가 맞는 지 확인
+		        if (inquiryNo <= 0) {
+		            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		            return;
+		        }
+		    } catch (NumberFormatException e) {
+		        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		        return;
+		    }
 	        
 	        
 	        // 문의글 상세조회
