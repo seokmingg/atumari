@@ -80,6 +80,7 @@
     <div class="board-cell board-subject">タイトル</div>
     <div class="board-cell board-file">添付</div>
     <div class="board-cell board-writer">作成者</div>
+    <div class="board-cell board-public">公開設定</div>
     <div class="board-cell board-status">状態</div>
     <div class="board-cell board-date">作成日</div>
   </div>
@@ -101,7 +102,14 @@
             </c:if>
         </div>
     <div class="board-cell board-writer">${inquiry.writer}</div>
-    <div class="board-cell board-status"><span class="status-badge status-waiting">${inquiry.status}</span></div>
+    <div class="board-cell board-public">
+    ${inquiry.isPublic() ? '公開' : '非公開'}
+	</div>
+    <div class="board-cell board-status">
+	    <span class="status-badge ${inquiry.status eq 'COMPLETED' ? 'status-completed':'status-waiting'}">
+	    			${inquiry.status}
+	    </span>
+    </div>
     <div class="board-cell board-date">${inquiry.formattedCreatedDate}</div>
   </div>
   </c:forEach>

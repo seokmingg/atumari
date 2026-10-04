@@ -97,7 +97,17 @@
 <div class="detail-actions">
   <a class="secondary-button" href="${pageContext.request.contextPath}/inquiry/admin/list">一覧へ</a>
   <div class="right">
-  <button type="submit" class="primary-button">回答登録</button>
+  <button type="submit" 
+  		  class="primary-button"
+  		  onclick="return confirm('回答を保存しますか？')">
+  		  回答保存
+  		  </button>
+  <button type="submit" 
+  		  class="primary-button answer-delete"
+  		  formaction="${pageContext.request.contextPath}/inquiry/admin/answer/delete"
+  		  formnovalidate
+  		  onclick ="return confirm('回答を削除しますか？');">
+  		  回答削除</button>
   </div>
 </div>
 

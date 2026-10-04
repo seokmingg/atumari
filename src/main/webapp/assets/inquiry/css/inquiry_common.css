@@ -104,6 +104,24 @@ a {
     background: #444;
 }
 
+.primary-button.answer-delete {
+    background-color: #a84b4b;
+    color: #fff;
+}
+
+.primary-button.answer-delete:hover {
+    background-color: #913b3b;
+}
+
+.primary-button.answer-delete:active {
+    background-color: #7c3030;
+}
+
+.primary-button.answer-delete:focus-visible {
+    outline: 3px solid #a84b4b;
+    outline-offset: 3px;
+}
+
 .status-badge,
 .public-badge {
     display: inline-block;

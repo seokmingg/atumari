@@ -409,4 +409,31 @@ public class InquiryDao {
 	}
 
 
+	public int deleteInquiryAnswer(int inquiryNo) {
+		int result =0;
+		
+		String sql ="UPDATE atumari.inquiry\r\n"
+				+ "SET answer_content = NULL,\r\n"
+				+ "    answered_at = NULL,\r\n"
+				+ "    status = 'WAITING'\r\n"
+				+ "WHERE inquiry_no = ?";
+		
+		try{
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql);
+				ps.setInt(1, inquiryNo);
+				
+			result = ps.executeUpdate();
+			
+		}catch (SQLException e) {
+		    throw new RuntimeException("답변 삭제 DB 처리 실패", e);
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		
+		return result;
+	}
+
+
 }

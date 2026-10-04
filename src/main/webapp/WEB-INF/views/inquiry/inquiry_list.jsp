@@ -79,7 +79,11 @@
       
     <div class="board-cell board-writer">${inquiry.writer}</div>
     <div class="board-cell board-public">${inquiry.isPublic() ? '公開' : '非公開'}</div>
-    <div class="board-cell board-status"><span class="status-badge status-completed">${inquiry.status}</span></div>
+	<div class="board-cell board-status">
+	    <span class="status-badge ${inquiry.status eq 'COMPLETED' ? 'status-completed':'status-waiting'}">
+	    			${inquiry.status}
+	    </span>
+    </div>
     <div class="board-cell board-date"> ${inquiry.formattedCreatedDate}</div>
   </div>
 </c:forEach>

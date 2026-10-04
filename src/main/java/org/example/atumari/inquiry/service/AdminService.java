@@ -11,7 +11,16 @@ public class AdminService {
 		int result =inquiryDao.saveInquiryAnswer(inquiryNo,answerContent);
 		
 		if(result <= 0) {
-			throw new RuntimeException("문의 수정에 실패했습니다.");
+			throw new RuntimeException("관리자 문의 답변 저장에 실패했습니다.");
+		}
+	}
+	
+	// 답변 삭제
+	public void deleteAnswer(int inquiryNo) {
+		int result = inquiryDao.deleteInquiryAnswer(inquiryNo);
+		
+		if(result <= 0) {
+			throw new RuntimeException("관리자 문의 답변 삭제에 실패했습니다.");
 		}
 	}
 	

@@ -113,7 +113,7 @@ public class InquiryAdminViewController extends HttpServlet {
 
 	    		    request.setAttribute(
 	    		        "errorMessage",
-	    		        "回答の登録中にエラーが発生しました。"
+	    		        "回答の保存中にエラーが発生しました。"
 	    		    );
 	   }
 	    
