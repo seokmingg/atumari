@@ -118,8 +118,8 @@
                 </div>
 
 
-                <!-- 利用規約 -->
-
+                <!-- 利用規約 
+				refactor: 이용 약관 동의 체크박스 삭제
                 <div class="signup-agree">
 
                     <label>
@@ -135,6 +135,8 @@
                     </label>
 
                 </div>
+                
+                -->
 
 
                 <!-- BUTTON -->
@@ -198,7 +200,7 @@
 	        event.preventDefault();
 	        return;
 	    }
-	
+	/* refactor: 이용 약관 체크박스 검증 삭제
 	    if (!signup.agree.checked) {
 	
 	        alert("利用規約とプライバシーポリシーに同意してください.");
@@ -206,6 +208,8 @@
 	        event.preventDefault();
 	        return;
 	    }
+	
+	*/
 	
 	    if (!checkEmailValid()) {
 	
