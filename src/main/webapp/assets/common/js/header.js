@@ -488,6 +488,26 @@ document.addEventListener(
     "DOMContentLoaded",
     function () {
 
+        const header = document.querySelector(".header");
+        const menuButton = document.querySelector(".mobile-menu-button");
+
+        if (header && menuButton) {
+            menuButton.addEventListener("click", function () {
+                const isOpen = header.classList.toggle("menu-open");
+                menuButton.setAttribute("aria-expanded", String(isOpen));
+                menuButton.setAttribute("aria-label", isOpen ? "メニューを閉じる" : "メニューを開く");
+                document.body.classList.toggle("menu-open", isOpen);
+            });
+
+            header.querySelectorAll(".header-menu a").forEach(function (link) {
+                link.addEventListener("click", function () {
+                    header.classList.remove("menu-open");
+                    menuButton.setAttribute("aria-expanded", "false");
+                    document.body.classList.remove("menu-open");
+                });
+            });
+        }
+
         const prev =
             document.querySelector(
                 ".header-calendar-prev"

@@ -11,13 +11,17 @@
 <header class="header">
 
   <a href="<%=request.getContextPath()%>/" class="logo">
+    <div class="logo-main">あつまり</div>
+    <div class="logo-sub">MATSURI GUIDE</div>
+  </a>
 
-	    <div class="logo-main">あつまり</div>
-	    <div class="logo-sub">MATSURI GUIDE</div>
+  <button type="button" class="mobile-menu-button" aria-label="メニューを開く" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 
-	</a>
+  <div class="header-menu">
 
-        <nav class="nav">
+        <nav class="nav main-nav">
             <a href="<%=request.getContextPath()%>/festival/month/card">今月の祭り</a>
             <a href="<%=request.getContextPath()%>/festival/region/card">地域から探す</a>
             <a href="<%=request.getContextPath()%>/festival/season/card">季節から探す</a>
@@ -25,10 +29,8 @@
             <a href="<%=request.getContextPath()%>/inquiry/list">お問い合わせ</a>
             <a href="<%=request.getContextPath()%>/community">コミュニティ</a>
         </nav>
-        
-        
 
-         <!-- LOGIN -->
+  <!-- LOGIN -->
   <div class="nav member-nav">
 
     <c:choose>
@@ -72,6 +74,8 @@
     </c:choose>
 
 </div>
+
+  </div>
 		
 		<!-- SEARCH -->
         <button
@@ -80,8 +84,6 @@
             onclick="openSearch()">
             🔍
         </button>
-
-    </div>
 
 
 		<!-- =========================

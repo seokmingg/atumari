@@ -139,3 +139,52 @@
     background: #c85c68;
     border-color: #c85c68;
 }
+
+@media (max-width: 600px) {
+    .member-modify {
+        min-height: 100svh;
+        padding: 104px 0 64px;
+    }
+
+    .member-modify-inner {
+        width: calc(100% - 32px);
+    }
+
+    .modify-title {
+        margin-bottom: 32px;
+    }
+
+    .modify-title h1 {
+        font-size: 34px;
+    }
+
+    .modify-box {
+        padding: 28px 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 9px;
+    }
+
+    .form-row label {
+        width: auto;
+    }
+
+    .form-row input {
+        max-width: 100%;
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    .modify-buttons {
+        flex-direction: column;
+    }
+
+    .save-button,
+    .delete-button {
+        width: 100%;
+        min-height: 46px;
+    }
+}
