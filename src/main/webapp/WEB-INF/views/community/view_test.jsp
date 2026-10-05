@@ -46,13 +46,6 @@ pageEncoding="UTF-8"%>
             <!-- WRITER -->
             <div class="post-writer-area">
 
-                <!-- PROFILE IMAGE -->
-<!-- 
-                <div class="writer-profile">
-                    <img src="<%=request.getContextPath()%>/assets/community/images/profile-default.svg"
-                         alt="プロフィール画像">
-                </div>
- -->
                 <!-- WRITER INFO -->
                 <div class="writer-info">
                     <div class="writer-name-area">
@@ -134,7 +127,7 @@ pageEncoding="UTF-8"%>
                 コメント
             </h2>
             <span>
-                3
+                ${commentList.size()}
             </span>
         </div>
         <!-- =========================
@@ -145,48 +138,43 @@ pageEncoding="UTF-8"%>
     <%-- 부모 댓글만 반복 --%>
     <c:forEach var="comment" items="${commentList}">
 
-        <c:if test="${empty comment.parentNo}">
+        <c:if test="${comment.parent_no eq 0}">
 
             <div class="comment-item">
-
-                <div class="comment-profile">
-                    <img
-                        src="${pageContext.request.contextPath}/assets/community/images/profile-default.svg"
-                        alt="프로필 이미지">
-                </div>
 
                 <div class="comment-main">
 
                     <div class="comment-writer">
                         <strong>
-                            <c:out value="${comment.writerName}" />
+                            <c:out value="${comment.member_name}" />
+                            <c:if test="${comment.member_email eq cmtydto.getMember_email()}">
+                            <span class="comment-author">
+							投稿者
+                        	</span>
+                        	</c:if>
                         </strong>
                     </div>
 
                     <div class="comment-content">
-                        <c:choose>
-                            <c:when test="${comment.isDeleted == 1}">
-                                삭제된 댓글입니다.
-                            </c:when>
-                            <c:otherwise>
                                 <c:out value="${comment.content}" />
-                            </c:otherwise>
-                        </c:choose>
                     </div>
 
                     <div class="comment-footer">
                         <span class="comment-date">
                             <fmt:formatDate
-                                value="${comment.regDate}"
+                                value="${comment.reg_date}"
                                 pattern="yyyy-MM-dd HH:mm" />
                         </span>
 
-                        <c:if test="${comment.isDeleted == 0}">
+                        <c:if test="${comment.is_delete eq 0}">
                             <button
                                 type="button"
                                 class="reply-button"
-                                data-comment-no="${comment.commentNo}">
-                                답글 달기
+                                data-comment-no="${comment.comment_no}"
+                                data-cmty-no="${cmtydto.getCmty_no()}"
+                                data-context-path="${pageContext.request.contextPath}"
+                                >
+                                返信する
                             </button>
                         </c:if>
                     </div>
@@ -196,39 +184,31 @@ pageEncoding="UTF-8"%>
 
                         <c:forEach var="reply" items="${commentList}">
 
-                            <c:if test="${reply.parentNo == comment.commentNo}">
+                            <c:if test="${reply.parent_no eq comment.comment_no}">
 
                                 <div class="reply-item">
-
-                                    <div class="reply-profile">
-                                        <img
-                                            src="${pageContext.request.contextPath}/assets/community/images/profile-default.svg"
-                                            alt="프로필 이미지">
-                                    </div>
 
                                     <div class="reply-main">
 
                                         <div class="reply-writer">
                                             <strong>
-                                                <c:out value="${reply.writerName}" />
+                                                <c:out value="${reply.member_name}" />
                                             </strong>
+                                            <c:if test="${reply.member_email eq cmtydto.getMember_email()}">
+				                            <span class="comment-author">
+											投稿者
+				                        	</span>
+				                        	</c:if>
                                         </div>
 
                                         <div class="reply-content">
-                                            <c:choose>
-                                                <c:when test="${reply.isDeleted == 1}">
-                                                    삭제된 댓글입니다.
-                                                </c:when>
-                                                <c:otherwise>
                                                     <c:out value="${reply.content}" />
-                                                </c:otherwise>
-                                            </c:choose>
                                         </div>
 
                                         <div class="reply-footer">
                                             <span>
                                                 <fmt:formatDate
-                                                    value="${reply.regDate}"
+                                                    value="${reply.reg_date}"
                                                     pattern="yyyy-MM-dd HH:mm" />
                                             </span>
                                         </div>
@@ -258,6 +238,9 @@ pageEncoding="UTF-8"%>
         		method="post"
 			    action="${pageContext.request.contextPath}/community/view"
 		>
+		
+		<input type="hidden" name="cmty_no" value="${cmtydto.getCmty_no()}">
+		
         <div class="comment-write">
         
             <textarea name="content" 
@@ -277,7 +260,26 @@ pageEncoding="UTF-8"%>
 		</form> 
 <script>
 // 댓글폼 넘기기 전에 공백인지 확인, 공백일 시 알럿창 띄우고 포커스.
-document.querySelector(".comment-form").addEventListener("submit", function(event) {
+document.addEventListener("submit", function(event) {
+
+    const form = event.target;
+
+    // 일반 댓글 폼과 답글 폼만 검사
+    if (!form.matches(".comment-form, .reply-form")) {
+        return;
+    }
+    
+	const content = form.elements["content"];
+	
+	const sessionEmail = "${sessionScope.sessionEmail}";
+	if (!sessionEmail) { 
+		event.preventDefault(); 
+		alert("ログインしてください。"); 
+		if (confirm("ログインしますか？")) {
+			location.href = "<%=request.getContextPath()%>/login"; 
+		} 
+		return; 
+	}
 	if (checkEmpty(comment.content, "内容を入力してください。")) {
 		comment.content.focus();
         event.preventDefault();
@@ -294,10 +296,17 @@ document.querySelector(".comment-form").addEventListener("submit", function(even
     ========================== -->
 
     <div class="community-view-bottom">
+    <c:if test="${sessionEmail eq cmtydto.getMember_email()}">
+     	<a href="<%=request.getContextPath()%>/community/update?cmtyNo=${cmtydto.getCmty_no()}"
+           class="list-button">
+            ポスト修正
+        </a>
+	</c:if>
         <a href="<%=request.getContextPath()%>/community"
            class="list-button">
             一覧へ
         </a>
+        
     </div>
 </div>
 

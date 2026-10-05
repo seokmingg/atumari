@@ -46,15 +46,6 @@ public class CommunityWriteController extends HttpServlet {
         	content = getSingleQuot(content);
         // 이미지 파일
         Part imagePart = request.getPart("image");
-        
-
-	        // 값 확인
-	        System.out.println("==============================");
-	        System.out.println("sessionEmail : " + sessionEmail);
-	        System.out.println("title       : " + title);
-	        System.out.println("content     : " + content);
-	        System.out.println("image       : " + imagePart);
-	        System.out.println("==============================");
 	
 	    // DTO 생성
         CommunityDto cmtydto = new CommunityDto(sessionEmail,title,content);
@@ -62,17 +53,18 @@ public class CommunityWriteController extends HttpServlet {
         // 게시물 + 첨부파일 저장
         CommunityService communityService = new CommunityService();
         int result = communityService.write(cmtydto, imagePart);
+        System.out.println("result:"+result);
         // 저장 성공
         if (result == 1) {
-        	request.getRequestDispatcher("/WEB-INF/views/community/list.jsp")
-        			.forward(request, response);
+        	response.sendRedirect(request.getContextPath() + "/community");
+			return;
         } else {
         	request.getRequestDispatcher("/WEB-INF/views/community/write_test.jsp")
         			.forward(request, response);
         }
     }
     //작은따옴표 변환
-    public String getSingleQuot(String str) {
+    private String getSingleQuot(String str) {
 		str = str.replaceAll("'", "&#39;");
 		return str;
 	}

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.atumari.common.database.DBConnection;
-import org.example.atumari.community.dto.CommunityCommentDto;
 import org.example.atumari.community.dto.CommunityDto;
 
 /**
@@ -53,11 +52,66 @@ public class CommunityDao {
 	    }
 	    return cmty_no;
 	}
+	//조회수 증가
+	public int setHitCount(Long no) {
+		int result = 0;
+		String sql = "update community\r\n"
+				+ "		set hit = hit + 1\r\n"
+				+ "		where cmty_no = ? ";
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql.toString());
+			ps.setLong(1, no);
+			result = ps.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("setHitCount() 오류"+ps.toString());
+			e.printStackTrace();
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}	
+		return result;
+	}
 	
 	//커뮤니티 글 삭제
 	public static void deleteCommunity(Long cmtyNo) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	// 커뮤니티 글 수정
+	public int updateCommunity(long cmtyNo, String memberEmail, String title, String content) {
+
+	    int result = 0;
+
+	    String sql =
+	            "UPDATE community c "
+	          + "JOIN member m ON c.member_id = m.id "
+	          + "SET c.title = ?, "
+	          + "    c.content = ?, "
+	          + "    c.update_date = NOW() "
+	          + "WHERE c.cmty_no = ? "
+	          + "AND m.email = ?";
+
+	    try {
+	        con = DBConnection.getConnection();
+	        ps = con.prepareStatement(sql);
+
+	        ps.setString(1, title);
+	        ps.setString(2, content);
+	        ps.setLong(3, cmtyNo);
+	        ps.setString(4, memberEmail);
+
+	        result = ps.executeUpdate();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("updateCommunity() 오류!");
+
+	    } finally {
+	        DBConnection.closeDB(con, ps, rs);
+	    }
+
+	    return result;
 	}
 
 	//게시물 총 갯수

@@ -81,15 +81,89 @@ public class CommunityService {
 	    }
 	    return result;
 	}
+	// 게시물 수정
+	public int update(Long cmtyNo, String memberEmail, String title,
+	        String content, Part imagePart, String deleteImage, Long fileNo) {
+	    try {
+	        // 1. 게시물 내용 수정
+	        int result = cmtydao.updateCommunity(
+	                cmtyNo,
+	                memberEmail,
+	                title,
+	                content
+	        );
+
+	        // 게시물 수정 실패
+	        if (result != 1) {
+	            return 0;
+	        }
+	        // 2. 기존 이미지 삭제 요청
+	        if ("1".equals(deleteImage) && fileNo != null) {
+
+	            CommunityFileDto oldFile =
+	                    cmtyFileDao.getCmtyFileByNo(fileNo);
+
+	            if (oldFile != null) {
+
+	                // S3에서 기존 파일 삭제
+	                fileService.deleteFile(
+	                        oldFile.getSave_file_name()
+	                );
+
+	                // DB에서 기존 파일 정보 삭제
+	                cmtyFileDao.deleteFile(fileNo);
+	            }
+	        }
+
+
+	        // 3. 새로운 이미지가 선택된 경우
+	        if (imagePart != null && imagePart.getSize() > 0) {
+
+	            // 새 파일 저장
+	            StoredFile storedFile =
+	                    fileService.saveFile(imagePart, "community");
+
+	            String originalFileName =
+	                    storedFile.getOriginalFileName();
+
+	            String objectKey =
+	                    storedFile.getStoredFileName();
+
+
+	            // 기존 파일이 있었다면
+	            // 기존 파일 정보가 삭제됐으므로 새 파일 INSERT
+	            CommunityFileDto fileDto =
+	                    new CommunityFileDto(
+	                            cmtyNo,
+	                            originalFileName,
+	                            objectKey
+	                    );
+
+	            if (cmtyFileDao.fileSave(fileDto) != 1) {
+
+	                // DB 저장 실패하면 S3에 올라간 새 파일 삭제
+	                fileService.deleteFile(objectKey);
+
+	                return 0;
+	            }
+	        }
+
+	        return 1;
+
+	    } catch (Exception e) {
+
+	        e.printStackTrace();
+	        System.out.println("update() 오류!");
+
+	        return 0;
+	    }
+	}
 	
 	//게시물 상세조회
 	public CommunityDto getCommunityView(long cmtyno) {
 		CommunityDao cmtydao = new CommunityDao();
-		CommunityFileDao cmtyfiledao = new CommunityFileDao();
 		
 		CommunityDto cmtydto = cmtydao.getCommunityView(cmtyno);
-		CommunityFileDto cmtyfile = null;
-		
 		
 		return cmtydto;
 	}
@@ -151,12 +225,21 @@ public class CommunityService {
 	    return fileService.downloadFile(file.getSave_file_name());
 	}
 	
+	//댓글 작성
+	public int writeComment(CommunityCommentDto comment) {
+		return cmtyCommentDao.saveComment(comment);
+	}
+	
+	//조회수 증가
+	public int setHitCount(long cmtyno) {
+		return cmtydao.setHitCount(cmtyno);
+	}
 	
 	
 	//검색 조건 정규화
-	private String normalizeSearchType(String searchType) {
-		if(searchType == null) searchType = "content";
-		return searchType;
-    }
+		private String normalizeSearchType(String searchType) {
+			if(searchType == null) searchType = "content";
+			return searchType;
+	    }
 }
 

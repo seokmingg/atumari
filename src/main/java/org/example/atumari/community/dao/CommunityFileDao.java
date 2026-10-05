@@ -104,6 +104,65 @@ public class CommunityFileDao {
 	        return dto;
 	        
 	    }
+	// 첨부파일 DB 정보 삭제
+	 public int deleteFile(long fileNo) {
+
+	     int result = 0;
+
+	     String sql =
+	             "DELETE FROM community_files "
+	           + "WHERE file_no = ?";
+
+	     try {
+	         con = DBConnection.getConnection();
+	         ps = con.prepareStatement(sql);
+
+	         ps.setLong(1, fileNo);
+
+	         result = ps.executeUpdate();
+
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	         System.out.println("deleteFile() 오류!");
+
+	     } finally {
+	         DBConnection.closeDB(con, ps, rs);
+	     }
+
+	     return result;
+	 }
+	// 첨부파일 정보 수정
+	 public int updateFile(CommunityFileDto fileDto) {
+
+	     int result = 0;
+
+	     String sql =
+	             "UPDATE community_files "
+	           + "SET original_file_name = ?, "
+	           + "    save_file_name = ? "
+	           + "WHERE file_no = ?";
+
+	     try {
+	         con = DBConnection.getConnection();
+	         ps = con.prepareStatement(sql);
+
+	         ps.setString(1, fileDto.getOriginal_file_name());
+	         ps.setString(2, fileDto.getSave_file_name());
+	         ps.setLong(3, fileDto.getFile_no());
+
+	         result = ps.executeUpdate();
+
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	         System.out.println("updateFile() 오류!");
+
+	     } finally {
+	         DBConnection.closeDB(con, ps, rs);
+	     }
+
+	     return result;
+	 }
+	 
 	 //dto 생성
 	 private CommunityFileDto mapFile(ResultSet rs) throws SQLException {
 	        return new CommunityFileDto(

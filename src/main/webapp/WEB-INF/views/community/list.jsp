@@ -346,9 +346,7 @@
         <div class="community-write">
 			<a href="<%=request.getContextPath()%>/community/write"
                class="write-button">
-
                 投稿する
-
             </a>
 		</div>
 
