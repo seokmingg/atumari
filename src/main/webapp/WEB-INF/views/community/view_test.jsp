@@ -165,6 +165,14 @@ pageEncoding="UTF-8"%>
                                 value="${comment.reg_date}"
                                 pattern="yyyy-MM-dd HH:mm" />
                         </span>
+                        
+                        <c:if test="${comment.member_email eq cmtydto.getMember_email()}">
+                            <button
+                                type="button"
+                                class="delete-button">
+                                削除
+                            </button>
+                        </c:if>
 
                         <c:if test="${comment.is_delete eq 0}">
                             <button
@@ -174,7 +182,7 @@ pageEncoding="UTF-8"%>
                                 data-cmty-no="${cmtydto.getCmty_no()}"
                                 data-context-path="${pageContext.request.contextPath}"
                                 >
-                                返信する
+                                返信
                             </button>
                         </c:if>
                     </div>
@@ -297,6 +305,10 @@ document.addEventListener("submit", function(event) {
 
     <div class="community-view-bottom">
     <c:if test="${sessionEmail eq cmtydto.getMember_email()}">
+    	<a href="<%=request.getContextPath()%>/community/delete?cmtyNo=${cmtydto.getCmty_no()}"
+           class="list-button" onclick="return confirm('本当に削除しますか?');">
+            削除
+        </a>
      	<a href="<%=request.getContextPath()%>/community/update?cmtyNo=${cmtydto.getCmty_no()}"
            class="list-button">
             ポスト修正

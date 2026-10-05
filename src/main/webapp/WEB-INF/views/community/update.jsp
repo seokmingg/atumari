@@ -59,7 +59,7 @@
 			    enctype="multipart/form-data"
 	    >
 	    
-		<input type="hidden" name="cmty_no" value="${cmtydto.getCmty_no()}">
+		<input type="hidden" name="cmtyNo" value="${cmtydto.getCmty_no()}">
             <!-- =========================
                  POST HEADER
             ========================= -->
@@ -173,7 +173,7 @@
 					    -->
 					    <c:forEach var="file" items="${cmtyFiles}"> 
 					    <c:if test="${not empty file.file_no}">
-					
+							
 					        <div class="image-preview-box">
 					
 					            <!--
@@ -184,6 +184,7 @@
 					            <img src="${pageContext.request.contextPath}/community/file/image?fileNo=${file.file_no}"
 					                 class="community-preview-image"
 					                 alt="기존 이미지">
+								
 					            <!--
 					                기존 이미지 삭제 버튼
 					                onclick으로 JavaScript의
@@ -195,9 +196,7 @@
 					                イメージ削除
 					            </button>
 								<!-- 기존 파일 번호 -->
-				                <input type="hidden"
-				                       name="fileNo"
-				                       value="${file.file_no}">
+				                
 								
 					        </div>
 					        
@@ -220,9 +219,12 @@
 					       id="delete-image"
 					       name="deleteImage"
 					       value="0">
-					
+					<c:if test="${cmtyFiles.size() ne 0}">       
+					<input type="text"
+	                       name="fileNo"
+	                       value="${cmtyFiles.get(0).file_no}">
+					</c:if>
                 	</div>
-				
 				</div>
 <script type="text/javascript">
 	function autoResize(textarea) {
@@ -285,7 +287,7 @@
                 <button type="submit"
                         class="community-write-submit"
                         >
-                    ポストする
+                    修正する
                 </button>
 
             </div>
