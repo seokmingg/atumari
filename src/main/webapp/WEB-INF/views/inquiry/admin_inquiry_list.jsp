@@ -162,9 +162,6 @@
 </footer>
 
 
-<!-- =========================
-     SCRIPT
-========================== -->
-<script src="inquiry.js"></script>
+
 </body>
 </html>

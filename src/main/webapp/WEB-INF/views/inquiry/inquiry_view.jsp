@@ -41,7 +41,9 @@
         <div class="detail-label">タイトル</div>
         <h2>${inquiryDto.title}</h2>
       </div>
-      <span class="status-badge status-completed">${inquiryDto.status}</span>
+      <span class="status-badge ${inquiryDto.status eq 'COMPLETED' ? 'status-completed' : 'status-waiting'}">
+      	${inquiryDto.status}
+      </span>
     </div>
   </div>
   <div class="detail-meta">

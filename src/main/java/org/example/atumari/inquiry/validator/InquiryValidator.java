@@ -3,29 +3,14 @@ package org.example.atumari.inquiry.validator;
 import org.example.atumari.inquiry.dto.InquiryDto;
 
 public class InquiryValidator {
-	
-	//이메일 알림 확인
-		public void validateNotificationEmail(InquiryDto inquiry, boolean emailNotify) {
-		    // 이메일 알림을 받지 않음
-		    if (!emailNotify) {
-		        inquiry.setEmail(null);
-		        return;
-		    }
-
-		    // 이메일 알림을 받음
-		    String email = inquiry.getEmail();
-
-		    if (email == null || email.trim().isEmpty()) {
-		        throw new IllegalArgumentException(
-		            "メールアドレスを入力してください。"
-		        );
-		    }
-
-		    // 앞뒤 공백 제거 후 DTO에 다시 저장
-		    inquiry.setEmail(email.trim());
+		
+		// 관리자 답변 빈칸 검사
+		public void validateAnswer(String answerContent) {
+			if(answerContent == null || answerContent.trim().isEmpty()) {
+				
+				throw new IllegalArgumentException("回答内容を入力してください。");
+			}
 		}
-		
-		
 		
 		//문의 내용 검증
 		public void validateInquiry(InquiryDto inquiry) {

@@ -28,7 +28,8 @@
 ========================== -->
 <main class="board-page">
 <form action="${pageContext.request.contextPath}/inquiry/admin/view"
-      method="post">
+      method="post"
+      onsubmit="return validateAdminAnswer(event);">
 	
 	<input type="hidden" name="inquiryNo" value="${inquiryDto.inquiry_no}">
 <div class="board-inner">
@@ -45,7 +46,11 @@
         <div class="detail-label">タイトル</div>
         <h2>${inquiryDto.title}</h2>
       </div>
-      <span class="status-badge status-waiting">${inquiryDto.status}</span>
+      
+      	<span class="status-badge ${inquiryDto.status eq 'COMPLETED' ? 'status-completed' : 'status-waiting'}">
+      		${inquiryDto.status}
+      	</span>
+    
     </div>
   </div>
   <div class="detail-meta">
@@ -97,17 +102,22 @@
 <div class="detail-actions">
   <a class="secondary-button" href="${pageContext.request.contextPath}/inquiry/admin/list">一覧へ</a>
   <div class="right">
+  
   <button type="submit" 
   		  class="primary-button"
-  		  onclick="return confirm('回答を保存しますか？')">
+  		  name="action"
+  		  value="save">
   		  回答保存
-  		  </button>
+  </button>
+  		  
   <button type="submit" 
   		  class="primary-button answer-delete"
+  		  name="action"
+  		  value="delete"
   		  formaction="${pageContext.request.contextPath}/inquiry/admin/answer/delete"
-  		  formnovalidate
-  		  onclick ="return confirm('回答を削除しますか？');">
-  		  回答削除</button>
+  		  formnovalidate>
+  		  回答削除
+  </button>
   </div>
 </div>
 
@@ -125,10 +135,26 @@
 
 </footer>
 
-
 <!-- =========================
      SCRIPT
 ========================== -->
-<script src="inquiry.js"></script>
+<script>
+	function validateAdminAnswer(event){
+		// 삭제: 빈칸 검사 없이 확인창만 표시
+		 if (event.submitter && event.submitter.value === "delete") {
+		        return confirm("回答を削除しますか？");
+		    }
+
+		    const answerInput = event.target.elements["answerContent"];
+
+		    if (answerInput.value.trim() === "") {
+		        alert("回答内容を入力してください。");
+		        answerInput.focus();
+		        return false;
+		    }
+
+		    return confirm("回答を保存しますか？");
+		}
+</script>
 </body>
 </html>
