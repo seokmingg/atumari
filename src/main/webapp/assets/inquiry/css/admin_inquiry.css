@@ -30,17 +30,18 @@
     margin: 20px 0 25px;
 }
 
-.board-filter button {
+.board-filter a {
     border: 1px solid #ddd;
     background: #fff;
     color: #444;
     padding: 10px 18px;
     font-size: 13px;
     cursor: pointer;
+    text-decoration: none;
 }
 
-.board-filter button:hover,
-.board-filter button.active {
+.board-filter a:hover,
+.board-filter a.active {
     background: #222;
     color: #fff;
     border-color: #222;
@@ -63,4 +64,10 @@
     resize: vertical;
     font: inherit;
     line-height: 1.8;
+}
+/*답변 저장시 오류발생하면 해당 오류메시지에 적용*/
+.form-error {
+    color: #d32f2f;
+    margin: 12px 28px;
+    font-size: 14px;
 }

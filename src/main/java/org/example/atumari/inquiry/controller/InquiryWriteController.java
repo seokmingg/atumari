@@ -38,7 +38,7 @@ public class InquiryWriteController extends HttpServlet {
 		   
 		   // 로그인 여부 확인
 		   if(session == null || session.getAttribute("sessionId")==null) {
-			   response.sendRedirect(request.getContextPath()+"/login");
+			   response.sendRedirect(request.getContextPath()+"/member/login");
 			   return;
 		   }
 		   
@@ -69,15 +69,14 @@ public class InquiryWriteController extends HttpServlet {
 	        String title = request.getParameter("title");
 	        String writer =
 	        	    (String) session.getAttribute("sessionName");
-	   //     String password = request.getParameter("password");
 	        
 	        boolean isPublic = "1".equals(request.getParameter("isPublic"));//1이면 공개 true로 바꿔서 dto에 저장
-	        boolean emailNotify = "1".equals(request.getParameter("emailNotify"));
+	     //   boolean emailNotify = "1".equals(request.getParameter("emailNotify"));
 	        
-	        String email = request.getParameter("email");
+	    //   String email = request.getParameter("email");
 	        String content = request.getParameter("content");
 	        
-	        InquiryDto inquiry = new InquiryDto(member_id,title, writer, isPublic, content, email);
+	        InquiryDto inquiry = new InquiryDto(member_id,title, writer, isPublic, content);
 	        
 	        List<Part> files = new ArrayList<>();
 
@@ -94,8 +93,7 @@ public class InquiryWriteController extends HttpServlet {
 
 	            inquiryService.createInquiry(
 	                inquiry,
-	                files,
-	                emailNotify
+	                files
 	            );
 
 	            response.sendRedirect(

@@ -11,7 +11,6 @@ import org.example.atumari.inquiry.dao.InquiryFileDao;
 import org.example.atumari.inquiry.dto.InquiryDto;
 import org.example.atumari.inquiry.dto.InquiryFileDto;
 import org.example.atumari.inquiry.validator.InquiryValidator;
-import org.example.atumari.notice.dto.NoticeFileDto;
 
 import jakarta.servlet.http.Part;
 import software.amazon.awssdk.core.ResponseBytes;
@@ -33,15 +32,14 @@ public class InquiryService {
 	
     // 문의 등록
 	public void createInquiry(InquiryDto inquiry,
-            List<Part> files,
-            boolean emailNotify) {
+            List<Part> files) {
 		
 			
 		// 1. 문의 내용, 작성자 검증
 		validator.validateInquiry(inquiry);
 		
 		// 2. 이메일 알림 서비스 여부
-		validator.validateNotificationEmail(inquiry,emailNotify);
+		//validator.validateNotificationEmail(inquiry,emailNotify);
 		
 		// 3. 첨부파일 검증
 		fileService.validateFiles(files); //이미 전체 파일리스트를 넘겨서 검사 for문필요X
@@ -75,7 +73,7 @@ public class InquiryService {
 	
 	
 	// 문의 수정
-	public void updateInquiry(InquiryDto inquiry, List<Integer> deleteFileNos, List<Part> newFiles, boolean emailNotify) {
+	public void updateInquiry(InquiryDto inquiry, List<Integer> deleteFileNos, List<Part> newFiles) {
 		
 		 // 0. 문의 존재 여부 + 작성자 본인 확인
 	    InquiryDto existingInquiry =
@@ -85,7 +83,7 @@ public class InquiryService {
 	        );
 
 	    if (existingInquiry == null) {
-	        throw new IllegalArgumentException(
+	        throw new SecurityException(
 	            "お問い合わせが存在しないか、修正する権限がありません。"
 	        );
 	    }
@@ -94,7 +92,7 @@ public class InquiryService {
 		validator.validateInquiry(inquiry);
 				
 		// 2. 이메일 알림 서비스 여부
-		validator.validateNotificationEmail(inquiry,emailNotify);
+		//validator.validateNotificationEmail(inquiry,emailNotify);
 		
 		// 3. 새로 첨부한 파일 검증
 		fileService.validateFiles(newFiles); // 기존 파일은 이미 검증해 저장되어 있음 현재는 새로운 저장할 파일에 대한 검증 필요

@@ -35,30 +35,43 @@
 </div>
 
 <div class="admin-summary">
-  <div class="summary-box"><span>全お問い合わせ</span><strong>12</strong></div>
-  <div class="summary-box"><span>回答待ち</span><strong>4</strong></div>
-  <div class="summary-box"><span>回答完了</span><strong>8</strong></div>
+  <div class="summary-box"><span>全お問い合わせ</span><strong>${allInquiryCount}</strong></div>
+  <div class="summary-box"><span>回答待ち</span><strong>${waitingInquiryCount}</strong></div>
+  <div class="summary-box"><span>回答完了</span><strong>${completedInquiryCount}</strong></div>
 </div>
 
 <div class="board-top">
-  <p>全 <strong>12</strong> 件</p>
+  <p>全 <strong>${totalCount}</strong> 件</p>
  
   <!-- 검색란 -->
+    <form action="${pageContext.request.contextPath}/inquiry/admin/list" method="get">
+    
+    <input type="hidden" name="status" value="${status}">
+    
   <div class="board-search">
-    <select>
-    <option>タイトル</option>
-    <option>作成者</option>
-	<option>会員ID</option>
+   <select name="searchType">
+    	<option value="title" <c:if test="${searchType eq 'title'}"> selected </c:if>>タイトル</option>
+    	<option value="writer" <c:if test="${searchType eq 'writer'}"> selected </c:if>>作成者</option>
     </select>
-    <input id="searchKeyword" type="text" placeholder="検索してください">
-    <button id="searchBtn" type="button">検索</button>
+    <input id="searchKeyword" name="keyword" value="${keyword}" type="text" placeholder="検索してください">
+    <button id="searchBtn" type="submit">検索</button>
   </div>
+   </form>
 </div>
 
 <div class="board-filter">
-  <button class="active" data-filter="all">すべて</button>
-  <button data-filter="waiting">回答待ち</button>
-  <button data-filter="completed">回答完了</button>
+	<a href="${pageContext.request.contextPath}/inquiry/admin/list" 
+	class="${empty status ? 'active' : ''}">
+		すべて
+	</a>
+	 <a href="${pageContext.request.contextPath}/inquiry/admin/list?status=WAITING"
+	 class="${status eq 'WAITING' ? 'active' : ''}">
+		回答待ち
+	 </a>
+	 <a href="${pageContext.request.contextPath}/inquiry/admin/list?status=COMPLETED"
+	 class="${status eq 'COMPLETED' ? 'active' : ''}">
+	 	回答完了
+	 </a>
 </div>
 
 <div class="board-list">
@@ -67,6 +80,7 @@
     <div class="board-cell board-subject">タイトル</div>
     <div class="board-cell board-file">添付</div>
     <div class="board-cell board-writer">作成者</div>
+    <div class="board-cell board-public">公開設定</div>
     <div class="board-cell board-status">状態</div>
     <div class="board-cell board-date">作成日</div>
   </div>
@@ -88,10 +102,51 @@
             </c:if>
         </div>
     <div class="board-cell board-writer">${inquiry.writer}</div>
-    <div class="board-cell board-status"><span class="status-badge status-waiting">${inquiry.status}</span></div>
+    <div class="board-cell board-public">
+    ${inquiry.isPublic() ? '公開' : '非公開'}
+	</div>
+    <div class="board-cell board-status">
+	    <span class="status-badge ${inquiry.status eq 'COMPLETED' ? 'status-completed':'status-waiting'}">
+	    			${inquiry.status}
+	    </span>
+    </div>
     <div class="board-cell board-date">${inquiry.formattedCreatedDate}</div>
   </div>
   </c:forEach>
+</div>
+
+<div class="board-pagination">
+
+<!-- 이전 페이지 -->
+	<c:if test="${page>1}">
+		<a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${page - 1}">
+			←		
+		</a>
+	</c:if>
+	
+<!-- 페이지 번호 -->
+	<c:forEach var="i" begin="1" end="${totalPages}">
+		<c:if test="${i == page}">
+			<a class= "active"
+				href="${pageContext.request.contextPath}/inquiry/admin/list?page=${i}">
+				${i}
+			</a>
+		</c:if>
+		
+		<c:if test="${i != page}">
+			<a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${i}">
+				${i}
+			</a>
+		</c:if>
+	</c:forEach>
+
+<!-- 다음 페이지 -->
+    <c:if test="${page < totalPages}">
+        <a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${page + 1}">
+            →
+        </a>
+    </c:if>	
+	
 </div>
 
 </div>
@@ -107,9 +162,6 @@
 </footer>
 
 
-<!-- =========================
-     SCRIPT
-========================== -->
-<script src="inquiry.js"></script>
+
 </body>
 </html>

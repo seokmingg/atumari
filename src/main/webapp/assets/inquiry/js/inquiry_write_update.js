@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================
        메일 알림
-    ========================== */
+    ========================== 
 
     const emailRadios =
         document.querySelectorAll('input[name="emailNotify"]');
@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		// ★ 페이지가 처음 열릴 때도 한 번 실행
 		updateEmailArea();
+		*/
 	
 	/* =========================
 	   첨부파일
@@ -312,7 +313,7 @@ function validateForm() {
         document.querySelector("[name='content']");
 
 
-    // 현재 선택된 이메일 알림 값
+    /* 현재 선택된 이메일 알림 값
     const emailNotify =
         document.querySelector(
             "[name='emailNotify']:checked"
@@ -320,7 +321,7 @@ function validateForm() {
 
     const email =
         document.querySelector("[name='email']");
-
+*/
 
     /* =========================
        제목
@@ -335,20 +336,8 @@ function validateForm() {
 
 
     /* =========================
-       작성자
-    ========================== */
-
-    if (checkEmpty(
-        writer,
-        "お名前を入力してください。"
-    )) {
-        return false;
-    }
-
-
-    /* =========================
        이메일
-    ========================== */
+    ========================== 
 
     if (
         emailNotify &&
@@ -374,7 +363,7 @@ function validateForm() {
             return false;
         }
     }
-
+	*/
 
     /* =========================
        문의 내용
