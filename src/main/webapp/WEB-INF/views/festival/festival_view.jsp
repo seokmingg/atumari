@@ -18,6 +18,9 @@ pageEncoding="UTF-8"%>
 
 <link rel="stylesheet"
       href="<%=request.getContextPath()%>/assets/festival/css/festival_view.css">
+      
+<link rel="stylesheet"
+      href="<%=request.getContextPath()%>/assets/festival/css/festival_review.css">
 
 </head>
 
@@ -527,6 +530,274 @@ pageEncoding="UTF-8"%>
 
 
     </section>
+    
+    <!-- =========================
+         LIST REVIEW
+    ========================== -->
+<section class="festival-review">
+
+<c:if test="${not empty msg}">
+    <script>
+        alert("${msg}");
+    </script>
+</c:if>
+
+    <div class="festival-review-header">
+	    <h2>
+	        レビュー
+	        <span class="festival-review-count">
+	            レビュー件数：${reviewCount}件
+	        </span>
+	    </h2>
+	</div>
+
+
+    <!-- 리뷰 작성 -->
+
+<c:if test="${not empty sessionScope.sessionId}">    
+    
+<form
+    action="<%=request.getContextPath()%>/festival/review"
+    method="post"
+    class="festival-review-write">
+    
+    <input type="hidden" name="type" value="${type}">
+	<input type="hidden" name="keyword" value="${keyword}">
+	<input type="hidden" name="startDate" value="${startDate}">
+	<input type="hidden" name="endDate" value="${endDate}">
+
+    <input
+        type="hidden"
+        name="action"
+        value="write">
+
+    <input
+        type="hidden"
+        name="festival_no"
+        value="${festival.festival_no}">
+        
+    <textarea
+        name="content"
+        maxlength="2000"
+        placeholder="お祭りの感想を書いてください。"
+        required></textarea>
+
+    <div class="festival-review-write-bottom">
+
+        <span class="festival-review-write-guide">
+            ※ レビュー는 2000文字以内で入力してください。
+        </span>
+
+        <button type="submit">
+            レビューを書く
+        </button>
+
+    </div>
+
+</form>
+
+</c:if>
+
+<c:if test="${empty sessionScope.sessionId}">
+
+    <p class="festival-review-login-guide">
+        レビューを書くにはログインしてください。
+    </p>
+
+</c:if>
+
+    <!-- 리뷰 목록 -->
+    <div class="festival-review-list" id="review-list">
+
+  <c:forEach var="review" items="${reviewList}">
+
+    <article class="festival-review-item">
+
+        <div class="festival-review-user">
+
+            <strong>${review.name}</strong>
+
+            <span>
+            
+                <c:choose>
+
+			        <c:when test="${not empty review.updated_date}">
+			            ${fn:replace(review.updated_date, 'T', ' ')}
+			            <span class="festival-review-edited">
+			                編集済み
+			            </span>
+			        </c:when>
+			
+			        <c:otherwise>
+			            ${fn:replace(review.created_date, 'T', ' ')}
+			        </c:otherwise>
+			
+			    </c:choose>
+			    
+            </span>
+
+        </div>
+
+
+        <!-- 리뷰 내용 -->
+        <p class="festival-review-content"
+    		id="review-content-${review.review_no}">${review.content}</p>
+   
+
+
+        <!-- 수정 폼 -->
+        <form
+            action="${pageContext.request.contextPath}/festival/review"
+            method="post"
+            class="festival-review-edit-form"
+            id="review-edit-${review.review_no}"
+            style="display: none;">
+
+            <input
+                type="hidden"
+                name="action"
+                value="update">
+
+            <input
+                type="hidden"
+                name="review_no"
+                value="${review.review_no}">
+
+            <input
+                type="hidden"
+                name="festival_no"
+                value="${festival.festival_no}">
+
+            <input
+                type="hidden"
+                name="type"
+                value="${type}">
+
+            <input
+                type="hidden"
+                name="keyword"
+                value="${keyword}">
+
+            <input
+                type="hidden"
+                name="startDate"
+                value="${startDate}">
+
+            <input
+                type="hidden"
+                name="endDate"
+                value="${endDate}">
+
+            <textarea
+                name="content"
+                maxlength="2000"
+                required>${review.content}</textarea>
+
+            <div class="festival-review-edit-actions">
+
+                <button type="submit">
+                    修整
+                </button>
+
+                <button
+                    type="button"
+                    onclick="cancelReviewEdit(${review.review_no})">
+                    キャンセル
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- 본인 리뷰일 경우만 표시 -->
+<c:if test="${sessionScope.sessionId == review.member_id || sessionScope.sessionLevel == 'admin'}">
+
+    <div class="festival-review-actions">
+
+        <button
+            type="button"
+            onclick="editReview(${review.review_no})">
+            編集
+        </button>
+
+        <form
+		    action="${pageContext.request.contextPath}/festival/review"
+		    method="post"
+		    style="display: inline;"
+		    onsubmit="return confirmDeleteReview();">
+
+            <input
+                type="hidden"
+                name="action"
+                value="delete">
+
+            <input
+                type="hidden"
+                name="review_no"
+                value="${review.review_no}">
+
+            <input
+                type="hidden"
+                name="festival_no"
+                value="${festival.festival_no}">
+
+            <input
+                type="hidden"
+                name="type"
+                value="${type}">
+
+            <input
+                type="hidden"
+                name="keyword"
+                value="${keyword}">
+
+            <input
+                type="hidden"
+                name="startDate"
+                value="${startDate}">
+
+            <input
+                type="hidden"
+                name="endDate"
+                value="${endDate}">
+
+            <button type="submit">
+                削除
+            </button>
+
+        </form>
+
+    </div>
+
+</c:if>
+
+    </article>
+
+</c:forEach>
+
+
+        <c:if test="${empty reviewList}">
+
+            <div class="festival-review-empty">
+                まだレビューがありません。
+            </div>
+
+        </c:if>
+
+    </div>
+    
+    <!-- =========================
+         리스트 불러오는중..
+    ========================== -->
+    <div
+	    id="review-loading"
+	    class="festival-review-loading"
+	    style="display: none;">
+	    レビューを読み込み中...
+	</div>
+
+</section>
 
 
     <!-- =========================
@@ -556,12 +827,20 @@ pageEncoding="UTF-8"%>
 	
 	
 	    <c:when test="${type == 'month'}">
-	
+	    
 	        <a href="${pageContext.request.contextPath}/festival/list?type=month&year=${year}&month=${month}" class="festival-list-button">
 	            ← 一覧へ戻る
 	        </a>
 	
 	    </c:when>
+	    
+	     <c:when test="${type == 'date'}">
+
+		    <a href="${pageContext.request.contextPath}/home/search?keyword=${keyword}&startDate=${startDate}&endDate=${endDate}" class="festival-list-button">
+		        ← 一覧へ戻る
+		    </a>
+		
+		</c:when>
 
 </c:choose>
     </div>
@@ -582,7 +861,24 @@ pageEncoding="UTF-8"%>
 
 </footer>
 
+<script>
+    const festivalNo = ${festival.festival_no};
+    const contextPath = '${pageContext.request.contextPath}';
+    const sessionMemberId =
+        ${empty sessionScope.sessionId ? 'null' : sessionScope.sessionId};
+    const sessionLevel =
+        '${empty sessionScope.sessionLevel ? "" : sessionScope.sessionLevel}';
+        
+    const reviewCount =
+        ${reviewCount};
 
+    const reviewPageSize =
+        ${reviewPageSize};
+        
+</script>
+
+<script src="${pageContext.request.contextPath}/assets/festival/js/festival_review.js"></script>
+<script src="${pageContext.request.contextPath}/assets/festival/js/festival_review_scroll.js"></script>
 </body>
 
 </html>

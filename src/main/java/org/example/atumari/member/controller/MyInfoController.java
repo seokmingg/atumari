@@ -17,24 +17,19 @@ public class MyInfoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
+    	// Refactor: MemberWebFilter에서 먼저 회원 세션 검증 후 실행
+    	
     	String sessionEmail = (String) request.getSession().getAttribute("sessionEmail");
     	
-    	// 세션이 없으면 로그인 페이지로
-    	if (sessionEmail == null) {
-    		request.getRequestDispatcher("/WEB-INF/views/member/login.jsp")
-    			.forward(request, response);
-    	} else {
-    		
-    		MemberService service = new MemberService();
-    		
-    		// 회원정보 조회
-    		MemberDto memberDto = service.getMemberInfo(sessionEmail);
-    		
-    		request.setAttribute("myInfo", memberDto);
-    		
-			request.getRequestDispatcher("/WEB-INF/views/member/my-info.jsp")
-				.forward(request, response);
-    	}
+    	MemberService service = new MemberService();
+		
+		// 회원정보 조회
+		MemberDto memberDto = service.getMemberInfo(sessionEmail);
+		
+		request.setAttribute("myInfo", memberDto);
+		
+		request.getRequestDispatcher("/WEB-INF/views/member/my-info.jsp")
+			.forward(request, response);
     	
     }
 }

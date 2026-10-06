@@ -65,7 +65,7 @@
         <div class="form-label">作成者</div>
 
         <div class="form-field">
-            <input type="text" name="writer" value="${SessionName}">
+            <input type="text" readonly value="${sessionScope.sessionName}">
         </div>
     </div>
 
@@ -99,29 +99,7 @@
     </div>
 
 
-    <!-- 비밀번호
-    <div class="form-row hidden-row" id="passwordArea">
-
-        <div class="form-label">パスワード</div>
-
-        <div class="form-field">
-
-            <input type="password"
-                   id="inquiryPassword"
-                   name="password"
-                   maxlength="4"
-                   inputmode="numeric" 
-                   placeholder="4桁の数字を入力">
-
-            <div class="form-help">
-                *非公開のお問い合わせを確認する際に使用します。
-            </div>
-
-        </div>
-    </div>
- -->
-
-    <!-- 답변 알림 -->
+    <%-- 답변 알림 
     <div class="form-row">
 
         <div class="form-label">回答通知</div>
@@ -147,7 +125,7 @@
     </div>
 
 
-    <!-- 이메일 입력 -->
+-- 이메일 입력
     <div class="form-row hidden-row" id="emailArea">
 
         <div class="form-label">メールアドレス</div>
@@ -165,7 +143,7 @@
 
         </div>
     </div>
-
+--%>
 
     <!-- 첨부파일 -->
     <div class="form-row">
@@ -262,9 +240,6 @@
 </footer>
 
 
-<!-- =========================
-     SCRIPT
-========================== -->
-<script src="inquiry.js"></script>
+
 </body>
 </html>

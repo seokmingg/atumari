@@ -400,7 +400,7 @@
 
     display: flex;
 
-    justify-content: center;
+    justify-content: flex-end;
 
     padding-top: 40px;
 
@@ -616,3 +616,5 @@
     }
 
 }
+
+

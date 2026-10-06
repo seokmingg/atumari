@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS member (
     nickname VARCHAR(255),
     tel VARCHAR(100), -- 010-0000-0000
     reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modify_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 가입시에는 가입 일자와 동일, 이후 수정시 수정일자로 자동 업데이트
+    modify_date TIMESTAMP, -- fix: 수정일자 자동으로 생성되지 않도록 쿼리 수정, 수정일자는 회원 정보 변경 요청 시 dao(DB)에서 직접 수정
     exit_date TIMESTAMP,
     rk VARCHAR(100), -- 회원 등급(rank): 매니저, 기자, 일반 등
     filepath VARCHAR(5000) -- 추후 프로필 사진 등 첨부파일 구현 시 파일 경로
@@ -261,3 +261,23 @@ CREATE TABLE IF NOT EXISTS community_files (
     FOREIGN KEY (cmty_no)
     REFERENCES community(cmty_no)
     );
+    
+--페스티벌 리뷰 테이블
+CREATE TABLE IF NOT EXISTS festival_review (
+    review_no BIGINT NOT NULL AUTO_INCREMENT,
+    festival_no INT NOT NULL,
+    member_id BIGINT NOT NULL,
+    content VARCHAR(2000) NOT NULL,
+    created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_date DATETIME NULL DEFAULT NULL,
+
+    PRIMARY KEY (review_no),
+
+    CONSTRAINT fk_festival_review_festival
+        FOREIGN KEY (festival_no)
+        REFERENCES festival(festival_no),
+
+    CONSTRAINT fk_festival_review_member
+        FOREIGN KEY (member_id)
+        REFERENCES member(id)
+);    

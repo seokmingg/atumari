@@ -1,8 +1,11 @@
 package org.example.atumari.festival.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.example.atumari.festival.dto.FestivalDto;
+import org.example.atumari.festival.dto.ReviewDto;
+import org.example.atumari.festival.service.FestivalReviewService;
 import org.example.atumari.festival.service.FestivalViewService;
 
 import jakarta.servlet.ServletException;
@@ -10,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/festival/view")
 public class ViewController extends HttpServlet {
@@ -43,10 +47,20 @@ public class ViewController extends HttpServlet {
 		String endDate = request.getParameter("endDate");
 
 		FestivalViewService service = new FestivalViewService();
+		FestivalReviewService rservice = new FestivalReviewService();
 
 		FestivalDto festival = service.getFestivalView(festivalNoValue);
 
+		final int reviewPageSize = 10;
+
+		List<ReviewDto> reviewList = rservice.getReviewList(festivalNoValue, 1, reviewPageSize);
+
+		int reviewCount = rservice.getReviewCount(festivalNoValue);
+
 		request.setAttribute("festival", festival);
+		
+		request.setAttribute("reviewCount", reviewCount);
+		request.setAttribute("reviewPageSize", reviewPageSize);
 
 		// JSP로 구분값 전달
 		request.setAttribute("type", type);
@@ -61,9 +75,16 @@ public class ViewController extends HttpServlet {
 		request.setAttribute("startDate", startDate);
 		request.setAttribute("endDate", endDate);
 
-		request.getRequestDispatcher(
-				"/WEB-INF/views/festival/festival_view.jsp"
-		).forward(request, response);
-	}
+		request.setAttribute("reviewList", reviewList);
 
+		HttpSession session = request.getSession();
+
+		String msg = (String) session.getAttribute("msg");
+
+		request.setAttribute("msg", msg);
+
+		session.removeAttribute("msg");
+
+		request.getRequestDispatcher("/WEB-INF/views/festival/festival_view.jsp").forward(request, response);
+	}
 }

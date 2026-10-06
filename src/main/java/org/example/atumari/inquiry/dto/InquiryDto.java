@@ -3,6 +3,8 @@ package org.example.atumari.inquiry.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.example.atumari.common.util.DateTimeUtil;
+
 public class InquiryDto {
 	
 
@@ -11,9 +13,10 @@ public class InquiryDto {
 
 	    private String title;
 	    private String writer;
-	  //    private String password;
+	    private String status;
 	    
 	    private boolean isPublic; //jsp에서 value값이 0,1로 넘어옴
+	    private boolean fileIs; //jsp에서 value값이 0,1로 넘어옴
 	    
 	    private String content;
 	    private String email;
@@ -27,7 +30,7 @@ public class InquiryDto {
 
     
     // writeController 
-		public InquiryDto( Long member_id, String title, String writer, boolean isPublic, String content, String email) 
+		public InquiryDto( Long member_id, String title, String writer, boolean isPublic, String content) 
 		{
 			super();
 			this.title = title;
@@ -35,7 +38,40 @@ public class InquiryDto {
 			this.member_id = member_id;
 			this.isPublic = isPublic;
 			this.content = content;
-			this.email = email;
+		}
+
+		public InquiryDto() {
+			// TODO Auto-generated constructor stub
+		}
+
+		// 목록 페이지 출력용 [2026-09-28]
+		public String getFormattedCreatedDate() {
+		    return DateTimeUtil.formatDate(created_at);
+		}
+
+		// 상세 페이지 출력용 [2026-09-28 12:10:58]
+		public String getFormattedCreatedDateTime() {
+		    return DateTimeUtil.formatDateTime(created_at);
+		}
+		
+		
+		public boolean isFileIs() {
+			return fileIs;
+		}
+
+
+		public void setFileIs(boolean fileIs) {
+			this.fileIs = fileIs;
+		}
+
+
+		public String getStatus() {
+			return status;
+		}
+
+
+		public void setStatus(String status) {
+			this.status = status;
 		}
 
 
@@ -82,18 +118,6 @@ public class InquiryDto {
 		public void setWriter(String writer) {
 			this.writer = writer;
 		}
-
-		
-
-//		public void setPassword(String password) {
-//			this.password = password;
-//		}
-//
-//
-//		public String getPassword() {
-//			return password;
-//		}
-
 
 		public void setMember_id(Long member_id) {
 			this.member_id = member_id;

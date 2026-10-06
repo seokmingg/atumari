@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================
        메일 알림
-    ========================== */
+    ========================== 
 
     const emailRadios =
         document.querySelectorAll('input[name="emailNotify"]');
@@ -14,27 +14,51 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput =
         document.getElementById("email");
 
-    emailRadios.forEach(function (radio) {
+		// 이메일 입력 영역 표시/숨김
+		function updateEmailArea() {
 
-        radio.addEventListener("change", function () {
+		    const checkedRadio =
+		        document.querySelector(
+		            'input[name="emailNotify"]:checked'
+		        );
 
-            if (this.value === "1") {
+		    if (checkedRadio && checkedRadio.value === "1") {
 
-                // 이메일 알림 받기
-                emailArea.classList.add("show");
-                emailInput.required = true;
+		        // 이메일 알림 받기
+		        emailArea.classList.add("show");
+		        emailInput.required = true;
 
-            } else {
+		    } else {
 
-                // 이메일 알림 받지 않기
-                emailArea.classList.remove("show");
-                emailInput.required = false;
-                emailInput.value = "";
-            }
-        });
-    });
+		        // 이메일 알림 받지 않기
+		        emailArea.classList.remove("show");
+		        emailInput.required = false;
+
+		    }
+		}
 
 
+		// 라디오 버튼 변경 시
+		emailRadios.forEach(function (radio) {
+
+		    radio.addEventListener("change", function () {
+
+		        // 받지 않기를 선택하면 기존 이메일 삭제
+		        if (this.value === "0") {
+		            emailInput.value = "";
+		        }
+
+		        updateEmailArea();
+
+		    });
+
+		});
+
+
+		// ★ 페이지가 처음 열릴 때도 한 번 실행
+		updateEmailArea();
+		*/
+	
 	/* =========================
 	   첨부파일
 	========================== */
@@ -52,6 +76,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	    document.getElementById("fileError");
 
 	const MAX_FILE_COUNT = 3;
+	
+	// Update 페이지에 존재하는 기존 첨부파일
+	const existingFiles =
+	    document.querySelectorAll(".existing-file");
+
+	// 기존 파일 삭제 체크박스
+	const deleteFileCheckboxes =
+	    document.querySelectorAll(".delete-file-checkbox");
 
 	// 실제 선택된 파일들을 관리
 	let selectedFiles = [];
@@ -60,13 +92,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	    fileInput.addEventListener("change", function () {
 
-	        // 이번에 선택한 파일
+	        // 이번에 선택한 새로운 파일
 	        const newFiles = Array.from(this.files);
+			
+			// 삭제되지 않고 남아있는 기존 파일 개수
+			const existingFileCount = getCurrentFileCount();
+			
+			// 확인용 로그 — 여기에 추가
+			        console.log("전체 기존 파일:", existingFiles.length);
+			        console.log(
+			            "삭제 체크 수:",
+			            document.querySelectorAll(
+			                ".delete-file-checkbox:checked"
+			            ).length
+			        );
+			        console.log("남는 기존 파일:", existingFileCount);
+			        console.log("앞서 선택한 새 파일:", selectedFiles.length);
+			        console.log("이번에 선택한 파일:", newFiles.length);
 
-	        // 기존 파일 + 새 파일이 3개를 초과하는지 확인
+	        // 기존 파일 + 이전에 선택한 새 파일 + 새 파일이 3개를 초과하는지 확인
 	        if (
-	            selectedFiles.length + newFiles.length
-	            > MAX_FILE_COUNT
+	          	existingFileCount + selectedFiles.length + newFiles.length > MAX_FILE_COUNT
 	        ) {
 
 	            fileError.textContent =
@@ -91,7 +137,54 @@ document.addEventListener("DOMContentLoaded", function () {
 	        renderFileList();
 	    });
 	}
+	
+	/* =========================
+	   기존 파일 개수
+	========================== */
+	function getCurrentFileCount() {
 
+	    // DB에 저장되어 있는 기존 파일 개수
+	    const existingFileCount =
+	        existingFiles.length;
+
+	    // 삭제하기로 체크한 기존 파일 개수
+	    const deleteFileCount =
+	        document.querySelectorAll(
+	            ".delete-file-checkbox:checked"
+	        ).length;
+
+	    // 수정 후에도 남아있을 기존 파일 개수
+	    return existingFileCount - deleteFileCount;
+	}
+	
+	/* =========================
+	   삭제 체크박스 변경을 고려해 안내 문구 띄우기
+	========================== */
+	deleteFileCheckboxes.forEach(function (checkbox) {
+
+	    checkbox.addEventListener("change", function () {
+
+	        const existingFileCount =
+	            getCurrentFileCount();
+
+	        const totalFileCount =
+	            existingFileCount
+	            + selectedFiles.length;
+
+				if (totalFileCount > MAX_FILE_COUNT) {
+
+				    fileError.textContent =
+				        "添付できるファイルは3件までです。";
+
+				} else {
+
+				    fileError.textContent = "";
+
+				}
+
+	    });
+
+	});
 
 	/* =========================
 	   선택된 파일 화면 표시
@@ -220,7 +313,7 @@ function validateForm() {
         document.querySelector("[name='content']");
 
 
-    // 현재 선택된 이메일 알림 값
+    /* 현재 선택된 이메일 알림 값
     const emailNotify =
         document.querySelector(
             "[name='emailNotify']:checked"
@@ -228,7 +321,7 @@ function validateForm() {
 
     const email =
         document.querySelector("[name='email']");
-
+*/
 
     /* =========================
        제목
@@ -243,48 +336,8 @@ function validateForm() {
 
 
     /* =========================
-       작성자
-    ========================== */
-
-    if (checkEmpty(
-        writer,
-        "お名前を入力してください。"
-    )) {
-        return false;
-    }
-
-
-    /* =========================
-       비공개 비밀번호
-    ==========================
-
-    if (isPublic && isPublic.value === "0") {
-
-        // 빈칸 확인
-        if (checkEmpty(
-            password,
-            "パスワードを入力してください。"
-        )) {
-            return false;
-        }
-
-        // 숫자 4자리인지 확인
-        if (!/^\d{4}$/.test(password.value)) {
-
-            alert(
-                "パスワードは4桁の数字で入力してください。"
-            );
-
-            password.focus();
-
-            return false;
-        }
-    }
-	*/
-
-    /* =========================
        이메일
-    ========================== */
+    ========================== 
 
     if (
         emailNotify &&
@@ -310,7 +363,7 @@ function validateForm() {
             return false;
         }
     }
-
+	*/
 
     /* =========================
        문의 내용
@@ -328,9 +381,20 @@ function validateForm() {
        최종 확인
     ========================== */
 
-    return confirmSubmit(
-        "お問い合わせを登録しますか？"
-    );
+	const form =
+	    document.querySelector("form");
+
+	if (form.name === "update_form") {
+
+	    return confirmSubmit(
+	        "お問い合わせ内容を修正しますか？"
+	    );
+
+	}
+
+	return confirmSubmit(
+	    "お問い合わせを登録しますか？"
+	);
 }
 
 
