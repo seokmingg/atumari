@@ -73,9 +73,33 @@ public class CommunityDao {
 	}
 	
 	//커뮤니티 글 삭제
-	public static void deleteCommunity(Long cmtyNo) {
-		// TODO Auto-generated method stub
-		
+	public int deleteCommunity(Long cmtyNo) {
+
+	    int result = 0;
+
+	    String sql =
+	            "DELETE c " +
+	            "FROM community c " +
+	            "JOIN member m ON c.member_id = m.id " +
+	            "WHERE c.cmty_no = ? ";
+
+	    try {
+	        con = DBConnection.getConnection();
+	        ps = con.prepareStatement(sql);
+
+	        ps.setLong(1, cmtyNo);
+
+	        result = ps.executeUpdate();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("deleteCommunity() 오류!");
+
+	    } finally {
+	        DBConnection.closeDB(con, ps, rs);
+	    }
+
+	    return result;
 	}
 	
 	// 커뮤니티 글 수정
@@ -138,8 +162,12 @@ public class CommunityDao {
 		            ps.setString(2, "%" + search + "%");
 		        }
 		    }
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count");
+			}
 		} catch(Exception e) {
-			System.out.println("countCommunity() 오류!!");
+			System.out.println("countCommunity() 오류!!"+ps.toString());
 		} finally {
 			DBConnection.closeDB(con, ps, rs);
 		}

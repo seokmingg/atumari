@@ -84,5 +84,61 @@ public class CommunityCommentDao {
 		}
 		return result;
 	}
+	//원게시물 삭제시 댓글 일괄 삭제
+	public int deleteCommentsByCmtyNo(Long cmtyNo) {
+
+	    String sql1 = "DELETE FROM atumari.community_comments\r\n"
+	    		+ "	            WHERE cmty_no = ?\r\n"
+	    		+ "	              AND parent_no IS NOT NULL";
+
+	    String sql2 = "DELETE FROM atumari.community_comments\r\n"
+	    		+ "	            WHERE cmty_no = ?";
+
+	    int result = 0;
+
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps1 = conn.prepareStatement(sql1);
+	         PreparedStatement ps2 = conn.prepareStatement(sql2)) {
+
+	        // 답글 먼저 삭제
+	        ps1.setLong(1, cmtyNo);
+	        result += ps1.executeUpdate();
+
+	        // 부모 댓글 삭제
+	        ps2.setLong(1, cmtyNo);
+	        result += ps2.executeUpdate();
+
+	        return result;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return 0;
+	    }
+	}
+	//댓글 삭제
+		public int deleteComment(Long commentNo) {
+		    int result = 0;
+		    String sql =
+		            "UPDATE atumari.community_comments "
+        		  + "SET content = ? , "
+       	          + "    update_date = NOW() "
+       	          + "WHERE comment_no = ? ";
+		    try {
+		        con = DBConnection.getConnection();
+		        ps = con.prepareStatement(sql);
+		        ps.setString(1, "このコメントは削除されました。");
+		        ps.setLong(2, commentNo);
+
+		        result = ps.executeUpdate();
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        System.out.println("deleteComment() 오류!"+ps.toString());
+
+		    } finally {
+		        DBConnection.closeDB(con, ps, rs);
+		    }
+		    return result;
+		}
 	
 }

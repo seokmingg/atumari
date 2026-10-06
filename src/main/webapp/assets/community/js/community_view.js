@@ -2,14 +2,14 @@
  * 
  */
 // 공백 체크
-function checkEmpty(obj,msg){
-	if(obj.value === ""){
-		alert(msg);
-		obj.focus();
-		return true;
-	} else {
-		return false;
-	}
+function checkEmpty(obj, msg) {
+    if (obj.value.trim() === "") {
+        alert(msg);
+        obj.focus();
+        return true;
+    }
+
+    return false;
 }
 
 //대댓글 입력창 생성. 

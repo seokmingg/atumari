@@ -40,12 +40,21 @@ public class CommunityService {
     	String normalizedSearchType = normalizeSearchType(searchType);
         String normalizedKeyword = search == null ? "" : search.trim();
         int totalCount = cmtydao.countCommunity(normalizedSearchType, normalizedKeyword);
+        System.out.println("totalcount :"+totalCount);
         PAGE_SIZE = postCount == 1 ? 10 : postCount;
         Pagination pagination = Pagination.of(currentPage, PAGE_SIZE, PAGE_GROUP_SIZE, totalCount);
 
         List<CommunityDto> cmtyList = cmtydao.getCommunityList(pagination.getPageSize(), pagination.getOffset(), normalizedSearchType, normalizedKeyword);
 
-        return new CommunityListPageDto(cmtyList, pagination.getCurrentPage(), pagination.getPageSize(), pagination.getTotalCount(), pagination.getTotalPage(), pagination.getStartPage(), pagination.getEndPage(), normalizedSearchType, normalizedKeyword);
+        return new CommunityListPageDto(cmtyList, 
+        					pagination.getCurrentPage(), 
+        					pagination.getPageSize(), 
+        					pagination.getTotalCount(), 
+        					pagination.getTotalPage(), 
+        					pagination.getStartPage(), 
+        					pagination.getEndPage(), 
+        					normalizedSearchType, 
+        					normalizedKeyword);
     
 	}
     
@@ -66,7 +75,7 @@ public class CommunityService {
 		            try {
 		                result = saveFile(imagePart, cmtyNo);
 		            } catch (RuntimeException e) {
-		                CommunityDao.deleteCommunity(cmtyNo);
+		            	cmtydao.deleteCommunity(cmtyNo);
 		                throw e;
 		            }
 		        } else {
@@ -82,10 +91,21 @@ public class CommunityService {
 	    return result;
 	}
 	// 게시물 수정
-	public int update(Long cmtyNo, String memberEmail, String title,
-	        String content, Part imagePart, String deleteImage, Long fileNo) {
+	public int update(
+	        Long cmtyNo,
+	        String memberEmail,
+	        String title,
+	        String content,
+	        Part imagePart,
+	        String deleteImage,
+	        Long fileNo) {
+
 	    try {
+
+	        // ========================================
 	        // 1. 게시물 내용 수정
+	        // ========================================
+
 	        int result = cmtydao.updateCommunity(
 	                cmtyNo,
 	                memberEmail,
@@ -95,70 +115,158 @@ public class CommunityService {
 
 	        // 게시물 수정 실패
 	        if (result != 1) {
+	        	System.out.println("게시물 수정 실패");
 	            return 0;
 	        }
-	        // 2. 기존 이미지 삭제 요청
-	        if ("1".equals(deleteImage) && fileNo != null) {
 
-	            CommunityFileDto oldFile =
-	                    cmtyFileDao.getCmtyFileByNo(fileNo);
 
-	            if (oldFile != null) {
+	        // ========================================
+	        // 2. 기존 이미지 조회
+	        // ========================================
 
-	                // S3에서 기존 파일 삭제
-	                fileService.deleteFile(
-	                        oldFile.getSave_file_name()
-	                );
+	        CommunityFileDto oldFile = null;
 
-	                // DB에서 기존 파일 정보 삭제
-	                cmtyFileDao.deleteFile(fileNo);
-	            }
+	        if (fileNo != null) {
+
+	            oldFile = cmtyFileDao.getCmtyFileByNo(fileNo);
 	        }
 
 
-	        // 3. 새로운 이미지가 선택된 경우
-	        if (imagePart != null && imagePart.getSize() > 0) {
+	        // ========================================
+	        // 3. 기존 이미지 삭제
+	        // ========================================
+	        //
+	        // deleteImage = "1"
+	        // 또는
+	        // 새 이미지가 선택되어 기존 이미지를 교체하는 경우
+	        //
 
-	            // 새 파일 저장
+	        boolean hasNewImage =
+	                imagePart != null
+	                && imagePart.getSize() > 0;
+
+
+	        boolean shouldDeleteOldImage =
+	                "1".equals(deleteImage)
+	                || hasNewImage;
+
+
+	        if (shouldDeleteOldImage && oldFile != null) {
+
+	            // S3에서 기존 파일 삭제
+	            fileService.deleteFile(
+	                    oldFile.getSave_file_name()
+	            );
+
+	            // DB에서 기존 파일 정보 삭제
+	            cmtyFileDao.deleteFile(fileNo);
+	        }
+
+
+	        // ========================================
+	        // 4. 새 이미지가 선택된 경우
+	        // ========================================
+
+	        if (hasNewImage) {
+
+	            // 새 파일 S3 저장
 	            StoredFile storedFile =
-	                    fileService.saveFile(imagePart, "community");
+	                    fileService.saveFile(
+	                            imagePart,
+	                            "community"
+	                    );
 
+
+	            // 원본 파일명
 	            String originalFileName =
 	                    storedFile.getOriginalFileName();
 
+
+	            // S3에 실제 저장된 파일명
 	            String objectKey =
 	                    storedFile.getStoredFileName();
 
 
-	            // 기존 파일이 있었다면
-	            // 기존 파일 정보가 삭제됐으므로 새 파일 INSERT
-	            CommunityFileDto fileDto =
+	            // DB 저장용 DTO
+	            CommunityFileDto newFile =
 	                    new CommunityFileDto(
 	                            cmtyNo,
 	                            originalFileName,
 	                            objectKey
 	                    );
 
-	            if (cmtyFileDao.fileSave(fileDto) != 1) {
 
-	                // DB 저장 실패하면 S3에 올라간 새 파일 삭제
+	            // DB에 새 파일 정보 저장
+	            if (cmtyFileDao.fileSave(newFile) != 1) {
+
+	                // DB 저장 실패하면
+	                // 방금 S3에 올린 파일 삭제
 	                fileService.deleteFile(objectKey);
 
+		        	System.out.println("새 파일 DB 저장 실패");
 	                return 0;
 	            }
 	        }
 
+
+	        // ========================================
+	        // 5. 수정 성공
+	        // ========================================
+
 	        return 1;
+
 
 	    } catch (Exception e) {
 
 	        e.printStackTrace();
+
 	        System.out.println("update() 오류!");
 
 	        return 0;
 	    }
 	}
-	
+	//커뮤니티 게시글, 댓글, 첨부파일 삭제
+	public int delete(Long cmtyNo, String memberEmail) {
+
+	    try {
+
+	        // 1. 게시글에 연결된 파일 조회
+	        List<CommunityFileDto> files = cmtyFileDao.getCmtyFiles(cmtyNo);
+
+	        // 2. S3 파일 삭제
+	        for (CommunityFileDto file : files) {
+
+	            String objectKey = file.getSave_file_name();
+
+	            if (objectKey != null && !objectKey.isBlank()) {
+	                fileService.deleteFile(objectKey);
+	            }
+	        }
+
+	        // 3. 첨부파일 DB 삭제
+	        for (CommunityFileDto file : files) {
+	            cmtyFileDao.deleteFile(file.getFile_no());
+	        }
+	        //4. 게시글 댓글들 삭제
+	        int commentDResult = cmtyCommentDao.deleteCommentsByCmtyNo(cmtyNo);
+	        if(commentDResult == 0){
+	        	System.out.println(cmtyNo+"번 게시글 댓글삭제 실패!!");
+	        	return commentDResult;
+	        } else {
+	        	// 5. 게시글 삭제
+		        int result = cmtydao.deleteCommunity(cmtyNo);
+		        return result;
+	        }
+	        
+
+	    } catch (Exception e) {
+
+	        e.printStackTrace();
+	        System.out.println("delete() 오류!");
+
+	        return 0;
+	    }
+	}
 	//게시물 상세조회
 	public CommunityDto getCommunityView(long cmtyno) {
 		CommunityDao cmtydao = new CommunityDao();
@@ -234,6 +342,11 @@ public class CommunityService {
 	public int setHitCount(long cmtyno) {
 		return cmtydao.setHitCount(cmtyno);
 	}
+	//댓글 삭제
+	public int deleteComment(Long commentNo) {
+		int result = cmtyCommentDao.deleteComment(commentNo);
+		return result;
+	}
 	
 	
 	//검색 조건 정규화
@@ -241,5 +354,7 @@ public class CommunityService {
 			if(searchType == null) searchType = "content";
 			return searchType;
 	    }
+
+		
 }
 

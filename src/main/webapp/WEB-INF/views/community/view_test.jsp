@@ -165,13 +165,20 @@ pageEncoding="UTF-8"%>
                                 value="${comment.reg_date}"
                                 pattern="yyyy-MM-dd HH:mm" />
                         </span>
-                        
-                        <c:if test="${comment.member_email eq cmtydto.getMember_email()}">
-                            <button
-                                type="button"
-                                class="delete-button">
-                                削除
-                            </button>
+                   <!-- 댓글삭제 -->
+                        <c:if test="${comment.member_email eq sessionEmail}">
+                            <form method="post"
+							      action="<%=request.getContextPath()%>/community/view"
+							      onsubmit="return confirm('コメントを削除しますか。');">
+							
+							    <input type="hidden" name="commentGubun" value="deleteComment">
+							    <input type="hidden" name="comment_no" value="${comment.comment_no}">
+							    <input type="hidden" name="cmty_no" value="${comment.cmty_no}">
+							
+							    <button type="submit" class="delete-button">
+							        削除
+							    </button>
+							</form>
                         </c:if>
 
                         <c:if test="${comment.is_delete eq 0}">
@@ -219,6 +226,21 @@ pageEncoding="UTF-8"%>
                                                     value="${reply.reg_date}"
                                                     pattern="yyyy-MM-dd HH:mm" />
                                             </span>
+                                            <!-- 댓글삭제 -->
+					                        <c:if test="${reply.member_email eq sessionEmail}">
+					                            <form method="post"
+												      action="<%=request.getContextPath()%>/community/view"
+												      onsubmit="return confirm('コメントを削除しますか。');">
+												
+												    <input type="hidden" name="commentGubun" value="deleteComment">
+												    <input type="hidden" name="comment_no" value="${reply.comment_no}">
+												    <input type="hidden" name="cmty_no" value="${reply.cmty_no}">
+												
+												    <button type="submit" class="delete-button">
+												        削除
+												    </button>
+												</form>
+					                        </c:if>
                                         </div>
 
                                     </div>
@@ -267,32 +289,39 @@ pageEncoding="UTF-8"%>
         </div>
 		</form> 
 <script>
-// 댓글폼 넘기기 전에 공백인지 확인, 공백일 시 알럿창 띄우고 포커스.
+//댓글/대댓글 등록 전 검사
 document.addEventListener("submit", function(event) {
 
-    const form = event.target;
+ const form = event.target;
 
-    // 일반 댓글 폼과 답글 폼만 검사
-    if (!form.matches(".comment-form, .reply-form")) {
-        return;
-    }
-    
-	const content = form.elements["content"];
-	
-	const sessionEmail = "${sessionScope.sessionEmail}";
-	if (!sessionEmail) { 
-		event.preventDefault(); 
-		alert("ログインしてください。"); 
-		if (confirm("ログインしますか？")) {
-			location.href = "<%=request.getContextPath()%>/login"; 
-		} 
-		return; 
-	}
-	if (checkEmpty(comment.content, "内容を入力してください。")) {
-		comment.content.focus();
-        event.preventDefault();
-        return;
-    }
+ // 일반 댓글 폼 또는 대댓글 폼만 검사
+ if (!form.matches(".comment-form") && !form.matches(".reply-form")) {
+     return;
+ }
+
+ // 현재 제출되는 form의 content를 가져옴
+ const content = form.elements["content"];
+
+ // 로그인 여부 확인
+ const sessionEmail = "${sessionScope.sessionEmail}";
+
+ if (!sessionEmail) {
+     event.preventDefault();
+
+     alert("ログインしてください。");
+
+     if (confirm("ログインしますか？")) {
+         location.href = "<%=request.getContextPath()%>/login";
+     }
+
+     return;
+ }
+
+ // 댓글 내용 공백 체크
+ if (checkEmpty(content, "内容を入力してください。")) {
+     event.preventDefault();
+     return;
+ }
 });
 </script>
     </section>
