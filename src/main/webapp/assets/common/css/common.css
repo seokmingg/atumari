@@ -9,3 +9,21 @@ html {
     scroll-behavior: smooth;
 }
 
+body {
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+iframe {
+    max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+    max-width: 100%;
+}
