@@ -111,7 +111,7 @@
                 <a href="<%=request.getContextPath()%>/community/view?cmtyNo=${cmtyHit.cmty_no}"
                    class="popular-item">
                     <div class="popular-number">
-                        1
+                        ${number}
                     </div>
                     <div class="popular-content">
                         <strong>
@@ -130,7 +130,7 @@
                         </span>
                     </div>
                 </a>
-                <c:set var="number" value="${number+1}" />
+                <c:set var="number" value="${number + 1}" />
                 </c:forEach>
             </div>
         </section>
