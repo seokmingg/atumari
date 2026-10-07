@@ -84,6 +84,26 @@ body.menu-open {
     display: none;
 }
 
+@media (min-width: 701px) {
+    .header-top {
+        position: relative;
+    }
+
+    .header-menu {
+        display: contents;
+    }
+
+    .main-nav {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .header-top .member-nav {
+        margin-left: auto;
+    }
+}
+
 @media (max-width: 700px) {
     .header,
     .header-top {

@@ -88,6 +88,12 @@ body.menu-open {
     display: none;
 }
 
+@media (min-width: 701px) {
+    .header-menu {
+        display: contents;
+    }
+}
+
 .nav a {
 
     color: #222;
