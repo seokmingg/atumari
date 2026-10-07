@@ -44,8 +44,8 @@
         <!-- PAGE TITLE -->
         <div class="community-write-title">
             <span>COMMUNITY</span>
-            <h1>投稿</h1>
-            <p>新しいポストを作成してください。</p>
+            <h1>ポスト修正</h1>
+            <p>ポストを修正してください。</p>
         </div>
 
 
@@ -55,10 +55,11 @@
   		<form class="community-write-form"
 			    name="cmtywrite"
 			    method="post"
-			    action="${pageContext.request.contextPath}/community/write"
+			    action="${pageContext.request.contextPath}/community/update"
 			    enctype="multipart/form-data"
 	    >
-
+	    
+		<input type="hidden" name="cmtyNo" value="${cmtydto.getCmty_no()}">
             <!-- =========================
                  POST HEADER
             ========================= -->
@@ -74,6 +75,7 @@
                         <input type="text"
                                name="title"
                                placeholder="タイトルを入力してください。"
+                               value="${cmtydto.getTitle()}"
                         >
                     </div>
 
@@ -92,14 +94,14 @@
                                value="${sessionScope.sessionName}"
                                readonly
                                style="color:black;"
-                               disabled="disabled">
+                               disabled="disabled"
+                               >
                     </div>
 
                 </div>
 
             </div>
-
-
+			
             <!-- =========================
                  POST BODY
             ========================= -->
@@ -114,35 +116,115 @@
 
                     <div class="community-write-field">
 
-                        <div class="community-image-upload">
-
-                            <input type="file"
-                                   id="community-image"
-                                   name="image"
-                                   accept="image/*"
-                                   onchange="setThumbnail(event);">
-
-                            <label for="community-image"
-                                   class="community-image-button">
-                                イメージ選択
-                            </label>
-
-                            <span class="community-image-name">
-                                新しいイメージをインプットしてください。
-                            </span>
-                            
-                        <p class="community-write-help">
-                            一番よく取れた写真を投稿してください。写真は一つだけ添付できます。
-                        </p>
-                        
-                        </div>
-                        
-                        <!-- 사진 프리뷰 -->
-						<div id="image_preview">
-						</div>
-						
+                        <!-- 이미지 업로드 영역 -->
+					<div class="community-image-upload">
+					
+					    <!--
+					        파일 선택 input
+					
+					        수정 페이지에서는 기존 파일을
+					        input type="file"에 넣을 수 없기 때문에
+					        새로운 파일을 선택할 때만 사용한다.
+					    -->
+					    <input type="file"
+					           id="community-image"
+					           name="image"
+					           accept="image/*"
+					           onchange="setThumbnail(event);">
+					    <!-- 파일 선택 버튼 -->
+					    <label for="community-image"
+					           class="community-image-button">
+					        イメージ選択
+					    </label>
+					    <!--
+					        선택한 파일 이름을 표시하는 영역
+					    -->
+					    <span class="community-image-name">
+					
+					        <!--
+					            기존 이미지가 있으면
+					            기존 이미지의 파일명을 보여줄 수도 있음.
+					
+					            이미지 이름을 따로 관리하지 않는다면
+					            아래 기본 문구를 사용하면 됨.
+					        -->
+					        新しいイメージをインプットしてください。
+					    </span>
+					
+					
+					    <p class="community-write-help">
+					        一番よく取れた写真を投稿してください。写真は一つだけ添付できます。
+					    </p>
+					
+					</div>
+					
+					
+					<!-- ==================================================
+					     사진 미리보기
+					     ================================================== -->
+					
+					<div id="image_preview">
+					
+					    <!--
+					        기존 이미지가 존재하는 경우에만 출력
+					
+					        fn:trim()을 이용해서
+					        null 또는 빈 문자열을 확인할 수 있다.
+					    -->
+					    <c:forEach var="file" items="${cmtyFiles}"> 
+					    <c:if test="${not empty file.file_no}">
+							
+					        <div class="image-preview-box">
+					
+					            <!--
+					                기존에 저장되어 있는 이미지 출력
+					
+					                S3 이미지 URL이 cmty.image에 들어있다고 가정
+					            -->
+					            <img src="${pageContext.request.contextPath}/community/file/image?fileNo=${file.file_no}"
+					                 class="community-preview-image"
+					                 alt="기존 이미지">
+								
+					            <!--
+					                기존 이미지 삭제 버튼
+					                onclick으로 JavaScript의
+					                deleteExistingImage() 실행
+					            -->
+					            <button type="button"
+					                    class="image-delete-button"
+					                    onclick="deleteExistingImage();">
+					                イメージ削除
+					            </button>
+								<!-- 기존 파일 번호 -->
+				                
+								
+					        </div>
+					        
+					    </c:if>
+					    </c:forEach>
+					
+					</div>
+					
+					
+					<!--
+					    기존 이미지 삭제 여부를 서버에 전달하기 위한 hidden input
+					
+					    0 = 기존 이미지 유지
+					    1 = 기존 이미지 삭제
+					
+					    수정 페이지에 처음 들어왔을 때는
+					    기존 이미지를 유지해야 하므로 0
+					-->
+					<input type="hidden"
+					       id="delete-image"
+					       name="deleteImage"
+					       value="0">
+					<c:if test="${cmtyFiles.size() ne 0}">       
+					<input type="text"
+	                       name="fileNo"
+	                       value="${cmtyFiles.get(0).file_no}">
+					</c:if>
                 	</div>
-				
 				</div>
 <script type="text/javascript">
 	function autoResize(textarea) {
@@ -162,7 +244,7 @@
                         <textarea name="content"
                                   placeholder="内容を入力してください。"
                                   oninput="autoResize(this)"
-                                  ></textarea>
+                                  >${cmtydto.getContent()}</textarea>
 
                     </div>
 
@@ -198,14 +280,14 @@
             <div class="community-write-actions">
 
                 <a class="community-write-cancel"
-                   href="${pageContext.request.contextPath}/community/list">
+                   href="${pageContext.request.contextPath}/community/view?cmtyNo=${cmtydto.getCmty_no()}">
                     キャンセル
                 </a>
 
                 <button type="submit"
                         class="community-write-submit"
                         >
-                    ポストする
+                    修正する
                 </button>
 
             </div>

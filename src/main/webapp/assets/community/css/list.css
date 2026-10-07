@@ -679,6 +679,15 @@
 
 }
 
+/* 리스트 공백 */
+.list-empty{
+	padding: 70px 20px;
+    border-bottom: 1px solid #eee;
+    color: #777;
+    text-align: center;
+    font-size: 14px;
+	
+}
 
 /* =========================
    PAGINATION

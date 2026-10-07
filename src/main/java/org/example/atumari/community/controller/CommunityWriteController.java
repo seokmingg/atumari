@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.example.atumari.community.dto.CommunityPostDto;
+import org.example.atumari.community.dto.CommunityDto;
 import org.example.atumari.community.service.CommunityService;
 import org.example.atumari.config.FileConfig;
 
@@ -36,52 +36,36 @@ public class CommunityWriteController extends HttpServlet {
             throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
 
-        // 로그인 사용자
+        // 로그인 사용자 (작성자)
         String sessionEmail =
                 (String) request.getSession().getAttribute("sessionEmail");
-
-        
         // 일반 form 데이터
         String title = request.getParameter("title");
+        	title = getSingleQuot(title);
         String content = request.getParameter("content");
+        	content = getSingleQuot(content);
         // 이미지 파일
         Part imagePart = request.getPart("image");
-
-	        // 값 확인
-	        System.out.println("==============================");
-	        System.out.println("sessionEmail : " + sessionEmail);
-	        System.out.println("title       : " + title);
-	        System.out.println("content     : " + content);
-	        System.out.println("image       : " + imagePart);
-	        System.out.println("==============================");
 	
-	        
-	     // DTO 생성
-	        CommunityPostDto cmtydto =
-	                new CommunityPostDto(
-	                        sessionEmail,
-	                        title,
-	                        content
-	                );
+	    // DTO 생성
+        CommunityDto cmtydto = new CommunityDto(sessionEmail,title,content);
 
-	        // 게시물 + 첨부파일 저장
-	        CommunityService communityService =
-	                new CommunityService();
-
-	        int result =
-	                communityService.write(cmtydto, imagePart);
-	        
-	        // 저장 성공
-	        if (result == 1) {
-	        	request.getRequestDispatcher(
-	        			"/WEB-INF/views/community/list.jsp"
-	    	        ).forward(request, response);
-
-	        } else {
-	        	request.getRequestDispatcher(
-	        			"/WEB-INF/views/community/write_test.jsp"
-	    	        ).forward(request, response);
-
-	        }
-       }
+        // 게시물 + 첨부파일 저장
+        CommunityService communityService = new CommunityService();
+        int result = communityService.write(cmtydto, imagePart);
+        System.out.println("result:"+result);
+        // 저장 성공
+        if (result == 1) {
+        	response.sendRedirect(request.getContextPath() + "/community");
+			return;
+        } else {
+        	request.getRequestDispatcher("/WEB-INF/views/community/write_test.jsp")
+        			.forward(request, response);
+        }
+    }
+    //작은따옴표 변환
+    private String getSingleQuot(String str) {
+		str = str.replaceAll("'", "&#39;");
+		return str;
+	}
 }

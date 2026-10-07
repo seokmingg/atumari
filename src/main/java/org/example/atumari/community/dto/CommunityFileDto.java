@@ -12,6 +12,15 @@ public class CommunityFileDto {
 		this.original_file_name = original_file_name;
 		this.save_file_name = save_file_name;
 	}
+	
+	//불러오기 dto
+	public CommunityFileDto(Long file_no, Long cmty_no, String original_file_name, String save_file_name) {
+		this.file_no = file_no;
+		this.cmty_no = cmty_no;
+		this.original_file_name = original_file_name;
+		this.save_file_name = save_file_name;
+	}
+
 
 	public Long getFile_no() {
 		return file_no;
