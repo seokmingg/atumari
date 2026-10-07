@@ -12,6 +12,7 @@ public class InquiryViewService {
 	private final InquiryDao inquiryDao = new InquiryDao();
 	private final InquiryFileDao inquiryFileDao = new InquiryFileDao();
 	
+	
 	// 문의글 상세조회
 	public InquiryDto getInquiryView(int inquiryNo) {
 		

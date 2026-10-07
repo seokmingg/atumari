@@ -59,7 +59,9 @@
 .board-header,
 .board-row {
     display: grid;
-    grid-template-columns: 70px 1fr 90px 140px 120px 130px;
+    /* 번호 / 제목 / 첨부 / 작성자 / 공개 여부 / 상태 / 작성일 */
+    grid-template-columns:
+        70px minmax(0, 1fr) 90px 140px 100px 120px 130px;
     align-items: center;
 }
 
@@ -87,6 +89,7 @@
 
 .board-no,
 .board-writer,
+.board-public,
 .board-status,
 .board-date {
     text-align: center;

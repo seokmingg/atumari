@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <!DOCTYPE html>
 
@@ -31,14 +33,14 @@
             <span>COMMUNITY</span>
             <h1>コミュニティ</h1>
             <p>
-                
+                お祭りでの思い出を集めましょう！
             </p>
         </div>
 
         <!-- =========================
              SEARCH AREA
         ========================== -->
-
+		<form name="search">
         <div class="community-search-area">
 
 
@@ -46,37 +48,17 @@
 
             <div class="community-search">
 
-                <select name="search">
-
-                    <option value="content">
-                        内容
-                    </option>
-
-                    <option value="title">
-                        タイトル
-                    </option>
-
-                    <option value="title_content">
-                        タイトル＋内容
-                    </option>
-
-                    <option value="writer">
-                        投稿者
-                    </option>
+                <select name="searchType">
+	                <option value="content">　内容　</option>
+                    <option value="title">　タイトル　</option>
+                    <option value="title_content">　タイトル＋内容　</option>
+                    <option value="writer">　投稿者　</option>
 
                 </select>
 
+                <input type="text" placeholder="検索してください" name="search">
 
-                <input
-                    type="text"
-                    placeholder="検索してください">
-
-
-                <button type="button">
-
-                    検索
-
-                </button>
+                <button type="button"> 検索 </button>
 
             </div>
 
@@ -89,31 +71,19 @@
                     表示件数
                 </span>
 
-                <select>
-
-                    <option>
-                        10件
-                    </option>
-
-                    <option>
-                        20件
-                    </option>
-
-                    <option>
-                        30件
-                    </option>
-
-                    <option>
-                        50件
-                    </option>
-
+                <select name="postCount">
+                    <option value="10">　10件　</option>
+                    <option value="20"> 20件 </option>
+                    <option value="30"> 30件 </option>
+                    <option value="50"> 50件 </option>
                 </select>
 
             </div>
 
 
         </div>
-
+        
+		</form>
 
 
         <!-- =========================
@@ -124,13 +94,7 @@
 
             <p>
 
-                全
-
-                <strong>
-                    128
-                </strong>
-
-                件
+                全<strong> ${cmtyPage.getTotalCount()} </strong>件
 
             </p>
 
@@ -339,252 +303,50 @@
 
 
             </div>
-
-
-
-            <!-- =========================
-                 POST 01
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    初めて日本の祭りに参加しました！
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    祭り好き
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-09-04
-
-                </div>
-
-
-                <div class="list-view">
-
-                    328
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 24
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- =========================
-                 POST 02
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    大阪でおすすめの祭りを教えてください
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    大阪旅行中
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-09-03
-
-                </div>
-
-
-                <div class="list-view">
-
-                    217
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 18
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- =========================
-                 POST 03
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    秋に開催されるおすすめの祭り
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    秋祭り
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-09-02
-
-                </div>
-
-
-                <div class="list-view">
-
-                    185
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 12
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- =========================
-                 POST 04
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    祭りに行くときの服装について
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    夏休み
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-09-01
-
-                </div>
-
-
-                <div class="list-view">
-
-                    154
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 9
-
-                </div>
-
-
-            </a>
-
-
-
-            <!-- =========================
-                 POST 05
-            ========================== -->
-
-            <a href="<%=request.getContextPath()%>/community/view"
-               class="community-row">
-
-
-                <div class="list-title">
-
-                    初心者におすすめの日本の祭りはありますか？
-
-                </div>
-
-
-                <div class="list-writer">
-
-                    日本旅行
-
-                </div>
-
-
-                <div class="list-date">
-
-                    2026-08-31
-
-                </div>
-
-
-                <div class="list-view">
-
-                    132
-
-                </div>
-
-
-                <div class="list-like">
-
-                    ♥ 7
-
-                </div>
-
-
-            </a>
-				
-				
-
+		 	<c:choose> 
+			<c:when test="${not empty cmtyPage.cmtyList}">
+			<c:forEach var="cmty" items="${cmtyPage.cmtyList}" varStatus="status">
+	            <!-- =========================
+	                 POST 
+	            ========================== -->
+			
+	            <a href="<%=request.getContextPath()%>/community/view?cmtyNo=${cmty.cmty_no}"
+	               class="community-row">
+	
+	                <span class="list-title">
+	                    <c:out value="${cmty.title}"/>
+	                </span>
+	
+	                <span class="list-writer">
+	                    <c:out value="${cmty.member_name}"/>
+	                </span>
+	
+	                <span class="list-date">
+	                    <c:out value="${cmty.reg_date}"/>
+	                </span>
+	                
+	                <span class="list-view">
+	                    <c:out value="${cmty.hit}"></c:out>
+	                </span>
+	
+	                <span class="list-like">
+	                    ♥ 0
+	                </span>
+	
+	
+	            </a>
+			</c:forEach>
+			</c:when>
+			 <c:otherwise>
+                    <div class="list-empty">検索結果がありません。</div>
+                </c:otherwise>
+            </c:choose>
         </div>
         
         <div class="community-write">
 			<a href="<%=request.getContextPath()%>/community/write"
                class="write-button">
-
                 投稿する
-
             </a>
 		</div>
 
@@ -592,68 +354,76 @@
              PAGINATION
         ========================== -->
 
-        <div class="community-pagination">
-
-
+ <!--        <div class="community-pagination">
             <a href="#"
                class="page-prev">
-
                 ←
-
             </a>
-
-
             <a href="#"
                class="active">
-
                 1
-
             </a>
-
-
             <a href="#">
-
                 2
-
             </a>
-
-
             <a href="#">
-
                 3
-
             </a>
-
-
             <a href="#">
-
                 4
-
             </a>
-
-
             <a href="#">
-
                 5
-
             </a>
-
-
             <a href="#"
                class="page-next">
-
                 →
-
             </a>
-
-
         </div>
+  -->      
+        <c:if test="${cmtyPage.totalPage > 1}">
+            <div class="community-pagination">
+                <c:if test="${cmtyPage.startPage > 1}">
+                    <c:url var="previousPageUrl" value="/community">
+                        <c:param name="page" value="${cmtyPage.startPage - 1}"/>
+                        <c:param name="searchType" value="${cmtyPage.searchType}"/>
+                        <c:param name="search" value="${cmtyPage.search}"/>
+                    </c:url>
+                    <a href="${previousPageUrl}" class="page-prev">←</a>
+                </c:if>
 
+                <c:forEach var="pageNumber"
+                           begin="${cmtyPage.startPage}"
+                           end="${cmtyPage.endPage}">
+                    <c:url var="pageUrl" value="/community">
+                        <c:param name="page" value="${pageNumber}"/>
+                        <c:param name="searchType" value="${cmtyPage.searchType}"/>
+                        <c:param name="search" value="${cmtyPage.search}"/>
+                    </c:url>
+                    <a href="${pageUrl}"
+                       class="${pageNumber eq cmtyPage.currentPage ? 'active' : ''}">
+                        ${pageNumber}
+                    </a>
+                </c:forEach>
+
+                <c:if test="${cmtyPage.endPage < cmtyPage.totalPage}">
+                    <c:url var="nextPageUrl" value="/community">
+                        <c:param name="page" value="${cmtyPage.endPage + 1}"/>
+                        <c:param name="searchType" value="${cmtyPage.searchType}"/>
+                        <c:param name="search" value="${cmtyPage.search}"/>
+                    </c:url>
+                    <a href="${nextPageUrl}" class="page-next">→</a>
+                </c:if>
+            </div>
+        </c:if>
+        
 
     </div>
+    
 
 </main>
 
+ 
 
 
 <!-- =========================
