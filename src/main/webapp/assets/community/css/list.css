@@ -1057,5 +1057,10 @@
         height: 32px;
 
     }
-
+    
 }
+
+	.warning_text{
+		color:gray;
+		font-size: 13px;
+	}
