@@ -30,7 +30,7 @@ public class InquiryDto {
 
     
     // writeController 
-		public InquiryDto( Long member_id, String title, String writer, boolean isPublic, String content, String email) 
+		public InquiryDto( Long member_id, String title, String writer, boolean isPublic, String content) 
 		{
 			super();
 			this.title = title;
@@ -38,7 +38,6 @@ public class InquiryDto {
 			this.member_id = member_id;
 			this.isPublic = isPublic;
 			this.content = content;
-			this.email = email;
 		}
 
 		public InquiryDto() {

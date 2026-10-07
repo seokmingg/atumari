@@ -55,6 +55,14 @@ function setThumbnail(event) {
 			// 파일 이름을 원래 문구로 변경
 			    var imageName = document.querySelector(".community-image-name");
 			    imageName.innerText = "新しいイメージをインプットしてください。";
+				
+			/*
+             * 기존 이미지도 삭제하는 것으로 처리
+             *
+             * 서버에서 deleteImage = 1을 확인해서
+             * 기존 S3 파일과 DB 데이터를 삭제한다.
+             */
+            document.querySelector("#delete-image").value = "1";
 			
         });
 
@@ -66,5 +74,29 @@ function setThumbnail(event) {
 
     reader.readAsDataURL(file);
 }
+// ======================================================
+// 수정 페이지에서 기존 이미지 삭제
+// ======================================================
+function deleteExistingImage() {
 
+    // 미리보기 영역
+    var preview = document.querySelector("#image_preview");
+
+    // 기존 이미지 미리보기 삭제
+    preview.innerHTML = "";
+
+
+    // 기존 이미지 삭제 여부를 1로 변경
+    //
+    // 서버에서는 이 값을 확인해서
+    // 기존 S3 파일과 DB 정보를 삭제하면 됨.
+    document.querySelector("#delete-image").value = "1";
+
+
+    // 파일 이름 문구 변경
+    var imageName = document.querySelector(".community-image-name");
+
+    imageName.innerText =
+        "新しいイメージをインプットしてください。";
+}
 

@@ -41,7 +41,9 @@
         <div class="detail-label">タイトル</div>
         <h2>${inquiryDto.title}</h2>
       </div>
-      <span class="status-badge status-completed">${inquiryDto.status}</span>
+      <span class="status-badge ${inquiryDto.status eq 'COMPLETED' ? 'status-completed' : 'status-waiting'}">
+      	${inquiryDto.status}
+      </span>
     </div>
   </div>
   <div class="detail-meta">
@@ -79,10 +81,10 @@
   <div class="answer-body">
    <c:choose>
    		<%-- 답변 완료 --%>
-   		<c:when test="${inquiryDto.answer_content eq 'COMPLETED'}">
-   			${inquiryDto.answer_content}
-   		</c:when>
-   		
+   		<c:when test="${inquiryDto.status eq 'COMPLETED'}">
+            <div class="answer-content"><c:out value="${inquiryDto.answer_content}" /></div>
+        </c:when>
+        
    		<%-- 답변 대기 --%>
    		<c:otherwise>
                 まだ回答は登録されていません。
@@ -129,9 +131,5 @@
 </footer>
 
 
-<!-- =========================
-     SCRIPT
-========================== -->
-<script src="inquiry.js"></script>
 </body>
 </html>

@@ -64,7 +64,17 @@
     line-height: 1.9;
     color: #555;
     min-height: 150px;
-    white-space: pre-wrap; /*관리자가 입력한 줄바꿈을 유지해서 보여줄 수 있음*/
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.answer-content {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 .detail-actions {

@@ -51,9 +51,20 @@ public class InquiryUpdateController extends HttpServlet {
 		    Long memberId =
 		            (Long) session.getAttribute("sessionId");
 		    
-		    // 수정할 문의 번호
-		  	String inquiryNoParam = request.getParameter("inquiryNo");
-	        int inquiryNo = Integer.parseInt(inquiryNoParam);
+		 
+		    // 문의 글 번호 , 사용자가 값을 문자열이나 확인불가한 문자로 값을 변경할 경우를 대비
+		    int inquiryNo;
+		    try {
+		        inquiryNo = Integer.parseInt(request.getParameter("inquiryNo"));
+		        //양수가 맞는 지 확인
+		        if (inquiryNo <= 0) {
+		            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		            return;
+		        }
+		    } catch (NumberFormatException e) {
+		        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		        return;
+		    }
 	        
 	        // 문의글 상세조회
 		  	InquiryDto inquiryDto = inquiryViewService.getInquiryView(inquiryNo);
@@ -95,17 +106,27 @@ public class InquiryUpdateController extends HttpServlet {
 				    return;
 				}
 		   
-		   		int inquiryNo = Integer.parseInt(request.getParameter("inquiryNo"));
-
+		   // 문의 글 번호 , 사용자가 값을 문자열이나 확인불가한 문자로 값을 변경할 경우를 대비
+			    int inquiryNo;
+			    try {
+			        inquiryNo = Integer.parseInt(request.getParameter("inquiryNo"));
+			        //양수가 맞는 지 확인
+			        if (inquiryNo <= 0) {
+			            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			            return;
+			        }
+			    } catch (NumberFormatException e) {
+			        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			        return;
+			    }
+			    
 			    String title = request.getParameter("title");
 			  
 			    String writer = (String) session.getAttribute("sessionName");
 			    Long memberId = (Long)session.getAttribute("sessionId");
 			    
 			    boolean isPublic = "1".equals(request.getParameter("isPublic"));
-			    boolean emailNotify = "1".equals(request.getParameter("emailNotify"));
 
-			    String email = request.getParameter("email");
 			    String content = request.getParameter("content");
 
 			    InquiryDto inquiry = new InquiryDto();
@@ -115,7 +136,6 @@ public class InquiryUpdateController extends HttpServlet {
 			    inquiry.setTitle(title);
 			    inquiry.setWriter(writer);
 			    inquiry.setPublic(isPublic);
-			    inquiry.setEmail(email);
 			    inquiry.setContent(content);
 			    
 			    // 삭제할 기존 첨부파일
@@ -143,7 +163,7 @@ public class InquiryUpdateController extends HttpServlet {
 			   try {
 
 				    // 문의 글 및 첨부파일 수정
-				    inquiryService.updateInquiry(inquiry,deleteFileNos,newFiles,emailNotify);
+				    inquiryService.updateInquiry(inquiry,deleteFileNos,newFiles);
 
 				    // 수정 성공 → 상세 페이지로 이동
 				    response.sendRedirect(
@@ -152,9 +172,15 @@ public class InquiryUpdateController extends HttpServlet {
 				        + inquiryNo
 				    );
 
+				} catch (SecurityException e) {
+					
+					// 사용자가 문의 접근권한이 없는 경우: 첨부파일을 조회하지 않고 목록으로 이동
+					response.sendRedirect(request.getContextPath()+"/inquiry/list");
+					return;
+					
 				} catch (IllegalArgumentException e) { // RuntimeException의 자식 클래스로 구체적인 예외 먼저 작성
 
-				    // 사용자 입력값 등의 검증 실패
+				    // 입력값 등의 검증 실패
 				    request.setAttribute(
 				        "errorMessage",
 				        e.getMessage()

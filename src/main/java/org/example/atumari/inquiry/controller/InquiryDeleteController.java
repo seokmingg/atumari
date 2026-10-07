@@ -46,7 +46,7 @@ public class InquiryDeleteController extends HttpServlet {
 		 // 삭제할 문의글 번호
 		 int inquiryNo = Integer.parseInt(request.getParameter("inquiryNo"));
 	
-		 // 문의 삭제
+		 // 문의 삭제 (작성자 본인 및 관리자 확인 후 삭제)
 		 inquiryService.deleteInquiry(inquiryNo, memberId, isAdmin);
 		 
 		 // 삭제 성공 후 목록으로 이동

@@ -136,3 +136,48 @@
     
     cursor: pointer;
 }
+
+@media (max-width: 600px) {
+    .mypage {
+        min-height: 100svh;
+        padding: 104px 0 64px;
+    }
+
+    .mypage-inner {
+        width: calc(100% - 32px);
+    }
+
+    .mypage-title {
+        margin-bottom: 32px;
+    }
+
+    .mypage-title h1 {
+        font-size: 34px;
+    }
+
+    .member-info {
+        padding: 28px 20px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 8px;
+        padding: 18px 0;
+    }
+
+    .info-row span {
+        width: auto;
+    }
+
+    .info-button {
+        display: grid;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .info-button a,
+    .info-button .member-exit-button {
+        width: 100%;
+        min-height: 46px;
+    }
+}

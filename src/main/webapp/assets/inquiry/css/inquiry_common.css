@@ -104,6 +104,24 @@ a {
     background: #444;
 }
 
+.primary-button.answer-delete {
+    background-color: #a84b4b;
+    color: #fff;
+}
+
+.primary-button.answer-delete:hover {
+    background-color: #913b3b;
+}
+
+.primary-button.answer-delete:active {
+    background-color: #7c3030;
+}
+
+.primary-button.answer-delete:focus-visible {
+    outline: 3px solid #a84b4b;
+    outline-offset: 3px;
+}
+
 .status-badge,
 .public-badge {
     display: inline-block;
@@ -131,6 +149,16 @@ a {
 .public-private {
     background: #f3c6cf;
     color: #7a3d48;
+}
+
+.form-error {
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    border: 1px solid #e4b8bd;
+    background: #fff1f2;
+    color: #8a3540;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 @media (max-width: 900px) {

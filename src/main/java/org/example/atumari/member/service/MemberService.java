@@ -51,9 +51,9 @@ public class MemberService {
 				throw new IllegalArgumentException("パスワードは8文字以上20文字以下で入力してください。");
 			}
 			
-			if (!signup.getAgree()) { // 이용약관 동의 체크박스
-				throw new IllegalArgumentException("利用規約とプライバシーポリシーに同意してください.");
-			}
+//			if (!signup.getAgree()) { // 이용약관 동의 체크박스 -> refactor: 검증 삭제
+//				throw new IllegalArgumentException("利用規約とプライバシーポリシーに同意してください.");
+//			}
 			
 			// 회원 정보
 			MemberDto memberDto = new MemberDto();
