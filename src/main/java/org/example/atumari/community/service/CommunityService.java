@@ -39,8 +39,9 @@ public class CommunityService {
 		//검색 조건 정규화
     	String normalizedSearchType = normalizeSearchType(searchType);
         String normalizedKeyword = search == null ? "" : search.trim();
+        
         int totalCount = cmtydao.countCommunity(normalizedSearchType, normalizedKeyword);
-        System.out.println("totalcount :"+totalCount);
+        
         PAGE_SIZE = postCount == 1 ? 10 : postCount;
         Pagination pagination = Pagination.of(currentPage, PAGE_SIZE, PAGE_GROUP_SIZE, totalCount);
 
@@ -247,15 +248,23 @@ public class CommunityService {
 	        for (CommunityFileDto file : files) {
 	            cmtyFileDao.deleteFile(file.getFile_no());
 	        }
-	        //4. 게시글 댓글들 삭제
-	        int commentDResult = cmtyCommentDao.deleteCommentsByCmtyNo(cmtyNo);
-	        if(commentDResult == 0){
-	        	System.out.println(cmtyNo+"번 게시글 댓글삭제 실패!!");
-	        	return commentDResult;
-	        } else {
+	        // 4. 댓글 유무 
+	        List<CommunityCommentDto> commentCount = cmtyCommentDao.getCommunityCommentView(cmtyNo);
+	        if(commentCount.size() == 0) {
 	        	// 5. 게시글 삭제
-		        int result = cmtydao.deleteCommunity(cmtyNo);
+	        	int result = cmtydao.deleteCommunity(cmtyNo);
 		        return result;
+	        } else {
+	        	//게시글 댓글들 삭제
+		        int commentDResult = cmtyCommentDao.deleteCommentsByCmtyNo(cmtyNo);
+		        if(commentDResult == 0){
+		        	System.out.println(cmtyNo+"번 게시글 댓글삭제 실패!!");
+		        	return commentDResult;
+		        } else {
+		        	// 5. 게시글 삭제
+		        	int result = cmtydao.deleteCommunity(cmtyNo);
+			        return result;
+		        }
 	        }
 	        
 
@@ -347,13 +356,16 @@ public class CommunityService {
 		int result = cmtyCommentDao.deleteComment(commentNo);
 		return result;
 	}
-	
-	
 	//검색 조건 정규화
-		private String normalizeSearchType(String searchType) {
-			if(searchType == null) searchType = "content";
-			return searchType;
-	    }
+	private String normalizeSearchType(String searchType) {
+		if(searchType == null) searchType = "content";
+		return searchType;
+    }
+	//인기글 리스트 
+	public List<CommunityDto> getCommunityHitList() {
+		List<CommunityDto> dtos = cmtydao.getCommunityHitList();
+		return dtos;
+	}
 
 		
 }

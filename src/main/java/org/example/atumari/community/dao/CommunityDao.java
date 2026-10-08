@@ -141,16 +141,24 @@ public class CommunityDao {
 	//게시물 총 갯수
 	public int countCommunity(String searchType, String search) {
 		int count = 0;
-		StringBuilder sql = new StringBuilder("SELECT COUNT(*) as count FROM atumari.community\r\n");
+		StringBuilder sql = new StringBuilder(
+				"SELECT COUNT(*) AS count " +
+		        "FROM atumari.community c " +
+		        "JOIN atumari.member m ON c.member_id = m.id\r\n"
+		);
 		boolean hasKeyword = search != null && !search.isBlank();
 
         if (hasKeyword) {
-            sql.append(" WHERE ");
-            if(searchType.equals("content")) sql.append("content like ?");
-            else if(searchType.equals("title")) sql.append("title like ?");
-            else if(searchType.equals("content_title")) {
-            	sql.append("(content like ? or title like ?)");
-            }
+        	sql.append("WHERE ");
+        	 if ("content".equals(searchType)) {
+                 sql.append("c.content LIKE ?");
+             } else if ("title".equals(searchType)) {
+                 sql.append("c.title LIKE ?");
+             } else if ("content_title".equals(searchType)) {
+                 sql.append("(c.content LIKE ? OR c.title LIKE ?)");
+             } else if ("writer".equals(searchType)) {
+                 sql.append("m.name LIKE ?");
+             }
         }
 		
 		try {
@@ -179,20 +187,19 @@ public class CommunityDao {
 			String search) {
 		List<CommunityDto> dtos = new ArrayList<CommunityDto>();
 		StringBuilder sql = new StringBuilder(
-				"select c.cmty_no, m.name, c.title, c.content,  DATE_FORMAT(c.reg_date, '%Y.%m.%d.') AS reg_date, c.hit\r\n"
+				"select c.cmty_no, m.name, c.title, c.content, DATE_FORMAT(c.reg_date, '%Y.%m.%d.') AS reg_date, c.hit\r\n"
 				+ "from atumari.community c, atumari.member m\r\n"
 				+ "where c.member_id = m.id\r\n");
 		boolean hasKeyword = search != null && !search.isBlank();
 
         if (hasKeyword) {
             sql.append(" AND ");
-            if(searchType.equals("content")) sql.append("content like ?");
-            else if(searchType.equals("title")) sql.append("title like ?");
-            else if(searchType.equals("content_title")) {
-            	sql.append("(content like ? or title like ?)");
-            }
+            if(searchType.equals("content")) sql.append("c.content like ?");
+            else if(searchType.equals("title")) sql.append("c.title like ?");
+            else if(searchType.equals("content_title")) sql.append("(c.content like ? or c.title like ?)");
+            else if(searchType.equals("writer")) sql.append("m.name like ?");
+            
         }
-        
         sql.append(" ORDER BY c.cmty_no DESC LIMIT ? OFFSET ?");
 		
 		try {
@@ -255,7 +262,30 @@ public class CommunityDao {
 		}
 		return dto;
 	}
-	
+	//인기글 불러오기 
+	public List<CommunityDto> getCommunityHitList() {
+		List<CommunityDto> dtos = new ArrayList<CommunityDto>();
+		String sql = "select c.cmty_no, m.name, c.title, c.content, DATE_FORMAT(c.reg_date, '%Y.%m.%d.') AS reg_date, c.hit\r\n"
+				+ "from atumari.community c\r\n"
+				+ "JOIN atumari.member m ON m.id = c.member_id\r\n"
+				+ "WHERE c.hit >= 50\r\n"
+				+ "ORDER BY c.hit DESC, c.cmty_no desc\r\n"
+				+ "LIMIT 3";
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(sql.toString());
+			rs = ps.executeQuery();
+            while (rs.next()) {
+            	dtos.add(mapCmty(rs));
+            }
+		} catch(Exception e) {
+			e.printStackTrace();
+            System.out.println("getCommunityHitList() 오류 :"+ps.toString());
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		return dtos;
+	}
 	
 
 	//리스트 저장
@@ -269,5 +299,6 @@ public class CommunityDao {
 												0);
 	        return cmty;
 	    }
+		
 	
 }
