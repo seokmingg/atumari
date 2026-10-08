@@ -67,7 +67,7 @@
 
 会員、祭り、コミュニティ、お問い合わせ機能で使用するテーブル構成とリレーションは、ERDCloudで確認できます。
 
-### [あつまりのERDを見る](https://www.erdcloud.com/d/okiHje2oA8gQgmZp3)
+### [あつまりのERDを見る](https://dbdiagram.io/d/6ac7551da5ab2804191c890a)
 
 ## プロジェクト構成
 
