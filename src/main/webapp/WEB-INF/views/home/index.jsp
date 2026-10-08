@@ -41,8 +41,12 @@
             <div class="logo-sub">MATSURI GUIDE</div>
         </a>
 
-        <!-- NAV -->
-        <nav class="nav">
+        <button type="button" class="mobile-menu-button" aria-label="メニューを開く" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+
+        <div class="header-menu">
+        <nav class="nav main-nav">
             <a href="#festival-section">今月の祭り</a>
             <a href="#article">季節から探す</a>
             <a href="#region">地域から探す</a>
@@ -98,7 +102,9 @@
 
 </div>
 
-       
+        </div>
+
+    </div>
 
 </header>
 

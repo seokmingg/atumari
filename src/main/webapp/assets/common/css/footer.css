@@ -144,3 +144,33 @@
     color: #666;
     font-size: 11px;
 }
+
+@media (max-width: 700px) {
+    .footer {
+        padding: 56px 0 24px;
+    }
+
+    .footer-inner {
+        width: calc(100% - 32px);
+        flex-direction: column;
+        gap: 36px;
+    }
+
+    .footer-menu {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .footer-menu a {
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+        border-bottom: 1px solid #292929;
+    }
+
+    .footer-bottom {
+        width: calc(100% - 32px);
+        margin-top: 40px;
+    }
+}

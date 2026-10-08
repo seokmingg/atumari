@@ -631,6 +631,28 @@ color: #d85b6b;
 
 }
 
+.delete-button {
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #999;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+}
+
+.delete-button:hover {
+
+    color: #333;
+
+}
+
 
 
 /* =========================
@@ -1147,6 +1169,8 @@ color: #d85b6b;
 
 /* 대댓글 날짜 */
 .reply-footer {
+	display: flex;
+	gap: 15px;
     margin-top: 8px;
     color: #aaa;
     font-size: 11px;

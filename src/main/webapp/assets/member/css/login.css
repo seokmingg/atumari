@@ -301,3 +301,36 @@ body {
 .signup-agree input {
     margin: 0;
 }
+
+@media (max-width: 600px) {
+    .login-page {
+        min-height: 100svh;
+        padding: 88px 16px 40px;
+        align-items: flex-start;
+    }
+
+    .login-box {
+        max-width: 100%;
+        padding: 36px 20px;
+    }
+
+    .login-title {
+        margin-bottom: 30px;
+    }
+
+    .login-title h1 {
+        font-size: 28px;
+    }
+
+    .input-group input,
+    .login-button {
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    .login-options {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+}

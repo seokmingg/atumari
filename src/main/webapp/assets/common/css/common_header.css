@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+body.menu-open {
+    overflow: hidden;
+}
+
 /* =========================
    COMMON HEADER
    ========================= */
@@ -72,6 +76,22 @@
 
     gap: 40px;
 
+}
+
+.header-menu {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.mobile-menu-button {
+    display: none;
+}
+
+@media (min-width: 701px) {
+    .header-menu {
+        display: contents;
+    }
 }
 
 .nav a {
@@ -613,27 +633,110 @@
 @media (max-width: 700px) {
 
     .header {
-        padding: 0 20px;
+        height: 64px;
+        padding: 0 16px;
     }
 
-    .nav {
-        gap: 15px;
+    .logo-main {
+        font-size: 21px;
+        letter-spacing: 4px;
     }
 
-    .member-nav {
-        margin-left: 15px;
+    .header-menu {
+        position: fixed;
+        inset: 64px 0 0;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 28px 24px 40px;
+        overflow-y: auto;
+        background: #fff;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-12px);
+        transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+    }
+
+    .header.menu-open .header-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .header-menu .nav {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .header-menu .nav a {
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        font-size: 15px;
+    }
+
+    .header-menu .member-nav {
+        margin: 20px 0 0;
+    }
+
+    .header-menu .member-nav span {
+        display: none;
+    }
+
+    .mobile-menu-button {
+        order: 3;
+        width: 44px;
+        height: 44px;
+        margin-left: 8px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .mobile-menu-button span {
+        width: 22px;
+        height: 2px;
+        display: block;
+        background: currentColor;
+        transition: transform .2s ease, opacity .2s ease;
+    }
+
+    .header.menu-open .mobile-menu-button span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .header.menu-open .mobile-menu-button span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .header.menu-open .mobile-menu-button span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
     }
 
     .header-search {
-        margin-left: 15px;
+        order: 2;
+        margin-left: auto;
     }
 
     .search-panel {
-        padding: 25px 20px;
+        height: calc(100svh - 64px);
+        padding: 22px 16px 40px;
+        overflow-y: auto;
     }
 
     .search-content {
-        gap: 15px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
     }
 
     .search-keyword {
@@ -641,7 +744,27 @@
     }
 
     .search-date {
-        width: 200px;
+        width: 100%;
+    }
+
+    .search-submit {
+        width: 100%;
+        min-width: 0;
+        min-height: 48px;
+    }
+
+    .header.search-open .search-header {
+        position: fixed;
+        top: 64px;
+        height: calc(100svh - 64px);
+    }
+
+    .header .search-header .header-calendar {
+        position: static;
+        width: min(320px, 100%);
+        min-width: 0;
+        max-width: 100%;
+        margin-top: 12px;
     }
 
 }
@@ -655,6 +778,16 @@
 
 .header .search-header {
     overflow: visible;
+}
+
+@media (max-width: 700px) {
+    .header .search-header .header-calendar {
+        position: static;
+        width: min(320px, 100%);
+        min-width: 0;
+        max-width: 100%;
+        margin-top: 12px;
+    }
 }
 
 .header .search-header .header-calendar {
@@ -782,4 +915,24 @@
 
     box-shadow:
         0 6px 12px rgba(0, 0, 0, 0.18);
+}
+
+@media (max-width: 700px) {
+    .header .search-header .header-calendar {
+        position: static;
+        width: min(320px, 100%);
+        min-width: 0;
+        max-width: 100%;
+        margin-top: 12px;
+    }
+
+    .date-select-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .header-calendar-reset {
+        width: 100%;
+        min-height: 44px;
+    }
 }

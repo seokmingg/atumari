@@ -110,10 +110,8 @@ public class FileService {
 	 * @throws IllegalArgumentException 파일이 허용 조건을 만족하지 않을 때
 	 */
 	public void validateFiles(List<Part> files) {
-		//파일 개수 
-		if(files.size() > MAX_FILE_COUNT) {
-			throw new IllegalArgumentException("添付ファイルは3個まで登録できます。");
-		}
+		  //파일 개수 검증
+	    validateFileCount(files.size());
 		
 		for(Part file : files) {
 			
@@ -145,6 +143,17 @@ public class FileService {
 			}
 		}
 		
+	}
+	
+	//최종 파일개수 검사
+	public void validateFileCount(int fileCount) {
+
+	    if (fileCount > MAX_FILE_COUNT) {
+
+	        throw new IllegalArgumentException(
+	            "添付ファイルは3個まで登録できます。"
+	        );
+	    }
 	}
 
 
