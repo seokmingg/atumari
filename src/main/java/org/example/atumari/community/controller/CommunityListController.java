@@ -38,7 +38,7 @@ public class CommunityListController extends HttpServlet {
                 currentPage, searchType, search, postCount);
         //인기글 리스트 불러오기
         List<CommunityDto> cmtyHits = communityService.getCommunityHitList();
-        
+       
         request.setAttribute("cmtyPage", cmtyPage);
         request.setAttribute("cmtyHits", cmtyHits);
         
