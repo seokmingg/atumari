@@ -696,7 +696,7 @@ pageEncoding="UTF-8"%>
             <div class="festival-review-edit-actions">
 
                 <button type="submit">
-                    修整
+                    修正
                 </button>
 
                 <button

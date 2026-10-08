@@ -42,7 +42,7 @@
             
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a href="${pageContext.request.contextPath}/my-info">
-                自分情報
+                マイページ 
             </a>
 
             <span>|</span>

@@ -247,7 +247,7 @@ function loadMoreReviews() {
                         "submit";
 
                     updateButton.textContent =
-                        "修整";
+                        "修正";
 
 
                     const cancelButton =
