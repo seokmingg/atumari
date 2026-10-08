@@ -65,6 +65,13 @@
                     2027年 祭り一覧 →
 
                 </a>
+
+                <a href="${pageContext.request.contextPath}/festival/list?type=month&year=2028&month=${month}"
+                   class="card-list-button">
+
+                    2028年 祭り一覧 →
+
+                </a>
             </div>
 
         </div>

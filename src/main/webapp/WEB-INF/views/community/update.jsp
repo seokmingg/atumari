@@ -220,7 +220,7 @@
 					       name="deleteImage"
 					       value="0">
 					<c:if test="${cmtyFiles.size() ne 0}">       
-					<input type="text"
+					<input type="hidden"
 	                       name="fileNo"
 	                       value="${cmtyFiles.get(0).file_no}">
 					</c:if>

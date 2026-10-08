@@ -1238,3 +1238,9 @@ color: #d85b6b;
 .reply-write-bottom button:hover {
     background: #f5f5f5;
 }
+
+
+.warning_text{
+		color:gray;
+		font-size: 13px;
+}

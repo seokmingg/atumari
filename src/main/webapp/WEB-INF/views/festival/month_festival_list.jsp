@@ -101,6 +101,11 @@
 				        2027年
 				    </a>
 				
+				    <a href="${pageContext.request.contextPath}/festival/list?type=month&year=2028&month=${month}"
+				       class="month-button ${year == 2028 ? 'active' : ''}">
+				        2028年
+				    </a>
+
 				</div>
 
                 <!-- MONTH BUTTON -->

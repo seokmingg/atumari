@@ -112,6 +112,8 @@ pageEncoding="UTF-8"%>
 				    </span>
 				</button>
 			</div>
+			
+			<span class="warning_text">*「いいね」機能は具現されていません。</span>
         </div>
     </article>
 
