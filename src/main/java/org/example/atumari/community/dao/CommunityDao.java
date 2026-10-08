@@ -266,10 +266,11 @@ public class CommunityDao {
 	public List<CommunityDto> getCommunityHitList() {
 		List<CommunityDto> dtos = new ArrayList<CommunityDto>();
 		String sql = "select c.cmty_no, m.name, c.title, c.content, DATE_FORMAT(c.reg_date, '%Y.%m.%d.') AS reg_date, c.hit\r\n"
-				+ "from atumari.community c, atumari.member m\r\n"
+				+ "from atumari.community c\r\n"
+				+ "JOIN atumari.member m ON m.id = c.member_id\r\n"
 				+ "WHERE c.hit >= 50\r\n"
-				+ "ORDER BY c.hit DESC\r\n"
-				+ "LIMIT 3;";
+				+ "ORDER BY c.hit DESC, c.cmty_no desc\r\n"
+				+ "LIMIT 3";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(sql.toString());

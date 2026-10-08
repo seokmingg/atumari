@@ -90,7 +90,7 @@
         <!-- =========================
              POPULAR POSTS
         ========================== -->
-		<c:if test="${not empty cmtyHits}">
+		<c:if test="${cmtyHits.size() != 0}">
         <section class="popular-section">
 
             <div class="popular-title">
