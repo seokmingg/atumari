@@ -47,6 +47,7 @@ public class InquiryListController extends HttpServlet {
 		   request.setAttribute("totalCount", totalCount); // 검색조건에 맞는 전체 문의글 개수
 		   request.setAttribute("totalPages", totalPages); // 전체 페이지 개수
 		   request.setAttribute("page", page); // 현재 몇페이지인지
+		   request.setAttribute("pageSize", inquiryListService.getPageSize());
 
 	        String view = "/WEB-INF/views/inquiry/inquiry_list.jsp";
 	        
