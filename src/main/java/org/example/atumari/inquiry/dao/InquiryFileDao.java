@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.example.atumari.common.database.DBConnection;
 import org.example.atumari.inquiry.dto.InquiryFileDto;
-import org.example.atumari.notice.dto.NoticeFileDto;
 
 public class InquiryFileDao {
 
@@ -19,32 +18,22 @@ public class InquiryFileDao {
 	ResultSet rs = null;
 
 	// 문의 글 등록시 첨부파일 저장
-	public int insertFile(InquiryFileDto fileDto) {
+	public int insertFile(Connection con ,InquiryFileDto fileDto) 
+			throws SQLException {
 
-		int result = 0;
-		
 		String sql="insert into inquiry_file\r\n"
 				+ "(inquiry_no, original_file_name, stored_file_name)\r\n"
 				+ "values\r\n"
 				+ "(?,?,?)";
 		
-		try {
-			con = DBConnection.getConnection();
-			ps = con.prepareStatement(sql);
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			
 			ps.setInt(1,fileDto.getInquiry_no());
 			ps.setString(2, fileDto.getOriginal_file_name());
 			ps.setString(3, fileDto.getStored_file_name());
 			
-			result = ps.executeUpdate();
-		
-			
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBConnection.closeDB(con, ps, rs);
+			return ps.executeUpdate();	
 		}
-		return result;
 	}
 	
 	// 상세페이지 첨부파일 조회
@@ -89,33 +78,20 @@ public class InquiryFileDao {
 
 	
 	// 문의 수정및 삭제시 첨부파일 삭제
-	public int deleteFile(int file_no) {
-		
-		int result =0;
+	public int deleteFile(Connection con, int fileNo) 
+			throws SQLException {
 		
 		String sql="delete from inquiry_file\r\n"
 				+ "where file_no =?";
-		 try {
-
-		        con = DBConnection.getConnection();
-		        ps = con.prepareStatement(sql);
-
-		        ps.setInt(1, file_no);
-
-		        result = ps.executeUpdate();
-
-		    } catch (SQLException e) {
-
-		        e.printStackTrace();
-
-		    } finally {
-
-		        DBConnection.closeDB(con, ps, rs);
-		    }
-
 		
-		return result;
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+	        ps.setInt(1, fileNo);
+
+	        return ps.executeUpdate();
+	    }
 	}
+	
 	
 	// 파일 번호로 FileDto 조회
 	public InquiryFileDto findById(int fileNo) {

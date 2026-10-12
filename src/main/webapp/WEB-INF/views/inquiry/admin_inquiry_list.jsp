@@ -53,7 +53,7 @@
     	<option value="title" <c:if test="${searchType eq 'title'}"> selected </c:if>>タイトル</option>
     	<option value="writer" <c:if test="${searchType eq 'writer'}"> selected </c:if>>作成者</option>
     </select>
-    <input id="searchKeyword" name="keyword" value="${keyword}" type="text" placeholder="検索してください">
+    <input id="searchKeyword" name="keyword" value="<c:out value='${keyword}'/>" type="text" placeholder="検索してください">
     <button id="searchBtn" type="submit">検索</button>
   </div>
    </form>
@@ -85,9 +85,11 @@
     <div class="board-cell board-date">作成日</div>
   </div>
   
-  <c:forEach var="inquiry" items="${inquiryList}">
-  <div class="board-row" data-status="waiting">
-    <div class="board-cell board-no">${inquiry.inquiry_no}</div>
+ <c:forEach var="inquiry" items="${inquiryList}" varStatus="loop">
+    <div class="board-row" data-status="${inquiry.status}">
+        <div class="board-cell board-no">
+            ${totalCount - (page - 1) * pageSize - loop.index}
+        </div>
     <div class="board-cell board-subject"><a href="${pageContext.request.contextPath}/inquiry/admin/view?inquiryNo=${inquiry.inquiry_no}">${inquiry.title}</a></div>
      <!-- 첨부파일 -->
         <div class="board-cell board-file">
@@ -117,36 +119,60 @@
 
 <div class="board-pagination">
 
-<!-- 이전 페이지 -->
-	<c:if test="${page>1}">
-		<a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${page - 1}">
-			←		
-		</a>
-	</c:if>
-	
-<!-- 페이지 번호 -->
-	<c:forEach var="i" begin="1" end="${totalPages}">
-		<c:if test="${i == page}">
-			<a class= "active"
-				href="${pageContext.request.contextPath}/inquiry/admin/list?page=${i}">
-				${i}
-			</a>
-		</c:if>
-		
-		<c:if test="${i != page}">
-			<a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${i}">
-				${i}
-			</a>
-		</c:if>
-	</c:forEach>
+    <!-- 이전 페이지 -->
+    <c:if test="${page > 1}">
 
-<!-- 다음 페이지 -->
+        <c:url var="prevUrl" value="/inquiry/admin/list">
+            <c:param name="page" value="${page - 1}" />
+            <c:param name="searchType" value="${searchType}" />
+            <c:param name="keyword" value="${keyword}" />
+            <c:param name="status" value="${status}" />
+        </c:url>
+
+        <a href="${prevUrl}">←</a>
+
+    </c:if>
+
+
+    <!-- 페이지 번호 -->
+    <c:forEach var="i" begin="1" end="${totalPages}">
+
+        <c:url var="pageUrl" value="/inquiry/admin/list">
+            <c:param name="page" value="${i}" />
+            <c:param name="searchType" value="${searchType}" />
+            <c:param name="keyword" value="${keyword}" />
+            <c:param name="status" value="${status}" />
+        </c:url>
+
+        <c:if test="${i == page}">
+            <a class="active" href="${pageUrl}">
+                ${i}
+            </a>
+        </c:if>
+
+        <c:if test="${i != page}">
+            <a href="${pageUrl}">
+                ${i}
+            </a>
+        </c:if>
+
+    </c:forEach>
+
+
+    <!-- 다음 페이지 -->
     <c:if test="${page < totalPages}">
-        <a href="${pageContext.request.contextPath}/inquiry/admin/list?page=${page + 1}">
-            →
-        </a>
-    </c:if>	
-	
+
+        <c:url var="nextUrl" value="/inquiry/admin/list">
+            <c:param name="page" value="${page + 1}" />
+            <c:param name="searchType" value="${searchType}" />
+            <c:param name="keyword" value="${keyword}" />
+            <c:param name="status" value="${status}" />
+        </c:url>
+
+        <a href="${nextUrl}">→</a>
+
+    </c:if>
+
 </div>
 
 </div>

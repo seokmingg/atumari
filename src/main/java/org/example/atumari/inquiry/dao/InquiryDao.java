@@ -20,8 +20,9 @@ public class InquiryDao {
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 
-	// 문의 글 등록
-	public int insertInquiry(InquiryDto inquiry) {
+	// 문의 글 등록- 트랜잭션 적용
+	public int insertInquiry(Connection con, InquiryDto inquiry) 
+		throws SQLException {
 		
 		int inquiry_no=0;
 		
@@ -29,36 +30,36 @@ public class InquiryDao {
 			    "(member_id, title, writer, is_public, content) " +
 			    "VALUES (?, ?, ?, ?, ?)";
 		
-		try{
-			con = DBConnection.getConnection();
-			ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			//두번째 인수 의미:INSERT에서 DB가 자동 생성한 키도 나한테 돌려줘라는 의미
-				ps.setLong(1, inquiry.getMember_id());
-				ps.setString(2, inquiry.getTitle());
-				ps.setString(3, inquiry.getWriter());
-				ps.setBoolean(4, inquiry.isPublic());
-				ps.setString(5, inquiry.getContent());
-				
-			int result = ps.executeUpdate();
-			
-			if(result > 0) {
-				rs = ps.getGeneratedKeys();//JDBC에는 INSERT하면 DB가 자동 생성한 PK를 바로 받을 수 있는 기능
-				/*SELECT MAX(inquiry_no) 같은 방식으로 다시 조회하는 건 
-				 * 여러 사용자가 동시에 글을 작성하면 잘못된 번호를 가져올 위험이 있으므로 사용하지 않는 게 좋음*/
-				
-				if(rs.next()) {
-					inquiry_no = rs.getInt(1);
-				}
-			}
-			
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBConnection.closeDB(con, ps, rs);
-		}
-				
-		return inquiry_no;
+		try (PreparedStatement ps =
+				con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+	        ps.setLong(1, inquiry.getMember_id());
+	        ps.setString(2, inquiry.getTitle());
+	        ps.setString(3, inquiry.getWriter());
+	        ps.setBoolean(4, inquiry.isPublic());
+	        ps.setString(5, inquiry.getContent());
+
+	        int result = ps.executeUpdate();
+
+	        if (result <= 0) {
+	            throw new SQLException("문의글 등록에 실패했습니다.");
+	        }
+
+	        // 자동 생성된 문의번호 조회
+	        try (ResultSet rs = ps.getGeneratedKeys()) {
+
+	            if (rs.next()) {
+	                inquiry_no = rs.getInt(1);
+	            } else {
+	                throw new SQLException("문의번호 생성에 실패했습니다.");
+	            }
+	        }
+	    }
+
+	    return inquiry_no;
 	}
+
+
 	
 	
 	// 전체 문의글 목록 조회
@@ -281,8 +282,9 @@ public class InquiryDao {
 	}
 
 
-	// 문의글 수정
-	public int updateInquiry(InquiryDto inquiry) {
+	// 문의글 수정 - 트랜잭션 적용
+	public int updateInquiry(Connection con, InquiryDto inquiry) 
+			throws SQLException {
 		
 		int result = 0;
 		
@@ -294,24 +296,18 @@ public class InquiryDao {
 				+ "  AND member_id = ?";
 		// member_id를 조건으로 넣음으로서 본인이 아닌 경우는 수정이 불가하도록 한번더 확인
 		
-		try{
-			con = DBConnection.getConnection();
-			ps = con.prepareStatement(sql);
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			
 				ps.setString(1, inquiry.getTitle());
 				ps.setString(2, inquiry.getContent());
 				ps.setBoolean(3, inquiry.isPublic());
 				ps.setInt(4, inquiry.getInquiry_no());
 				ps.setLong(5, inquiry.getMember_id());
 				
-			result = ps.executeUpdate();
-			
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBConnection.closeDB(con, ps, rs);
-		}
-		
-		return result;
+				 result = ps.executeUpdate();
+	    }
+
+	    return result;
 	}
 
 	

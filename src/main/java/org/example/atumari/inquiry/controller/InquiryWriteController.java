@@ -71,9 +71,7 @@ public class InquiryWriteController extends HttpServlet {
 	        	    (String) session.getAttribute("sessionName");
 	        
 	        boolean isPublic = "1".equals(request.getParameter("isPublic"));//1이면 공개 true로 바꿔서 dto에 저장
-	     //   boolean emailNotify = "1".equals(request.getParameter("emailNotify"));
-	        
-	    //   String email = request.getParameter("email");
+
 	        String content = request.getParameter("content");
 	        
 	        InquiryDto inquiry = new InquiryDto(member_id,title, writer, isPublic, content);
