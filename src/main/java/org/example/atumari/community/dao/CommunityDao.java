@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -244,13 +245,15 @@ public class CommunityDao {
             
 			rs = ps.executeQuery();
 			if(rs.next()) {
+				Timestamp regDate = rs.getTimestamp("reg_date");
+				Timestamp updateDate = rs.getTimestamp("update_date");
 				dto = new CommunityDto(cmtyno, 
 									rs.getString("email"),
 									rs.getString("name"), 
 									rs.getString("title"), 
 									rs.getString("content"), 
-									rs.getString("reg_date"), 
-									rs.getString("update_date"),
+									regDate == null ? null : regDate.toString(),
+									updateDate == null ? null : updateDate.toString(),
 									rs.getInt("hit"),
 									0);
 			}
