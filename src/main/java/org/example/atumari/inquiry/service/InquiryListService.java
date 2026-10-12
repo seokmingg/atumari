@@ -14,12 +14,11 @@ public class InquiryListService {
 	// 문의글 조회
 	public List<InquiryDto> getInquiryList(String searchType,String keyword,int page, String status) {
 		
-		int pageSize = 5; // 몇개의 글을 가져올건가
-		int offset = (page-1)*pageSize; 
+		int offset = (page-1)*PAGE_SIZE; 
 		// 앞에서 몇 개를 건너뛸 것인가
 		// 1을 빼는 것은 첫번째 페이지에서는 1~6이 출력되야하므로 건너뛸 필요가 없음
 		
-		return inquiryDao.findInquiryList(searchType,keyword,pageSize,offset,status);
+		return inquiryDao.findInquiryList(searchType,keyword,PAGE_SIZE,offset,status);
 	}
 	
 	// 검색 조건에 맞는 전체 문의글 개수(문의페이지)
@@ -36,6 +35,9 @@ public class InquiryListService {
 		return totalPages;
 	}
 	
-	//
+	// 통일된 페이지 사이즈를 공유할 수 있음
+	public int getPageSize() {
+	    return PAGE_SIZE;
+	}
 
 }
